@@ -11,7 +11,7 @@ import pandas as pd
 import csv
 import urllib2
 
-def demo():
+def demo(drive):
     
     try:
         exist_demos = list(pd.read_csv('csv\\hltv_demos.csv', header = None)[1])
@@ -23,7 +23,7 @@ def demo():
     except:
         exist_demos = pd.DataFrame(index = range(0), columns = [0,1])
     
-    directory = 'E:\\CSGO Demos\\zipped'
+    zipped_folder = drive + ':\\CSGO Demos\\zipped'
     
     hltv_matches = pd.read_csv('csv\\hltv_matches.csv', header = None)
     hltv_eventids = list(hltv_matches.loc[pd.isnull(hltv_matches[2]) == False,0])
@@ -40,15 +40,15 @@ def demo():
         if demoid not in exist_demos:
             eventid2 = re.compile('(?<=events\/)[0-9]{1,}(?=\/)').search(eventid).group(0)
             matchid2 = re.compile('(?<=matches\/)[0-9]{1,}(?=\/)').search(matchid).group(0)
-            if not os.path.exists(directory + '\\' + eventid2 + '\\'):
-                os.makedirs(directory + '\\' + eventid2 + '\\')
-            if not os.path.exists(directory + '\\' + eventid2 + '\\' + matchid2 + '.rar'):
+            if not os.path.exists(zipped_folder + '\\' + eventid2 + '\\'):
+                os.makedirs(zipped_folder + '\\' + eventid2 + '\\')
+            if not os.path.exists(zipped_folder + '\\' + eventid2 + '\\' + matchid2 + '.rar'):
                 try:            
                     demo_url = 'https://www.hltv.org' + demoid
                     req = urllib2.Request(demo_url,headers = header)
                     response = urllib2.urlopen(req)
                     read = response.read()
-                    with open(directory + '\\' + eventid2 + '\\' + matchid2 + '.rar', 'wb+') as file_:
+                    with open(zipped_folder + '\\' + eventid2 + '\\' + matchid2 + '.rar', 'wb+') as file_:
                         file_.write(read)
                     file_.close()
                     with open('csv\\hltv_demos.csv', 'ab') as democsv:

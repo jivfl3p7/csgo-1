@@ -11,7 +11,7 @@ import pandas as pd
 import re
 import csv
 
-def json_to_csv():
+def json_to_csv(drive):
     try:
         exist_csv = list(pd.read_csv('csv\\match_info.csv', header = None)[0].drop_duplicates())
         try:
@@ -22,10 +22,10 @@ def json_to_csv():
     except:
         exist_csv = []
         
-    weapon_data = pd.read_csv("C:\\Users\\wesso\\Documents\\Github\\dem2json\\csgo weapon value.csv")
-    json_folder = "E:\\CSGO Demos\\json"
+    weapon_data = pd.read_csv('csv\\csgo weapon value.csv')
+    json_folder = drive + ':\\CSGO Demos\\json'
     
-    for eventid in os.listdir(json_folder):#reversed()
+    for eventid in os.listdir(json_folder):
         print(eventid)
         for matchid in os.listdir(json_folder + '\\' + eventid):
             for file_ in os.listdir(json_folder + '\\' + eventid + '\\' + matchid):

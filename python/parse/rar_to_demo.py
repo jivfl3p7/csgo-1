@@ -8,11 +8,10 @@ Created on Mon May 22 15:59:25 2017
 import os
 from pyunpack import Archive
 import csv
-import shutil
 
-def rar_to_demo():
-    zipped_folder = "E:\\CSGO Demos\\zipped"
-    unzipped_folder = "E:\\CSGO Demos\\unzipped"
+def rar_to_demo(drive):
+    zipped_folder = drive + ':\\CSGO Demos\\zipped'
+    unzipped_folder = drive + 'E:\\CSGO Demos\\unzipped'
     
     for folder in os.listdir(zipped_folder):
         print('rar_to_demo, ' + folder)
