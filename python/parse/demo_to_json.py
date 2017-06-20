@@ -9,10 +9,10 @@ import os
 import subprocess
 import csv
 
-def demo_to_json():
-    unzipped_folder = "E:\\CSGO Demos\\unzipped"
-    json_folder = "E:\\CSGO Demos\\json"
-    parse_string1 = "cd C:\\Users\\wesso\\Documents\\Github\\dem2json && node dem2json.js "
+def demo_to_json(drive, username):
+    unzipped_folder = drive + ':\\CSGO Demos\\unzipped'
+    json_folder = drive + ':\\CSGO Demos\\json'
+    parse_string1 = 'cd C:\\Users\\' + username + '\\Documents\\Github\\dem2json && node dem2json.js '
     
     for eventid in os.listdir(unzipped_folder):
         print('demo_to_json, ' + eventid)

@@ -78,6 +78,3 @@ def team_name_match():
     
     with open('csv\\team_name_match.csv', 'wb') as namecsv:
         team_name_match[['team_hltv','team_demo','team_match_score']].drop_duplicates().sort_values('team_hltv').reset_index(drop = True).to_csv(namecsv, header = False, index = False)
-    #    
-    #hltv_match_teams.loc[hltv_match_teams[1].str.contains('2309411')]
-    #demo_teams.loc[demo_teams[0].str.contains('2309411')]
