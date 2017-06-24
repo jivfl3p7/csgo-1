@@ -329,7 +329,6 @@
 2541,2307926-0,issue with player teams
 2541,2307931-2,Expected object or value
 2541,2307931-3,issue with player teams
-2557,2311268-1,Expected object or value
 2557,2311330-0,issue with player teams
 2557,2311330-1,issue with player teams
 2557,2311330-2,issue with player teams
@@ -341,6 +340,8 @@
 2564,2307393-1,wrong number of pistol rounds
 2564,2307457-1,issue with player teams
 2566,2307436-0,Expected object or value
+2569,2311458-0,Expected object or value
+2569,2311463-0,issue with player teams
 2599,2307081-0,issue with player teams
 2599,2307081-1,wrong number of pistol rounds
 2599,2307090-1,Expected object or value
@@ -398,6 +399,16 @@
 2722,2311434-1,'float' object has no attribute 'encode'
 2722,2311435-1,Expected object or value
 2722,2311435-2,wrong number of pistol rounds
+2723,2311553-0,'float' object has no attribute 'encode'
+2723,2311555-0,'float' object has no attribute 'encode'
+2723,2311556-0,'float' object has no attribute 'encode'
+2723,2311557-0,'float' object has no attribute 'encode'
+2723,2311558-0,'float' object has no attribute 'encode'
+2723,2311559-0,'float' object has no attribute 'encode'
+2723,2311560-0,'float' object has no attribute 'encode'
+2723,2311563-0,Expected object or value
+2723,2311563-1,issue with player teams
+2723,2311568-0,'float' object has no attribute 'encode'
 2725,2311184-2,issue with player teams
 2725,2311184-3,issue with player teams
 2725,2311184-4,wrong number of pistol rounds

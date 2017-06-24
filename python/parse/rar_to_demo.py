@@ -1,17 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May 22 15:59:25 2017
-
-@author: wesso
-"""
-
 import os
 from pyunpack import Archive
 import csv
 
 def rar_to_demo(drive):
-    zipped_folder = drive + ':\\CSGO Demos\\zipped'
-    unzipped_folder = drive + 'E:\\CSGO Demos\\unzipped'
+    zipped_folder = drive + r':\\CSGO Demos\\zipped'
+    unzipped_folder = drive + r':\\CSGO Demos\\unzipped'
     
     for folder in os.listdir(zipped_folder):
         print('rar_to_demo, ' + folder)
@@ -21,6 +14,6 @@ def rar_to_demo(drive):
                 try:
                     Archive(zipped_folder + '\\' + folder + '\\' + file_).extractall(unzipped_folder + '\\' + folder + '\\' + file_[:-4])
                 except:
-                    with open("csv\\demo_fails.csv", 'ab') as demofailcsv:
+                    with open('csv\\demo_fails.csv', 'ab') as demofailcsv:
                         demofailwriter = csv.writer(demofailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                         demofailwriter.writerow([folder,file_[:-4],'fail'])

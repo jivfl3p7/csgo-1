@@ -7944,3 +7944,233 @@
 /matches/2311429/immortals-vs-complexity-americas-minor-pgl-major-krakow-2017,5,compLexity,remove,Cobble
 /matches/2311429/immortals-vs-complexity-americas-minor-pgl-major-krakow-2017,6,Immortals,remove,Inferno
 /matches/2311429/immortals-vs-complexity-americas-minor-pgl-major-krakow-2017,7,,,Cache
+/matches/2311083/astralis-vs-virtuspro-eleague-clash-for-cash,1,Virtus.pro,remove,Cache
+/matches/2311083/astralis-vs-virtuspro-eleague-clash-for-cash,2,Astralis,remove,Cobble
+/matches/2311083/astralis-vs-virtuspro-eleague-clash-for-cash,3,Virtus.pro ,pick,Nuke
+/matches/2311083/astralis-vs-virtuspro-eleague-clash-for-cash,4,Astralis ,pick,Overpass
+/matches/2311083/astralis-vs-virtuspro-eleague-clash-for-cash,5,Virtus.pro,remove,Train
+/matches/2311083/astralis-vs-virtuspro-eleague-clash-for-cash,6,Astralis,remove,Inferno
+/matches/2311083/astralis-vs-virtuspro-eleague-clash-for-cash,7,,,Mirage
+/matches/2311568/penta-vs-big-europe-minor-pgl-major-krakow-2017,1,PENTA,remove,Mirage
+/matches/2311568/penta-vs-big-europe-minor-pgl-major-krakow-2017,2,BIG,remove,Nuke
+/matches/2311568/penta-vs-big-europe-minor-pgl-major-krakow-2017,3,PENTA ,pick,Train
+/matches/2311568/penta-vs-big-europe-minor-pgl-major-krakow-2017,4,BIG ,pick,Overpass
+/matches/2311568/penta-vs-big-europe-minor-pgl-major-krakow-2017,5,BIG,remove,Inferno
+/matches/2311568/penta-vs-big-europe-minor-pgl-major-krakow-2017,6,PENTA,remove,Cache
+/matches/2311568/penta-vs-big-europe-minor-pgl-major-krakow-2017,7,,,Cobble
+/matches/2311567/dignitas-vs-big-europe-minor-pgl-major-krakow-2017,1,dignitas,remove,Cobble
+/matches/2311567/dignitas-vs-big-europe-minor-pgl-major-krakow-2017,2,BIG,remove,Nuke
+/matches/2311567/dignitas-vs-big-europe-minor-pgl-major-krakow-2017,3,dignitas ,pick,Cache
+/matches/2311567/dignitas-vs-big-europe-minor-pgl-major-krakow-2017,4,BIG ,pick,Overpass
+/matches/2311567/dignitas-vs-big-europe-minor-pgl-major-krakow-2017,5,BIG,remove,Inferno
+/matches/2311567/dignitas-vs-big-europe-minor-pgl-major-krakow-2017,6,dignitas,remove,Train
+/matches/2311567/dignitas-vs-big-europe-minor-pgl-major-krakow-2017,7,,,Mirage
+/matches/2311566/envyus-vs-big-europe-minor-pgl-major-krakow-2017,1,EnVyUs,remove,Mirage
+/matches/2311566/envyus-vs-big-europe-minor-pgl-major-krakow-2017,2,BIG,remove,Nuke
+/matches/2311566/envyus-vs-big-europe-minor-pgl-major-krakow-2017,3,EnVyUs ,pick,Cobble
+/matches/2311566/envyus-vs-big-europe-minor-pgl-major-krakow-2017,4,BIG ,pick,Overpass
+/matches/2311566/envyus-vs-big-europe-minor-pgl-major-krakow-2017,5,BIG,remove,Inferno
+/matches/2311566/envyus-vs-big-europe-minor-pgl-major-krakow-2017,6,EnVyUs,remove,Cache
+/matches/2311566/envyus-vs-big-europe-minor-pgl-major-krakow-2017,7,,,Train
+/matches/2311565/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,1,dignitas,remove,Cobble
+/matches/2311565/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,2,PENTA,remove,Nuke
+/matches/2311565/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,3,dignitas ,pick,Mirage
+/matches/2311565/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,4,PENTA ,pick,Inferno
+/matches/2311565/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,5,PENTA,remove,Cache
+/matches/2311565/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,6,dignitas,remove,Train
+/matches/2311565/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,7,,,Overpass
+/matches/2311564/big-vs-dignitas-europe-minor-pgl-major-krakow-2017,1,dignitas,remove,Cobble
+/matches/2311564/big-vs-dignitas-europe-minor-pgl-major-krakow-2017,2,BIG,remove,Nuke
+/matches/2311564/big-vs-dignitas-europe-minor-pgl-major-krakow-2017,3,dignitas ,pick,Mirage
+/matches/2311564/big-vs-dignitas-europe-minor-pgl-major-krakow-2017,4,BIG ,pick,Inferno
+/matches/2311564/big-vs-dignitas-europe-minor-pgl-major-krakow-2017,5,BIG,remove,Overpass
+/matches/2311564/big-vs-dignitas-europe-minor-pgl-major-krakow-2017,6,dignitas,remove,Train
+/matches/2311564/big-vs-dignitas-europe-minor-pgl-major-krakow-2017,7,,,Cache
+/matches/2311563/penta-vs-envyus-europe-minor-pgl-major-krakow-2017,1,EnVyUs,remove,Mirage
+/matches/2311563/penta-vs-envyus-europe-minor-pgl-major-krakow-2017,2,PENTA,remove,Nuke
+/matches/2311563/penta-vs-envyus-europe-minor-pgl-major-krakow-2017,3,EnVyUs ,pick,Cobble
+/matches/2311563/penta-vs-envyus-europe-minor-pgl-major-krakow-2017,4,PENTA ,pick,Inferno
+/matches/2311563/penta-vs-envyus-europe-minor-pgl-major-krakow-2017,5,PENTA,remove,Train
+/matches/2311563/penta-vs-envyus-europe-minor-pgl-major-krakow-2017,6,EnVyUs,remove,Overpass
+/matches/2311563/penta-vs-envyus-europe-minor-pgl-major-krakow-2017,7,,,Cache
+/matches/2311562/dignitas-vs-ldlc-europe-minor-pgl-major-krakow-2017,1,dignitas,remove,Cobble
+/matches/2311562/dignitas-vs-ldlc-europe-minor-pgl-major-krakow-2017,2,LDLC,remove,Mirage
+/matches/2311562/dignitas-vs-ldlc-europe-minor-pgl-major-krakow-2017,3,dignitas ,pick,Cache
+/matches/2311562/dignitas-vs-ldlc-europe-minor-pgl-major-krakow-2017,4,LDLC ,pick,Nuke
+/matches/2311562/dignitas-vs-ldlc-europe-minor-pgl-major-krakow-2017,5,LDLC,remove,Train
+/matches/2311562/dignitas-vs-ldlc-europe-minor-pgl-major-krakow-2017,6,dignitas,remove,Overpass
+/matches/2311562/dignitas-vs-ldlc-europe-minor-pgl-major-krakow-2017,7,,,Inferno
+/matches/2311561/igamecom-vs-ldlc-europe-minor-pgl-major-krakow-2017,1,iGame.com,remove,Cache
+/matches/2311561/igamecom-vs-ldlc-europe-minor-pgl-major-krakow-2017,2,LDLC,remove,Train
+/matches/2311561/igamecom-vs-ldlc-europe-minor-pgl-major-krakow-2017,3,iGame.com ,pick,Mirage
+/matches/2311561/igamecom-vs-ldlc-europe-minor-pgl-major-krakow-2017,4,LDLC ,pick,Cobble
+/matches/2311561/igamecom-vs-ldlc-europe-minor-pgl-major-krakow-2017,5,LDLC,remove,Inferno
+/matches/2311561/igamecom-vs-ldlc-europe-minor-pgl-major-krakow-2017,6,iGame.com,remove,Overpass
+/matches/2311561/igamecom-vs-ldlc-europe-minor-pgl-major-krakow-2017,7,,,Nuke
+/matches/2311560/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,1,dignitas,remove,Cobble
+/matches/2311560/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,2,PENTA,remove,Mirage
+/matches/2311560/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,3,dignitas,remove,Nuke
+/matches/2311560/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,4,PENTA,remove,Cache
+/matches/2311560/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,5,dignitas,remove,Train
+/matches/2311560/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,6,PENTA,remove,Overpass
+/matches/2311560/penta-vs-dignitas-europe-minor-pgl-major-krakow-2017,7,,,Inferno
+/matches/2311559/ldlc-vs-dignitas-europe-minor-pgl-major-krakow-2017,1,LDLC,remove,Mirage
+/matches/2311559/ldlc-vs-dignitas-europe-minor-pgl-major-krakow-2017,2,dignitas,remove,Cobble
+/matches/2311559/ldlc-vs-dignitas-europe-minor-pgl-major-krakow-2017,3,LDLC,remove,Cache
+/matches/2311559/ldlc-vs-dignitas-europe-minor-pgl-major-krakow-2017,4,dignitas,remove,Overpass
+/matches/2311559/ldlc-vs-dignitas-europe-minor-pgl-major-krakow-2017,5,LDLC,remove,Inferno
+/matches/2311559/ldlc-vs-dignitas-europe-minor-pgl-major-krakow-2017,6,dignitas,remove,Nuke
+/matches/2311559/ldlc-vs-dignitas-europe-minor-pgl-major-krakow-2017,7,,,Train
+/matches/2311558/penta-vs-igamecom-europe-minor-pgl-major-krakow-2017,1,PENTA,remove,Train
+/matches/2311558/penta-vs-igamecom-europe-minor-pgl-major-krakow-2017,2,iGame.com,remove,Cache
+/matches/2311558/penta-vs-igamecom-europe-minor-pgl-major-krakow-2017,3,PENTA,remove,Nuke
+/matches/2311558/penta-vs-igamecom-europe-minor-pgl-major-krakow-2017,4,iGame.com,remove,Mirage
+/matches/2311558/penta-vs-igamecom-europe-minor-pgl-major-krakow-2017,5,PENTA,remove,Overpass
+/matches/2311558/penta-vs-igamecom-europe-minor-pgl-major-krakow-2017,6,iGame.com,remove,Cobble
+/matches/2311558/penta-vs-igamecom-europe-minor-pgl-major-krakow-2017,7,,,Inferno
+/matches/2311557/ballistix-vs-envyus-europe-minor-pgl-major-krakow-2017,1,Ballistix,remove,Train
+/matches/2311557/ballistix-vs-envyus-europe-minor-pgl-major-krakow-2017,2,EnVyUs,remove,Mirage
+/matches/2311557/ballistix-vs-envyus-europe-minor-pgl-major-krakow-2017,3,Ballistix ,pick,Cache
+/matches/2311557/ballistix-vs-envyus-europe-minor-pgl-major-krakow-2017,4,EnVyUs ,pick,Inferno
+/matches/2311557/ballistix-vs-envyus-europe-minor-pgl-major-krakow-2017,5,EnVyUs,remove,Overpass
+/matches/2311557/ballistix-vs-envyus-europe-minor-pgl-major-krakow-2017,6,Ballistix,remove,Nuke
+/matches/2311557/ballistix-vs-envyus-europe-minor-pgl-major-krakow-2017,7,,,Cobble
+/matches/2311556/envyus-vs-kinguin-europe-minor-pgl-major-krakow-2017,1,EnVyUs,remove,Mirage
+/matches/2311556/envyus-vs-kinguin-europe-minor-pgl-major-krakow-2017,2,Kinguin,remove,Train
+/matches/2311556/envyus-vs-kinguin-europe-minor-pgl-major-krakow-2017,3,EnVyUs ,pick,Nuke
+/matches/2311556/envyus-vs-kinguin-europe-minor-pgl-major-krakow-2017,4,Kinguin ,pick,Overpass
+/matches/2311556/envyus-vs-kinguin-europe-minor-pgl-major-krakow-2017,5,Kinguin,remove,Cache
+/matches/2311556/envyus-vs-kinguin-europe-minor-pgl-major-krakow-2017,6,EnVyUs,remove,Inferno
+/matches/2311556/envyus-vs-kinguin-europe-minor-pgl-major-krakow-2017,7,,,Cobble
+/matches/2311555/ballistix-vs-big-europe-minor-pgl-major-krakow-2017,1,BIG,remove,Nuke
+/matches/2311555/ballistix-vs-big-europe-minor-pgl-major-krakow-2017,2,Ballistix,remove,Train
+/matches/2311555/ballistix-vs-big-europe-minor-pgl-major-krakow-2017,3,BIG,remove,Cache
+/matches/2311555/ballistix-vs-big-europe-minor-pgl-major-krakow-2017,4,Ballistix,remove,Inferno
+/matches/2311555/ballistix-vs-big-europe-minor-pgl-major-krakow-2017,5,BIG,remove,Mirage
+/matches/2311555/ballistix-vs-big-europe-minor-pgl-major-krakow-2017,6,Ballistix,remove,Overpass
+/matches/2311555/ballistix-vs-big-europe-minor-pgl-major-krakow-2017,7,,,Cobble
+/matches/2311554/big-vs-kinguin-europe-minor-pgl-major-krakow-2017,1,Kinguin,remove,Cache
+/matches/2311554/big-vs-kinguin-europe-minor-pgl-major-krakow-2017,2,BIG,remove,Mirage
+/matches/2311554/big-vs-kinguin-europe-minor-pgl-major-krakow-2017,3,Kinguin,remove,Inferno
+/matches/2311554/big-vs-kinguin-europe-minor-pgl-major-krakow-2017,4,BIG,remove,Overpass
+/matches/2311554/big-vs-kinguin-europe-minor-pgl-major-krakow-2017,5,Kinguin,remove,Cobble
+/matches/2311554/big-vs-kinguin-europe-minor-pgl-major-krakow-2017,6,BIG,remove,Nuke
+/matches/2311554/big-vs-kinguin-europe-minor-pgl-major-krakow-2017,7,,,Train
+/matches/2311553/envyus-vs-ballistix-europe-minor-pgl-major-krakow-2017,1,Ballistix,remove,Train
+/matches/2311553/envyus-vs-ballistix-europe-minor-pgl-major-krakow-2017,2,EnVyUs,remove,Mirage
+/matches/2311553/envyus-vs-ballistix-europe-minor-pgl-major-krakow-2017,3,Ballistix,remove,Nuke
+/matches/2311553/envyus-vs-ballistix-europe-minor-pgl-major-krakow-2017,4,EnVyUs,remove,Overpass
+/matches/2311553/envyus-vs-ballistix-europe-minor-pgl-major-krakow-2017,5,Ballistix,remove,Inferno
+/matches/2311553/envyus-vs-ballistix-europe-minor-pgl-major-krakow-2017,6,EnVyUs,remove,Cobble
+/matches/2311553/envyus-vs-ballistix-europe-minor-pgl-major-krakow-2017,7,,,Cache
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,1,Virtus.pro,remove,Overpass
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,2,Natus Vincere,remove,Cache
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,3,Virtus.pro ,pick,Nuke
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,4,Natus Vincere ,pick,Train
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,5,Virtus.pro,remove,Cobble
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,6,Natus Vincere,remove,Inferno
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,7,,,Mirage
+/matches/2311679/virtuspro-vs-hellraisers-adrenaline-cyber-league-2017,1,HellRaisers,remove,Nuke
+/matches/2311679/virtuspro-vs-hellraisers-adrenaline-cyber-league-2017,2,Virtus.pro,remove,Overpass
+/matches/2311679/virtuspro-vs-hellraisers-adrenaline-cyber-league-2017,3,HellRaisers ,pick,Cache
+/matches/2311679/virtuspro-vs-hellraisers-adrenaline-cyber-league-2017,4,Virtus.pro ,pick,Train
+/matches/2311679/virtuspro-vs-hellraisers-adrenaline-cyber-league-2017,5,HellRaisers,remove,Inferno
+/matches/2311679/virtuspro-vs-hellraisers-adrenaline-cyber-league-2017,6,Virtus.pro,remove,Cobble
+/matches/2311679/virtuspro-vs-hellraisers-adrenaline-cyber-league-2017,7,,,Mirage
+/matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,1,FlipSid3,remove,Cobble
+/matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,2,Natus Vincere,remove,Cache
+/matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,3,FlipSid3 ,pick,Nuke
+/matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,4,Natus Vincere ,pick,Inferno
+/matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,5,FlipSid3,remove,Overpass
+/matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,6,Natus Vincere,remove,Mirage
+/matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,7,,,Train
+/matches/2311469/sk-vs-fnatic-dreamhack-open-summer-2017,1,fnatic,remove,Cobble
+/matches/2311469/sk-vs-fnatic-dreamhack-open-summer-2017,2,SK,remove,Nuke
+/matches/2311469/sk-vs-fnatic-dreamhack-open-summer-2017,3,fnatic ,pick,Inferno
+/matches/2311469/sk-vs-fnatic-dreamhack-open-summer-2017,4,SK ,pick,Overpass
+/matches/2311469/sk-vs-fnatic-dreamhack-open-summer-2017,5,fnatic,remove,Cache
+/matches/2311469/sk-vs-fnatic-dreamhack-open-summer-2017,6,SK,remove,Train
+/matches/2311469/sk-vs-fnatic-dreamhack-open-summer-2017,7,,,Mirage
+/matches/2311468/immortals-vs-fnatic-dreamhack-open-summer-2017,1,fnatic,remove,Cobble
+/matches/2311468/immortals-vs-fnatic-dreamhack-open-summer-2017,2,Immortals,remove,Nuke
+/matches/2311468/immortals-vs-fnatic-dreamhack-open-summer-2017,3,fnatic ,pick,Inferno
+/matches/2311468/immortals-vs-fnatic-dreamhack-open-summer-2017,4,Immortals ,pick,Overpass
+/matches/2311468/immortals-vs-fnatic-dreamhack-open-summer-2017,5,fnatic,remove,Cache
+/matches/2311468/immortals-vs-fnatic-dreamhack-open-summer-2017,6,Immortals,remove,Train
+/matches/2311468/immortals-vs-fnatic-dreamhack-open-summer-2017,7,,,Mirage
+/matches/2311467/clg-vs-sk-dreamhack-open-summer-2017,1,SK,remove,Nuke
+/matches/2311467/clg-vs-sk-dreamhack-open-summer-2017,2,CLG,remove,Inferno
+/matches/2311467/clg-vs-sk-dreamhack-open-summer-2017,3,SK ,pick,Mirage
+/matches/2311467/clg-vs-sk-dreamhack-open-summer-2017,4,CLG ,pick,Train
+/matches/2311467/clg-vs-sk-dreamhack-open-summer-2017,5,SK,remove,Cache
+/matches/2311467/clg-vs-sk-dreamhack-open-summer-2017,6,CLG,remove,Overpass
+/matches/2311467/clg-vs-sk-dreamhack-open-summer-2017,7,,,Cobble
+/matches/2311466/fnatic-vs-gambit-dreamhack-open-summer-2017,1,Gambit,remove,Mirage
+/matches/2311466/fnatic-vs-gambit-dreamhack-open-summer-2017,2,fnatic,remove,Cobble
+/matches/2311466/fnatic-vs-gambit-dreamhack-open-summer-2017,3,Gambit ,pick,Train
+/matches/2311466/fnatic-vs-gambit-dreamhack-open-summer-2017,4,fnatic ,pick,Inferno
+/matches/2311466/fnatic-vs-gambit-dreamhack-open-summer-2017,5,Gambit,remove,Cache
+/matches/2311466/fnatic-vs-gambit-dreamhack-open-summer-2017,6,fnatic,remove,Overpass
+/matches/2311466/fnatic-vs-gambit-dreamhack-open-summer-2017,7,,,Nuke
+/matches/2311465/sk-vs-mousesports-dreamhack-open-summer-2017,1,mousesports,remove,Overpass
+/matches/2311465/sk-vs-mousesports-dreamhack-open-summer-2017,2,SK,remove,Nuke
+/matches/2311465/sk-vs-mousesports-dreamhack-open-summer-2017,3,mousesports ,pick,Inferno
+/matches/2311465/sk-vs-mousesports-dreamhack-open-summer-2017,4,SK ,pick,Mirage
+/matches/2311465/sk-vs-mousesports-dreamhack-open-summer-2017,5,mousesports,remove,Cobble
+/matches/2311465/sk-vs-mousesports-dreamhack-open-summer-2017,6,SK,remove,Train
+/matches/2311465/sk-vs-mousesports-dreamhack-open-summer-2017,7,,,Cache
+/matches/2311464/gambit-vs-cloud9-dreamhack-open-summer-2017,1,Gambit,remove,Mirage
+/matches/2311464/gambit-vs-cloud9-dreamhack-open-summer-2017,2,Cloud9,remove,Nuke
+/matches/2311464/gambit-vs-cloud9-dreamhack-open-summer-2017,3,Gambit ,pick,Train
+/matches/2311464/gambit-vs-cloud9-dreamhack-open-summer-2017,4,Cloud9 ,pick,Cache
+/matches/2311464/gambit-vs-cloud9-dreamhack-open-summer-2017,5,Gambit,remove,Inferno
+/matches/2311464/gambit-vs-cloud9-dreamhack-open-summer-2017,6,Cloud9,remove,Cobble
+/matches/2311464/gambit-vs-cloud9-dreamhack-open-summer-2017,7,,,Overpass
+/matches/2311463/singularity-vs-mousesports-dreamhack-open-summer-2017,1,Singularity,remove,Cache
+/matches/2311463/singularity-vs-mousesports-dreamhack-open-summer-2017,2,mousesports,remove,Overpass
+/matches/2311463/singularity-vs-mousesports-dreamhack-open-summer-2017,3,Singularity ,pick,Nuke
+/matches/2311463/singularity-vs-mousesports-dreamhack-open-summer-2017,4,mousesports ,pick,Mirage
+/matches/2311463/singularity-vs-mousesports-dreamhack-open-summer-2017,5,Singularity,remove,Train
+/matches/2311463/singularity-vs-mousesports-dreamhack-open-summer-2017,6,mousesports,remove,Inferno
+/matches/2311463/singularity-vs-mousesports-dreamhack-open-summer-2017,7,,,Cobble
+/matches/2311462/clg-vs-fnatic-dreamhack-open-summer-2017,1,fnatic,remove,Cobble
+/matches/2311462/clg-vs-fnatic-dreamhack-open-summer-2017,2,CLG,remove,Nuke
+/matches/2311462/clg-vs-fnatic-dreamhack-open-summer-2017,3,fnatic,remove,Overpass
+/matches/2311462/clg-vs-fnatic-dreamhack-open-summer-2017,4,CLG,remove,Inferno
+/matches/2311462/clg-vs-fnatic-dreamhack-open-summer-2017,5,fnatic,remove,Cache
+/matches/2311462/clg-vs-fnatic-dreamhack-open-summer-2017,6,CLG,remove,Mirage
+/matches/2311462/clg-vs-fnatic-dreamhack-open-summer-2017,7,,,Train
+/matches/2311461/sk-vs-immortals-dreamhack-open-summer-2017,1,Immortals,remove,Mirage
+/matches/2311461/sk-vs-immortals-dreamhack-open-summer-2017,2,SK,remove,Inferno
+/matches/2311461/sk-vs-immortals-dreamhack-open-summer-2017,3,Immortals,remove,Nuke
+/matches/2311461/sk-vs-immortals-dreamhack-open-summer-2017,4,SK,remove,Cobble
+/matches/2311461/sk-vs-immortals-dreamhack-open-summer-2017,5,Immortals,remove,Train
+/matches/2311461/sk-vs-immortals-dreamhack-open-summer-2017,6,SK,remove,Overpass
+/matches/2311461/sk-vs-immortals-dreamhack-open-summer-2017,7,,,Cache
+/matches/2311460/fnatic-vs-cloud9-dreamhack-open-summer-2017,1,Cloud9,remove,Inferno
+/matches/2311460/fnatic-vs-cloud9-dreamhack-open-summer-2017,2,fnatic,remove,Cobble
+/matches/2311460/fnatic-vs-cloud9-dreamhack-open-summer-2017,3,Cloud9,remove,Nuke
+/matches/2311460/fnatic-vs-cloud9-dreamhack-open-summer-2017,4,fnatic,remove,Cache
+/matches/2311460/fnatic-vs-cloud9-dreamhack-open-summer-2017,5,Cloud9,remove,Overpass
+/matches/2311460/fnatic-vs-cloud9-dreamhack-open-summer-2017,6,fnatic,remove,Train
+/matches/2311460/fnatic-vs-cloud9-dreamhack-open-summer-2017,7,,,Mirage
+/matches/2311459/mousesports-vs-immortals-dreamhack-open-summer-2017,1,Immortals,remove,Mirage
+/matches/2311459/mousesports-vs-immortals-dreamhack-open-summer-2017,2,mousesports,remove,Inferno
+/matches/2311459/mousesports-vs-immortals-dreamhack-open-summer-2017,3,Immortals,remove,Nuke
+/matches/2311459/mousesports-vs-immortals-dreamhack-open-summer-2017,4,mousesports,remove,Overpass
+/matches/2311459/mousesports-vs-immortals-dreamhack-open-summer-2017,5,Immortals,remove,Cache
+/matches/2311459/mousesports-vs-immortals-dreamhack-open-summer-2017,6,mousesports,remove,Train
+/matches/2311459/mousesports-vs-immortals-dreamhack-open-summer-2017,7,,,Cobble
+/matches/2311458/gambit-vs-clg-dreamhack-open-summer-2017,1,Gambit,remove,Cache
+/matches/2311458/gambit-vs-clg-dreamhack-open-summer-2017,2,CLG,remove,Nuke
+/matches/2311458/gambit-vs-clg-dreamhack-open-summer-2017,3,Gambit,remove,Mirage
+/matches/2311458/gambit-vs-clg-dreamhack-open-summer-2017,4,CLG,remove,Inferno
+/matches/2311458/gambit-vs-clg-dreamhack-open-summer-2017,5,Gambit,remove,Cobble
+/matches/2311458/gambit-vs-clg-dreamhack-open-summer-2017,6,CLG,remove,Train
+/matches/2311458/gambit-vs-clg-dreamhack-open-summer-2017,7,,,Overpass
+/matches/2311457/sk-vs-singularity-dreamhack-open-summer-2017,1,SK,remove,Nuke
+/matches/2311457/sk-vs-singularity-dreamhack-open-summer-2017,2,Singularity,remove,Mirage
+/matches/2311457/sk-vs-singularity-dreamhack-open-summer-2017,3,SK,remove,Inferno
+/matches/2311457/sk-vs-singularity-dreamhack-open-summer-2017,4,Singularity,remove,Cache
+/matches/2311457/sk-vs-singularity-dreamhack-open-summer-2017,5,SK,remove,Train
+/matches/2311457/sk-vs-singularity-dreamhack-open-summer-2017,6,Singularity,remove,Overpass

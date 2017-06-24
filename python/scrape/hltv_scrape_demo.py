@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 04 15:57:08 2017
-
-@author: wesso
-"""
-
 import os
 import re
 import pandas as pd
@@ -34,7 +27,7 @@ def demo(drive):
     
     prev_eventid = None
     for eventid, matchid, demoid in zip(hltv_eventids, hltv_matchids, hltv_demoids):
-        if eventid != prev_eventid:
+        if eventid != prev_eventid and eventid not in hltv_eventids:
             print('demo_download, ' + eventid)
             prev_eventid = eventid
         if demoid not in exist_demos:

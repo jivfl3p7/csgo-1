@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 25 18:11:20 2017
-
-@author: wesso
-"""
-
 from __future__ import division
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -15,7 +8,7 @@ import csv
 
 def teamrank():
     try:
-        exist_ranks = list(pd.read_csv('csv\\hltv_teamranks.csv', header = None)[0].drop_duplicates())
+        exist_ranks = list(pd.read_csv('csv\\hltv_team_ranks.csv', header = None)[0].drop_duplicates())
     except:
         exist_ranks = pd.DataFrame(index = range(0))
     
@@ -48,6 +41,6 @@ def teamrank():
                         team_href = team.contents[1].contents[1].contents[2].get('data-url')
                         team_name = team.contents[1].contents[1].contents[2].text.encode('utf-8')
                         team_points = int(re.sub('[a-z]|\(|\)| ','',team.contents[1].contents[1].contents[3].text.encode('utf-8')))
-                        with open("csv\\hltv_teamranks.csv", 'ab') as rankcsv:
+                        with open("csv\\hltv_team_ranks.csv", 'ab') as rankcsv:
                             rankwriter = csv.writer(rankcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                             rankwriter.writerow([date,rank,team_name,team_href,team_points])

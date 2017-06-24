@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Apr 29 15:56:36 2017
-
-@author: wessonmo
-"""
-
 from __future__ import division
 import pandas as pd
 import requests
@@ -85,9 +78,12 @@ def event():
                             event_date_raw = event.contents[2].contents[1].contents[1].contents[2].contents[1].contents[1].contents[0].text.encode('utf-8')
                             event_end_date_raw = re.sub('.* - ','',event_date_raw)
                             event_end_date = datetime.datetime.strftime(parse(event_end_date_raw), '%Y-%m-%d')
-                            event_prize = re.sub('\$|,','',event.contents[2].contents[1].contents[1].contents[0].contents[5].text.encode('utf-8'))
+                            try:
+                                prize_money = int(re.sub('\$|,','',event.contents[2].contents[1].contents[1].contents[0].contents[5].text.encode('utf-8')))
+                            except:
+                                prize_money = None
                             event_type = event.contents[2].contents[1].contents[1].contents[0].contents[7].text.encode('utf-8')
                             with open("csv\\hltv_events.csv", 'ab') as eventcsv:
                                 eventwriter = csv.writer(eventcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                eventwriter.writerow([event_url,event_name,event_end_date,event_prize,event_type])
+                                eventwriter.writerow([event_url,event_name,event_end_date,prize_money,event_type])
                             print(event_name)

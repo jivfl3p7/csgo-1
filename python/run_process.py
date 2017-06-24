@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jun 12 16:21:07 2017
-
-@author: wesso
-"""
-
 import sys
 import os
 import platform
@@ -18,7 +11,7 @@ elif processor == 'Intel64 Family 6 Model 142 Stepping 9, GenuineIntel':
     username = 'wesso'
 
 os.chdir('C:\\Users\\' + username + '\\Documents\\Github\\csgo')    
-sys.path.append('C:\\Users\\wesso\\Documents\\Github\\csgo\\python')
+sys.path.append('C:\\Users\\' + username + '\\Documents\\Github\\csgo\\python')
 
 from scrape.hltv_scrape_teamrank import teamrank
 teamrank()
@@ -38,4 +31,3 @@ json_to_csv(drive)
 
 from other.team_name_match import team_name_match
 team_name_match()
-

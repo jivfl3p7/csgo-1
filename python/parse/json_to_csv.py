@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 18 13:08:21 2017
-
-@author: wesso
-"""
-
 from __future__ import division
 import os
 import pandas as pd
@@ -13,7 +6,7 @@ import csv
 
 def json_to_csv(drive):
     try:
-        exist_csv = list(pd.read_csv('csv\\match_info.csv', header = None)[0].drop_duplicates())
+        exist_csv = list(pd.read_csv('csv\\demo_info.csv', header = None)[0].drop_duplicates())
         try:
             exist_fail = list(pd.read_csv('csv\\csv_fails.csv', header = None)[1])
             exist_csv = exist_csv + exist_fail
@@ -22,7 +15,7 @@ def json_to_csv(drive):
     except:
         exist_csv = []
         
-    weapon_data = pd.read_csv('csv\\csgo weapon value.csv')
+    weapon_data = pd.read_csv('csv\\weapon_info.csv')
     json_folder = drive + ':\\CSGO Demos\\json'
     
     for eventid in os.listdir(json_folder):
@@ -36,8 +29,8 @@ def json_to_csv(drive):
                         
                         match_info = pd.DataFrame(data[data['event']=='info'])
                         match_info.insert(0,'mapid',file_[:-5])
-                        match_info['mapHash'] = match_info['mapHash'].astype(str)
-                        match_info = match_info[['mapid','mapName','mapHash','tickRate']]
+                        match_info['mapHash'] = match_info['mapHash'].astype(int).astype(str)
+                        match_info = match_info[['mapid','mapName','mapHash']]
                         match_info = match_info.drop_duplicates()
                         
                         player_teams = pd.DataFrame(columns = ['steamid','team'])
@@ -595,24 +588,29 @@ def json_to_csv(drive):
                         rounds['ct_econ_equip'] = (rounds['ct_t1_rifle_econ_change'] + rounds['ct_t2_rifle_econ_change'] + rounds['ct_other_primary_econ_change'] + rounds['ct_upg_pistol_econ_change'] + rounds['ct_armor_econ_change']) - (rounds['t_t1_rifle_econ_change'] + rounds['t_t2_rifle_econ_change'] + rounds['t_other_primary_econ_change'] + rounds['t_upg_pistol_econ_change'] + rounds['t_armor_econ_change'])
                         rounds = rounds.drop_duplicates()
                         rounds.insert(0, 'mapid', file_[:-5])
+                        rounds[['round','winner']] = rounds[['round','winner']].astype(int)
                         
-                        with open('csv\\match_info.csv', 'ab') as infocsv:
+                        with open('csv\\demo_info.csv', 'ab') as infocsv:
                             match_info.to_csv(infocsv, header = False, index = False)
                         
-                        with open('csv\\match_players.csv', 'ab') as playercsv:
+                        with open('csv\\demo_players.csv', 'ab') as playercsv:
                             players.to_csv(playercsv, header = False, index = False)
     
                         try:
-                            with open('csv\\match_knife_results.csv', 'ab') as knifecsv:
-                                rounds.loc[rounds['round'] == 0,['mapid','round','t_team','ct_team','winner']].to_csv(knifecsv, header = False, index = False)
+                            with open('csv\\demo_knife.csv', 'ab') as knifecsv:
+                                rounds.loc[rounds['round'] == 0,['mapid','t_team','ct_team','winner']].to_csv(knifecsv, header = False, index = False)
                         except:
                             pass
                         
-                        with open('csv\\match_pistol_results.csv', 'ab') as pistolcsv:
+                        rounds = rounds.loc[rounds['round'] > 0]
+                        cols = [col for col in rounds.columns if col not in ['mapid','phase','round','winner','t_team','ct_team']]
+                        rounds[cols] = rounds[cols].astype(int)
+                        
+                        with open('csv\\demo_pistol.csv', 'ab') as pistolcsv:
                             rounds.loc[rounds['round'].isin([1,16]),['mapid','round','t_team','ct_team','winner','ct_econ_result','ct_econ_equip','t_upg_pistol','ct_upg_pistol','t_grenade','ct_grenade','t_armor','ct_armor']].to_csv(pistolcsv, header = False, index = False)
                             
-                        with open('csv\\match_primary_results.csv', 'ab') as primarycsv:
-                            rounds.loc[~rounds['round'].isin([0,1,16]),['mapid','round','t_team','ct_team','winner','ct_econ_result','ct_econ_equip','t_t1_rifle','t_t2_rifle','t_other_primary','ct_t1_rifle','ct_t2_rifle','ct_other_primary','t_upg_pistol','ct_upg_pistol','t_grenade','ct_grenade','t_armor','ct_armor']].to_csv(primarycsv, header = False, index = False)
+                        with open('csv\\demo_primary.csv', 'ab') as primarycsv:
+                            rounds.loc[~rounds['round'].isin([1,16]),['mapid','round','t_team','ct_team','winner','ct_econ_result','ct_econ_equip','t_upg_pistol','ct_upg_pistol','t_grenade','ct_grenade','t_armor','ct_armor','t_t1_rifle','t_t2_rifle','t_other_primary','ct_t1_rifle','ct_t2_rifle','ct_other_primary']].to_csv(primarycsv, header = False, index = False)
     
                     except Exception as e:
                         error_msg = str(e)

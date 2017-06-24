@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May 22 20:12:28 2017
-
-@author: wesso
-"""
-
 import os
 import subprocess
 import csv

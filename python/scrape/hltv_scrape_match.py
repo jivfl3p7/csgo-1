@@ -1,16 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue May 02 19:34:37 2017
-
-@author: wesso
-"""
-
 from __future__ import division
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import re
-import math
 import datetime
 import csv
 
