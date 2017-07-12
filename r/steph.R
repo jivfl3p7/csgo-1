@@ -6,7 +6,7 @@ library("PlayerRatings")
 
 drv <- dbDriver("PostgreSQL")
 
-con <- dbConnect(drv, user="postgres", password="", host="localhost", port=5432, dbname="esports2")
+con <- dbConnect(drv, user="postgres", password="", host="localhost", port=5432, dbname="esports")
 
 query <- dbSendQuery(con, "
   SELECT DISTINCT
@@ -40,18 +40,16 @@ query <- dbSendQuery(con, "
   LIMIT 100
   ;")
 
-test <- fetch(query,n=-1)
+all_data <- fetch(query,n=-1)
 
-attach(test)
+attach(all_data)
 
-
-
-head(test)
+head(all_data)
 for (yr in year){
   for (map_nm in map_name){
-    x = data.frame(test[(test$year == yr) & (test$map_name == map_nm),c("week","team1_href","team2_href","result")])
+    x = data.frame(all_data[(all_data$year == yr) & (all_data$map_name == map_nm),c("week","team1_href","team2_href","result")])
     init = ...
-    gamma = test$map_pick
+    gamma = all_data$map_pick
     cval = ...
     hval = ...
     bval = ...
