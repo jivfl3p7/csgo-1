@@ -47,10 +47,18 @@ attach(test)
 
 
 head(test)
-
-for (map_nm in map_name){
-  x = data.frame(test[,c("")])
+for (yr in year){
+  for (map_nm in map_name){
+    x = data.frame(test[(test$year == yr) & (test$map_name == map_nm),c("week","team1_href","team2_href","result")])
+    init = ...
+    gamma = test$map_pick
+    cval = ...
+    hval = ...
+    bval = ...
+    lambda = ...
+  }  
 }
+
 
 # head(map_data)
 # write.csv(map_data, file = 'map_data.csv', row.names = T)
