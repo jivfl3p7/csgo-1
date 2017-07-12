@@ -37,7 +37,7 @@ query <- dbSendQuery(con, "
     LEFT JOIN csgo.hltv_vetos as v
       ON r.match_href = v.match_href
       AND left(lower(r.map_name),4) = left(lower(v.map),4)
-  LIMIT 100
+  --LIMIT 100
   ;")
 
 all_data <- fetch(query,n=-1)
@@ -45,18 +45,25 @@ all_data <- fetch(query,n=-1)
 attach(all_data)
 
 head(all_data)
-for (yr in year){
-  for (map_nm in map_name){
-    x = data.frame(all_data[(all_data$year == yr) & (all_data$map_name == map_nm),c("week","team1_href","team2_href","result")])
-    init = ...
-    gamma = all_data$map_pick
-    cval = ...
-    hval = ...
-    bval = ...
-    lambda = ...
+
+ratings = data.frame()
+for (yr in unique(all_data$year)){
+  for (map_nm in unique(all_data$map_name[all_data$year == yr])){
+    map_data = all_data[(all_data$year == yr) & (all_data$map_name == map_nm),]
+    
+    x = map_data[,c("week","team1_href","team2_href","result")]
+    p1_map_pick = map_data$map_pick
+    
+    robj <- steph(x, gamma = p1_map_pick)
+    robj$ratings$season = yr
+    robj$ratings$week = max(map_data$week)
+    robj$ratings$map_name = map_nm
+    
+    ratings <- rbind(ratings,robj$ratings)
   }  
 }
 
+names(ratings)[names(ratings) == "Player"] <- "team_href"
 
-# head(map_data)
-# write.csv(map_data, file = 'map_data.csv', row.names = T)
+
+dbWriteTable(con,c("csgo","steph_ratings"),ratings, row.names = F, overwrite = T)
