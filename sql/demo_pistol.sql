@@ -1,4 +1,4 @@
-﻿begin;
+begin;
 
 drop table if exists csgo.demo_pistol;
 
@@ -7,15 +7,7 @@ create table csgo.demo_pistol (
 	round		int,
 	t_team		text,
 	ct_team		text,
-	winner		bytea,
-	ct_econ_result	int,
-	ct_econ_equip	int,
-	t_upg_pistol	int,
-	ct_upg_pistol	int,
-	t_grenade	int,
-	ct_grenade	int,
-	t_armor		int,
-	ct_armor	int
+	winner		int
 		
 );
 

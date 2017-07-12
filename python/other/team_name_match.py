@@ -80,5 +80,7 @@ def team_name_match():
     
     team_name_match = team_name_match.drop_duplicates().sort_values('team_hltv').reset_index(drop = True)
     
-    with open('csv\\team_name_index.csv', 'wb') as namecsv:
+    with open('csv\\team_name_match.csv', 'wb') as namecsv:
         team_name_match[['teamid_hltv','team_hltv','team_demo','team_match_score']].drop_duplicates().sort_values('teamid_hltv').reset_index(drop = True).to_csv(namecsv, header = False, index = False)
+        
+team_name_match()

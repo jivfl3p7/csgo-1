@@ -1,4 +1,4 @@
-﻿begin;
+begin;
 
 drop table if exists csgo.demo_info;
 

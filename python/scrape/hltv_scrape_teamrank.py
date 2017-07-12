@@ -7,6 +7,7 @@ import datetime
 import csv
 
 def teamrank():
+    print('########## scrape team ranks ##########')
     try:
         exist_ranks = list(pd.read_csv('csv\\hltv_team_ranks.csv', header = None)[0].drop_duplicates())
     except:
@@ -33,9 +34,12 @@ def teamrank():
                 month = str(datetime.datetime.strptime(re.compile('(?<=20[0-9]{2}\/).*(?=\/)').search(day_url).group(0), '%B').month)
                 day = re.compile('[0-9]{1,2}$').search(day_url).group(0)
                 date = month + '/' + day + '/' + year
-                if date not in list(list(exist_ranks) + date_list):
+                if date in list(list(exist_ranks) + date_list):
+                    return
+                else:
                     date_list.append(date)
                     team_rows = BeautifulSoup(day_req.content, 'lxml').find_all('div', {'class': 'ranked-team standard-box'})
+                    print(date + ', ' + str(len(team_rows)))
                     for team in team_rows:
                         rank = int(re.sub('#','',team.contents[1].contents[1].contents[0].text.encode('utf-8')))
                         team_href = team.contents[1].contents[1].contents[2].get('data-url')
@@ -44,3 +48,5 @@ def teamrank():
                         with open("csv\\hltv_team_ranks.csv", 'ab') as rankcsv:
                             rankwriter = csv.writer(rankcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                             rankwriter.writerow([date,rank,team_name,team_href,team_points])
+
+teamrank()

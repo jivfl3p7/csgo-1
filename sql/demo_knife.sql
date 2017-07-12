@@ -1,4 +1,4 @@
-﻿begin;
+begin;
 
 drop table if exists csgo.demo_knife;
 
@@ -6,7 +6,7 @@ create table csgo.demo_knife (
 	map_id		text,
 	t_team		text,
 	ct_team		text,
-	winner		bytea
+	winner		int
 );
 
 truncate table csgo.demo_knife;
