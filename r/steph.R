@@ -13,6 +13,10 @@ query <- dbSendQuery(con, "
     left(m.datetime_utc::varchar,4)::int as year,
     m.event_href,
     r.match_href,
+    CASE
+      WHEN date_part('dow', m.datetime_utc) > 1 THEN date_part('week', m.datetime_utc)
+      ELSE date_part('week', m.datetime_utc) - 1
+    END AS week,
     r.map_name,
     r.team1_href,
     m.team1_name,
@@ -33,16 +37,20 @@ query <- dbSendQuery(con, "
     LEFT JOIN csgo.hltv_vetos as v
       ON r.match_href = v.match_href
       AND left(lower(r.map_name),4) = left(lower(v.map),4)
-  --LIMIT 100
+  LIMIT 100
   ;")
 
 test <- fetch(query,n=-1)
 
 attach(test)
+
+
+
 head(test)
 
-# for (map_nm in map_name){
-# }
+for (map_nm in map_name){
+  x = data.frame(test[,c("")])
+}
 
 # head(map_data)
 # write.csv(map_data, file = 'map_data.csv', row.names = T)
