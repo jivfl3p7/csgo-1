@@ -24,4 +24,4 @@ Note: parsing data from the HLTV demos requires an external tool and the data fr
 If it does not exist, create a local db called `esports`. Next, the schema `csgo` is created where all of the csv files above are loaded into.
 
 ### 4. calculate team ratings (R)
-* `steph.R` - *Utilize the Stephenson Rating System in the [PlayerRatings package](https://cran.r-project.org/web/packages/PlayerRatings/PlayerRatings.pdf) to calculate team ratings by map and output into local postgresql db*
+* `steph.R` - *Utilize the Stephenson Rating System in the [PlayerRatings package](https://cran.r-project.org/web/packages/PlayerRatings/PlayerRatings.pdf) to calculate team ratings by map and output results into local postgresql db*
