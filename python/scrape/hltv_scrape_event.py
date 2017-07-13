@@ -39,7 +39,7 @@ def event():
         archive_page_soup = BeautifulSoup(archive_page_req.content, 'html5lib').find('div', {'class': 'contentCol'})
         months = BeautifulSoup(str(archive_page_soup),'lxml').find_all('div', {'class': 'events-month'})
         for month in months:
-            month_year = int(re.compile('[0-9]{4}').search(month.contents[1].contents[0].encode('utf-8')).group(0))
+            month_year = int(re.compile('[0-9]{4}').search(month.contents[1].contents[0]).group(0))
             if month_year >= 2016:
                 events = BeautifulSoup(str(month),'lxml').find_all('a', {'class': 'a-reset small-event standard-box'})
                 for event in events:
@@ -82,12 +82,27 @@ def event():
                             event_end_date_raw = re.sub('.* - ','',event_date_raw)
                             event_end_date = datetime.datetime.strftime(parse(event_end_date_raw), '%Y-%m-%d')
                             try:
-                                prize_money = int(re.sub('\$|,','',event.contents[2].contents[1].contents[1].contents[0].contents[5].text.encode('utf-8')))
+                                prize_money = int(re.sub('\$|,','',event.contents[2].contents[1].contents[1].contents[0].contents[5].text))
                             except:
                                 prize_money = None
                             event_type = event.contents[2].contents[1].contents[1].contents[0].contents[7].text.encode('utf-8')
                             with open("csv\\hltv_events.csv", 'ab') as eventcsv:
                                 eventwriter = csv.writer(eventcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 eventwriter.writerow([event_url,event_name,event_end_date,prize_money,event_type])
+                                
+                            event_teams_place = BeautifulSoup(event_req.content,'lxml').find_all('div', {'class': 'placement'})
+                            for team in event_teams_place:
+                                team_href = team.contents[1].contents[1].get('href')
+                                try:
+                                    place = int(re.findall(r'\d+',team.contents[3].text.split('-')[0])[0])
+                                except:
+                                    place = int(re.findall(r'\d+',team.contents[3].text)[0])
+                                try:
+                                    winnings = int(re.sub('\$|,','',team.contents[5].text))
+                                except:
+                                    winnings = 0
+                                with open("csv\\hltv_event_team_places.csv", 'ab') as teamplacecsv:
+                                    teamplacewriter = csv.writer(teamplacecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                    teamplacewriter.writerow([event_url,event_end_date,team_href,place,winnings])
 
 event()
