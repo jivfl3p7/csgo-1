@@ -5,9 +5,9 @@ C:\Anaconda2\python.exe -W ignore %~dp0\python\scrape\hltv_scrape_event.py
 C:\Anaconda2\python.exe -W ignore %~dp0\python\scrape\hltv_scrape_match.py
 C:\Anaconda2\python.exe -W ignore %~dp0\python\scrape\hltv_scrape_demo.py
 
-C:\Anaconda2\python.exe -W ignore %~dp0\python\parse\rar_to_demo.py
-C:\Anaconda2\python.exe -W ignore %~dp0\python\parse\demo_to_json.py
-C:\Anaconda2\python.exe -W ignore %~dp0\python\parse\json_to_csv.py
+::C:\Anaconda2\python.exe -W ignore %~dp0\python\parse\rar_to_demo.py
+::C:\Anaconda2\python.exe -W ignore %~dp0\python\parse\demo_to_json.py
+::C:\Anaconda2\python.exe -W ignore %~dp0\python\parse\json_to_csv.py
 
 ::C:\Anaconda2\python.exe -W ignore %~dp0\python\other\team_name_match.py
 
@@ -28,5 +28,7 @@ psql -U postgres -d esports -qf sql/hltv_vetos.sql
 ::psql -U postgres -d esports -qf sql/demo_pistol.sql
 ::psql -U postgres -d esports -qf sql/demo_primary.sql
 ::psql -U postgres -d esports -qf sql/team_name_match.sql
+
+::placeholder for R script(s)
 
 pause
