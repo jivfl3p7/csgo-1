@@ -80,13 +80,15 @@ def match():
                 for map_ in map_results:
                     try:
                         map_name = map_.contents[1].contents[1].contents[2].contents[0]
-                        if int(map_.contents[3].contents[0].contents[0]) > 16:
+                        team1_rounds = int(map_.contents[3].contents[0].contents[0])
+                        team2_rounds = int(map_.contents[3].contents[2].contents[0])
+                        if team1_rounds > 16:
                             result = 0.5
-                            if int(map_.contents[3].contents[0].contents[0]) > int(map_.contents[3].contents[2].contents[0]):
+                            if team1_rounds > team2_rounds:
                                 abs_result = 1
                             else:
                                 abs_result = 0
-                        elif int(map_.contents[3].contents[0].contents[0]) == 16:
+                        elif team1_rounds == 16:
                             result = 1
                             abs_result = 1
                         else:
@@ -94,7 +96,7 @@ def match():
                             abs_result = 0
                         with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
                             resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                            resultwriter.writerow([match_href.get('href'), map_name, match_team1_href, match_team2_href, result, abs_result])
+                            resultwriter.writerow([match_href.get('href'), map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
                     except:
                         pass
         else:
