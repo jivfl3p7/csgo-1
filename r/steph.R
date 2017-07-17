@@ -61,17 +61,50 @@ head(all_data)
 # test$result
 # pvals
 
+
+ratings = data.frame()
+logloss_calc = data.frame()
+for (yr in unique(all_data$year)){
+  for (wk in sort(unique(all_data$week[all_data$year == yr]))[-1]){
+    sub_data = all_data[(all_data$year == yr) & (all_data$week <= wk),]
+    
+    train = sub_data[sub_data$week < wk,c('week','team1_href','team2_href','result')]
+    train_adv = sub_data$map_pick[sub_data$week < wk]
+    test = sub_data[sub_data$week == wk,c('week','team1_href','team2_href','result')]
+    test_adv = sub_data$map_pick[sub_data$week == wk]
+    
+    robj <- steph(train, gamma = train_adv)
+    robj$ratings$season = yr
+    robj$ratings$week = wk
+    
+    pvals <- predict(robj, test, tng = 5, gamma = test_adv)
+    
+    if (sum(!is.na(pvals)) > 0){
+      results = test[which(!is.na(pvals)),]
+      results$pvals = pvals[which(!is.na(pvals))]
+      results$season = yr
+      logloss_calc <- rbind(logloss_calc,results)
+    }
+    
+    ratings <- rbind(ratings,robj$ratings[robj$ratings$Games >= 5,])
+  }
+}
+
+ratings[(ratings$season == 2017) & (ratings$week == max(ratings$week[ratings$season == 2017])),]
+
+
+
 ratings = data.frame()
 logloss_calc = data.frame()
 for (yr in unique(all_data$year)){
   for (map_nm in unique(all_data$map_name[all_data$year == yr])){
     for (wk in sort(unique(all_data$week[(all_data$year == yr) & (all_data$map_name == map_nm)]))[-1]){
-      map_data = all_data[(all_data$year == yr) & (all_data$map_name == map_nm) & (all_data$week <= wk),]
+      sub_data = all_data[(all_data$year == yr) & (all_data$map_name == map_nm) & (all_data$week <= wk),]
       
-      train = map_data[map_data$week < wk,c('week','team1_href','team2_href','result')]
-      train_adv = map_data$map_pick[map_data$week < wk]
-      test = map_data[map_data$week == wk,c('week','team1_href','team2_href','result')]
-      test_adv = map_data$map_pick[map_data$week == wk]
+      train = sub_data[sub_data$week < wk,c('week','team1_href','team2_href','result')]
+      train_adv = sub_data$map_pick[sub_data$week < wk]
+      test = sub_data[sub_data$week == wk,c('week','team1_href','team2_href','result')]
+      test_adv = sub_data$map_pick[sub_data$week == wk]
       
       robj <- steph(train, gamma = train_adv)
       robj$ratings$season = yr

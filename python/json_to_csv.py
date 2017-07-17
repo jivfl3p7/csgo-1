@@ -6,10 +6,59 @@ Created on Wed Jul 05 13:38:30 2017
 """
 
 from __future__ import division
+from pyunpack import Archive
 import os
 import pandas as pd
 import re
 import csv
+import subprocess
+import getpass
+
+def rar_to_demo():
+    print('########## rar to demo ##########')
+    zipped_folder = r'E:\\CSGO Demos\\zipped'
+    unzipped_folder = r'E:\\CSGO Demos\\unzipped'
+    
+    for folder in os.listdir(zipped_folder):
+        for file_ in os.listdir(zipped_folder + '\\' + folder):
+            if not os.path.exists(unzipped_folder + '\\' + folder + '\\' + file_[:-4]):
+                os.makedirs(unzipped_folder + '\\' + folder + '\\' + file_[:-4])
+                try:
+                    Archive(zipped_folder + '\\' + folder + '\\' + file_).extractall(unzipped_folder + '\\' + folder + '\\' + file_[:-4])
+                    print(zipped_folder + '\\' + folder + '\\' + file_)
+                except:
+                    with open('csv\\demo_fails.csv', 'ab') as demofailcsv:
+                        demofailwriter = csv.writer(demofailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                        demofailwriter.writerow([folder,file_[:-4],'fail'])
+                        
+rar_to_demo()
+
+def demo_to_json():
+    print('########## demo to json ##########')
+    unzipped_folder = 'E:\\CSGO Demos\\unzipped'
+    json_folder = 'E:\\CSGO Demos\\json'
+    parse_string1 = 'cd C:\\Users\\' + getpass.getuser() + '\\Documents\\Github\\dem2json && node dem2json.js '
+    
+    for eventid in os.listdir(unzipped_folder):
+        for matchid in os.listdir(unzipped_folder + '\\' + eventid):
+            if not os.path.exists(json_folder + '\\' + eventid + '\\' + matchid):
+                os.makedirs(json_folder + '\\' + eventid + '\\' + matchid)
+            for root, dirs, files in os.walk(unzipped_folder + '\\' + eventid + '\\' + matchid, topdown = False):
+                files = (x for x in files if x[-4:] == '.dem')
+                for idx, item in enumerate(files):
+                    if not os.path.exists(json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid + "-" + str(idx) + ".json"):
+                        parse_string2 = "\"" + unzipped_folder + '\\' + eventid + '\\' + matchid + "\\" + item + "\" > "
+                        args = parse_string1 + parse_string2 + "\"" + json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid + "-" + str(idx) + ".json\""
+                        try:
+                            subprocess.check_output(args, shell = True, stderr=subprocess.STDOUT)
+                            print(matchid + "-" + str(idx))
+                        except Exception as e:
+                            error_msg = str(e)
+                            with open("csv\\json_fails.csv", 'ab') as jsonfailcsv:
+                                jsonfailwriter = csv.writer(jsonfailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                jsonfailwriter.writerow([eventid,matchid,error_msg])
+
+demo_to_json()
 
 def json_to_csv():
     print('########## json to csv ##########')
