@@ -1,4 +1,4 @@
-﻿begin;
+begin;
 
 drop table if exists csgo.hltv_player_winnings;
 

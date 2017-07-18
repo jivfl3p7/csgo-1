@@ -148,90 +148,91 @@ def event():
                                     match_req = requests.get('https://www.hltv.org' + match_href, headers = header)
                                     match_soup = BeautifulSoup(match_req.content,'lxml')
                                     
-                                    try:
-                                        match_team1_name = match_soup.find_all('div', {'class': 'teamName'})[0].text.encode('utf-8').strip()
-                                    except:
-                                        continue
-                                    match_team1_href = match_soup.find_all('a', {'class': 'teamName'})[0].get('href')
-                                    match_team2_name = match_soup.find_all('div', {'class': 'teamName'})[1].text.encode('utf-8').strip()
-                                    match_team2_href = match_soup.find_all('a', {'class': 'teamName'})[1].get('href')
-                                    match_unix_time = int(match_soup.find_all('div', {'class': 'timeAndEvent'})[0].contents[1].get('data-unix'))/1000
-                                    match_datetime_utc = datetime.datetime.utcfromtimestamp(match_unix_time).isoformat()
-                                    try:
-                                        match_demo_pt1 = BeautifulSoup(str(match_soup.find_all('div', {'class': 'match-page'})), 'lxml')
-                                        match_demo = match_demo_pt1.find_all('a', {'href': re.compile('demo')})[0].get('href')
-                                    except:
-                                        match_demo = None
-                                    with open("csv\\hltv_match_info.csv", 'ab') as matchcsv:
-                                        matchwriter = csv.writer(matchcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                        matchwriter.writerow([event_href, match_href, match_demo, match_datetime_utc, match_team1_name, match_team1_href, match_team2_name, match_team2_href])
-                                    
-                                    map_stats = match_soup.find_all('div', {'class': 'stats-content'})
-                                    for map_ in map_stats:
-                                        if map_.get('id') != 'all-content':
-                                            map_name = re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0)
-                                            for team in [1,3]:
-                                                player_rows = map_.contents[team].find_all('tr', class_=lambda x: x != 'header-row')
-                                                team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
-                                                for player in player_rows:
-                                                    player_href = player.contents[1].contents[0].get('href')
-                                                    player_name = player.contents[1].contents[0].contents[1].contents[2].contents[1].text.encode('utf-8')
-                                                    kd = int(player.contents[3].text.split('-')[0])/int(player.contents[3].text.split('-')[1])
-                                                    with open("csv\\hltv_match_stats.csv", 'ab') as statscsv:
-                                                        statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                        statswriter.writerow([event_href, match_href, map_name, team_href, player_href, player_name, kd])
-                                    
                                     match_veto_box = match_soup.find_all('div', {'class': 'standard-box veto-box'})
-                                    if len(match_veto_box) == 1:
-                                        match_veto_process = match_veto_box[0].contents[1].contents[0].split('\n')
-                                    elif len(match_veto_box) == 2:
-                                        match_veto_process = match_veto_box[1].contents[1].text.split('\n')
-                                    for veto_step in match_veto_process:
-                                        i = 1
-                                        if re.compile('remove|pick|remain|left').search(veto_step.encode('utf-8')):
-                                            try:
-                                                step = int(veto_step.encode('utf-8')[0])
-                                            except:
-                                                step = i
-                                            try:
-                                                if re.compile('random').search(veto_step.encode('utf-8')):
+                                    if not re.compile('tie(\-)*breaker', re.I).search(str(match_veto_box[0])):
+                                        if len(match_veto_box) == 1:
+                                            match_veto_process = match_veto_box[0].contents[1].contents[0].split('\n')
+                                        elif len(match_veto_box) == 2:
+                                            match_veto_process = match_veto_box[1].contents[1].text.split('\n')
+                                        for veto_step in match_veto_process:
+                                            i = 1
+                                            if re.compile('remove|pick|remain|left').search(veto_step.encode('utf-8')):
+                                                try:
+                                                    step = int(veto_step.encode('utf-8')[0])
+                                                except:
+                                                    step = i
+                                                try:
+                                                    if re.compile('random').search(veto_step.encode('utf-8')):
+                                                        team = None
+                                                        action = None
+                                                    else:
+                                                        team = re.sub('^[0-9]\. ','',re.compile('.*(?= remove|pick)').search(veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
+                                                        action = re.compile('remove|pick').search(veto_step.encode('utf-8')).group(0)
+                                                except:
                                                     team = None
                                                     action = None
-                                                else:
-                                                    team = re.sub('^[0-9]\. ','',re.compile('.*(?= remove|pick)').search(veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
-                                                    action = re.compile('remove|pick').search(veto_step.encode('utf-8')).group(0)
-                                            except:
-                                                team = None
-                                                action = None
-                                            map_ = re.compile('nuke|cobble|mirage|inferno|cache|dust( )*2|overpass|train', re.I).search(veto_step.encode('utf-8')).group(0)
-                                            with open("csv\\hltv_vetos.csv", 'ab') as vetocsv:
-                                                vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                vetowriter.writerow([match_href, step, team, action, map_])
-                                            i += 1
-                                    
-                                    map_results = match_soup.find_all('div', {'class': 'mapholder'})
-                                    for map_ in map_results:
+                                                map_ = re.compile('nuke|cobble|mirage|inferno|cache|dust( )*2|overpass|train', re.I).search(veto_step.encode('utf-8')).group(0)
+                                                with open("csv\\hltv_vetos.csv", 'ab') as vetocsv:
+                                                    vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                    vetowriter.writerow([match_href, step, team, action, map_])
+                                                i += 1
+                                        
                                         try:
-                                            map_name = map_.contents[1].contents[1].contents[2].contents[0]
-                                            team1_rounds = int(map_.contents[3].contents[0].contents[0])
-                                            team2_rounds = int(map_.contents[3].contents[2].contents[0])
-                                            if team1_rounds > 16:
-                                                result = 0.5
-                                                if team1_rounds > team2_rounds:
+                                            match_team1_name = match_soup.find_all('div', {'class': 'teamName'})[0].text.encode('utf-8').strip()
+                                        except:
+                                            continue
+                                        match_team1_href = match_soup.find_all('a', {'class': 'teamName'})[0].get('href')
+                                        match_team2_name = match_soup.find_all('div', {'class': 'teamName'})[1].text.encode('utf-8').strip()
+                                        match_team2_href = match_soup.find_all('a', {'class': 'teamName'})[1].get('href')
+                                        match_unix_time = int(match_soup.find_all('div', {'class': 'timeAndEvent'})[0].contents[1].get('data-unix'))/1000
+                                        match_datetime_utc = datetime.datetime.utcfromtimestamp(match_unix_time).isoformat()
+                                        try:
+                                            match_demo_pt1 = BeautifulSoup(str(match_soup.find_all('div', {'class': 'match-page'})), 'lxml')
+                                            match_demo = match_demo_pt1.find_all('a', {'href': re.compile('demo')})[0].get('href')
+                                        except:
+                                            match_demo = None
+                                        with open("csv\\hltv_match_info.csv", 'ab') as matchcsv:
+                                            matchwriter = csv.writer(matchcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                            matchwriter.writerow([event_href, match_href, match_demo, match_datetime_utc, match_team1_name, match_team1_href, match_team2_name, match_team2_href])
+                                                
+                                        map_stats = match_soup.find_all('div', {'class': 'stats-content'})
+                                        for map_ in map_stats:
+                                            if map_.get('id') != 'all-content':
+                                                map_name = re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0)
+                                                for team in [1,3]:
+                                                    player_rows = map_.contents[team].find_all('tr', class_=lambda x: x != 'header-row')
+                                                    team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
+                                                    for player in player_rows:
+                                                        player_href = player.contents[1].contents[0].get('href')
+                                                        player_name = player.contents[1].contents[0].contents[1].contents[2].contents[1].text.encode('utf-8')
+                                                        kd = int(player.contents[3].text.split('-')[0])/int(player.contents[3].text.split('-')[1])
+                                                        with open("csv\\hltv_match_stats.csv", 'ab') as statscsv:
+                                                            statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                            statswriter.writerow([event_href, match_href, map_name, team_href, player_href, player_name, kd])
+                                        
+                                        map_results = match_soup.find_all('div', {'class': 'mapholder'})
+                                        for map_ in map_results:
+                                            try:
+                                                map_name = map_.contents[1].contents[1].contents[2].contents[0]
+                                                team1_rounds = int(map_.contents[3].contents[0].contents[0])
+                                                team2_rounds = int(map_.contents[3].contents[2].contents[0])
+                                                if team1_rounds > 16:
+                                                    result = 0.5
+                                                    if team1_rounds > team2_rounds:
+                                                        abs_result = 1
+                                                    else:
+                                                        abs_result = 0
+                                                elif team1_rounds == 16:
+                                                    result = 1
                                                     abs_result = 1
                                                 else:
+                                                    result = 0
                                                     abs_result = 0
-                                            elif team1_rounds == 16:
-                                                result = 1
-                                                abs_result = 1
-                                            else:
-                                                result = 0
-                                                abs_result = 0
-                                            with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
-                                                resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                resultwriter.writerow([match_href, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
-                                        except:
-                                            pass
+                                                with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
+                                                    resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                    resultwriter.writerow([match_href, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
+                                            except:
+                                                pass
                                 break
 
 event()
