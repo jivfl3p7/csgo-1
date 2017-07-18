@@ -12,11 +12,11 @@ psql -U postgres -d esports -qc "drop schema if exists csgo cascade; create sche
 
 psql -U postgres -d esports -qf sql/hltv_team_ranks.sql
 psql -U postgres -d esports -qf sql/hltv_events.sql
-psql -U postgres -d esports -qf sql/hltv_event_team_places.sql
+psql -U postgres -d esports -qf sql/hltv_team_places.sql
 psql -U postgres -d esports -qf sql/hltv_match_info.sql
 psql -U postgres -d esports -qf sql/hltv_map_results.sql
 psql -U postgres -d esports -qf sql/hltv_match_stats.sql
-psql -U postgres -d esports -qf sql/hltv_team_rosters.sql
+psql -U postgres -d esports -qf sql/hltv_player_winnings.sql
 psql -U postgres -d esports -qf sql/hltv_vetos.sql
 ::psql -U postgres -d esports -qf sql/demo_info.sql
 ::psql -U postgres -d esports -qf sql/demo_players.sql

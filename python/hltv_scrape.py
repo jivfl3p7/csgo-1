@@ -76,6 +76,8 @@ def event():
     total_results = int(re.compile('(?<= of )[0-9]{1,}').search(pagination_string).group(0))
     num_pages = 1 + int(math.ceil((total_results - page_results)/page_results))
     
+    prev_month = None
+    
     for page in range(0,num_pages):
         offset = page*50
         archive_page_url = 'https://www.hltv.org/events/archive?offset=' + str(offset) + '&eventType=MAJOR&eventType=INTLLAN'
@@ -91,7 +93,9 @@ def event():
                     if event_name in exist_events:
                         return
                     else:
-                        print(month.contents[1].contents[0].encode('utf-8').strip() + ', ' + str(len(events)))
+                        if prev_month != month.contents[1].contents[0].encode('utf-8').strip():
+                            print(month.contents[1].contents[0].encode('utf-8').strip() + ', ' + str(len(events)))
+                            prev_month = month.contents[1].contents[0].encode('utf-8').strip()
                         
                         event_href = event.get('href')
                         event_req = requests.get('https://www.hltv.org' + event_href, headers = header)
@@ -132,7 +136,7 @@ def event():
                                         winnings = int(re.sub('\$|,','',team.contents[5].text))
                                     except:
                                         winnings = 0
-                                    with open("csv\\hltv_event_team_places.csv", 'ab') as teamplacecsv:
+                                    with open("csv\\hltv_team_places.csv", 'ab') as teamplacecsv:
                                         teamplacewriter = csv.writer(teamplacecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                         teamplacewriter.writerow([event_href,event_end,team_href,place,winnings])
                                         
@@ -167,8 +171,8 @@ def event():
                                         if map_.get('id') != 'all-content':
                                             map_name = re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0)
                                             for team in [1,3]:
-                                                player_rows = map_.contents[1].find_all('tr', class_=lambda x: x != 'header-row')
-                                                team_href = map_.contents[1].contents[1].contents[1].contents[1].contents[1].get('href')
+                                                player_rows = map_.contents[team].find_all('tr', class_=lambda x: x != 'header-row')
+                                                team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
                                                 for player in player_rows:
                                                     player_href = player.contents[1].contents[0].get('href')
                                                     player_name = player.contents[1].contents[0].contents[1].contents[2].contents[1].text.encode('utf-8')
