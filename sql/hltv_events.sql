@@ -6,7 +6,6 @@ create table csgo.hltv_events (
 	event_href	text,
 	event_name	text,
 	event_end_date	date,
-	prize_money	int,
 	event_type	text
 );
 

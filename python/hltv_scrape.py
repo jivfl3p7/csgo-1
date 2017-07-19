@@ -55,7 +55,7 @@ teamrank()
 def event():
     print('########## scrape events ##########')
     try:
-        exist_events = list(pd.read_csv('csv\\hltv_events.csv', header = None)[1])
+        exist_events = list(pd.read_csv('csv\\hltv_events.csv', header = None)[0])
     except:
         exist_events = pd.DataFrame(index = range(0), columns = [0,1])
         
@@ -89,15 +89,15 @@ def event():
             if month_year >= 2015:
                 events = BeautifulSoup(str(month),'lxml').find_all('a', {'class': 'a-reset small-event standard-box'})
                 for event in events:
-                    event_name = event.contents[2].contents[1].contents[1].contents[0].contents[1].text.encode('utf-8').strip()
-                    if event_name in exist_events:
-                        return
+                    if event.get('href') in exist_events:
+                        continue
                     else:
                         if prev_month != month.contents[1].contents[0].encode('utf-8').strip():
                             print(month.contents[1].contents[0].encode('utf-8').strip() + ', ' + str(len(events)))
                             prev_month = month.contents[1].contents[0].encode('utf-8').strip()
                         
                         event_href = event.get('href')
+                        event_name = event.contents[2].contents[1].contents[1].contents[0].contents[1].text.encode('utf-8').strip()
                         event_req = requests.get('https://www.hltv.org' + event_href, headers = header)
                         
                         event_date = BeautifulSoup(event_req.content,'lxml').find_all('td', {'class': 'eventdate'})
@@ -114,15 +114,15 @@ def event():
                             
                         event_teams_place = BeautifulSoup(event_req.content,'lxml').find_all('div', {'class': 'placement'})
                         for team in event_teams_place:
+                            try:
+                                team.contents[1].contents[1].get('href')
+                            except:
+                                break
                             if team.contents[1].contents[1].get('href') in hltv_rank_teams:
-                                try:
-                                    prize_money = int(re.sub('\$|,','',event.contents[2].contents[1].contents[1].contents[0].contents[5].text))
-                                except:
-                                    prize_money = None
                                 event_type = event.contents[2].contents[1].contents[1].contents[0].contents[7].text.encode('utf-8')
                                 with open("csv\\hltv_events.csv", 'ab') as eventcsv:
                                     eventwriter = csv.writer(eventcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                    eventwriter.writerow([event_href,event_name,event_end,prize_money,event_type])
+                                    eventwriter.writerow([event_href,event_name,event_end,event_type])
                                     
                                 team_name_set = set()
                                 for team in event_teams_place:
@@ -143,39 +143,42 @@ def event():
                                 results_href = 'results?event=' + re.compile('(?<=events\/)[0-9]{1,}(?=\/)').search(event.get('href')).group(0)
                                 results_req = requests.get('https://www.hltv.org/' + results_href, headers = header)
                                 result_rows = BeautifulSoup(results_req.content,'lxml').find_all('div', {'class': 'result-con'})
+                                print('\t' + event_href + ', ' + str(len(result_rows)))
                                 for match in result_rows:
                                     match_href = match.contents[0].get('href')
+                                    print('\t\t' + match_href)
                                     match_req = requests.get('https://www.hltv.org' + match_href, headers = header)
                                     match_soup = BeautifulSoup(match_req.content,'lxml')
                                     
                                     match_veto_box = match_soup.find_all('div', {'class': 'standard-box veto-box'})
                                     if not re.compile('tie(\-)*breaker', re.I).search(str(match_veto_box[0])):
-                                        if len(match_veto_box) == 1:
-                                            match_veto_process = match_veto_box[0].contents[1].contents[0].split('\n')
-                                        elif len(match_veto_box) == 2:
-                                            match_veto_process = match_veto_box[1].contents[1].text.split('\n')
-                                        for veto_step in match_veto_process:
-                                            i = 1
-                                            if re.compile('remove|pick|remain|left').search(veto_step.encode('utf-8')):
-                                                try:
-                                                    step = int(veto_step.encode('utf-8')[0])
-                                                except:
-                                                    step = i
-                                                try:
-                                                    if re.compile('random').search(veto_step.encode('utf-8')):
+                                        if re.compile('nuke|c(o)*bble|mirage|inferno|cache|dust( )*2|overpass|train', re.I).search(str(match_veto_box[0])):
+                                            if len(match_veto_box) == 1:
+                                                match_veto_process = match_veto_box[0].contents[1].contents[0].split('\n')
+                                            elif len(match_veto_box) == 2:
+                                                match_veto_process = match_veto_box[1].contents[1].text.split('\n')
+                                            for veto_step in match_veto_process:
+                                                i = 1
+                                                if re.compile('remove|pick|remain|left').search(veto_step.encode('utf-8')):
+                                                    try:
+                                                        step = int(veto_step.encode('utf-8')[0])
+                                                    except:
+                                                        step = i
+                                                    try:
+                                                        if re.compile('random').search(veto_step.encode('utf-8')):
+                                                            team = None
+                                                            action = None
+                                                        else:
+                                                            team = re.sub('^[0-9]\. ','',re.compile('.*(?= remove|pick)').search(veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
+                                                            action = re.compile('remove|pick').search(veto_step.encode('utf-8')).group(0)
+                                                    except:
                                                         team = None
                                                         action = None
-                                                    else:
-                                                        team = re.sub('^[0-9]\. ','',re.compile('.*(?= remove|pick)').search(veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
-                                                        action = re.compile('remove|pick').search(veto_step.encode('utf-8')).group(0)
-                                                except:
-                                                    team = None
-                                                    action = None
-                                                map_ = re.compile('nuke|cobble|mirage|inferno|cache|dust( )*2|overpass|train', re.I).search(veto_step.encode('utf-8')).group(0)
-                                                with open("csv\\hltv_vetos.csv", 'ab') as vetocsv:
-                                                    vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                    vetowriter.writerow([match_href, step, team, action, map_])
-                                                i += 1
+                                                    map_ = re.compile('nuke|c(o)*bble|mirage|inferno|cache|dust( )*2|overpass|train', re.I).search(veto_step.encode('utf-8')).group(0)
+                                                    with open("csv\\hltv_vetos.csv", 'ab') as vetocsv:
+                                                        vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                        vetowriter.writerow([match_href, step, team, action, map_])
+                                                    i += 1
                                         
                                         try:
                                             match_team1_name = match_soup.find_all('div', {'class': 'teamName'})[0].text.encode('utf-8').strip()
@@ -204,7 +207,8 @@ def event():
                                                     team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
                                                     for player in player_rows:
                                                         player_href = player.contents[1].contents[0].get('href')
-                                                        player_name = player.contents[1].contents[0].contents[1].contents[2].contents[1].text.encode('utf-8')
+#                                                        player_name = player.contents[1].contents[0].contents[1].contents[2].contents[1].text.encode('utf-8')
+                                                        player_name = player.contents[1].contents[0].contents[1].contents[4].text.encode('utf-8')
                                                         kd = int(player.contents[3].text.split('-')[0])/int(player.contents[3].text.split('-')[1])
                                                         with open("csv\\hltv_match_stats.csv", 'ab') as statscsv:
                                                             statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
