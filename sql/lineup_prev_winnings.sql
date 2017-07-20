@@ -81,6 +81,7 @@ create table csgo.lineup_prev_winnings as (
 					from csgo.hltv_match_stats as m
 						left join csgo.player_winnings as pw
 							on m.event_href = pw.event_href
+							and m.map_name = pw.map_name
 							and m.player_href = pw.player_href
 					) as a
 				group by 

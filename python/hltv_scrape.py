@@ -205,7 +205,10 @@ def event():
                                         if not map_stats == []:
                                             for map_ in map_stats:
                                                 if map_.get('id') != 'all-content':
-                                                    map_name = re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0)
+                                                    if match_href == '/matches/2294998/atlantis-vs-puta-copenhagen-games-2015' and re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0) == 'Nuke':
+                                                        map_name = 'Dust2'
+                                                    else:
+                                                        map_name = re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0)
                                                     for team in [1,3]:
                                                         player_rows = map_.contents[team].find_all('tr', class_=lambda x: x != 'header-row')
                                                         team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
