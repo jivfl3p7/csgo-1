@@ -6,9 +6,11 @@ create table csgo.hltv_map_results (
 	match_href	text,
 	map_name	text,
 	team1_href	text,
+	team1_rounds	int,
 	team2_href	text,
+	team2_rounds	int,
 	result		float,
-	abs_result	float
+	abs_result	int
 );
 
 truncate table csgo.hltv_map_results;

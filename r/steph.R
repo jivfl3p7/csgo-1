@@ -1,69 +1,178 @@
 # sink("diagnostics/steph.txt")
 
-library("RPostgreSQL")
-library("dplyr")
-library("PlayerRatings")
+library('RPostgreSQL')
+library('dplyr')
+library('PlayerRatings')
+library('ggplot2')
 
-drv <- dbDriver("PostgreSQL")
+drv <- dbDriver('PostgreSQL')
 
-con <- dbConnect(drv, user="postgres", password="", host="localhost", port=5432, dbname="esports")
+con <- dbConnect(drv, user='postgres', password='', host='localhost', port=5432, dbname='esports')
 
 query <- dbSendQuery(con, "
-  SELECT DISTINCT
-    left(m.datetime_utc::varchar,4)::int as year,
-    m.event_href,
-    r.match_href,
-    CASE
-      WHEN date_part('dow', m.datetime_utc) > 1 THEN date_part('week', m.datetime_utc)
-      ELSE date_part('week', m.datetime_utc) - 1
-    END AS week,
-    r.map_name,
-    r.team1_href,
-    m.team1_name,
-    r.team2_href,
-    m.team2_name,
-    --v.team_name as team_map_pick,
-    CASE
-      WHEN v.team_name IS NULL THEN 0
-      WHEN lower(v.team_name) = lower(m.team1_name) THEN 1
-      WHEN lower(v.team_name) = lower(m.team2_name) THEN -1
-      ELSE 999
-    END AS map_pick,
-    r.result,
-    r.abs_result
-  FROM csgo.hltv_map_results as r
-    LEFT JOIN csgo.hltv_match_info as m
-      ON r.match_href = m.match_href
-    LEFT JOIN csgo.hltv_vetos as v
-      ON r.match_href = v.match_href
-      AND left(lower(r.map_name),4) = left(lower(v.map),4)
-  --LIMIT 100
+select distinct
+  left(m.datetime_utc::varchar,4)::int as year,
+  date_part('doy', m.datetime_utc) as round,
+  m.datetime_utc,
+  m.event_href,
+  r.match_href,
+  r.map_name,
+  r.team1_href,
+  lpw1.lineup_id as lineup1_id,
+  lpw1.prev_winnings as lineup1_prev_winnings,
+  r.team2_href,
+  lpw2.lineup_id as lineup2_id,
+  lpw2.prev_winnings as lineup2_prev_winnings,
+  r.result,
+  r.abs_result
+from csgo.hltv_map_results as r
+  left join csgo.hltv_match_info as m
+    on r.match_href = m.match_href
+  left join csgo.lineup_prev_winnings as lpw1
+    on r.match_href = lpw1.match_href
+    and r.map_name = lpw1.map_name
+    and r.team1_href = lpw1.team_href
+  left join csgo.lineup_prev_winnings as lpw2
+    on r.match_href = lpw2.match_href
+    and r.map_name = lpw2.map_name
+    and r.team2_href = lpw2.team_href
+where r.map_name != 'Season'
+order by m.datetime_utc
   ;")
 
 all_data <- fetch(query,n=-1)
 
 attach(all_data)
 
+all_data <- all_data[order(all_data$datetime_utc),]
 head(all_data)
 
+
 ratings = data.frame()
-for (yr in unique(all_data$year)){
-  for (map_nm in unique(all_data$map_name[all_data$year == yr])){
-    map_data = all_data[(all_data$year == yr) & (all_data$map_name == map_nm),]
+init_data = data.frame()
+for (map in unique(all_data$map_name[all_data$year == 2015])){
+  for (day in sort(unique(all_data$round[(all_data$year == 2015) & (all_data$map_name == map)]))[-1]){
+    sub_data = all_data[(all_data$map_name == map) & (all_data$year == 2015) & (all_data$round < day),]
     
-    x = map_data[,c("week","team1_href","team2_href","result")]
-    p1_map_pick = map_data$map_pick
+    sobj <- steph(sub_data[,c('round','lineup1_id','lineup2_id','result')])
+    sobj$ratings$round = day
+    sobj$ratings$map_name = map
     
-    robj <- steph(x, gamma = p1_map_pick)
-    robj$ratings$season = yr
-    robj$ratings$week = max(map_data$week)
-    robj$ratings$map_name = map_nm
+    matches = all_data[(all_data$map_name == map) & (all_data$year == 2015) & (all_data$round == day),c('round','lineup1_id','lineup1_prev_winnings','lineup2_id','lineup2_prev_winnings','result')]
+    matches = merge(matches, sobj$ratings[,c('round','map_name','Player','Rating','Deviation','Games')], by.x = c('round','lineup1_id'), by.y = c('round','Player'), all.x = T)
+    matches = merge(matches, sobj$ratings[,c('round','map_name','Player','Rating','Deviation','Games')], by.x = c('round','lineup2_id'), by.y = c('round','Player'), all.x = T)
     
-    ratings <- rbind(ratings,robj$ratings)
-  }  
+    init_data = rbind(init_data,matches)
+  }
 }
 
-names(ratings)[names(ratings) == "Player"] <- "team_href"
+init_data1 = init_data[!is.na(init_data$Rating.x),c('round','map_name.x','lineup1_id','lineup1_prev_winnings', 'Rating.x','Deviation.x','Games.x')] %>% rename(lineup_id = lineup1_id, lineup_prev_winnings = lineup1_prev_winnings, map_name = map_name.x, Rating = Rating.x, Deviation = Deviation.x, Games = Games.x)
+init_data2 = init_data[!is.na(init_data$Rating.y),c('round','map_name.y','lineup2_id','lineup2_prev_winnings', 'Rating.y','Deviation.y','Games.y')] %>% rename(lineup_id = lineup2_id, lineup_prev_winnings = lineup2_prev_winnings, map_name = map_name.y, Rating = Rating.y, Deviation = Deviation.y, Games = Games.y)
+
+init_data_comb = rbind(init_data1,init_data2)
+
+head(sobj$ratings)
+head(init_data_comb)
+
+data = init_data_comb[(init_data_comb$round > 200),]
+
+ggplot(data, aes(x = sqrt(lineup_prev_winnings), y = Rating, alpha = 1/Deviation)) + geom_point()
 
 
-dbWriteTable(con,c("csgo","steph_ratings"),ratings, row.names = F, overwrite = T)
+fit <- lm(Rating ~ lineup_prev_winnings + map_name, data=data)
+summary(fit)
+
+fit <- lm(Deviation ~ lineup_prev_winnings, data=data)
+summary(fit)
+
+hist(init_data_comb$Rating[init_data_comb$Games > 6])
+hist(sqrt(init_data_comb$lineup_prev_winnings[init_data_comb$Games > 6]))
+
+
+
+head(ratings)
+head(init_data)
+
+ratings = data.frame()
+logloss_calc = data.frame()
+for (yr in unique(all_data$year)){
+  for (wk in sort(unique(all_data$week[all_data$year == yr]))[-1]){
+    sub_data = all_data[(all_data$year == yr) & (all_data$week <= wk),]
+    
+    train = sub_data[sub_data$week < wk,c('week','team1_href','team2_href','result')]
+    train_adv = sub_data$map_pick[sub_data$week < wk]
+    test = sub_data[sub_data$week == wk,c('week','team1_href','team2_href','result')]
+    test_adv = sub_data$map_pick[sub_data$week == wk]
+    
+    robj <- steph(train, gamma = train_adv)
+    robj$ratings$season = yr
+    robj$ratings$week = wk
+    
+    pvals <- predict(robj, test, tng = 5, gamma = test_adv)
+    
+    if (sum(!is.na(pvals)) > 0){
+      results = test[which(!is.na(pvals)),]
+      results$pvals = pvals[which(!is.na(pvals))]
+      results$season = yr
+      logloss_calc <- rbind(logloss_calc,results)
+    }
+    
+    ratings <- rbind(ratings,robj$ratings[robj$ratings$Games >= 5,])
+  }
+}
+
+ratings[(ratings$season == 2017) & (ratings$week == max(ratings$week[ratings$season == 2017])),]
+
+
+
+ratings = data.frame()
+logloss_calc = data.frame()
+for (yr in unique(all_data$year)){
+  for (map_nm in unique(all_data$map_name[all_data$year == yr])){
+    for (wk in sort(unique(all_data$week[(all_data$year == yr) & (all_data$map_name == map_nm)]))[-1]){
+      sub_data = all_data[(all_data$year == yr) & (all_data$map_name == map_nm) & (all_data$week <= wk),]
+      
+      train = sub_data[sub_data$week < wk,c('week','team1_href','team2_href','result')]
+      train_adv = sub_data$map_pick[sub_data$week < wk]
+      test = sub_data[sub_data$week == wk,c('week','team1_href','team2_href','result')]
+      test_adv = sub_data$map_pick[sub_data$week == wk]
+      
+      robj <- steph(train, gamma = train_adv)
+      robj$ratings$season = yr
+      robj$ratings$week = wk
+      robj$ratings$map_name = map_nm
+      
+      pvals <- predict(robj, test, tng = 5, gamma = test_adv)
+      
+      if (sum(!is.na(pvals)) > 0){
+        results = test[which(!is.na(pvals)),]
+        results$pvals = pvals[which(!is.na(pvals))]
+        results$season = yr
+        results$map_name = map_nm
+        logloss_calc <- rbind(logloss_calc,results)
+      }
+      
+      ratings <- rbind(ratings,robj$ratings[robj$ratings$Games >= 5,])
+    }
+  }
+}
+
+
+
+test = logloss_calc[(logloss_calc$season == 2017) & (logloss_calc$map_name == 'Mirage'),]
+test$logloss = -1*(test$result*log(test$pvals) + (1 - test$result)*log(1 - test$pvals))
+test$agg_ll = cummean(test$logloss)
+
+
+
+(data$win*log(w)+(1-data$win)*log(1-w))
+
+ratings[(ratings$season == 2017) & (ratings$map_name == 'Mirage'),]
+
+
+
+
+names(ratings)[names(ratings) == 'Player'] <- 'team_href'
+
+
+dbWriteTable(con,c('csgo','steph_ratings'),ratings, row.names = F, overwrite = T)
