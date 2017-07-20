@@ -9,35 +9,31 @@ drv <- dbDriver('PostgreSQL')
 con <- dbConnect(drv, user='postgres', password='', host='localhost', port=5432, dbname='esports')
 
 query <- dbSendQuery(con, "
-  SELECT DISTINCT
+  select distinct
     left(m.datetime_utc::varchar,4)::int as year,
+    date_part('doy', m.datetime_utc) as round,
+    m.datetime_utc,
     m.event_href,
     r.match_href,
-    CASE
-      WHEN date_part('dow', m.datetime_utc) > 1 THEN date_part('week', m.datetime_utc)
-      ELSE date_part('week', m.datetime_utc) - 1
-    END AS week,
     r.map_name,
     r.team1_href,
-    m.team1_name,
+    lpw1.lineup_id as lineup1_id,
+    lpw1.prev_winnings as lineup1_prev_winnings,
     r.team2_href,
-    m.team2_name,
-    --v.team_name as team_map_pick,
-    CASE
-      WHEN v.team_name IS NULL THEN 0
-      WHEN lower(v.team_name) = lower(m.team1_name) THEN 1
-      WHEN lower(v.team_name) = lower(m.team2_name) THEN -1
-      ELSE 999
-    END AS map_pick,
+    lpw2.lineup_id as lineup2_id,
+    lpw2.prev_winnings as lineup2_prev_winnings,
     r.result,
     r.abs_result
-  FROM csgo.hltv_map_results as r
-    LEFT JOIN csgo.hltv_match_info as m
-      ON r.match_href = m.match_href
-    LEFT JOIN csgo.hltv_vetos as v
-      ON r.match_href = v.match_href
-      AND left(lower(r.map_name),4) = left(lower(v.map),4)
-  --LIMIT 100
+  from csgo.hltv_map_results as r
+    left join csgo.hltv_match_info as m
+      on r.match_href = m.match_href
+    left join csgo.lineup_prev_winnings as lpw1
+      on r.match_href = lpw1.match_href
+      and r.team1_href = lpw1.team_href
+    left join csgo.lineup_prev_winnings as lpw2
+      on r.match_href = lpw2.match_href
+      and r.team2_href = lpw2.team_href
+  order by m.datetime_utc
   ;")
 
 all_data <- fetch(query,n=-1)

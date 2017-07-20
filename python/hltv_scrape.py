@@ -135,7 +135,10 @@ def event():
                                     try:
                                         winnings = int(re.sub('\$|,','',team.contents[5].text))
                                     except:
-                                        winnings = 0
+                                        if event.contents[2].contents[1].contents[1].contents[0].contents[5].text.encode('utf-8') == 'Other':
+                                            winnings = None
+                                        else:
+                                            winnings = 0
                                     with open("csv\\hltv_team_places.csv", 'ab') as teamplacecsv:
                                         teamplacewriter = csv.writer(teamplacecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                         teamplacewriter.writerow([event_href,event_end,team_href,place,winnings])
@@ -199,20 +202,38 @@ def event():
                                             matchwriter.writerow([event_href, match_href, match_demo, match_datetime_utc, match_team1_name, match_team1_href, match_team2_name, match_team2_href])
                                                 
                                         map_stats = match_soup.find_all('div', {'class': 'stats-content'})
-                                        for map_ in map_stats:
-                                            if map_.get('id') != 'all-content':
-                                                map_name = re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0)
+                                        if not map_stats == []:
+                                            for map_ in map_stats:
+                                                if map_.get('id') != 'all-content':
+                                                    map_name = re.compile('.*(?=[0-9]{5})').search(map_.get('id')).group(0)
+                                                    for team in [1,3]:
+                                                        player_rows = map_.contents[team].find_all('tr', class_=lambda x: x != 'header-row')
+                                                        team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
+                                                        for player in player_rows:
+                                                            player_href = player.contents[1].contents[0].get('href')
+#                                                            player_name = player.contents[1].contents[0].contents[1].contents[2].contents[1].text.encode('utf-8')
+                                                            player_name = player.contents[1].contents[0].contents[1].contents[4].text.encode('utf-8')
+                                                            kd = int(player.contents[3].text.split('-')[0])/int(player.contents[3].text.split('-')[1])
+                                                            with open("csv\\hltv_match_stats.csv", 'ab') as statscsv:
+                                                                statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                                statswriter.writerow([event_href, match_href, map_name, team_href, player_href, player_name, kd])
+                                        else:
+                                            map_lineups = match_soup.find_all('div', {'class': 'lineups'})
+                                            map_results = match_soup.find_all('div', {'class': 'mapholder'})
+                                            for map_ in map_results:
+                                                map_name = map_.contents[1].contents[1].contents[2].contents[0]
                                                 for team in [1,3]:
-                                                    player_rows = map_.contents[team].find_all('tr', class_=lambda x: x != 'header-row')
-                                                    team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
-                                                    for player in player_rows:
-                                                        player_href = player.contents[1].contents[0].get('href')
-#                                                        player_name = player.contents[1].contents[0].contents[1].contents[2].contents[1].text.encode('utf-8')
-                                                        player_name = player.contents[1].contents[0].contents[1].contents[4].text.encode('utf-8')
-                                                        kd = int(player.contents[3].text.split('-')[0])/int(player.contents[3].text.split('-')[1])
+                                                    team_href = map_lineups[0].contents[2].contents[team].contents[1].contents[1].get('href')
+                                                    players = map_lineups[0].contents[2].contents[team].contents[3].contents[1].contents[1].find_all('td', {'class':'player'})
+                                                    for player in players:
+                                                        player_href = player.contents[0].get('href')
+                                                        if '\'' in player.contents[0].contents[1].contents[0].get('title'):
+                                                            player_name = re.sub('\'','',re.compile('(?=\').*(?<=\')').search(player.contents[0].contents[1].contents[0].get('title')).group(0))
+                                                        else:
+                                                            player_name = re.sub(' ','',player.contents[0].contents[1].contents[0].get('title'))
                                                         with open("csv\\hltv_match_stats.csv", 'ab') as statscsv:
                                                             statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                            statswriter.writerow([event_href, match_href, map_name, team_href, player_href, player_name, kd])
+                                                            statswriter.writerow([event_href, match_href, map_name, team_href, player_href, player_name, None])
                                         
                                         map_results = match_soup.find_all('div', {'class': 'mapholder'})
                                         for map_ in map_results:

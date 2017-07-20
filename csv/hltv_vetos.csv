@@ -5174,27 +5174,6 @@
 /matches/2306391/gambit-vs-fnatic-academy-predator-masters-3,5,fnatic Academy,remove,Train
 /matches/2306391/gambit-vs-fnatic-academy-predator-masters-3,6,Gambit,remove,Dust2
 /matches/2306391/gambit-vs-fnatic-academy-predator-masters-3,7,,,Mirage
-/matches/2306268/ldlc-vs-alternate-attax-eswc-2016,1,LDLC,remove,Mirage
-/matches/2306268/ldlc-vs-alternate-attax-eswc-2016,2,ALTERNATE aTTaX,remove,Train
-/matches/2306268/ldlc-vs-alternate-attax-eswc-2016,3,LDLC,pick,Dust2
-/matches/2306268/ldlc-vs-alternate-attax-eswc-2016,4,ALTERNATE aTTaX,pick,Cobble
-/matches/2306268/ldlc-vs-alternate-attax-eswc-2016,5,LDLC,remove,Nuke
-/matches/2306268/ldlc-vs-alternate-attax-eswc-2016,6,ALTERNATE aTTaX,remove,Overpass
-/matches/2306268/ldlc-vs-alternate-attax-eswc-2016,7,,,Cache
-/matches/2306257/alternate-attax-vs-platinium-eswc-2016,1,Platinium,remove,Nuke
-/matches/2306257/alternate-attax-vs-platinium-eswc-2016,2,ALTERNATE aTTaX,remove,Mirage
-/matches/2306257/alternate-attax-vs-platinium-eswc-2016,3,Platinium,pick,Cache
-/matches/2306257/alternate-attax-vs-platinium-eswc-2016,4,ALTERNATE aTTaX,pick,Overpass
-/matches/2306257/alternate-attax-vs-platinium-eswc-2016,5,Platinium,remove,Train
-/matches/2306257/alternate-attax-vs-platinium-eswc-2016,6,ALTERNATE aTTaX,remove,Dust2
-/matches/2306257/alternate-attax-vs-platinium-eswc-2016,7,,,Cobble
-/matches/2306256/space-soldiers-vs-ldlc-eswc-2016,1,LDLC,remove,Mirage
-/matches/2306256/space-soldiers-vs-ldlc-eswc-2016,2,Space Soldiers,remove,Nuke
-/matches/2306256/space-soldiers-vs-ldlc-eswc-2016,3,LDLC,pick,Overpass
-/matches/2306256/space-soldiers-vs-ldlc-eswc-2016,4,Space Soldiers,pick,Train
-/matches/2306256/space-soldiers-vs-ldlc-eswc-2016,5,LDLC,remove,Cobble
-/matches/2306256/space-soldiers-vs-ldlc-eswc-2016,6,Space Soldiers,remove,Cache
-/matches/2306256/space-soldiers-vs-ldlc-eswc-2016,7,,,Dust2
 /matches/2306241/sk-vs-cloud9-esl-pro-league-season-4-finals,1,SK,remove,Cache
 /matches/2306241/sk-vs-cloud9-esl-pro-league-season-4-finals,2,Cloud9,remove,Nuke
 /matches/2306241/sk-vs-cloud9-esl-pro-league-season-4-finals,3,SK,pick,Overpass
