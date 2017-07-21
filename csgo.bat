@@ -17,8 +17,7 @@ psql -U postgres -d esports -qf sql/hltv_match_info.sql
 psql -U postgres -d esports -qf sql/hltv_map_results.sql
 psql -U postgres -d esports -qf sql/hltv_match_stats.sql
 psql -U postgres -d esports -qf sql/hltv_vetos.sql
-psql -U postgres -d esports -qf sql/player_winnings.sql
-psql -U postgres -d esports -qf sql/lineup_prev_winnings.sql
+psql -U postgres -d esports -qf sql/lineup_init_stats.sql
 ::psql -U postgres -d esports -qf sql/demo_info.sql
 ::psql -U postgres -d esports -qf sql/demo_players.sql
 ::psql -U postgres -d esports -qf sql/demo_knife.sql
