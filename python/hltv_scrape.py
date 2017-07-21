@@ -128,6 +128,7 @@ def event():
                                 for team in event_teams_place:
                                     team_name_set.add(team.contents[1].contents[1].text.encode('utf-8'))
                                     team_href = team.contents[1].contents[1].get('href')
+                                    team_hltv_points = ranks.loc[(ranks[3] == team_href) & (ranks[0] == re.sub('^0(?=[0-9])|(?<=\/)0(?=[0-9])','',rank_dt.strftime('%m/%d/%Y'))),4]
                                     try:
                                         place = int(re.findall(r'\d+',team.contents[3].text.split('-')[0])[0])
                                     except:
@@ -141,7 +142,7 @@ def event():
                                             winnings = 0
                                     with open("csv\\hltv_team_places.csv", 'ab') as teamplacecsv:
                                         teamplacewriter = csv.writer(teamplacecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                        teamplacewriter.writerow([event_href,event_end,team_href,place,winnings])
+                                        teamplacewriter.writerow([event_href,event_end,team_href,team_hltv_points,place,winnings])
                                         
                                 results_href = 'results?event=' + re.compile('(?<=events\/)[0-9]{1,}(?=\/)').search(event.get('href')).group(0)
                                 results_req = requests.get('https://www.hltv.org/' + results_href, headers = header)
