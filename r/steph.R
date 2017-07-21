@@ -10,34 +10,40 @@ drv <- dbDriver('PostgreSQL')
 con <- dbConnect(drv, user='postgres', password='', host='localhost', port=5432, dbname='esports')
 
 query <- dbSendQuery(con, "
-select distinct
-  left(m.datetime_utc::varchar,4)::int as year,
-  date_part('doy', m.datetime_utc) as round,
-  m.datetime_utc,
-  m.event_href,
-  r.match_href,
-  r.map_name,
-  r.team1_href,
-  lpw1.lineup_id as lineup1_id,
-  lpw1.prev_winnings as lineup1_prev_winnings,
-  r.team2_href,
-  lpw2.lineup_id as lineup2_id,
-  lpw2.prev_winnings as lineup2_prev_winnings,
-  r.result,
-  r.abs_result
-from csgo.hltv_map_results as r
-  left join csgo.hltv_match_info as m
-    on r.match_href = m.match_href
-  left join csgo.lineup_prev_winnings as lpw1
-    on r.match_href = lpw1.match_href
-    and r.map_name = lpw1.map_name
-    and r.team1_href = lpw1.team_href
-  left join csgo.lineup_prev_winnings as lpw2
-    on r.match_href = lpw2.match_href
-    and r.map_name = lpw2.map_name
-    and r.team2_href = lpw2.team_href
-where r.map_name != 'Season'
-order by m.datetime_utc
+  select distinct
+    left(m.datetime_utc::varchar,4)::int as year,
+    date_part('doy', m.datetime_utc) as round,
+    m.datetime_utc,
+    m.event_href,
+    r.match_href,
+    r.map_name,
+    r.team1_href,
+    ls1.lineup_id as lineup1_id,
+    ls1.win_prev_events as lineup1_win_prev_events, 
+    ls1.prev_winnings as lineup1_prev_winnings,
+    ls1.pt_prev_events as lineup1_pt_prev_events,
+    ls1.prev_points as lineup1_prev_points,
+    r.team2_href,
+    ls2.lineup_id as lineup2_id,
+    ls2.win_prev_events as lineup2_win_prev_events, 
+    ls2.prev_winnings as lineup2_prev_winnings,
+    ls2.pt_prev_events as lineup2_pt_prev_events,
+    ls2.prev_points as lineup2_prev_points,
+    r.result,
+    r.abs_result
+  from csgo.hltv_map_results as r
+    left join csgo.hltv_match_info as m
+      on r.match_href = m.match_href
+    left join csgo.lineup_init_stats as ls1
+      on r.match_href = ls1.match_href
+      and r.map_name = ls1.map_name
+      and r.team1_href = ls1.team_href
+    left join csgo.lineup_init_stats as ls2
+      on r.match_href = ls2.match_href
+      and r.map_name = ls2.map_name
+      and r.team2_href = ls2.team_href
+  where r.map_name != 'Season'
+  order by m.datetime_utc
   ;")
 
 all_data <- fetch(query,n=-1)
@@ -58,7 +64,7 @@ for (map in unique(all_data$map_name[all_data$year == 2015])){
     sobj$ratings$round = day
     sobj$ratings$map_name = map
     
-    matches = all_data[(all_data$map_name == map) & (all_data$year == 2015) & (all_data$round == day),c('round','lineup1_id','lineup1_prev_winnings','lineup2_id','lineup2_prev_winnings','result')]
+    matches = all_data[(all_data$map_name == map) & (all_data$year == 2015) & (all_data$round == day),c('round','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points','result')]
     matches = merge(matches, sobj$ratings[,c('round','map_name','Player','Rating','Deviation','Games')], by.x = c('round','lineup1_id'), by.y = c('round','Player'), all.x = T)
     matches = merge(matches, sobj$ratings[,c('round','map_name','Player','Rating','Deviation','Games')], by.x = c('round','lineup2_id'), by.y = c('round','Player'), all.x = T)
     
@@ -66,8 +72,8 @@ for (map in unique(all_data$map_name[all_data$year == 2015])){
   }
 }
 
-init_data1 = init_data[!is.na(init_data$Rating.x),c('round','map_name.x','lineup1_id','lineup1_prev_winnings', 'Rating.x','Deviation.x','Games.x')] %>% rename(lineup_id = lineup1_id, lineup_prev_winnings = lineup1_prev_winnings, map_name = map_name.x, Rating = Rating.x, Deviation = Deviation.x, Games = Games.x)
-init_data2 = init_data[!is.na(init_data$Rating.y),c('round','map_name.y','lineup2_id','lineup2_prev_winnings', 'Rating.y','Deviation.y','Games.y')] %>% rename(lineup_id = lineup2_id, lineup_prev_winnings = lineup2_prev_winnings, map_name = map_name.y, Rating = Rating.y, Deviation = Deviation.y, Games = Games.y)
+init_data1 = init_data[!is.na(init_data$Rating.x),c('round','map_name.x','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points', 'Rating.x','Deviation.x','Games.x')] %>% rename(lineup_id = lineup1_id, lineup_win_prev_events = lineup1_win_prev_events, lineup_prev_winnings = lineup1_prev_winnings, lineup_pt_prev_events = lineup1_pt_prev_events, lineup_prev_points = lineup1_prev_points, map_name = map_name.x, Rating = Rating.x, Deviation = Deviation.x, Games = Games.x)
+init_data2 = init_data[!is.na(init_data$Rating.y),c('round','map_name.y','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points', 'Rating.y','Deviation.y','Games.y')] %>% rename(lineup_id = lineup2_id, lineup_win_prev_events = lineup2_win_prev_events, lineup_prev_winnings = lineup2_prev_winnings, lineup_pt_prev_events = lineup2_pt_prev_events, lineup_prev_points = lineup2_prev_points, map_name = map_name.y, Rating = Rating.y, Deviation = Deviation.y, Games = Games.y)
 
 init_data_comb = rbind(init_data1,init_data2)
 
@@ -76,14 +82,19 @@ head(init_data_comb)
 
 data = init_data_comb[(init_data_comb$round > 200),]
 
-ggplot(data, aes(x = sqrt(lineup_prev_winnings), y = Rating, alpha = 1/Deviation)) + geom_point()
+hist(data$Rating)
+hist(data$Deviation)
+hist(data$lineup_pt_prev_events)
+hist(data$lineup_win_prev_events)
+hist(sqrt(data$lineup_prev_points))
+hist(data$lineup_prev_winnings)
 
 
-fit <- lm(Rating ~ lineup_prev_winnings + map_name, data=data)
-summary(fit)
+rat.fit <- lm(Rating ~ lineup_prev_points + lineup_prev_winnings, data=data)
+summary(rat.fit)
 
-fit <- lm(Deviation ~ lineup_prev_winnings, data=data)
-summary(fit)
+dev.fit <- lm(Deviation ~ lineup_pt_prev_events + lineup_win_prev_events + lineup_prev_points, data=data)
+summary(dev.fit)
 
 hist(init_data_comb$Rating[init_data_comb$Games > 6])
 hist(sqrt(init_data_comb$lineup_prev_winnings[init_data_comb$Games > 6]))
