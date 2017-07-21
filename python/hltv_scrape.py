@@ -128,7 +128,10 @@ def event():
                                 for team in event_teams_place:
                                     team_name_set.add(team.contents[1].contents[1].text.encode('utf-8'))
                                     team_href = team.contents[1].contents[1].get('href')
-                                    team_hltv_points = ranks.loc[(ranks[3] == team_href) & (ranks[0] == re.sub('^0(?=[0-9])|(?<=\/)0(?=[0-9])','',rank_dt.strftime('%m/%d/%Y'))),4]
+                                    try:
+                                        team_hltv_points = int(ranks.loc[(ranks[3] == team_href) & (ranks[0] == re.sub('^0(?=[0-9])|(?<=\/)0(?=[0-9])','',rank_dt.strftime('%m/%d/%Y'))),4])
+                                    except:
+                                        team_hltv_points = 0
                                     try:
                                         place = int(re.findall(r'\d+',team.contents[3].text.split('-')[0])[0])
                                     except:

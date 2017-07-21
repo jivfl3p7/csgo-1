@@ -4,10 +4,10 @@ drop table if exists csgo.hltv_team_ranks;
 
 create table csgo.hltv_team_ranks (
 	date_		date,
-	rank		integer,
+	rank		float,
 	team_name	text,
 	team_id		text,
-	points		integer
+	points		float
 );
 
 truncate table csgo.hltv_team_ranks;

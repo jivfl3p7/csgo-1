@@ -4,7 +4,7 @@ drop table if exists csgo.hltv_vetos;
 
 create table csgo.hltv_vetos (
 	match_href	text,
-	step		integer,
+	step		float,
 	team_name	text,
 	action_		text,
 	map		text

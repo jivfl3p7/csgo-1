@@ -21,31 +21,31 @@ create table csgo.player_winnings as (
 			case
 				when lag(p.player_href, 4) over (order by main.map_name, p.player_href, tp.event_end_date) = p.player_href
 					and lag(main.map_name, 4) over (order by main.map_name, p.player_href, tp.event_end_date) = main.map_name
-					then (lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int, 4) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int, 3) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int, 2) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						(main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int
+					then (lag(main.map_round_share/t.total_round_share*tp.winnings/5, 4) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						lag(main.map_round_share/t.total_round_share*tp.winnings/5, 3) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						lag(main.map_round_share/t.total_round_share*tp.winnings/5, 2) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						lag(main.map_round_share/t.total_round_share*tp.winnings/5) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						main.map_round_share/t.total_round_share*tp.winnings/5
 					)/5
 				when lag(p.player_href, 3) over (order by main.map_name, p.player_href, tp.event_end_date) = p.player_href
 					and lag(main.map_name, 3) over (order by main.map_name, p.player_href, tp.event_end_date) = main.map_name
-					then (lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int, 3) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int, 2) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						(main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int
+					then (lag(main.map_round_share/t.total_round_share*tp.winnings/5, 3) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						lag(main.map_round_share/t.total_round_share*tp.winnings/5, 2) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						lag(main.map_round_share/t.total_round_share*tp.winnings/5) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						main.map_round_share/t.total_round_share*tp.winnings/5
 					)/4
 				when lag(p.player_href, 2) over (order by main.map_name, p.player_href, tp.event_end_date) = p.player_href
 					and lag(main.map_name, 2) over (order by main.map_name, p.player_href, tp.event_end_date) = main.map_name
-					then (lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int, 2) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						(main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int
+					then (lag(main.map_round_share/t.total_round_share*tp.winnings/5, 2) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						lag(main.map_round_share/t.total_round_share*tp.winnings/5) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						main.map_round_share/t.total_round_share*tp.winnings/5
 					)/3
 				when lag(p.player_href) over (order by main.map_name, p.player_href, tp.event_end_date) = p.player_href
 					and lag(main.map_name) over (order by main.map_name, p.player_href, tp.event_end_date) = main.map_name
-					then (lag((main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int) over (order by main.map_name, p.player_href, tp.event_end_date) +
-						(main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int
+					then (lag(main.map_round_share/t.total_round_share*tp.winnings/5) over (order by main.map_name, p.player_href, tp.event_end_date) +
+						main.map_round_share/t.total_round_share*tp.winnings/5
 					)/2
-				else (main.map_round_share::float/t.total_round_share::float*tp.winnings/5::float)::int
+				else main.map_round_share/t.total_round_share*tp.winnings/5
 			end as winnings
 		from (
 			select distinct
@@ -59,8 +59,8 @@ create table csgo.player_winnings as (
 						map_name,
 						team1_href as team_href,
 						case
-							when result != 0.5 then team1_rounds::float/(team1_rounds::float + team2_rounds::float)
-							else result::float
+							when result != 0.5 then team1_rounds/(team1_rounds + team2_rounds)
+							else result
 						end as round_share
 					from csgo.hltv_map_results
 				union all
@@ -69,8 +69,8 @@ create table csgo.player_winnings as (
 						map_name,
 						team2_href as team_href,
 						case
-							when result != 0.5 then team2_rounds::float/(team1_rounds::float + team2_rounds::float)
-							else result::float
+							when result != 0.5 then team2_rounds/(team1_rounds + team2_rounds)
+							else result
 						end as round_share
 					from csgo.hltv_map_results
 				) as mr
@@ -96,8 +96,8 @@ create table csgo.player_winnings as (
 							match_href,
 							team1_href as team_href,
 							case
-								when result != 0.5 then team1_rounds::float/(team1_rounds::float + team2_rounds::float)
-								else result::float
+								when result != 0.5 then team1_rounds/(team1_rounds + team2_rounds)
+								else result
 							end as round_share
 						from csgo.hltv_map_results
 					union all
@@ -105,8 +105,8 @@ create table csgo.player_winnings as (
 							match_href,
 							team2_href as team_href,
 							case
-								when result != 0.5 then team2_rounds::float/(team1_rounds::float + team2_rounds::float)
-								else result::float
+								when result != 0.5 then team2_rounds/(team1_rounds + team2_rounds)
+								else result
 							end as round_share
 						from csgo.hltv_map_results
 					) as mr

@@ -6,9 +6,9 @@ create table csgo.hltv_team_places (
 	event_href	text,
 	event_end_date	date,
 	team_href	text,
-	team_hltv_points int,
-	place		int,
-	winnings 	int
+	team_hltv_points float,
+	place		float,
+	winnings 	float
 );
 
 truncate table csgo.hltv_team_places;
