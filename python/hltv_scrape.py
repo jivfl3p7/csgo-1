@@ -244,27 +244,30 @@ def event():
                                         
                                         map_results = match_soup.find_all('div', {'class': 'mapholder'})
                                         for map_ in map_results:
-                                            try:
-                                                map_name = map_.contents[1].contents[1].contents[2].contents[0]
-                                                team1_rounds = int(map_.contents[3].contents[0].contents[0])
-                                                team2_rounds = int(map_.contents[3].contents[2].contents[0])
-                                                if team1_rounds > 16:
-                                                    result = 0.5
-                                                    if team1_rounds > team2_rounds:
+                                            if match_href == '/matches/2306391/gambit-vs-fnatic-academy-predator-masters-3' and map_.contents[1].contents[1].contents[2].contents[0] == 'Cobblestone':
+                                                continue
+                                            else:
+                                                try:
+                                                    map_name = map_.contents[1].contents[1].contents[2].contents[0]
+                                                    team1_rounds = int(map_.contents[3].contents[0].contents[0])
+                                                    team2_rounds = int(map_.contents[3].contents[2].contents[0])
+                                                    if team1_rounds > 16:
+                                                        result = 0.5
+                                                        if team1_rounds > team2_rounds:
+                                                            abs_result = 1
+                                                        else:
+                                                            abs_result = 0
+                                                    elif team1_rounds == 16:
+                                                        result = 1
                                                         abs_result = 1
                                                     else:
+                                                        result = 0
                                                         abs_result = 0
-                                                elif team1_rounds == 16:
-                                                    result = 1
-                                                    abs_result = 1
-                                                else:
-                                                    result = 0
-                                                    abs_result = 0
-                                                with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
-                                                    resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                    resultwriter.writerow([match_href, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
-                                            except:
-                                                pass
+                                                    with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
+                                                        resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                        resultwriter.writerow([match_href, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
+                                                except:
+                                                    pass
                                 break
 
 event()
