@@ -53,36 +53,43 @@ attach(all_data)
 all_data <- all_data[order(all_data$datetime_utc),]
 head(all_data)
 
+head(all_data[is.na(all_data)])
+# head(which(is.na(all_data), arr.ind=TRUE)) check for missing
+
 
 ratings = data.frame()
 init_data = data.frame()
-for (map in unique(all_data$map_name[all_data$year == 2015])){
-  for (day in sort(unique(all_data$round[(all_data$year == 2015) & (all_data$map_name == map)]))[-1]){
-    sub_data = all_data[(all_data$map_name == map) & (all_data$year == 2015) & (all_data$round < day),]
-    
-    sobj <- steph(sub_data[,c('round','lineup1_id','lineup2_id','result')])
-    sobj$ratings$round = day
-    sobj$ratings$map_name = map
-    
-    matches = all_data[(all_data$map_name == map) & (all_data$year == 2015) & (all_data$round == day),c('round','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points','result')]
-    matches = merge(matches, sobj$ratings[,c('round','map_name','Player','Rating','Deviation','Games')], by.x = c('round','lineup1_id'), by.y = c('round','Player'), all.x = T)
-    matches = merge(matches, sobj$ratings[,c('round','map_name','Player','Rating','Deviation','Games')], by.x = c('round','lineup2_id'), by.y = c('round','Player'), all.x = T)
-    
-    init_data = rbind(init_data,matches)
+for (season in sort(unique(all_data$year))){
+  for (map in unique(all_data$map_name[all_data$year == season])){
+    for (day in sort(unique(all_data$round[(all_data$year == season) & (all_data$map_name == map)]))[-1]){
+      sub_data = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round < day),]
+      
+      sobj <- steph(sub_data[,c('round','lineup1_id','lineup2_id','result')])
+      sobj$ratings$year = season
+      sobj$ratings$round = day
+      sobj$ratings$map_name = map
+      
+      matches = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round == day),c('year','round','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points','result')]
+      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup1_id'), by.y = c('year','round','Player'), all.x = T)
+      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup2_id'), by.y = c('year','round','Player'), all.x = T)
+      
+      init_data = rbind(init_data,matches)
+    }
   }
 }
 
-init_data1 = init_data[!is.na(init_data$Rating.x),c('round','map_name.x','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points', 'Rating.x','Deviation.x','Games.x')] %>% rename(lineup_id = lineup1_id, lineup_win_prev_events = lineup1_win_prev_events, lineup_prev_winnings = lineup1_prev_winnings, lineup_pt_prev_events = lineup1_pt_prev_events, lineup_prev_points = lineup1_prev_points, map_name = map_name.x, Rating = Rating.x, Deviation = Deviation.x, Games = Games.x)
-init_data2 = init_data[!is.na(init_data$Rating.y),c('round','map_name.y','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points', 'Rating.y','Deviation.y','Games.y')] %>% rename(lineup_id = lineup2_id, lineup_win_prev_events = lineup2_win_prev_events, lineup_prev_winnings = lineup2_prev_winnings, lineup_pt_prev_events = lineup2_pt_prev_events, lineup_prev_points = lineup2_prev_points, map_name = map_name.y, Rating = Rating.y, Deviation = Deviation.y, Games = Games.y)
+init_data1 = init_data[!is.na(init_data$Rating.x),c('year','round','map_name.x','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points', 'Rating.x','Deviation.x','Games.x')] %>% rename(lineup_id = lineup1_id, lineup_win_prev_events = lineup1_win_prev_events, lineup_prev_winnings = lineup1_prev_winnings, lineup_pt_prev_events = lineup1_pt_prev_events, lineup_prev_points = lineup1_prev_points, map_name = map_name.x, Rating = Rating.x, Deviation = Deviation.x, Games = Games.x)
+init_data2 = init_data[!is.na(init_data$Rating.y),c('year','round','map_name.y','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points', 'Rating.y','Deviation.y','Games.y')] %>% rename(lineup_id = lineup2_id, lineup_win_prev_events = lineup2_win_prev_events, lineup_prev_winnings = lineup2_prev_winnings, lineup_pt_prev_events = lineup2_pt_prev_events, lineup_prev_points = lineup2_prev_points, map_name = map_name.y, Rating = Rating.y, Deviation = Deviation.y, Games = Games.y)
 
 init_data_comb = rbind(init_data1,init_data2)
+
 
 head(sobj$ratings)
 head(init_data_comb)
 
 data = init_data_comb[(init_data_comb$round > 200),]
 
-hist(data$Rating)
+hist(log(data$Games))
 hist(data$Deviation)
 hist(data$lineup_pt_prev_events)
 hist(data$lineup_win_prev_events)
@@ -93,7 +100,7 @@ hist(data$lineup_prev_winnings)
 rat.fit <- lm(Rating ~ lineup_prev_points + lineup_prev_winnings, data=data)
 summary(rat.fit)
 
-dev.fit <- lm(Deviation ~ lineup_pt_prev_events + lineup_win_prev_events + lineup_prev_points, data=data)
+dev.fit <- lm(Deviation ~ lineup_pt_prev_events + lineup_prev_points + Games, data=data)
 summary(dev.fit)
 
 hist(init_data_comb$Rating[init_data_comb$Games > 6])
