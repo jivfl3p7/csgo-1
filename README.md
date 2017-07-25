@@ -6,22 +6,22 @@ The professional CSGO scene has teams compete in both online and LAN (in-person)
 Below is the process that is executed by the `csgo.bat` batch file:
 
 
-### 1. scraping (python)
-* `hltv_scrape_teamrank.py` - *Gather historical HLTV.org World Rankings*
-* `hltv_scrape_event.py` - *Log basic info from international LAN events that contain at least one ranked team*
-* `hltv_scrape_match.py` - *For events from step 2, gather match info (teams, vetos, maps, results, etc.)*
-* `hltv_scrape_demo.py` - *Scrape match demos for possible future use*
-Info from the first three scripts below are scraped into csv files.
+### 1. scraping `python\hltv_scrape.py`
+- *Scrape historical HLTV.org World Rankings*
+- *Scrape match data from events with teams from the "current" world ranking involved*
 
-### 2. demo parsing (python)
+
+### 2. demo parsing `python\rar_to_csv.py`
 Note: parsing data from the HLTV demos requires an external tool and the data from these demos is not currently being utilized for the rankings.
-* `rar_to_demo.py` - *Convert zipped demo files to `.dem` files*
-* `demo_to_json.py` - *Use external parsing tool to log match events (e.g. gun buy, player death, bomb plant) into json files*
-* `json_to_csv.py` - *Convert events from json into usable match data and stored in csv files*
-* `team_name_match.py` - *Utilize fuzzy matching functions in python to match HLTV team names to demo team names*
+- *Convert zipped demo files to `.dem` files*
+- *Use external parsing tool to log match events (e.g. gun buy, player death, bomb plant) into json files*
+- *Convert events from json into usable match data and stored in csv files*
 
-### 3. database creation (postgresql)
+### 2. demo parsing `python\team_name_match.py`
+- *Utilize fuzzy matching functions in python to match HLTV team names to demo team names*
+
+### 3. database creation `sql\...`
 If it does not exist, create a local db called `esports`. Next, the schema `csgo` is created where all of the csv files above are loaded into.
 
-### 4. calculate team ratings (R)
-* `steph.R` - *Utilize the Stephenson Rating System in the [PlayerRatings package](https://cran.r-project.org/web/packages/PlayerRatings/PlayerRatings.pdf) to calculate team ratings by map and output results into local postgresql db*
+### 4. calculate team ratings `r\step_explore.py` (WIP)
+- *Utilize the Stephenson Rating System in the [PlayerRatings package](https://cran.r-project.org/web/packages/PlayerRatings/PlayerRatings.pdf) to calculate team ratings by map and output results into local postgresql db*

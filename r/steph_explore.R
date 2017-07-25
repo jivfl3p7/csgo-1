@@ -51,9 +51,9 @@ all_data <- fetch(query,n=-1)
 attach(all_data)
 
 all_data <- all_data[order(all_data$datetime_utc),]
-head(all_data)
-
-head(all_data[is.na(all_data)])
+# head(all_data)
+# 
+# head(all_data[is.na(all_data)])
 # head(which(is.na(all_data), arr.ind=TRUE)) check for missing
 
 
@@ -84,23 +84,30 @@ init_data2 = init_data[!is.na(init_data$Rating.y),c('year','round','map_name.y',
 init_data_comb = rbind(init_data1,init_data2)
 
 
-head(sobj$ratings)
-head(init_data_comb)
+# head(sobj$ratings)
+# head(init_data_comb)
 
-data = init_data_comb[(init_data_comb$round > 200),]
+data = init_data_comb[(init_data_comb$round < 200) & (init_data_comb$year > 2015),]#((init_data_comb$round > 200) & (init_data_comb$year > 2015))
 
-hist(log(data$Games))
-hist(data$Deviation)
-hist(data$lineup_pt_prev_events)
-hist(data$lineup_win_prev_events)
-hist(sqrt(data$lineup_prev_points))
-hist(data$lineup_prev_winnings)
+# hist(log(data$Games))
+# hist(data$Deviation)
+# hist(data$lineup_pt_prev_events)
+# hist(data$lineup_win_prev_events)
+# hist(sqrt(data$lineup_prev_points))
+# hist(data$lineup_prev_winnings)
 
 
-rat.fit <- lm(Rating ~ lineup_prev_points + lineup_prev_winnings, data=data)
+smp_size <- floor(0.65 * nrow(data))
+set.seed(5431)
+train_ind <- sample(seq_len(nrow(data)), size = smp_size)
+
+train <- data[train_ind, ]
+test <- data[-train_ind, ]
+
+rat.fit <- lm(Rating ~ lineup_pt_prev_events + lineup_prev_winnings + Games, data=train)
 summary(rat.fit)
 
-dev.fit <- lm(Deviation ~ lineup_pt_prev_events + lineup_prev_points + Games, data=data)
+dev.fit <- lm(Deviation ~ lineup_pt_prev_events + lineup_prev_points + Games, data=train)
 summary(dev.fit)
 
 hist(init_data_comb$Rating[init_data_comb$Games > 6])
