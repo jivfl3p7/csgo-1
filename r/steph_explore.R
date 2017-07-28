@@ -1,9 +1,14 @@
 # sink("diagnostics/steph.txt")
 
-library('RPostgreSQL')
-library('dplyr')
-library('PlayerRatings')
-library('ggplot2')
+library(RPostgreSQL)
+library(dplyr)
+library(PlayerRatings)
+library(ggplot2)
+library(caret)
+library(rqPen)
+library(caretEnsemble)
+library(earth)
+
 
 drv <- dbDriver('PostgreSQL')
 
@@ -83,40 +88,52 @@ init_data2 = init_data[!is.na(init_data$Rating.y),c('year','round','map_name.y',
 
 init_data_comb = rbind(init_data1,init_data2)
 
+data = init_data_comb[(init_data_comb$round > 200) | (init_data_comb$year > 2015),]
 
-# head(sobj$ratings)
-# head(init_data_comb)
+set.seed(157)
+inTrain <- createDataPartition(y = data$Rating, p = .65, list = F)
+training <- data[ inTrain,]
+testing <- data[-inTrain,]
 
-data = init_data_comb[(init_data_comb$round < 200) & (init_data_comb$year > 2015),]#((init_data_comb$round > 200) & (init_data_comb$year > 2015))
+my_control <- trainControl(
+  method = "boot632",
+  number = 25,
+  savePredictions = "final",
+  index = createResample(training$Rating, 25)
+)
 
-# hist(log(data$Games))
-# hist(data$Deviation)
-# hist(data$lineup_pt_prev_events)
-# hist(data$lineup_win_prev_events)
-# hist(sqrt(data$lineup_prev_points))
-# hist(data$lineup_prev_winnings)
+rat.fit = train(x = training[,-c(1:2,4,9:10)], y = training[,'Rating'], method = 'lmStepAIC', trControl = my_control)
+dev.fit = train(x = training[,-c(1:2,4,9:10)], y = training[,'Deviation'], method = 'lmStepAIC', trControl = my_control)
 
-
-smp_size <- floor(0.65 * nrow(data))
-set.seed(5431)
-train_ind <- sample(seq_len(nrow(data)), size = smp_size)
-
-train <- data[train_ind, ]
-test <- data[-train_ind, ]
-
-rat.fit <- lm(Rating ~ lineup_pt_prev_events + lineup_prev_winnings + Games, data=train)
-summary(rat.fit)
-
-dev.fit <- lm(Deviation ~ lineup_pt_prev_events + lineup_prev_points + Games, data=train)
-summary(dev.fit)
-
-hist(init_data_comb$Rating[init_data_comb$Games > 6])
-hist(sqrt(init_data_comb$lineup_prev_winnings[init_data_comb$Games > 6]))
+init_data_comb$pred_Rat = predict(rat.fit$finalModel, newdata = init_data_comb)
+init_data_comb$pred_Dev = predict(dev.fit$finalModel, newdata = init_data_comb)
 
 
+ratings = data.frame()
+for (season in sort(unique(all_data$year))[-1]){
+  for (map in unique(all_data$map_name[all_data$year == season])){
+    for (day in sort(unique(all_data$round[(all_data$year == season) & (all_data$map_name == map)]))[-1]){
+      
+      if (exists("steph_rate") == T){
+        
+      }
+      sub_data = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round < day),]
+      
+      sobj <- steph(sub_data[,c('round','lineup1_id','lineup2_id','result')])
+      sobj$ratings$year = season
+      sobj$ratings$round = day
+      sobj$ratings$map_name = map
+      
+      matches = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round == day),c('year','round','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points','result')]
+      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup1_id'), by.y = c('year','round','Player'), all.x = T)
+      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup2_id'), by.y = c('year','round','Player'), all.x = T)
+      
+      init_data = rbind(init_data,matches)
+    }
+  }
+}
 
-head(ratings)
-head(init_data)
+
 
 ratings = data.frame()
 logloss_calc = data.frame()
