@@ -268,23 +268,19 @@ def event():
                                                         resultwriter.writerow([match_href, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
                                                     for half in range(1,3):
                                                         if map_.contents[3].contents[4*half].get('class')[0] == 'ct':
-                                                            for ct_win in range(1,int(map_.contents[3].contents[4*half].text) + 1):
-                                                                with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
-                                                                    roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                                    roundwriter.writerow([match_href, map_name, match_team1_href, match_team2_href, 1])
-                                                            for t_win in range(1,int(map_.contents[3].contents[4*half + 2].text) + 1):
-                                                                with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
-                                                                    roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                                    roundwriter.writerow([match_href, map_name, match_team1_href, match_team2_href, 0])
+                                                            team1 = str(match_team1_href + '/ct')
+                                                            team2 = str(match_team2_href + '/t')
                                                         else:
-                                                            for ct_win in range(1,int(map_.contents[3].contents[4*half + 2].text) + 1):
-                                                                with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
-                                                                    roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                                    roundwriter.writerow([match_href, map_name, match_team2_href, match_team1_href, 1])
-                                                            for t_win in range(1,int(map_.contents[3].contents[4*half].text) + 1):
-                                                                with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
-                                                                    roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                                    roundwriter.writerow([match_href, map_name, match_team2_href, match_team1_href, 0])
+                                                            team1 = str(match_team1_href + '/t')
+                                                            team2 = str(match_team2_href + '/ct')
+                                                        for t1_win in range(1,int(map_.contents[3].contents[4*half].text) + 1):
+                                                            with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
+                                                                roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                                roundwriter.writerow([match_href, map_name, team1, team2, 1])
+                                                        for t2_win in range(1,int(map_.contents[3].contents[4*half + 2].text) + 1):
+                                                            with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
+                                                                roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                                                roundwriter.writerow([match_href, map_name, team1, team2, 0])
                                                 except:
                                                     pass
                                 break
