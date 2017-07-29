@@ -5,9 +5,6 @@ library(dplyr)
 library(PlayerRatings)
 library(ggplot2)
 library(caret)
-library(rqPen)
-library(caretEnsemble)
-library(earth)
 
 
 drv <- dbDriver('PostgreSQL')
@@ -71,24 +68,29 @@ for (season in sort(unique(all_data$year))){
       
       sobj <- steph(sub_data[,c('round','lineup1_id','lineup2_id','result')])
       sobj$ratings$year = season
-      sobj$ratings$round = day
       sobj$ratings$map_name = map
       
-      matches = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round == day),c('year','round','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points','result')]
-      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup1_id'), by.y = c('year','round','Player'), all.x = T)
-      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup2_id'), by.y = c('year','round','Player'), all.x = T)
-      
+      if (day == max(all_data$round[(all_data$map_name == map) & (all_data$year == season)])){
+        sobj$ratings$round = (day + 1)
+      } else {
+        next_rd = min(all_data$round[(all_data$map_name == map) & (all_data$year == season) & (all_data$round > day)])
+        sobj$ratings$round = next_rd
+        matches = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round == next_rd),c('year','round','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points','result')]
+        matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation')], by.x = c('year','round','lineup1_id'), by.y = c('year','round','Player'), all.x = T)
+        matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation')], by.x = c('year','round','lineup2_id'), by.y = c('year','round','Player'), all.x = T)
+      }
+
       init_data = rbind(init_data,matches)
     }
   }
 }
 
-init_data1 = init_data[!is.na(init_data$Rating.x),c('year','round','map_name.x','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points', 'Rating.x','Deviation.x','Games.x')] %>% rename(lineup_id = lineup1_id, lineup_win_prev_events = lineup1_win_prev_events, lineup_prev_winnings = lineup1_prev_winnings, lineup_pt_prev_events = lineup1_pt_prev_events, lineup_prev_points = lineup1_prev_points, map_name = map_name.x, Rating = Rating.x, Deviation = Deviation.x, Games = Games.x)
-init_data2 = init_data[!is.na(init_data$Rating.y),c('year','round','map_name.y','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points', 'Rating.y','Deviation.y','Games.y')] %>% rename(lineup_id = lineup2_id, lineup_win_prev_events = lineup2_win_prev_events, lineup_prev_winnings = lineup2_prev_winnings, lineup_pt_prev_events = lineup2_pt_prev_events, lineup_prev_points = lineup2_prev_points, map_name = map_name.y, Rating = Rating.y, Deviation = Deviation.y, Games = Games.y)
+init_data1 = init_data[!is.na(init_data$Rating.x),c('year','round','map_name.x','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points', 'Rating.x','Deviation.x')] %>% rename(lineup_id = lineup1_id, lineup_win_prev_events = lineup1_win_prev_events, lineup_prev_winnings = lineup1_prev_winnings, lineup_pt_prev_events = lineup1_pt_prev_events, lineup_prev_points = lineup1_prev_points, map_name = map_name.x, Rating = Rating.x, Deviation = Deviation.x)
+init_data2 = init_data[!is.na(init_data$Rating.y),c('year','round','map_name.y','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points', 'Rating.y','Deviation.y')] %>% rename(lineup_id = lineup2_id, lineup_win_prev_events = lineup2_win_prev_events, lineup_prev_winnings = lineup2_prev_winnings, lineup_pt_prev_events = lineup2_pt_prev_events, lineup_prev_points = lineup2_prev_points, map_name = map_name.y, Rating = Rating.y, Deviation = Deviation.y)
 
 init_data_comb = rbind(init_data1,init_data2)
 
-data = init_data_comb[(init_data_comb$round > 200) | (init_data_comb$year > 2015),]
+data = init_data_comb[init_data_comb$year > 2015,]
 
 set.seed(157)
 inTrain <- createDataPartition(y = data$Rating, p = .65, list = F)
@@ -103,35 +105,135 @@ my_control <- trainControl(
 )
 
 rat.fit = train(x = training[,-c(1:2,4,9:10)], y = training[,'Rating'], method = 'lmStepAIC', trControl = my_control)
+
+inTrain <- createDataPartition(y = data$Deviation, p = .65, list = F)
+training <- data[ inTrain,]
+testing <- data[-inTrain,]
+
+my_control <- trainControl(
+  method = "boot632",
+  number = 25,
+  savePredictions = "final",
+  index = createResample(training$Deviation, 25)
+)
 dev.fit = train(x = training[,-c(1:2,4,9:10)], y = training[,'Deviation'], method = 'lmStepAIC', trControl = my_control)
 
-init_data_comb$pred_Rat = predict(rat.fit$finalModel, newdata = init_data_comb)
-init_data_comb$pred_Dev = predict(dev.fit$finalModel, newdata = init_data_comb)
+# init_data_comb$pred_Rat = predict(rat.fit$finalModel, newdata = init_data_comb)
+# init_data_comb$pred_Dev = predict(dev.fit$finalModel, newdata = init_data_comb)
 
 
-ratings = data.frame()
+steph_arch = data.frame()
 for (season in sort(unique(all_data$year))[-1]){
-  for (map in unique(all_data$map_name[all_data$year == season])){
+  for (map in unique(data$map_name[data$year == season])){
+    if (exists("steph_status") == T){
+      rm(steph_status)
+    }
     for (day in sort(unique(all_data$round[(all_data$year == season) & (all_data$map_name == map)]))[-1]){
+      sub_data = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round == day),]
       
-      if (exists("steph_rate") == T){
-        
+      if (exists('l1') == T){
+        rm(l1)
       }
-      sub_data = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round < day),]
       
-      sobj <- steph(sub_data[,c('round','lineup1_id','lineup2_id','result')])
+      if (exists('l2') == T){
+        rm(l2)
+      }
+      
+      if (exists('new_lineups') == T){
+        rm(new_lineups)
+      }
+      
+      if (exists('steph_status') == T){
+        for (lineup1 in unique(sub_data$lineup1_id)){
+          if (!(lineup1 %in% unique(steph_status$Player))){
+            l1 = sub_data[!(sub_data$lineup1_id %in% unique(steph_status$Player)),c('year','round','map_name','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points')] %>% rename(lineup_id = lineup1_id, lineup_win_prev_events = lineup1_win_prev_events, lineup_prev_winnings = lineup1_prev_winnings, lineup_pt_prev_events = lineup1_pt_prev_events, lineup_prev_points = lineup1_prev_points)
+            l1$Rating = predict(rat.fit, newdata = l1)
+            l1$Deviation = predict(dev.fit, newdata = l1)
+            new_lineups = l1[,c('year','round','map_name','lineup_id','Rating','Deviation')]
+          }
+          break
+        }
+        
+        for (lineup2 in unique(sub_data$lineup2_id)){
+          if (!(lineup2 %in% unique(steph_status$Player))){
+            l2 = sub_data[!(sub_data$lineup2_id %in% unique(steph_status$Player)),c('year','round','map_name','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points')] %>% rename(lineup_id = lineup2_id, lineup_win_prev_events = lineup2_win_prev_events, lineup_prev_winnings = lineup2_prev_winnings, lineup_pt_prev_events = lineup2_pt_prev_events, lineup_prev_points = lineup2_prev_points)
+            l2$Rating = predict(rat.fit, newdata = l2)
+            l2$Deviation = predict(dev.fit, newdata = l2)
+            l2 = l2[,c('year','round','map_name','lineup_id','Rating','Deviation')]
+            if (exists('new_lineups') == T){
+              new_lineups = rbind(new_lineups,l2)
+            } else {
+              new_lineups = l2[,c('year','round','map_name','lineup_id','Rating','Deviation')]
+            }
+          }
+          break
+        }
+      } else {
+        l1 = sub_data[,c('year','round','map_name','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points')] %>% rename(lineup_id = lineup1_id, lineup_win_prev_events = lineup1_win_prev_events, lineup_prev_winnings = lineup1_prev_winnings, lineup_pt_prev_events = lineup1_pt_prev_events, lineup_prev_points = lineup1_prev_points)
+        l2 = sub_data[,c('year','round','map_name','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points')] %>% rename(lineup_id = lineup2_id, lineup_win_prev_events = lineup2_win_prev_events, lineup_prev_winnings = lineup2_prev_winnings, lineup_pt_prev_events = lineup2_pt_prev_events, lineup_prev_points = lineup2_prev_points)
+        new_lineups = rbind(l1,l2)
+        new_lineups$Rating = predict(rat.fit, newdata = new_lineups)
+        new_lineups$Deviation = predict(dev.fit, newdata = new_lineups)
+        new_lineups = new_lineups[,c('year','round','map_name','lineup_id','Rating','Deviation')]
+      }
+      
+      if (exists('new_lineups') == T){
+        new_lineups = new_lineups %>% rename(Player = lineup_id)
+        new_lineups$Games = 0
+        new_lineups$Win = 0
+        new_lineups$Draw = 0
+        new_lineups$Loss = 0
+        new_lineups$Lag = 0
+        if (exists('steph_status') == T){
+          steph_status = rbind(steph_status, new_lineups)
+        } else {
+          steph_status = new_lineups
+        }
+      }
+      
+      sobj <- steph(x = sub_data[,c('round','lineup1_id','lineup2_id','result')], status = steph_status)
       sobj$ratings$year = season
-      sobj$ratings$round = day
       sobj$ratings$map_name = map
       
-      matches = all_data[(all_data$map_name == map) & (all_data$year == season) & (all_data$round == day),c('year','round','lineup1_id','lineup1_win_prev_events','lineup1_prev_winnings','lineup1_pt_prev_events','lineup1_prev_points','lineup2_id','lineup2_win_prev_events','lineup2_prev_winnings','lineup2_pt_prev_events','lineup2_prev_points','result')]
-      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup1_id'), by.y = c('year','round','Player'), all.x = T)
-      matches = merge(matches, sobj$ratings[,c('year','round','map_name','Player','Rating','Deviation','Games')], by.x = c('year','round','lineup2_id'), by.y = c('year','round','Player'), all.x = T)
+      if (day == max(all_data$round[(all_data$map_name == map) & (all_data$year == season)])){
+        sobj$ratings$round = (day + 1)
+      } else {
+        sobj$ratings$round = min(all_data$round[(all_data$map_name == map) & (all_data$year == season) & (all_data$round > day)])
+      }
       
-      init_data = rbind(init_data,matches)
+      steph_status = sobj$ratings
+      
+      if (exists('steph_arch') == T){
+        steph_arch = rbind(steph_arch,steph_status)
+      } else {
+        steph_arch = steph_status
+      }
     }
   }
 }
+
+steph_arch[(steph_arch$map_name == 'Cache') & (steph_arch$year == 2017) & (steph_arch$round == max(steph_arch$round[(steph_arch$map_name == 'Cache') & (steph_arch$year == 2017)])),]
+
+
+
+head(all_data)
+head(data)
+head(steph_arch)
+
+eval = merge(all_data[,c('year','round','map_name','lineup1_id','lineup2_id','abs_result')], data[,c('year','round','map_name','lineup_id','Rating')], by.x = c('year','round','map_name','lineup1_id'), by.y = c('year','round','map_name','lineup_id')) %>% rename(Rating1_old = Rating)
+eval = merge(eval, data[,c('year','round','map_name','lineup_id','Rating')], by.x = c('year','round','map_name','lineup2_id'), by.y = c('year','round','map_name','lineup_id')) %>% rename(Rating2_old = Rating)
+
+eval = merge(eval, steph_arch[,c('year','round','map_name','Player','Rating')], by.x = c('year','round','map_name','lineup1_id'), by.y = c('year','round','map_name','Player')) %>% rename(Rating1_new = Rating)
+eval = merge(eval, steph_arch[,c('year','round','map_name','Player','Rating')], by.x = c('year','round','map_name','lineup2_id'), by.y = c('year','round','map_name','Player')) %>% rename(Rating2_new = Rating)
+
+eval$old_pred = ifelse(eval$Rating1_old > eval$Rating2_old, 1, 0)
+eval$old_corr = ifelse(eval$old_pred == eval$abs_result, 1, 0)
+
+eval$new_pred = ifelse(eval$Rating1_new > eval$Rating2_new, 1, 0)
+eval$new_corr = ifelse(eval$new_pred == eval$abs_result, 1, 0)
+
+sum(eval$old_pred)/nrow(eval)
+sum(eval$new_pred)/nrow(eval)
 
 
 
