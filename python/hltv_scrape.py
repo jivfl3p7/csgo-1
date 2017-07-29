@@ -266,13 +266,9 @@ def event():
                                                     with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
                                                         resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                                         resultwriter.writerow([match_href, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
-                                                    for half in range(1,3):
-                                                        if map_.contents[3].contents[4*half].get('class')[0] == 'ct':
-                                                            team1 = str(match_team1_href + '/ct')
-                                                            team2 = str(match_team2_href + '/t')
-                                                        else:
-                                                            team1 = str(match_team1_href + '/t')
-                                                            team2 = str(match_team2_href + '/ct')
+                                                    for half in [1,2]:
+                                                        team1 = str(match_team1_href + '/' + map_.contents[3].contents[4*half].get('class')[0])
+                                                        team2 = str(match_team2_href + '/' + map_.contents[3].contents[4*half + 2].get('class')[0])
                                                         for t1_win in range(1,int(map_.contents[3].contents[4*half].text) + 1):
                                                             with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
                                                                 roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
