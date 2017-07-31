@@ -5,7 +5,6 @@ drop table if exists csgo.hltv_team_places;
 create table csgo.hltv_team_places (
 	event_href	text,
 	team_href	text,
-	team_hltv_points float,
 	place		float,
 	winnings 	float
 );
