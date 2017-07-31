@@ -243,7 +243,7 @@ def event():
                                                             statswriter.writerow([event_href, match_href, map_name, team_href, player_href, player_name, None])
                                         
                                         map_results = match_soup.find_all('div', {'class': 'mapholder'})
-                                        for map_ in map_results:
+                                        for map_,map_num in zip(map_results,range(1,len(map_results) + 1)):
                                             if match_href == '/matches/2306391/gambit-vs-fnatic-academy-predator-masters-3' and map_.contents[1].contents[1].contents[2].contents[0] == 'Cobblestone':
                                                 continue
                                             else:
@@ -265,18 +265,18 @@ def event():
                                                         abs_result = 0
                                                     with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
                                                         resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                        resultwriter.writerow([match_href, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
+                                                        resultwriter.writerow([match_href, map_num, map_name, match_team1_href, team1_rounds, match_team2_href, team2_rounds, result, abs_result])
                                                     for half in [1,2]:
-                                                        team1 = str(match_team1_href + '/' + map_.contents[3].contents[4*half].get('class')[0])
-                                                        team2 = str(match_team2_href + '/' + map_.contents[3].contents[4*half + 2].get('class')[0])
+                                                        team1_side = map_.contents[3].contents[4*half].get('class')[0]
+                                                        team2_side = map_.contents[3].contents[4*half + 2].get('class')[0]
                                                         for t1_win in range(1,int(map_.contents[3].contents[4*half].text) + 1):
                                                             with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
                                                                 roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                                roundwriter.writerow([match_href, map_name, team1, team2, 1])
+                                                                roundwriter.writerow([match_href, map_num, map_name, half, t1_win, match_team1_href, team1_side, match_team2_href, team2_side, 1])
                                                         for t2_win in range(1,int(map_.contents[3].contents[4*half + 2].text) + 1):
                                                             with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
                                                                 roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                                                roundwriter.writerow([match_href, map_name, team1, team2, 0])
+                                                                roundwriter.writerow([match_href, map_num, map_name, half, t2_win, match_team1_href, team1_side, match_team2_href, team2_side, 0])
                                                 except:
                                                     pass
                                 break
