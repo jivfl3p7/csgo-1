@@ -12,7 +12,7 @@ Below is the process that is executed by the `csgo.bat` batch file:
 
 
 ### ~~2. demo parsing `python\rar_to_csv.py`~~
-~~Note: parsing data from the HLTV demos requires an external tool and the data from these demos is not currently being utilized for the rankings.~~
+~~Note: parsing data from the HLTV demos requires an external tool~~
 - ~~*Convert zipped demo files to `.dem` files*~~
 - ~~*Use external parsing tool to log match events (e.g. gun buy, player death, bomb plant) into json files*~~
 - ~~*Convert events from json into usable match data and store in csv files*~~
