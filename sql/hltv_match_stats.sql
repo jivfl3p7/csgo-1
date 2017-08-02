@@ -3,7 +3,6 @@ begin;
 drop table if exists csgo.hltv_match_stats;
 
 create table csgo.hltv_match_stats (
-	event_href	text,
 	match_href	text,
 	map_name	text,
 	team_href	text,
