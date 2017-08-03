@@ -41,7 +41,7 @@ create table csgo.lineups as (
 				match_href,
 				team_href,
 				player_href
-			from csgo.hltv_match_stats
+			from csgo.hltv_player_stats
 			order by team_href, match_href, player_href
 			) as s
 			left join csgo.hltv_match_info as m

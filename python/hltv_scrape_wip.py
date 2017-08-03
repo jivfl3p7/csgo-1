@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Jul 30 23:01:12 2017
-
-@author: wessonmo
-"""
-
 from __future__ import division
 import pandas as pd
 import requests
@@ -30,15 +23,15 @@ def rank_data():
     
     date_list = []
     
-    for year_href in year_hrefs:
+    for year_href in reversed(year_hrefs):
         year_url = 'https://www.hltv.org' + year_href.get('href')
         year_req = requests.get(year_url, headers = header)
         month_hrefs = BeautifulSoup(year_req.content, 'lxml').find_all('div', {'class': 'filter-column-content'})[1].contents
-        for month_href in month_hrefs:
+        for month_href in reversed(month_hrefs):
             month_url = 'https://www.hltv.org' + month_href.get('href')
             month_req = requests.get(month_url, headers = header)
             day_hrefs = BeautifulSoup(month_req.content, 'lxml').find_all('div', {'class': 'filter-column-content'})[2].contents
-            for day_href in day_hrefs:
+            for day_href in reversed(day_hrefs):
                 day_url = 'https://www.hltv.org' + day_href.get('href')
                 day_req = requests.get(day_url, headers = header)
                 year = re.compile('(?<=teams\/)[0-9]{4}(?=\/)').search(day_url).group(0)
@@ -58,15 +51,16 @@ def rank_data():
                         with open("csv\\hltv_team_ranks.csv", 'ab') as rankcsv:
                             rankwriter = csv.writer(rankcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                             rankwriter.writerow([date,rank,team_name,team_href,team_points])
-                        print('\t' + 'Added: ' + date)
+                print('\t' + 'Added: ' + date)
 
 rank_data()
 
-ranks = pd.read_csv('csv\\hltv_team_ranks.csv', header = None)
-
-
 def event_data():
     print('### Events ###')
+    
+    ranks = pd.read_csv('csv\\hltv_team_ranks.csv', header = None)
+    rank_min_date = min(pd.to_datetime(ranks[0].drop_duplicates()).sort_values(0))
+    
     try:
         exist_events = list(pd.read_csv('csv\\hltv_events.csv', header = None)[0])
     except:
@@ -98,20 +92,15 @@ def event_data():
         archive_page_soup = BeautifulSoup(archive_page_req.content, 'html5lib').find('div', {'class': 'contentCol'})
         months = BeautifulSoup(str(archive_page_soup),'lxml').find_all('div', {'class': 'events-month'})
         for month in reversed(months):
-            month_year = int(re.compile('[0-9]{4}').search(month.contents[1].contents[0]).group(0))
-            if month_year < 2015:
-                continue
-            events = BeautifulSoup(str(month),'lxml').find_all('a', {'class': 'a-reset small-event standard-box'})
-            for event in events:
-                if (event.get('href') not in exist_events) | (event.get('href') not in exist_team_places):
-                    event_href = event.get('href')
-                    event_name = event.contents[2].contents[1].contents[1].contents[0].contents[1].text.encode('utf-8').strip()
-                    event_req = requests.get('https://www.hltv.org' + event_href, headers = header)
-                    if event_href not in exist_events:
-                        if event_href != prev_event:
-                            print('\t' + event_href)
-                            prev_event = event_href
-                            
+            if datetime.datetime.strptime(month.contents[1].contents[0].strip(), '%B %Y') >= rank_min_date:
+                print(month.contents[1].contents[0].strip())
+                events = BeautifulSoup(str(month),'lxml').find_all('a', {'class': 'a-reset small-event standard-box'})
+                for event in events:
+                    if (event.get('href') not in exist_events) | (event.get('href') not in exist_team_places):
+                        event_href = event.get('href')
+                        event_name = event.contents[2].contents[1].contents[1].contents[0].contents[1].text.encode('utf-8').strip()
+                        event_req = requests.get('https://www.hltv.org' + event_href, headers = header)
+                        
                         event_date = BeautifulSoup(event_req.content,'lxml').find_all('td', {'class': 'eventdate'})
                         event_start = datetime.datetime.utcfromtimestamp(
                             int(event_date[1].contents[0].get('data-unix'))/1000).strftime('%m/%d/%Y')
@@ -126,59 +115,59 @@ def event_data():
                                 hltv_rank_teams = list(ranks.loc[ranks[0] == re.sub('^0(?=[0-9])|(?<=\/)0(?=[0-9])','',
                                                                  rank_dt.strftime('%m/%d/%Y')),3])
                                 break
-                            
+                        
                         event_teams_place = BeautifulSoup(event_req.content,'lxml').find_all('div', {'class': 'placement'})
                         for team in event_teams_place:
                             try:
                                 team.contents[1].contents[1].get('href')
                             except:
-                                with open("csv\\hltv_events.csv", 'ab') as eventcsv:
-                                    eventwriter = csv.writer(eventcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                    eventwriter.writerow([event_href,None,None,None, None])
-                                break
-                            if team.contents[1].contents[1].get('href') in hltv_rank_teams:
-                                results_href = 'results?event=' + re.compile('(?<=events\/)[0-9]{1,}(?=\/)').search(event_href).group(0)
-                                results_req = requests.get('https://www.hltv.org/' + results_href, headers = header)
-                                result_rows = len(BeautifulSoup(results_req.content,'lxml').find_all('div', {'class': 'result-con'}))
-                                event_type = event.contents[2].contents[1].contents[1].contents[0].contents[7].text.encode('utf-8')
-                                with open("csv\\hltv_events.csv", 'ab') as eventcsv:
-                                    eventwriter = csv.writer(eventcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                    eventwriter.writerow([event_href,event_name,event_end,event_type, result_rows])
-                                print('\t\t' + 'info')
-                                break
-                    
-                    if event_href not in exist_team_places:
-                        if event_href != prev_event:
-                            print('\t' + event_href)
-                            prev_event = event_href
+                                continue
                             
-                        event_teams_place = BeautifulSoup(event_req.content,'lxml').find_all('div', {'class': 'placement'})
-                        for team in event_teams_place:
-                            team_href = team.contents[1].contents[1].get('href')
-                            try:
-                                place = int(re.findall(r'\d+',team.contents[3].text.split('-')[0])[0])
-                            except:
-                                place = int(re.findall(r'\d+',team.contents[3].text)[0])
-                            try:
-                                winnings = int(re.sub('\$|,','',team.contents[5].text))
-                            except:
-                                if event.contents[2].contents[1].contents[1].contents[0].contents[5].text.encode('utf-8') == 'Other':
-                                    winnings = None
-                                else:
-                                    winnings = 0
-                            with open("csv\\hltv_team_places.csv", 'ab') as teamplacecsv:
-                                teamplacewriter = csv.writer(teamplacecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                teamplacewriter.writerow([event_href,team_href,place,winnings])
-                            print('\t\t' + 'team places')
-                else:
-                    break
+                            if team.contents[1].contents[1].get('href') in hltv_rank_teams:
+                                if event_href not in exist_events:
+                                    if event_href != prev_event:
+                                        print('\t' + event_href)
+                                        prev_event = event_href                                    
+                                    
+                                    results_href = 'results?event=' + re.compile('(?<=events\/)[0-9]{1,}(?=\/)').search(event_href).group(0)
+                                    results_req = requests.get('https://www.hltv.org/' + results_href, headers = header)
+                                    result_rows = len(BeautifulSoup(results_req.content,'lxml').find_all('div', {'class': 'result-con'}))
+                                    event_type = event.contents[2].contents[1].contents[1].contents[0].contents[7].text.encode('utf-8')
+                                    with open("csv\\hltv_events.csv", 'ab') as eventcsv:
+                                        eventwriter = csv.writer(eventcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                        eventwriter.writerow([event_href,event_name,event_end,event_type, result_rows])
+                                
+                                if event_href not in exist_team_places:
+                                    if event_href != prev_event:
+                                        print('\t' + event_href)
+                                        prev_event = event_href
+                                        
+                                    for team in event_teams_place:
+                                        team_href = team.contents[1].contents[1].get('href')
+                                        try:
+                                            place = int(re.findall(r'\d+',team.contents[3].text.split('-')[0])[0])
+                                        except:
+                                            place = int(re.findall(r'\d+',team.contents[3].text)[0])
+                                        try:
+                                            winnings = int(re.sub('\$|,','',team.contents[5].text))
+                                        except:
+                                            if event.contents[2].contents[1].contents[1].contents[0].contents[5].text.encode('utf-8') == 'Other':
+                                                winnings = None
+                                            else:
+                                                winnings = 0
+                                        with open("csv\\hltv_team_places.csv", 'ab') as teamplacecsv:
+                                            teamplacewriter = csv.writer(teamplacecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                            teamplacewriter.writerow([event_href,team_href,place,winnings])
+                                
+                                break
                 
 event_data()
 
-scraped_events = pd.read_csv('csv\\hltv_events.csv', header = None)
 
 def match_data():
     print('### Matches ###')
+    
+    scraped_events = pd.read_csv('csv\\hltv_events.csv', header = None)
     
     try:
         exist_match_info = pd.read_csv('csv\\hltv_match_info.csv', header = None)
@@ -266,7 +255,6 @@ def match_data():
                         matchwriter = csv.writer(matchcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                         matchwriter.writerow([event_href, match_href, match_demo, match_datetime_utc,
                                               match_team1_name, match_team1_href, match_team2_name, match_team2_href])
-                    print('\t\t' + 'info')
             except:
                 if row[2] == 1:
                     with open("csv\\hltv_match_info.csv", 'ab') as matchcsv:
@@ -313,7 +301,6 @@ def match_data():
                                 vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 vetowriter.writerow([match_href, step, team, action, map_])
                             i += 1
-                    print('\t\t' + 'vetos')
                             
         if row[4] == 1:
             if match_href != prev_match:
@@ -358,7 +345,6 @@ def match_data():
                             with open("csv\\hltv_player_stats.csv", 'ab') as statscsv:
                                 statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 statswriter.writerow([match_href, map_name, team_href, player_href, player_name, None])
-            print('\t\t' + 'player stats')
                                     
         if (row[5] == 1) | (row[6] == 1):
             if match_href != prev_match:
@@ -388,23 +374,19 @@ def match_data():
                                 abs_result = 0
                         except:
                             if row[5] == 1:
-                                write5 = False
                                 with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
                                     resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                     resultwriter.writerow([match_href, map_num, None, None, None, None, None, None, None])
                             if row[6] == 1:
-                                write6 = False
                                 with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
                                     roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                     roundwriter.writerow([match_href, map_num, None, None, None, None, None, None, None, None])
                         if row[5] == 1:
-                            write5 = True
                             with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
                                 resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 resultwriter.writerow([match_href, map_num, map_name, match_team1_href, team1_rounds,
                                                        match_team2_href, team2_rounds, result, abs_result])
                         if row[6] == 1:
-                            write6 = True
                             for half in [1,2]:
                                 team1_side = map_.contents[3].contents[4*half].get('class')[0]
                                 team2_side = map_.contents[3].contents[4*half + 2].get('class')[0]
@@ -420,18 +402,12 @@ def match_data():
                                                               match_team2_href, team2_side, 0])
             else:
                 if row[5] == 1:
-                    write5 = False
                     with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
                         resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                         resultwriter.writerow([match_href, map_num, None, None, None, None, None, None, None])
                 if row[6] == 1:
-                    write6 = False
                     with open("csv\\hltv_map_rounds.csv", 'ab') as roundcsv:
                         roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                         roundwriter.writerow([match_href, map_num, None, None, None, None, None, None, None, None])
-            if write5 == True:
-                print('\t\t' + 'map results')
-            if write6 == True:
-                print('\t\t' + 'map rounds')
                         
 match_data()
