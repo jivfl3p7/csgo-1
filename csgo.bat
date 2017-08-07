@@ -1,6 +1,6 @@
 echo off
 
-C:\Anaconda2\python.exe -W ignore %~dp0\python\hltv_scrape.py
+C:\Anaconda2\python.exe -W ignore %~dp0\python\hltv_scrape_wip.py
 ::C:\Anaconda2\python.exe -W ignore %~dp0\python\demo_parse.py
 ::C:\Anaconda2\python.exe -W ignore %~dp0\python\other\team_name_match.py
 
