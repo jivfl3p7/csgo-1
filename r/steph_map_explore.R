@@ -16,9 +16,9 @@ select distinct
 	,mi.event_href
   ,mi.datetime_utc
   ,mr.match_href
-  ,rank() over (partition by date_part('y', mi.datetime_utc), map_name order by mi.datetime_utc ,mr.match_href) as map_round
-  ,rank() over (partition by date_part('y', mi.datetime_utc) order by mi.datetime_utc ,mr.match_href) as round
-  --,mr.map_num
+  ,rank() over (partition by date_part('y', mi.datetime_utc), map_name order by mi.datetime_utc ,mr.match_href, mr.map_num) as map_round
+  ,rank() over (partition by date_part('y', mi.datetime_utc) order by mi.datetime_utc ,mr.match_href, mr.map_num) as round
+  ,mr.map_num
   ,mr.map_name
   ,mr.team1_href
   ,l1.lineup_id as team1_lineup
@@ -40,7 +40,7 @@ where mr.map_name != 'Season'
 order by
   mi.datetime_utc
   ,mr.match_href
-  --,mr.map_num
+  ,mr.map_num
 ;")
 
 map_data <- fetch(map_query,n=-1)
@@ -66,18 +66,41 @@ for (year in sort(unique(season))){
 }
 
 map_data$logloss = -1*(map_result*log(map_data$pred) + (1 - map_result)*log(1 - map_data$pred))
+# mean(map_data$logloss[!is.na(map_data$logloss)])
+# 0.6877750
+# 0.6814298 (separate rounds by map_num)
+
 # mean(map_data$logloss[!is.na(map_data$logloss) & (map_data$season < 2017)])
+# 0.6857275
+# 0.6754574 (separate rounds by map_num)
+
 # mean(map_data$logloss[!is.na(map_data$logloss) & (map_data$season == 2017)])
+# 0.6912126
+# 0.6915963 (separate rounds by map_num)
+
 map_data$map_logloss = -1*(map_result*log(map_data$pred_map) + (1 - map_result)*log(1 - map_data$pred_map))
+# mean(map_data$map_logloss[!is.na(map_data$map_logloss)])
+# 0.7366806
+
 # mean(map_data$map_logloss[!is.na(map_data$map_logloss) & (map_data$season < 2017)])
+# 0.724874
+
 # mean(map_data$map_logloss[!is.na(map_data$map_logloss) & (map_data$season == 2017)])
+# 0.7510301
 
 
 map_data$ideal_logloss = ifelse(map_data$map_logloss < map_data$logloss, map_data$map_logloss, ifelse(map_data$map_logloss > map_data$logloss, map_data$logloss, NA))
+# mean(map_data$ideal_logloss[!is.na(map_data$ideal_logloss)])
+# 0.5641692
+# 0.5673787 (separate rounds by map_num)
+
 # mean(map_data$ideal_logloss[!is.na(map_data$ideal_logloss) & (map_data$season < 2017)])
+# 0.5532937
+# 0.5582638 (separate rounds by map_num)
 
 map_data$rate_type = ifelse(map_data$map_logloss < map_data$logloss, 1, ifelse(map_data$map_logloss > map_data$logloss, 0, NA))
-# length(map_data$rate_type[!is.na(map_data$map_logloss)])
+# mean(map_data$rate_type[!is.na(map_data$rate_type)])
+
 
 
 
