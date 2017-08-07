@@ -6,7 +6,8 @@ create table csgo.hltv_events (
 	event_href	text,
 	event_name	text,
 	event_end_date	date,
-	event_type	text
+	event_type	text,
+	matches		float
 );
 
 truncate table csgo.hltv_events;
