@@ -430,14 +430,14 @@ def match_data():
                                     with open("csv\\hltv_round_results.csv", 'ab') as roundcsv:
                                         roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"',
                                                                  quoting = csv.QUOTE_MINIMAL)
-                                        roundwriter.writerow([match_href, map_num, map_name, half,
-                                                              t1_win, match_team1_href, team1_side, match_team2_href, team2_side, 1])
+                                        roundwriter.writerow([match_href, map_num, map_name, half, (t1_win + 15*(half - 1)),
+                                                              match_team1_href, team1_side, match_team2_href, team2_side, 1])
                                 for t2_win in range(1,int(map_.contents[3].contents[4*half + 2].text) + 1):
                                     with open("csv\\hltv_round_results.csv", 'ab') as roundcsv:
                                         roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"',
                                                                  quoting = csv.QUOTE_MINIMAL)
-                                        roundwriter.writerow([match_href, map_num, map_name, half,
-                                                              t2_win, match_team1_href, team1_side, match_team2_href, team2_side, 0]) 
+                                        roundwriter.writerow([match_href, map_num, map_name, half, (t1_win + t2_win + 15*(half - 1)),
+                                                              match_team1_href, team1_side, match_team2_href, team2_side, 0])
             else:
                 if row[5] == 1:
                     with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
