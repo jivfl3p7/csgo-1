@@ -7,15 +7,12 @@ create table csgo.hltv_events (
 	event_name	text,
 	event_end_date	date,
 	event_type	text,
-	matches		float
+	matches		float,
+	hltv_rank_dt	date
 );
 
 truncate table csgo.hltv_events;
 
 copy csgo.hltv_events from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\hltv_events.csv' with delimiter as ',' csv quote as '"';
-
---alter table csgo.hltv_events add column event_id int;
-
---update csgo.hltv_events set event_id = substring(event_url from '[0-9]{1,}(?=\/)')::int;
 
 commit;
