@@ -21,6 +21,13 @@ def rank_data():
     recent_rank_page_req = requests.get('https://www.hltv.org/ranking/teams', headers = header)
     year_hrefs = BeautifulSoup(recent_rank_page_req.content, 'lxml').find_all('div', {'class': 'filter-column-content'})[0].contents
     
+    latest_year = re.compile('(?<=teams\/)[0-9]{4}').search(year_hrefs[0].get('href')).group(0)
+    latest_month = str(datetime.datetime.strptime(
+        re.compile('(?<=[0-9]{4}\/)[a-z]*(?=\/)').search(year_hrefs[0].get('href')).group(0),'%B').month)
+    latest_day = re.compile('(?<=[a-z]\/)[0-9]*$').search(year_hrefs[0].get('href')).group(0)
+    if (latest_month + '/' + latest_day + '/' + latest_year) in exist_ranks:
+        return
+    
     date_list = []
     
     for year_href in reversed(year_hrefs):
@@ -35,7 +42,7 @@ def rank_data():
                 day_url = 'https://www.hltv.org' + day_href.get('href')
                 day_req = requests.get(day_url, headers = header)
                 year = re.compile('(?<=teams\/)[0-9]{4}(?=\/)').search(day_url).group(0)
-                month = str(datetime.datetime.strptime(re.compile('(?<=20[0-9]{2}\/).*(?=\/)').search(day_url).group(0), '%B').month)
+                month = str(datetime.datetime.strptime(re.compile('(?<=20[0-9]{2}\/).*(?=\/)').search(day_href.get('href')).group(0), '%B').month)
                 day = re.compile('[0-9]{1,2}$').search(day_url).group(0)
                 date = month + '/' + day + '/' + year
                 if date in list(list(exist_ranks) + date_list):
@@ -82,6 +89,14 @@ def event_data():
     page_results = int(re.compile('(?<= - )[0-9]{1,}(?= of )').search(pagination_string).group(0))
     total_results = int(re.compile('(?<= of )[0-9]{1,}').search(pagination_string).group(0))
     num_pages = 1 + int(math.ceil((total_results - page_results)/page_results))
+    
+    latest_event_check_url = 'https://www.hltv.org/events/archive?eventType=MAJOR&eventType=INTLLAN'
+    latest_event_check_req = requests.get(latest_event_check_url, headers = header)
+    latest_event_check_soup = BeautifulSoup(latest_event_check_req.content, 'html5lib').find('div', {'class': 'contentCol'})
+    first_month = BeautifulSoup(str(latest_event_check_soup),'lxml').find_all('div', {'class': 'events-month'})[0]
+    first_event = BeautifulSoup(str(first_month),'lxml').find_all('a', {'class': 'a-reset small-event standard-box'})[0]
+    if (first_event.get('href') in exist_events) & (first_event.get('href') in exist_events):
+        return
     
     prev_month = None    
     prev_event = None
@@ -140,7 +155,7 @@ def event_data():
                                     event_type = event.contents[2].contents[1].contents[1].contents[0].contents[7].text.encode('utf-8')
                                     with open("csv\\hltv_events.csv", 'ab') as eventcsv:
                                         eventwriter = csv.writer(eventcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                        eventwriter.writerow([event_href,event_name,event_end,event_type, result_rows])
+                                        eventwriter.writerow([event_href,event_name,event_end,event_type, result_rows, rank_dt])
                                 
                                 if event_href not in exist_team_places:
                                     if event_href != prev_event:
