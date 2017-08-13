@@ -1,7 +1,7 @@
 echo off
 
 C:\Anaconda2\python.exe -W ignore %~dp0\python\hltv_scrape.py
-::C:\Anaconda2\python.exe -W ignore %~dp0\python\demo_parse.py
+C:\Anaconda2\python.exe -W ignore %~dp0\python\rar_to_csv.py
 ::C:\Anaconda2\python.exe -W ignore %~dp0\python\other\team_name_match.py
 
 for /f %%a in ('psql -U postgres -c "select 1 as result from pg_database where datname='esports'" -t') do set /a check=%%a
