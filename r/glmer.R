@@ -106,7 +106,9 @@ for (map in unique(round_data$map_name)){
     t$var = sqrt(attr(eff[[2]], "postVar")[1, 1, ])
     t = merge(t, data.frame(table(round_data$t_team[round_data$map_name == map])), by.x = 'team', by.y = 'Var1', all.x = T)
     colnames(t)[c(2,6)] <- c("int","rounds")
-    t$int_std = scale(-1*t$int, center = T, scale = T)
+    t$int = -1*t$int
+    t$int_good = t$int + t$var
+    t$int_bad = t$int - t$var
     
     ct = eff$ct_team
     ct$map_name = map
@@ -115,7 +117,8 @@ for (map in unique(round_data$map_name)){
     ct$var = sqrt(attr(eff[[ct_val]], "postVar")[1, 1, ])
     ct = merge(ct, data.frame(table(round_data$ct_team[round_data$map_name == map])), by.x = 'team', by.y = 'Var1', all.x = T)
     colnames(ct)[c(2,6)] <- c("int","rounds")
-    ct$int_std = scale(ct$int, center = T, scale = T)
+    ct$int_good = ct$int + ct$var
+    ct$int_bad = ct$int - ct$var
     
     map_side_est = rbind(map_side_est,rbind(ct,t))
   }
@@ -125,15 +128,17 @@ for (map in unique(round_data$map_name)){
 # map_side_est %>% group_by(team, map_name) %>% summarise(rounds = sum(rounds))
 
 
-team_agg = ddply(map_side_est,c("team","map_name"),function(X) data.frame(int_std=weighted.mean(X$int_std, X$rounds), rounds=sum(X$rounds)))
-head(team_agg[order(team_agg$int_std, decreasing = T),])
+team_agg = ddply(map_side_est,c("team","map_name"),function(X) data.frame(
+  int_bad=weighted.mean(X$int_bad, X$rounds),
+  int=weighted.mean(X$int, X$rounds),
+  int_good=weighted.mean(X$int_good, X$rounds),
+  rounds=sum(X$rounds)))
+head(team_agg[order(team_agg$int, decreasing = T),])
 
-team_agg2 = ddply(team_agg,"team",function(X) data.frame(int_std=weighted.mean(X$int_std, X$rounds), rounds=sum(X$rounds)))
+team_agg2 = ddply(team_agg,"team",function(X) data.frame(
+  int_bad=weighted.mean(X$int_bad, X$rounds),
+  int=weighted.mean(X$int, X$rounds),
+  int_good=weighted.mean(X$int_good, X$rounds),
+  rounds=sum(X$rounds)))
 team_agg2 = team_agg2[team_agg2$rounds > 500,]
-head(team_agg2[order(team_agg2$int_std, decreasing = T),],20)
-
-
-
-team_agg[team_agg$team == '/player/2023/FalleN/player/557/fnx/player/8564/fer/player/9216/coldzera/player/9217/TACO_2016',]
-
-map_side_est[map_side_est$team == '/player/10004/enanoks/player/10554/nmt/player/322/FlipiN/player/4373/EasTor/player/9328/Blastinho_2016',]
+head(team_agg2[order(team_agg2$int, decreasing = T),],15)
