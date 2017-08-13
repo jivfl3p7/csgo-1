@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 05 13:38:30 2017
-
-@author: wessonmo
-"""
-
 from __future__ import division
 from pyunpack import Archive
 import os
@@ -13,31 +6,84 @@ import re
 import csv
 import subprocess
 import getpass
+import urllib2
+
+header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 \
+    Safari/537.36'}
+    
+scraped_match_info = pd.read_csv('csv\\hltv_match_info.csv', header = None)
+    
+matches_w_demos = scraped_match_info.loc[pd.isnull(scraped_match_info[2]) == False]
+matches_w_demos.loc[:,8] = matches_w_demos.loc[:,0].apply(lambda x: re.compile('(?<=events\/)[0-9]*(?=\/)').search(x).group(0))
+matches_w_demos.loc[:,9] = matches_w_demos.loc[:,1].apply(lambda x: re.compile('(?<=matches\/)[0-9]*(?=\/)').search(x).group(0))
+
+def rar_download():
+    print('### Rars ###')
+    
+    zipped_folder = r'E:\\CSGO Demos\\zipped'
+    prev_event = None
+    
+    for eventid in set(matches_w_demos.loc[:,8]):
+        if not os.path.exists(zipped_folder + '\\' + eventid):
+                os.makedirs(zipped_folder + '\\' + eventid)
+        
+        if len(os.listdir(zipped_folder + '\\' + eventid)) < len(matches_w_demos.loc[matches_w_demos[8] == eventid,9]):
+            for matchid in set(matches_w_demos.loc[matches_w_demos[8] == eventid,9]):
+                if not (matchid + '.rar') in os.listdir(zipped_folder + '\\' + eventid):
+                    if not prev_event == matches_w_demos.loc[matches_w_demos[8] == eventid,0].iloc[0]:
+                        print(matches_w_demos.loc[matches_w_demos[8] == eventid,0].iloc[0])
+                        prev_event = matches_w_demos.loc[matches_w_demos[8] == eventid,0].iloc[0]
+                    
+                    try:
+                        match_row = matches_w_demos.loc[matches_w_demos[9] == matchid,:].iloc[0]
+                        demo_url = 'https://www.hltv.org' + match_row[2]
+                        req = urllib2.Request(demo_url,headers = header)
+                        response = urllib2.urlopen(req)
+                        read = response.read()
+                        with open(zipped_folder + '\\' + eventid + '\\' + matchid + '.rar', 'wb+') as file_:
+                            file_.write(read)
+                        file_.close()
+                        print('\t' + match_row[1])
+                    except:
+                        with open(zipped_folder + '\\' + eventid + '\\' + matchid + '.rar', 'wb+') as file_:
+                            file_.write('')
+                        file_.close()
+                        print('\tFAIL - ' + match_row[1])
+rar_download()
 
 def rar_to_demo():
-    print('########## rar to demo ##########')
+    print('### Demos ###')
+    
     zipped_folder = r'E:\\CSGO Demos\\zipped'
     unzipped_folder = r'E:\\CSGO Demos\\unzipped'
+    prev_event = None
     
-    for folder in os.listdir(zipped_folder):
-        for file_ in os.listdir(zipped_folder + '\\' + folder):
-            if not os.path.exists(unzipped_folder + '\\' + folder + '\\' + file_[:-4]):
-                os.makedirs(unzipped_folder + '\\' + folder + '\\' + file_[:-4])
+    for eventid in os.listdir(zipped_folder):
+        for matchid in os.listdir(zipped_folder + '\\' + eventid):
+            if not os.path.exists(unzipped_folder + '\\' + eventid + '\\' + matchid[:-4]):
+                os.makedirs(unzipped_folder + '\\' + eventid + '\\' + matchid[:-4])
+                match_row = matches_w_demos.loc[matches_w_demos[9] == matchid[:-4],:].iloc[0]
+                if not prev_event == match_row[0]:
+                    print(match_row[0])
+                    prev_event = match_row[0]
                 try:
-                    Archive(zipped_folder + '\\' + folder + '\\' + file_).extractall(unzipped_folder + '\\' + folder + '\\' + file_[:-4])
-                    print(zipped_folder + '\\' + folder + '\\' + file_)
+                    Archive(zipped_folder + '\\' + eventid + '\\' + matchid).extractall(unzipped_folder + '\\' + eventid + '\\' + matchid[:-4])
+                    print('\t' + match_row[1])
                 except:
-                    with open('csv\\demo_fails.csv', 'ab') as demofailcsv:
-                        demofailwriter = csv.writer(demofailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                        demofailwriter.writerow([folder,file_[:-4],'fail'])
+                    with open(unzipped_folder + '\\' + eventid + '\\' +  matchid[:-4] + '.dem', 'wb+') as file_:
+                        file_.write('')
+                    file_.close()
+                    print('\tFAIL - ' + match_row[1])
                         
 rar_to_demo()
 
 def demo_to_json():
-    print('########## demo to json ##########')
+    print('### Jsons ###')
     unzipped_folder = 'E:\\CSGO Demos\\unzipped'
     json_folder = 'E:\\CSGO Demos\\json'
     parse_string1 = 'cd C:\\Users\\' + getpass.getuser() + '\\Documents\\Github\\dem2json && node dem2json.js '
+    
+    prev_event = None
     
     for eventid in os.listdir(unzipped_folder):
         for matchid in os.listdir(unzipped_folder + '\\' + eventid):
@@ -47,22 +93,32 @@ def demo_to_json():
                 files = (x for x in files if x[-4:] == '.dem')
                 for idx, item in enumerate(files):
                     if not os.path.exists(json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid + "-" + str(idx) + ".json"):
+                        match_row = matches_w_demos.loc[matches_w_demos[9] == matchid,:].iloc[0]
+                        if not prev_event == match_row[0]:
+                                print(match_row[0])
+                                prev_event = match_row[0]
+                        
                         parse_string2 = "\"" + unzipped_folder + '\\' + eventid + '\\' + matchid + "\\" + item + "\" > "
                         args = (parse_string1 + parse_string2 + "\"" + json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid + "-" 
                             + str(idx) + ".json\"")
                         try:
                             subprocess.check_output(args, shell = True, stderr=subprocess.STDOUT)
-                            print(matchid + "-" + str(idx))
+                            print('\t' + match_row[1])
                         except Exception as e:
+                            with open(json_folder + '\\' + eventid + '\\' +  matchid + '.json', 'wb+') as file_:
+                                file_.write('')
+                            file_.close()
+                            
                             error_msg = str(e)
                             with open("csv\\json_fails.csv", 'ab') as jsonfailcsv:
                                 jsonfailwriter = csv.writer(jsonfailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 jsonfailwriter.writerow([eventid,matchid,error_msg])
+                            print('\tFAIL - ' + match_row[1])
 
 demo_to_json()
 
 def json_to_csv():
-    print('########## json to csv ##########')
+    print('### json to csv ###')
     try:
         exist_csv = list(pd.read_csv('csv\\demo_info.csv', header = None)[0].drop_duplicates())
         try:
@@ -381,4 +437,4 @@ def json_to_csv():
                                 csvfailwriter = csv.writer(csvfailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 csvfailwriter.writerow([eventid,file_[:-5],error_msg])
                                 
-json_to_csv()
+#json_to_csv()
