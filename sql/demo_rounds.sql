@@ -3,13 +3,14 @@ begin;
 drop table if exists csgo.demo_rounds;
 
 create table csgo.demo_primary (
-	map_id			text,
+	match_href		text,
+	map_num			float,
 	phase			text,
-	round			int,
+	round			float,
 	t_team			text,
 	ct_team			text,
-	ct_econ_adv		int,
-	winner			int
+	ct_econ_adv		float,
+	winner			float
 );
 
 truncate table csgo.demo_rounds;
