@@ -131,15 +131,16 @@ def json_to_csv():
     except:
         exist_csv = []
         
-    prev_eventid = None
+    prev_event = None
     
-    for eventid in os.listdir(json_folder):
+    for eventid in os.listdir(json_folder)[0:1]:
         for matchid in os.listdir(json_folder + '\\' + eventid):
             for file_ in os.listdir(json_folder + '\\' + eventid + '\\' + matchid):
                 if file_[:-5] not in exist_csv:
-                    if prev_eventid != eventid:
-                        print(eventid)
-                        prev_eventid = eventid
+                    match_row = matches_w_demos.loc[matches_w_demos[9] == file_[:-7],:].iloc[0]
+                    if not prev_event == match_row[0]:
+                            print(match_row[0])
+                            prev_event = match_row[0]
                     try:
                         data = pd.read_json(json_folder + '\\' + eventid + '\\' + matchid + '\\' + file_)
                         # "C:\\Users\\wessonmo\\Desktop\\faze-vs-astralis-map1-mirage.json"
@@ -169,9 +170,9 @@ def json_to_csv():
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-1.json")
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json")
                         
-                        data = pd.merge(data, data.loc[(data['event'] == 'player_connect') &
-                            (data['steamid'] != 'BOT'),['userid','steamid']], how = 'left', on = 'userid').rename(index = str,
-                            columns = {'steamid_y':'steamid'}).reset_index(drop = True)
+                        data = pd.merge(data, data.loc[(data['event'] == 'player_connect') & (data['steamid'] != 'BOT'),
+                               ['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid').rename(index = str,
+                                columns = {'steamid_y':'steamid'}).reset_index(drop = True)
                         
                         rounds = data.loc[data['event'].isin(['round_start','round_end']),
                                           ['round','tick','event','winner','reason','score_ct','score_t']]\
@@ -229,7 +230,7 @@ def json_to_csv():
                                 if row['round_est'] == -1:
                                     pass
                                 elif row['round_est'] == next_round:
-                                    rounds.drop(rounds.index[index], inplace = True)
+                                    rounds.drop(rounds.index[[index]], inplace = True)
                                 elif next_round - row['round_est'] > 1:
                                     raise ValueError('missing round')
                                     
@@ -371,10 +372,11 @@ def json_to_csv():
                                 & (item_change['tick'] < row['first_blood']),'t_econ'].max()
                             rounds.set_value(index, 'ct_econ_adv', ct_econ - t_econ)
                         
-                        rounds['mapid'] = file_[:-5]
+                        rounds['match_href'] = match_row[1]
+                        rounds['map_num'] = int(file_[-6:-5])
                             
                         with open('csv\\demo_rounds.csv', 'ab') as democsv:
-                            rounds[['mapid','phase','round','t_team','ct_team','ct_econ_adv','winner']]\
+                            rounds[['match_href','map_num','phase','round','t_team','ct_team','ct_econ_adv','winner']]\
                                 .to_csv(democsv, header = False, index = False)
                            
                         mapname = data.loc[data['event']=='info','mapName'].iloc[0]
@@ -382,7 +384,7 @@ def json_to_csv():
                         error_msg = None
                         with open('csv\\demo_info.csv', 'ab') as democsv:
                             demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                            demowriter.writerow([file_[:-5],mapname,maphash,error_msg])
+                            demowriter.writerow([match_row[1],int(file_[-6:-5]),mapname,maphash,error_msg])
                             
                         
 #                        players = data.loc[(data['event'].isin(['player_hurt','item_purchase','item_pickup','armor_purchase','item_drop']))
@@ -407,12 +409,13 @@ def json_to_csv():
 #                        with open('csv\\demo_players.csv', 'ab') as playercsv:
 #                            players[['mapid','steamid','name','team']].to_csv(playercsv, header = False, index = False)
                             
-                        print(file_[:-5])
+                        print('\t' + match_row[1])
                     
                     except Exception as e:
                             error_msg = str(e)
                             with open('csv\\demo_info.csv', 'ab') as democsv:
                                 demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                demowriter.writerow([file_[:-5],None,None,error_msg])
+                                demowriter.writerow([match_row[1],int(file_[-6:-5]),None,None,error_msg])
+                            print('\tFAIL - ' + match_row[1])
                                 
 #json_to_csv()
