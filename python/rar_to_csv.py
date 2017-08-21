@@ -9,7 +9,6 @@ import subprocess
 import getpass
 import urllib2
 import math
-import time
 
 header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 \
     Safari/537.36'}
@@ -76,7 +75,8 @@ def rar_to_demo():
                     print(match_row[0])
                     prev_event = match_row[0]
                 try:
-                    Archive(zipped_folder + '\\' + eventid + '\\' + matchid).extractall(unzipped_folder + '\\' + eventid + '\\' + matchid[:-4])
+                    Archive(zipped_folder + '\\' + eventid + '\\' + matchid).extractall(unzipped_folder + '\\' + eventid + '\\'
+                        + matchid[:-4])
                     print('\t' + match_row[1])
                 except:
                     with open(unzipped_folder + '\\' + eventid + '\\' +  matchid[:-4] + '.dem', 'wb+') as file_:
@@ -105,13 +105,14 @@ def demo_to_json():
                                 prev_event = match_row[0]
                         
                         parse_string2 = "\"" + unzipped_folder + '\\' + eventid + '\\' + matchid + "\\" + item + "\" > "
-                        args = (parse_string1 + parse_string2 + "\"" + json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid + "-" 
-                            + str(idx) + ".json\"")
+                        args = (parse_string1 + parse_string2 + "\"" + json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid
+                            + "-" + str(idx) + ".json\"")
                         try:
                             subprocess.check_output(args, shell = True, stderr=subprocess.STDOUT)
                             print('\t' + match_row[1])
                         except Exception as e:
-                            with open(json_folder + '\\' + eventid + '\\' +  matchid + '\\' +  matchid + "-" + str(idx) + '.json', 'wb+') as file_:
+                            with open(json_folder + '\\' + eventid + '\\' +  matchid + '\\' +  matchid + "-" + str(idx) + '.json',
+                                      'wb+') as file_:
                                 file_.write('')
                             file_.close()
                             
@@ -127,17 +128,12 @@ def json_to_csv():
     print('### json to csv ###')
     try:
         exist_csv = list(pd.read_csv('csv\\demo_info.csv', header = None)[0].drop_duplicates())
-        try:
-            exist_fail = list(pd.read_csv('csv\\csv_fails.csv', header = None)[1])
-            exist_csv = exist_csv + exist_fail
-        except:
-            pass
     except:
         exist_csv = []
         
     prev_eventid = None
     
-    for eventid in os.listdir(json_folder)[11:18]:
+    for eventid in os.listdir(json_folder):
         for matchid in os.listdir(json_folder + '\\' + eventid):
             for file_ in os.listdir(json_folder + '\\' + eventid + '\\' + matchid):
                 if file_[:-5] not in exist_csv:
@@ -177,14 +173,6 @@ def json_to_csv():
                             (data['steamid'] != 'BOT'),['userid','steamid']], how = 'left', on = 'userid').rename(index = str,
                             columns = {'steamid_y':'steamid'}).reset_index(drop = True)
                         
-                        match_info = pd.DataFrame(data[data['event']=='info'])
-                        match_info.insert(0,'mapid',file_[:-5])
-                        match_info['mapHash'] = match_info['mapHash'].astype(int).astype(str)
-                        match_info = match_info[['mapid','mapName','mapHash']]
-                        match_info = match_info.drop_duplicates()
-                        with open('csv\\demo_info.csv', 'ab') as infocsv:
-                            match_info.to_csv(infocsv, header = False, index = False)
-                        
                         rounds = data.loc[data['event'].isin(['round_start','round_end']),
                                           ['round','tick','event','winner','reason','score_ct','score_t']]\
                                           .sort_values(['tick','event'], ascending = [True,True])\
@@ -212,6 +200,7 @@ def json_to_csv():
                         for index, row in rounds.iterrows():
                             if row['event'] == 'round_start':
                                 rounds.set_value(index, 'round_raw', i)
+                                i += 1
                             
                         knife_round = pd.merge(data.loc[(data['event'] == 'player_hurt') & (data['weapon'] != '') & (data['health'] == 0),
                                         ['tick','weapon']], weapon_data[['weapon','primary_class']],how = 'left', on = 'weapon')\
@@ -381,9 +370,19 @@ def json_to_csv():
                             t_econ = item_change.loc[(row['start'] <= item_change['tick'])
                                 & (item_change['tick'] < row['first_blood']),'t_econ'].max()
                             rounds.set_value(index, 'ct_econ_adv', ct_econ - t_econ)
+                        
+                        rounds['mapid'] = file_[:-5]
                             
                         with open('csv\\demo_rounds.csv', 'ab') as democsv:
-                            rounds.to_csv(democsv, header = False, index = False)
+                            rounds[['mapid','phase','round','t_team','ct_team','ct_econ_adv','winner']]\
+                                .to_csv(democsv, header = False, index = False)
+                           
+                        mapname = data.loc[data['event']=='info','mapName'].iloc[0]
+                        maphash = str(int(data.loc[data['event']=='info','mapHash'].iloc[0]))
+                        error_msg = None
+                        with open('csv\\demo_info.csv', 'ab') as democsv:
+                            demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                            demowriter.writerow([file_[:-5],mapname,maphash,error_msg])
                             
                         
 #                        players = data.loc[(data['event'].isin(['player_hurt','item_purchase','item_pickup','armor_purchase','item_drop']))
@@ -412,8 +411,8 @@ def json_to_csv():
                     
                     except Exception as e:
                             error_msg = str(e)
-                            with open('csv\\csv_fails.csv', 'ab') as csvfailcsv:
-                                csvfailwriter = csv.writer(csvfailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                csvfailwriter.writerow([eventid,file_[:-5],error_msg])
+                            with open('csv\\demo_info.csv', 'ab') as democsv:
+                                demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                demowriter.writerow([file_[:-5],None,None,error_msg])
                                 
 #json_to_csv()

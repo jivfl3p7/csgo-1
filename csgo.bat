@@ -23,9 +23,7 @@ psql -U postgres -d esports -qf sql/current_team_lineups.sql
 ::psql -U postgres -d esports -qf sql/lineup_init_stats.sql
 ::psql -U postgres -d esports -qf sql/demo_info.sql
 ::psql -U postgres -d esports -qf sql/demo_players.sql
-::psql -U postgres -d esports -qf sql/demo_knife.sql
-::psql -U postgres -d esports -qf sql/demo_pistol.sql
-::psql -U postgres -d esports -qf sql/demo_primary.sql
+::psql -U postgres -d esports -qf sql/demo_rounds.sql
 ::psql -U postgres -d esports -qf sql/team_name_match.sql
 
 ::placeholder for R script(s)
