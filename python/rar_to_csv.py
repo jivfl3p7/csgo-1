@@ -148,27 +148,29 @@ def json_to_csv():
                         # "C:\\Users\\wessonmo\\Desktop\\faze-vs-astralis-map3-inferno.json"
                         # "C:\\Users\\wessonmo\\Desktop\\1_flipsid3-natus-vincere_de_nuke.json"
                         
-                        # score testing jsons
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298924\\2298924-0.json") right after half
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298948\\2298948-0.json") pre-half
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298949\\2298949-0.json") later in second half
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298960\\2298960-1.json") right after half
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298961\\2298961-0.json")
+                        # missing + extra
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298924\\2298924-0.json") 
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298948\\2298948-0.json")
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298949\\2298949-0.json")
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298960\\2298960-1.json")
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298961\\2298961-1.json")
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298963\\2298963-0.json")
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298973\\2298973-1.json")
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298974\\2298974-0.json")
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298987\\2298987-0.json")
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298987\\2298987-0.json") 3x
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\1617\\2298987\\2298987-2.json")
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300570\\2300570-0.json") final round?
                         
-                        #wrong number of pistol rounds
+                        #ct score goes up then down
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300570\\2300570-0.json") 
+                        
+                        #extra rounds
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\2036\\2301160\\2301160-0.json")
-#                        data = pd.read_json("C:\\Users\\wessonmo\\Desktop\\2301160-0.json")
                         
                         #match split into two demos
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-1.json")
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json")
+                        
+#                        data = pd.read_json("F:\\1615\\2299500\\2299500-0.json")
                         
                         data = pd.merge(data, data.loc[(data['event'] == 'player_connect') & (data['steamid'] != 'BOT'),
                                ['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid').rename(index = str,
