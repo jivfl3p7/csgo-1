@@ -134,7 +134,7 @@ def json_to_csv():
     prev_event = None
     import random
 #    for eventid in os.listdir(json_folder):
-    for eventid in random.sample(os.listdir(json_folder),15):
+    for eventid in random.sample(os.listdir(json_folder),20):
         for matchid in os.listdir(json_folder + '\\' + eventid):
             for file_ in os.listdir(json_folder + '\\' + eventid + '\\' + matchid):
                 if file_[:-5] not in exist_csv:
@@ -171,6 +171,17 @@ def json_to_csv():
 
                         # 'too many teams per side'
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") both teams in round 4
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307094\\2307094-1.json") both sides in round 27
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2062\\2303385\\2303385-1.json")
+
+                        # '>1 knife round'
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2314\\2303745\\2303745-2.json")
+
+                        # 'round_raw'
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307101\\2307101-2.json") broken json
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2641\\2309865\\2309865-1.json") broken json
+
+                        error_msg = None
                         
                         data = pd.merge(data, data.loc[(data['event'] == 'player_connect') & (data['steamid'] != 'BOT'),
                                ['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid').rename(index = str,
@@ -217,12 +228,10 @@ def json_to_csv():
                             knife_round = pd.pivot_table(knife_round.groupby(['round_raw','primary_class']).size().reset_index(),
                                                     index = 'round_raw', columns = 'primary_class', aggfunc = 'sum').reset_index().fillna(0)
                             knife_round.columns = knife_round.columns.droplevel(0)
-                            knife_round = knife_round.loc[(knife_round['pistol'] + knife_round['primary'] == 0),'']
-                            
+                            knife_round = list(knife_round.loc[(knife_round['pistol'] + knife_round['primary'] == 0),''])
                             if len(knife_round) > 1:
-                                raise ValueError('> 1 knife round')
-                            elif len(knife_round) == 1:
-                                rounds['round_score'] = np.where(rounds['round_raw'] == knife_round.iloc[0], -1, rounds['round_score'])
+                                error_msg = '> 1 knife round'
+                            rounds['round_score'] = np.where(rounds['round_raw'].isin(knife_round), -1, rounds['round_score'])    
                             
                         for index, row in rounds.iterrows():
                             if row['round_score'] == -1:
@@ -247,7 +256,9 @@ def json_to_csv():
                                 if row['round_est'] in [0,next_round]:
                                     rounds.drop(rounds.index[[index]], inplace = True)
                                 elif next_round - row['round_est'] > 1:
-                                    raise ValueError('missing round')
+                                    rounds = rounds.loc[rounds['round'] <= row['round_est']]
+                                    error_msg = np.where(error_msg == None, 'missing round; ',
+                                                     error_msg + 'missing round; ')
                                     
                         rounds = rounds.drop(['event','round','round_raw','round_score'], 1).rename(index = str,
                             columns = {'round_est':'round'}).reset_index(drop = True)
@@ -279,14 +290,25 @@ def json_to_csv():
                         for rnd in set(teams['round']):
                             rnd_data = teams.loc[teams['round'] == rnd,['clanname','side']]
                             if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
-                                raise ValueError('too many teams per side')
+                                rounds = rounds.loc[rounds['round'] < rnd]
+                                error_msg = np.where(error_msg == None, 'too many teams per side; ',
+                                                     error_msg + 'too many teams per side; ')
+                                break
                             if rnd_data['clanname'].nunique() < 1:
-                                raise ValueError('not enough teams per round')
+                                rounds = rounds.loc[rounds['round'] < rnd]
+                                error_msg = np.where(error_msg == None, 'not enough teams per side; ',
+                                                     error_msg + 'not enough teams per side; ')
+                                break
+                                
                         
                         rounds = pd.merge(rounds, teams.loc[teams['side'] == 3,['round','clanname']], how = 'left', on = 'round')\
                             .rename(index = str, columns = {'clanname':'ct_team'}).reset_index(drop = True)
                         rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','clanname']], how = 'left', on = 'round')\
                             .rename(index = str, columns = {'clanname':'t_team'}).reset_index(drop = True)
+                            
+                        for index, row in rounds.iterrows():
+                            rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'].encode('utf-8'))))
+                            rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'].encode('utf-8'))))
                             
                         for index, row in rounds.loc[pd.isnull(rounds['ct_team']) | pd.isnull(rounds['t_team'])].iterrows():
                             if pd.isnull(row['ct_team']):
@@ -410,7 +432,7 @@ def json_to_csv():
                            
                         mapname = data.loc[data['event']=='info','mapName'].iloc[0]
                         maphash = str(int(data.loc[data['event']=='info','mapHash'].iloc[0]))
-                        error_msg = None
+                        
                         with open('csv\\demo_info.csv', 'ab') as democsv:
                             demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                             demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],mapname,maphash,error_msg])
