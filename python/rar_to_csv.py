@@ -132,9 +132,9 @@ def json_to_csv():
         exist_csv = []
         
     prev_event = None
-    
-#    for eventid in os.listdir(json_folder)[-4:-3]:
-    for eventid in ['1617','1865','2036','2571']:
+    import random
+#    for eventid in os.listdir(json_folder):
+    for eventid in random.sample(os.listdir(json_folder),15):
         for matchid in os.listdir(json_folder + '\\' + eventid):
             for file_ in os.listdir(json_folder + '\\' + eventid + '\\' + matchid):
                 if file_[:-5] not in exist_csv:
@@ -159,7 +159,18 @@ def json_to_csv():
 #                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300570\\2300570-0.json")
                         
                         # too many teams per side
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json") 
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json")
+                        
+                        # 'pistol'
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-0.json") only 3 rounds in the demo (demo to json issue?)
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-1.json") only 3 rounds in the demo (demo to json issue?)
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") only x rounds in the demo (demo to json issue?)
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311331\\2311331-0.json") only x rounds in the demo (demo to json issue?)
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311332\\2311332-1.json") only x rounds in the demo (demo to json issue?)
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2239\\2305232\\2305232-1.json") only x rounds in the demo (demo to json issue?)
+
+                        # 'too many teams per side'
+#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") both teams in round 4
                         
                         data = pd.merge(data, data.loc[(data['event'] == 'player_connect') & (data['steamid'] != 'BOT'),
                                ['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid').rename(index = str,
@@ -193,24 +204,25 @@ def json_to_csv():
                             if row['event'] == 'round_start':
                                 rounds.set_value(index, 'round_raw', i)
                                 i += 1
+
+                        if rounds['round_score'].iloc[0] < 5:
+                            knife_round = pd.merge(data.loc[(data['event'] == 'player_hurt') & (data['weapon'] != '') & (data['health'] == 0),
+                                            ['tick','weapon']], weapon_data[['weapon','primary_class']],how = 'left', on = 'weapon')\
+                                            [['tick','primary_class']].drop_duplicates()
+                                           
+                            for index, row in rounds[rounds['round_raw'] < 5].iterrows():
+                                knife_round.loc[(knife_round['tick'] >= row['start']) & (knife_round['tick'] != 0)
+                                    & (knife_round['tick'] <= row['round_decision']),'round_raw'] = row['round_raw']
+                            knife_round = knife_round.loc[pd.isnull(knife_round['round_raw']) == False]
+                            knife_round = pd.pivot_table(knife_round.groupby(['round_raw','primary_class']).size().reset_index(),
+                                                    index = 'round_raw', columns = 'primary_class', aggfunc = 'sum').reset_index().fillna(0)
+                            knife_round.columns = knife_round.columns.droplevel(0)
+                            knife_round = knife_round.loc[(knife_round['pistol'] + knife_round['primary'] == 0),'']
                             
-                        knife_round = pd.merge(data.loc[(data['event'] == 'player_hurt') & (data['weapon'] != '') & (data['health'] == 0),
-                                        ['tick','weapon']], weapon_data[['weapon','primary_class']],how = 'left', on = 'weapon')\
-                                        [['tick','primary_class']].drop_duplicates()
-                                       
-                        for index, row in rounds[rounds['round_raw'] < 5].iterrows():
-                            knife_round.loc[(knife_round['tick'] >= row['start']) & (knife_round['tick'] != 0)
-                                & (knife_round['tick'] <= row['round_decision']),'round_raw'] = row['round_raw']
-                        knife_round = knife_round.loc[pd.isnull(knife_round['round_raw']) == False]
-                        knife_round = pd.pivot_table(knife_round.groupby(['round_raw','primary_class']).size().reset_index(),
-                                                index = 'round_raw', columns = 'primary_class', aggfunc = 'sum').reset_index().fillna(0)
-                        knife_round.columns = knife_round.columns.droplevel(0)
-                        knife_round = knife_round.loc[(knife_round['pistol'] + knife_round['primary'] == 0),'']
-                        
-                        if len(knife_round) > 1:
-                            raise ValueError('> 1 knife round')
-                        elif len(knife_round) == 1:
-                            rounds['round_score'] = np.where(rounds['round_raw'] == knife_round.iloc[0], -1, rounds['round_score'])
+                            if len(knife_round) > 1:
+                                raise ValueError('> 1 knife round')
+                            elif len(knife_round) == 1:
+                                rounds['round_score'] = np.where(rounds['round_raw'] == knife_round.iloc[0], -1, rounds['round_score'])
                             
                         for index, row in rounds.iterrows():
                             if row['round_score'] == -1:
@@ -275,6 +287,18 @@ def json_to_csv():
                             .rename(index = str, columns = {'clanname':'ct_team'}).reset_index(drop = True)
                         rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','clanname']], how = 'left', on = 'round')\
                             .rename(index = str, columns = {'clanname':'t_team'}).reset_index(drop = True)
+                            
+                        for index, row in rounds.loc[pd.isnull(rounds['ct_team']) | pd.isnull(rounds['t_team'])].iterrows():
+                            if pd.isnull(row['ct_team']):
+                                if row['phase'] == rounds['phase'].iloc[int(index) + 1]:
+                                    rounds.set_value(index,'ct_team',rounds['ct_team'].iloc[int(index) + 1])
+                                else:
+                                    rounds.set_value(index,'ct_team',rounds['t_team'].iloc[int(index) + 1])
+                            if pd.isnull(row['t_team']):
+                                if row['phase'] == rounds['phase'].iloc[int(index) + 1]:
+                                    rounds.set_value(index,'t_team',rounds['t_team'].iloc[int(index) + 1])
+                                else:
+                                    rounds.set_value(index,'t_team',rounds['ct_team'].iloc[int(index) + 1])
                         
                         item_change = data.loc[(data['event'].isin(['defuser_purchase','armor_purchase']))
                             | ((data['weapon'] != 'c4') & data['event'].isin(['item_purchase','item_pickup','item_drop']))
