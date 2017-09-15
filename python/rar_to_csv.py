@@ -9,7 +9,8 @@ import subprocess
 import getpass
 import urllib2
 import math
-import fuzzywuzzy
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 \
     Safari/537.36'}
@@ -145,7 +146,7 @@ def json_to_csv():
                             prev_event = match_row[0]
                     try:
                         try:
-                            data = pd.read_json(json_folder + '\\' + eventid + '\\' + matchid + '\\' + file_)
+                            init_data = pd.read_json(json_folder + '\\' + eventid + '\\' + matchid + '\\' + file_)
                         except:
                             with open('csv\\demo_info.csv', 'ab') as democsv:
                                 demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
@@ -154,53 +155,72 @@ def json_to_csv():
                             continue
                         
                         # missing round
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2036\\2301162\\2301162-0.json") + missing/extra rounds
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2036\\2301162\\2301162-0.json") + missing/extra rounds
                         
                         # ct score goes up then down
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300570\\2300570-0.json")
-                        
-                        # too many teams per side
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300570\\2300570-0.json")
                         
                         # 'pistol'
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-0.json") only 3 rounds in the demo (demo to json issue?)
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-1.json") only 3 rounds in the demo (demo to json issue?)
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") only x rounds in the demo (demo to json issue?)
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311331\\2311331-0.json") only x rounds in the demo (demo to json issue?)
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311332\\2311332-1.json") only x rounds in the demo (demo to json issue?)
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2239\\2305232\\2305232-1.json") only x rounds in the demo (demo to json issue?)
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-0.json") only 3 rounds in the demo (demo to json issue?)
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-1.json") only 3 rounds in the demo (demo to json issue?)
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") only x rounds in the demo (demo to json issue?)
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311331\\2311331-0.json") only x rounds in the demo (demo to json issue?)
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311332\\2311332-1.json") only x rounds in the demo (demo to json issue?)
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2239\\2305232\\2305232-1.json") only x rounds in the demo (demo to json issue?)
 
                         # 'too many teams per side'
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") both teams in round 4
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307094\\2307094-1.json") both sides in round 27
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2062\\2303385\\2303385-1.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") both teams in round 4
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307094\\2307094-1.json") both sides in round 27
+
+                        # player on 'wrong' team
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json") rubino on both CLG and dignitas (dignitas first though)
 
                         # '>1 knife round'
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2314\\2303745\\2303745-2.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2314\\2303745\\2303745-2.json")
 
                         # 'round_raw'
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307101\\2307101-2.json") broken json
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2641\\2309865\\2309865-1.json") broken json
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307101\\2307101-2.json") broken json
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2641\\2309865\\2309865-1.json") broken json
 
                         # no rounds
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307101\\2307101-2.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307101\\2307101-2.json")
 
                         # 'pistol' or 'primary'
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-1.json")
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-2.json")
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2673\\2308382\\2308382-0.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-1.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-2.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2673\\2308382\\2308382-0.json")
 
                         # 'round'
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2635\\2312069\\2312069-5.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2635\\2312069\\2312069-5.json")
 
                         # multiple names for one team (add fuzzy matching)
-#                        data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json")
 
                         
-                        data = pd.merge(data, data.loc[(data['event'] == 'player_connect') & (data['steamid'] != 'BOT'),
-                               ['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid').rename(index = str,
-                                columns = {'steamid_y':'steamid'}).reset_index(drop = True)
-                        data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False),'clanname'].drop_duplicates()
+                        data = pd.merge(init_data, init_data.loc[(init_data['event'] == 'player_connect')
+                            & (init_data['steamid'] != 'BOT'),['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid')\
+                            .rename(index = str, columns = {'steamid_y':'steamid'}).reset_index(drop = True)
+                        
+                        clannames = data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False),['clanname']]\
+                            .drop_duplicates()
+                        clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['clanname']]
+                        
+                        hltv_teams = pd.DataFrame(match_row[[4,6]])
+                        hltv_teams.columns = range(hltv_teams.shape[1])
+                        hltv_teams['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in hltv_teams[0]]
+                        
+                        for team_name in clannames['lower']:
+                            fuzzy_match = process.extractOne(team_name, hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                            if fuzzy_match[1] > 85:
+                                clannames.loc[clannames['lower'] == team_name,'hltv_name'] = hltv_teams\
+                                    .loc[hltv_teams['lower'] == fuzzy_match[0],0].iloc[0]
+                            else:
+                                raise ValueError('team name match only ' + str(fuzzy_match[1]))
+                                
+                        if len(clannames['hltv_name'].drop_duplicates()) != 2:
+                            raise ValueError('number of team names')
+                        
+                        data = pd.merge(data, clannames[['clanname','hltv_name']], how = 'left', on = 'clanname')
                                 
                         error_msg = None
                         
@@ -312,19 +332,19 @@ def json_to_csv():
                             rounds.set_value(index,'first_blood',tick)
                             
                         teams = data.loc[(data['event'] == 'item_purchase') | ((data['event'] == 'player_hurt') & (data['health'] == 0)),
-                                         ['tick','side','clanname']].drop_duplicates()
+                                         ['tick','side','hltv_name']].drop_duplicates()
                         for index, row in rounds.iterrows():
                             teams.loc[(teams['tick'] >= row['start']) & (teams['tick'] <= row['round_decision']),'round'] = row['round']
                         
-                        teams = teams.loc[(pd.isnull(teams['round']) == False) & (teams['clanname'] != ''),
-                                          ['round','clanname','side']].drop_duplicates()
+                        teams = teams.loc[(pd.isnull(teams['round']) == False) & (teams['hltv_name'] != '')
+                            & (pd.isnull(teams['hltv_name']) == False), ['round','hltv_name','side']].drop_duplicates()
                         for rnd in set(rounds['round']):
-                            print(rnd,teams.loc[teams['round'] == rnd,'clanname'].iloc[0],teams.loc[teams['round'] == rnd,'side'].iloc[0])
-                            rnd_data = teams.loc[teams['round'] == rnd,['clanname','side']]
+                            print(rnd,teams.loc[teams['round'] == rnd,'hltv_name'].iloc[0],teams.loc[teams['round'] == rnd,'side'].iloc[0])
+                            rnd_data = teams.loc[teams['round'] == rnd,['hltv_name','side']]
                             if rnd == -1:
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                     error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
-                                if rnd_data['clanname'].nunique() < 1:
+                                if rnd_data['hltv_name'].nunique() < 1:
                                     error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
                                 rounds = rounds.loc[rounds['round'] != rnd]
                             elif len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
@@ -332,10 +352,10 @@ def json_to_csv():
                                 rounds = rounds.loc[rounds['round'] < rnd]
                                 
                         
-                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 3,['round','clanname']], how = 'left', on = 'round')\
-                            .rename(index = str, columns = {'clanname':'ct_team'}).reset_index(drop = True)
-                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','clanname']], how = 'left', on = 'round')\
-                            .rename(index = str, columns = {'clanname':'t_team'}).reset_index(drop = True)
+                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 3,['round','hltv_name']], how = 'left', on = 'round')\
+                            .rename(index = str, columns = {'hltv_name':'ct_team'}).reset_index(drop = True)
+                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','hltv_name']], how = 'left', on = 'round')\
+                            .rename(index = str, columns = {'hltv_name':'t_team'}).reset_index(drop = True)
                             
                         for index, row in rounds.loc[pd.isnull(rounds['ct_team']) | pd.isnull(rounds['t_team'])].iterrows():
                             if pd.isnull(row['ct_team']):
@@ -480,7 +500,7 @@ def json_to_csv():
                         
 #                        players = data.loc[(data['event'].isin(['player_hurt','item_purchase','item_pickup','armor_purchase','item_drop']))
 #                            & (((data['round'] >= 3) & (data['round'] <= 5)) | ((data['round'] > 16) & (data['round'] <= 20))),
-#                            ['tick','steamid','clanname']]
+#                            ['tick','steamid','hltv_name']]
 #                        for index, row in players.iterrows():
 #                            for index2, row2 in rounds.iterrows():
 #                                if row2['start'] <= row['tick'] <= row2['end']:
@@ -489,9 +509,9 @@ def json_to_csv():
 #                                else:
 #                                    pass
 #                                
-#                        players = pd.merge(players.loc[pd.isnull(players['round']) == False,['clanname','steamid']].drop_duplicates(),
+#                        players = pd.merge(players.loc[pd.isnull(players['round']) == False,['hltv_name','steamid']].drop_duplicates(),
 #                                       data.loc[data['event'] == 'player_connect',['steamid','name']], how = 'left', on = 'steamid')\
-#                                       .rename(index = str, columns = {'clanname':'team'}).drop_duplicates()
+#                                       .rename(index = str, columns = {'hltv_name':'team'}).drop_duplicates()
 #                        for index, row in players.iterrows():
 #                            players.set_value(index, 'name', re.sub(r'[^\x00-\x7F]+','',str(row['name'].encode('utf-8'))))
 #                            players.set_value(index, 'team', re.sub(r'[^\x00-\x7F]+','',str(row['team'].encode('utf-8'))))
