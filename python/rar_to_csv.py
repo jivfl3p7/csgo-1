@@ -169,11 +169,7 @@ def json_to_csv():
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2239\\2305232\\2305232-1.json") only x rounds in the demo (demo to json issue?)
 
                         # 'too many teams per side'
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") both teams in round 4
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307094\\2307094-1.json") both sides in round 27
-
-                        # player on 'wrong' team
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json") rubino on both CLG and dignitas (dignitas first though)
 
                         # '>1 knife round'
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2314\\2303745\\2303745-2.json")
@@ -193,14 +189,12 @@ def json_to_csv():
                         # 'round'
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2635\\2312069\\2312069-5.json")
 
-                        # multiple names for one team (add fuzzy matching)
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300635\\2300635-2.json")
-
+                        error_msg = None                        
                         
                         data = pd.merge(init_data, init_data.loc[(init_data['event'] == 'player_connect')
                             & (init_data['steamid'] != 'BOT'),['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid')\
                             .rename(index = str, columns = {'steamid_y':'steamid'}).reset_index(drop = True)
-                        
+                            
                         clannames = data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False),['clanname']]\
                             .drop_duplicates()
                         clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['clanname']]
@@ -211,18 +205,29 @@ def json_to_csv():
                         
                         for team_name in clannames['lower']:
                             fuzzy_match = process.extractOne(team_name, hltv_teams['lower'], scorer=fuzz.partial_ratio)
-                            if fuzzy_match[1] > 85:
-                                clannames.loc[clannames['lower'] == team_name,'hltv_name'] = hltv_teams\
+                            clannames.loc[clannames['lower'] == team_name,'hltv_name'] = hltv_teams\
                                     .loc[hltv_teams['lower'] == fuzzy_match[0],0].iloc[0]
-                            else:
-                                raise ValueError('team name match only ' + str(fuzzy_match[1]))
+                            if fuzzy_match[1] < 65:
+                                error_msg = 'team name match only ' + str(fuzzy_match[1])
                                 
                         if len(clannames['hltv_name'].drop_duplicates()) != 2:
                             raise ValueError('number of team names')
-                        
+                            
                         data = pd.merge(data, clannames[['clanname','hltv_name']], how = 'left', on = 'clanname')
-                                
-                        error_msg = None
+                            
+                        players = data.loc[(data['event'] == 'player_team') & (pd.isnull(data['steamid']) == False),['tick','steamid','hltv_name']].sort_values('tick')
+                        players['hltv_name'] = np.where(pd.isnull(players['hltv_name']), 'Unknown',players['hltv_name'])
+                        players['rank'] = players.groupby('steamid').rank(axis = 0, method = 'first')['tick']
+                        players = players.loc[players['rank'] == 1,['steamid','hltv_name']].drop_duplicates()
+                        if len(players) != 10:
+                            raise ValueError('wrong number of players')
+                            
+                        if 'Unknown' in list(players['hltv_name'].drop_duplicates()):
+                            exist_team = players.loc[players['hltv_name'] != 'Unknown','hltv_name'].iloc[0]
+                            miss_team = clannames.loc[clannames['hltv_name'] != exist_team,'clanname'].iloc[0]
+                            players['hltv_name'] = np.where(players['hltv_name'] == 'Unknown', miss_team, players['hltv_name'])
+                            
+                        data = pd.merge(data, players, how = 'left', on = 'steamid').rename(index = str, columns = {'hltv_name':'hltv_name_old','hltv_name_y':'hltv_name'})
                         
                         rounds = data.loc[(data['event'] == 'round_start') | data['winner'].isin([2,3]),
                                           ['round','tick','event','winner','reason','score_ct','score_t']]\
@@ -255,6 +260,8 @@ def json_to_csv():
                                 
                         if len(rounds) == 0:
                             raise ValueError('broken json')
+                        elif len(rounds) == 1:
+                            raise ValueError('only one round')
                                 
                         round_type = pd.merge(data.loc[(data['event'] == 'player_hurt') & (data['weapon'] != '') & (data['health'] == 0),
                                         ['tick','weapon']], weapon_data[['weapon','primary_class']],how = 'left', on = 'weapon')\
@@ -272,7 +279,7 @@ def json_to_csv():
                             if rounds['round_score'].iloc[0] < 5:
                                 knife_round = list(round_type.loc[(round_type['pistol'] + round_type['primary'] == 0),''])
                                 if len(knife_round) > 1:
-                                    error_msg = '> 1 knife round'
+                                    error_msg = '> 1 knife round' + (', ' + error_msg if error_msg else '')
                                 rounds['round_score'] = np.where(rounds['round_raw'].isin(knife_round), -1, rounds['round_score'])
                         except Exception as e:
                             if e == 'pistol':
