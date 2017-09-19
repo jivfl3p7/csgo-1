@@ -218,7 +218,8 @@ def json_to_csv():
                             
                         data = pd.merge(data, clannames[['clanname','hltv_name']], how = 'left', on = 'clanname')
                             
-                        players = data.loc[(data['event'] == 'player_team') & (pd.isnull(data['steamid']) == False),['tick','steamid','hltv_name']].sort_values('tick')
+                        players = data.loc[(data['event'] == 'player_team') & (pd.isnull(data['steamid']) == False)
+                            & (~data['steamid'].isin(['STEAM_1:0:20714352'])),['tick','steamid','hltv_name']].sort_values('tick')
                         players['hltv_name'] = np.where(pd.isnull(players['hltv_name']), 'Unknown',players['hltv_name'])
                         players['rank'] = players.groupby('steamid').rank(axis = 0, method = 'first')['tick']
                         players = players.loc[players['rank'] == 1,['steamid','hltv_name']].drop_duplicates()
@@ -230,7 +231,8 @@ def json_to_csv():
                             miss_team = clannames.loc[clannames['hltv_name'] != exist_team,'clanname'].iloc[0]
                             players['hltv_name'] = np.where(players['hltv_name'] == 'Unknown', miss_team, players['hltv_name'])
                             
-                        data = pd.merge(data, players, how = 'left', on = 'steamid').rename(index = str, columns = {'hltv_name':'hltv_name_old','hltv_name_y':'hltv_name'})
+                        data = pd.merge(data, players, how = 'left', on = 'steamid').rename(index = str,
+                            columns = {'hltv_name':'hltv_name_old','hltv_name_y':'hltv_name'})
                         
                         rounds = data.loc[(data['event'] == 'round_start') | data['winner'].isin([2,3]),
                                           ['round','tick','event','winner','reason','score_ct','score_t']]\
