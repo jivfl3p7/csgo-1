@@ -189,6 +189,9 @@ def json_to_csv():
                         # 'round'
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2635\\2312069\\2312069-5.json")
 
+                        # round counting error
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2034\\2301438\\2301438-3.json")
+
                         error_msg = None                        
                         
                         data = pd.merge(init_data, init_data.loc[(init_data['event'] == 'player_connect')
@@ -289,34 +292,79 @@ def json_to_csv():
                             
                         rounds = rounds.loc[rounds['round_raw'].isin(round_type['']),].reset_index(drop = True)
                         
+#                        if file_[:-5] in ['2312366-1','2312069-3']:
+#                            rounds['round_est'] = rounds['round_score']
+#                        else:
+#                            for index, row in rounds.iterrows():
+#                                if row['round_score'] == -1:
+#                                    rounds.set_value(index, 'round_est', row['round_score'])
+#                                else:
+#                                    if row['round_score'] != rounds['round_score'].iloc[int(index) - 1] + 1:
+#                                        try:
+#                                            rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+#                                        except:
+#                                            rounds.set_value(index, 'round_est', rounds['round_est'].iloc[int(index) - 1] + 1)
+#                                    else:
+#                                        rounds.set_value(index, 'round_est', row['round_score'])
+                                        
                         if file_[:-5] in ['2312366-1','2312069-3']:
                             rounds['round_est'] = rounds['round_score']
                         else:
                             for index, row in rounds.iterrows():
                                 if row['round_score'] == -1:
                                     rounds.set_value(index, 'round_est', row['round_score'])
+                                elif index not in [rounds.index.min(),rounds.index.max()]:
+                                    if (row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2
+                                            and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                        rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+                                    elif ((row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 1
+                                                or row['round_score'] == rounds['round_score'].iloc[int(index) - 1])
+                                            and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                        rounds.set_value(index, 'round_est', None)
+                                    
+                                    else:
+                                        rounds.set_value(index, 'round_est', row['round_score'])
                                 else:
-                                    if row['round_score'] != rounds['round_score'].iloc[int(index) - 1] + 1:
-                                        try:
-                                            rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
-                                        except:
-                                            rounds.set_value(index, 'round_est', rounds['round_est'].iloc[int(index) - 1] + 1)
+                                    if (index == rounds.index.min()
+                                            and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                        rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+                                    elif (index == rounds.index.max()
+                                            and row['round_score'] == rounds['round_score'].iloc[int(index) - 1]):
+                                        rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) - 1] + 1)
+                                    elif ((index == rounds.index.min()
+                                            and row['round_score'] != rounds['round_score'].iloc[int(index) + 1] - 1)
+                                        or (index == rounds.index.max()
+                                            and row['round_score'] != rounds['round_score'].iloc[int(index) - 1] + 1)):
+                                        raise ValueError('round counting error')
                                     else:
                                         rounds.set_value(index, 'round_est', row['round_score'])
                         
-                        for index, row in rounds.iloc[::-1].iterrows():
+#                        for index, row in rounds.iloc[::-1].iterrows():
+#                            if row['round_est'] == -1:
+#                                continue
+#                            else:
+#                                try:
+#                                    next_round = rounds['round_est'].iloc[int(index) + 1]
+#                                except:
+#                                    continue
+#                                if row['round_est'] in [0,next_round]:
+#                                    rounds.drop(rounds.index[[index]], inplace = True)
+#                                elif next_round - row['round_est'] > 1:
+#                                    rounds = rounds.loc[rounds['round'] <= row['round_est']]
+#                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
+                                    
+                        for index, row in rounds.iterrows():
                             if row['round_est'] == -1:
                                 continue
                             else:
-                                try:
-                                    next_round = rounds['round_est'].iloc[int(index) + 1]
-                                except:
-                                    continue
-                                if row['round_est'] in [0,next_round]:
+                                if row['round_est'] == 0 or pd.isnull(row['round_est']):
                                     rounds.drop(rounds.index[[index]], inplace = True)
-                                elif next_round - row['round_est'] > 1:
-                                    rounds = rounds.loc[rounds['round'] <= row['round_est']]
+                                elif (index == rounds.index.min()) and (rounds['round_est'].iloc[int(index) + 1] - row['round_est'] > 1):
                                     error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
+                                elif row['round_est'] - rounds.loc[rounds['round_est'] != -1,'round_est'].iloc[int(index) - 1] > 1:
+                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
                                     
                         rounds = rounds.drop(['event','round','round_raw','round_score'], 1).rename(index = str,
                             columns = {'round_est':'round'}).reset_index(drop = True)
@@ -346,7 +394,6 @@ def json_to_csv():
                         teams = teams.loc[(pd.isnull(teams['round']) == False) & (teams['hltv_name'] != '')
                             & (pd.isnull(teams['hltv_name']) == False), ['round','hltv_name','side']].drop_duplicates()
                         for rnd in set(rounds['round']):
-                            print(rnd,teams.loc[teams['round'] == rnd,'hltv_name'].iloc[0],teams.loc[teams['round'] == rnd,'side'].iloc[0])
                             rnd_data = teams.loc[teams['round'] == rnd,['hltv_name','side']]
                             if rnd == -1:
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
