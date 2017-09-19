@@ -134,6 +134,7 @@ def json_to_csv():
         exist_csv = []
         
     prev_event = None
+    
     import random
 #    for eventid in os.listdir(json_folder):
     for eventid in random.sample(os.listdir(json_folder),20):
@@ -190,7 +191,7 @@ def json_to_csv():
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2635\\2312069\\2312069-5.json")
 
                         # round counting error
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2034\\2301438\\2301438-3.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1978\\2300272\\2300272-1.json")
 
                         error_msg = None                        
                         
@@ -206,23 +207,42 @@ def json_to_csv():
                         hltv_teams.columns = range(hltv_teams.shape[1])
                         hltv_teams['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in hltv_teams[0]]
                         
-                        for team_name in clannames['lower']:
-                            fuzzy_match = process.extractOne(team_name, hltv_teams['lower'], scorer=fuzz.partial_ratio)
-                            clannames.loc[clannames['lower'] == team_name,'hltv_name'] = hltv_teams\
-                                    .loc[hltv_teams['lower'] == fuzzy_match[0],0].iloc[0]
-                            if fuzzy_match[1] < 65:
-                                error_msg = 'team name match only ' + str(fuzzy_match[1])
+                        if len(clannames) == 2:
+                            fuzzy_match0 = process.extractOne(clannames['lower'].iloc[0], hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                            fuzzy_match1 = process.extractOne(clannames['lower'].iloc[1], hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                            if fuzzy_match0[1] > 65:
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'hltv_name'] = hltv_teams\
+                                    .loc[hltv_teams['lower'] == fuzzy_match0[0],0].iloc[0]
+                                other_team_name = hltv_teams.loc[hltv_teams['lower'] != fuzzy_match0[0],0].iloc[0]
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'hltv_name'] = other_team_name
+                            elif fuzzy_match1[1] > 65:
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'hltv_name'] = hltv_teams\
+                                    .loc[hltv_teams['lower'] == fuzzy_match1[0],0].iloc[0]
+                                other_team_name = hltv_teams.loc[hltv_teams['lower'] != fuzzy_match1[0],0].iloc[0]
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'hltv_name'] = other_team_name
+                            else:
+                                raise ValueError('no high-level team name match')
+                        else:
+                            for team_name in clannames['lower']:
+                                fuzzy_match = process.extractOne(team_name, hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                                clannames.loc[clannames['lower'] == team_name,'hltv_name'] = hltv_teams\
+                                        .loc[hltv_teams['lower'] == fuzzy_match[0],0].iloc[0]
+                                if fuzzy_match[1] < 65:
+                                    error_msg = 'team name match only ' + str(fuzzy_match[1])
                                 
                         if len(clannames['hltv_name'].drop_duplicates()) != 2:
                             raise ValueError('number of team names')
                             
                         data = pd.merge(data, clannames[['clanname','hltv_name']], how = 'left', on = 'clanname')
-                            
-                        players = data.loc[(data['event'] == 'player_team') & (pd.isnull(data['steamid']) == False)
-                            & (~data['steamid'].isin(['STEAM_1:0:20714352'])),['tick','steamid','hltv_name']].sort_values('tick')
+                        
+                        players = data.loc[(data['event'] == 'player_team') & (pd.isnull(data['steamid']) == False),
+                                           ['tick','steamid','hltv_name']].sort_values('tick')
                         players['hltv_name'] = np.where(pd.isnull(players['hltv_name']), 'Unknown',players['hltv_name'])
                         players['rank'] = players.groupby('steamid').rank(axis = 0, method = 'first')['tick']
                         players = players.loc[players['rank'] == 1,['steamid','hltv_name']].drop_duplicates()
+                        for steamid in players['steamid']:
+                            if len(data.loc[(data['steamid'] == steamid) & (data['event'] == 'weapon_fire')]) == 0:
+                                players = players.loc[players['steamid'] != steamid]
                         if len(players) != 10:
                             raise ValueError('wrong number of players')
                             
