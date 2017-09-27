@@ -155,43 +155,13 @@ def json_to_csv():
                             print('\tFAIL - ' + match_row[1])
                             continue
                         
+                        # test
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2285\\2304191\\2304191-0.json")
+                        
                         # missing round
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2036\\2301162\\2301162-0.json") + missing/extra rounds
-                        
-                        # ct score goes up then down
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2013\\2300570\\2300570-0.json")
-                        
-                        # 'pistol'
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-0.json") only 3 rounds in the demo (demo to json issue?)
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-1.json") only 3 rounds in the demo (demo to json issue?)
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311330\\2311330-2.json") only x rounds in the demo (demo to json issue?)
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311331\\2311331-0.json") only x rounds in the demo (demo to json issue?)
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2557\\2311332\\2311332-1.json") only x rounds in the demo (demo to json issue?)
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2239\\2305232\\2305232-1.json") only x rounds in the demo (demo to json issue?)
-
-                        # 'too many teams per side'
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307094\\2307094-1.json") both sides in round 27
-
-                        # '>1 knife round'
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2314\\2303745\\2303745-2.json")
-
-                        # 'round_raw'
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307101\\2307101-2.json") broken json
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2641\\2309865\\2309865-1.json") broken json
-
-                        # no rounds
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2599\\2307101\\2307101-2.json")
-
-                        # 'pistol' or 'primary'
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-1.json")
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-2.json")
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2673\\2308382\\2308382-0.json")
-
-                        # 'round'
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2635\\2312069\\2312069-5.json")
-
-                        # round counting error
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2071\\2301055\\2301055-0.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307295\\2307295-0.json") final round adds extra point to scoreline
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1986\\2299842\\2299842-1.json") final round adds extra point to scoreline
 
                         error_msg = None                        
                         
@@ -305,6 +275,12 @@ def json_to_csv():
                         round_type.columns = round_type.columns.droplevel(0)
                         round_type['sum'] = round_type.loc[:,round_type.columns != ''].sum(axis = 1)
                         
+                        if len(data.loc[(data['event'] == 'bomb_exploded'),['tick']]) > 0:
+                            bomb_rounds = data.loc[(data['event'] == 'bomb_exploded'),['tick']]
+                            for index, row in rounds.iterrows():
+                                bomb_rounds.loc[(bomb_rounds['tick'] >= row['start']) & (bomb_rounds['tick'] != 0)
+                                    & (bomb_rounds['tick'] <= row['round_decision']),'round_raw'] = row['round_raw']
+                        
                         try:
                             if rounds['round_score'].iloc[0] < 5:
                                 knife_round = list(round_type.loc[(round_type['pistol'] + round_type['primary'] == 0),''])
@@ -316,8 +292,16 @@ def json_to_csv():
                                 raise ValueError('no pistol kills')
                             if e == 'primary':
                                 print(e)
+                                
+                        prev_rnd = 999
+                        for rnd in list(round_type.loc[(round_type['primary'] == 0) & (round_type['pistol'] > 0),'',].iloc[::-1]):
+                            if int(rnd) >= prev_rnd - 2:
+                                rounds = rounds.loc[~rounds['round_raw'].isin(range(int(rnd),prev_rnd)),].reset_index(drop = True)
+#                                extra_rnds.append()
+                            prev_rnd = int(rnd)
                             
-                        rounds = rounds.loc[rounds['round_raw'].isin(round_type['']),].reset_index(drop = True)
+                        rounds = rounds.loc[rounds['round_raw'].isin(round_type['']) | rounds['round_raw'].isin(bomb_rounds['round_raw'])
+                            ,].reset_index(drop = True)
                         
 #                        if file_[:-5] in ['2312366-1','2312069-3']:
 #                            rounds['round_est'] = rounds['round_score']
@@ -338,6 +322,7 @@ def json_to_csv():
 #                            rounds['round_est'] = rounds['round_score']
 #                        else:
                         for index, row in rounds.iterrows():
+#                            print(index)
                             if row['round_score'] == -1:
                                 rounds.set_value(index, 'round_est', row['round_score'])
                             elif index not in [rounds.index.min(),rounds.index.max()]:
@@ -352,12 +337,22 @@ def json_to_csv():
                                 else:
                                     rounds.set_value(index, 'round_est', row['round_score'])
                             else:
-                                if (index == rounds.index.min()
+                                if ((index == rounds.index.max()) & (row['round_score'] <= 30)
+                                    & ((row['score_ct'] > 16) | (row['score_t'] > 16))):
+                                        rounds.set_value(index, 'round_est', rounds['round_est'].iloc[int(index) - 1] + 1)
+                                elif (index == rounds.index.min()
                                         and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
                                     rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
                                 elif (index == rounds.index.max()
                                         and row['round_score'] == rounds['round_est'].iloc[int(index) - 1]):
                                     rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) - 1] + 1)
+                                elif ((index == rounds.index.min()
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1] - 2
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 2] - 2)
+                                    or (index == rounds.index.max()
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) - 2] + 2)):
+                                    rounds.set_value(index, 'round_est', row['round_score'])
                                 elif ((index == rounds.index.min()
                                         and row['round_score'] != rounds['round_score'].iloc[int(index) + 1] - 1)
                                     or (index == rounds.index.max()
@@ -379,19 +374,22 @@ def json_to_csv():
 #                                elif next_round - row['round_est'] > 1:
 #                                    rounds = rounds.loc[rounds['round'] <= row['round_est']]
 #                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
-                                    
+                        
+                        drop_rounds = []
                         for index, row in rounds.iterrows():
+#                            print(row['round_est'],rounds.index.min(),index,rounds['round_est'].iloc[int(index) + 1])
                             if row['round_est'] == -1:
                                 continue
                             else:
                                 if row['round_est'] == 0 or pd.isnull(row['round_est']):
-                                    rounds.drop(rounds.index[[index]], inplace = True)
+                                    drop_rounds.append(index)
                                 elif (index == rounds.index.min()) and (rounds['round_est'].iloc[int(index) + 1] - row['round_est'] > 1):
                                     error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
                                 elif row['round_est'] - rounds.loc[rounds['round_est'] != -1,'round_est'].iloc[int(index) - 1] > 1:
                                     error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
+                        rounds.drop(rounds.index[[drop_rounds]], inplace = True)
                                     
                         rounds = rounds.drop(['event','round','round_raw','round_score'], 1).rename(index = str,
                             columns = {'round_est':'round'}).reset_index(drop = True)
