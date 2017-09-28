@@ -156,14 +156,14 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2150\\2302434\\2302434-1.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2482\\2305536\\2305536-1.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307295\\2307295-0.json") final round adds extra point to scoreline
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1986\\2299842\\2299842-1.json") final round adds extra point to scoreline
 
-                        if matchid in ['2309764','2311330']:
+                        if matchid in ['2309764','2311330','2305232']:
                             raise ValueError('weird gotv demo')
 
                         error_msg = None                        
@@ -423,15 +423,17 @@ def json_to_csv():
                         
                         teams = teams.loc[(pd.isnull(teams['round']) == False) & (teams['hltv_name'] != '')
                             & (pd.isnull(teams['hltv_name']) == False), ['round','hltv_name','side']].drop_duplicates()
-                        for rnd in set(rounds['round']):
+                        for index,rnd in enumerate(set(rounds['round'])):
                             rnd_data = teams.loc[teams['round'] == rnd,['hltv_name','side']]
+                            print(rnd)
                             if rnd == -1:
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                     error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
                                 if rnd_data['hltv_name'].nunique() < 1:
                                     error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
                                 rounds = rounds.loc[rounds['round'] != rnd]
-                            elif rnd == 1:
+                            elif (rnd == 1) | (index == rounds.index.min()):
+                                print(True)
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                     error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
@@ -461,8 +463,14 @@ def json_to_csv():
                                     rounds.set_value(index,'t_team',rounds['ct_team'].iloc[int(index) + 1])
                                     
                         for index, row in rounds.iterrows():
-                            rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'].encode('utf-8'))))
-                            rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'].encode('utf-8'))))
+                            try:
+                                rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'].encode('utf-8'))))
+                            except:
+                                rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'])))
+                            try:
+                                rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'].encode('utf-8'))))
+                            except:
+                                rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'])))
                             
                         for phs in set(rounds['phase']):
                             ct_teams = rounds.loc[rounds['phase'] == phs,'ct_team'].drop_duplicates()
