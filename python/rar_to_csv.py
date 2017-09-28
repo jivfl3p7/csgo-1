@@ -156,12 +156,15 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2285\\2304191\\2304191-0.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2150\\2302434\\2302434-1.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307295\\2307295-0.json") final round adds extra point to scoreline
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1986\\2299842\\2299842-1.json") final round adds extra point to scoreline
+
+                        if matchid in ['2309764','2311330']:
+                            raise ValueError('weird gotv demo')
 
                         error_msg = None                        
                         
@@ -280,6 +283,8 @@ def json_to_csv():
                             for index, row in rounds.iterrows():
                                 bomb_rounds.loc[(bomb_rounds['tick'] >= row['start']) & (bomb_rounds['tick'] != 0)
                                     & (bomb_rounds['tick'] <= row['round_decision']),'round_raw'] = row['round_raw']
+                        else:
+                            bomb_rounds = pd.DataFrame({'round_raw':[]})
                         
                         try:
                             if rounds['round_score'].iloc[0] < 5:
@@ -376,8 +381,8 @@ def json_to_csv():
 #                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
                         
                         drop_rounds = []
-                        for index, row in rounds.iterrows():
-#                            print(row['round_est'],rounds.index.min(),index,rounds['round_est'].iloc[int(index) + 1])
+                        for index, row in rounds.iloc[:-1].iterrows():
+#                            print(row['round_est'])
                             if row['round_est'] == -1:
                                 continue
                             else:
@@ -426,6 +431,13 @@ def json_to_csv():
                                 if rnd_data['hltv_name'].nunique() < 1:
                                     error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
                                 rounds = rounds.loc[rounds['round'] != rnd]
+                            elif rnd == 1:
+                                if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
+                                    error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
+                                if rnd_data['hltv_name'].nunique() < 1:
+                                    error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
                             elif len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                 error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
                                 rounds = rounds.loc[rounds['round'] < rnd]
