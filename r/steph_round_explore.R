@@ -106,13 +106,14 @@ order by
 
 round_data <- fetch(round_query,n=-1)
 
-map_data = unique(round_data[,!names(round_data) %in% c('pseudo_rd','round','map_round','team1_side','team2_side','round_result')])
+map_data = unique(round_data[,!names(round_data) %in% c('pseudo_rd','overall_round','map_round','team1_side','team2_side','round_result')])
 
 round_data$team1_lineup_side = paste(round_data$team1_lineup, round_data$team1_side, sep = '/')
 round_data$team2_lineup_side = paste(round_data$team2_lineup, round_data$team2_side, sep = '/')
 
 min_matches = 50
-min_games = 5
+min_games = 4
+min_rounds = 100 #avg map ~ 25 rounds
 
 
 for (year in sort(unique(map_data$season))){
@@ -120,16 +121,16 @@ for (year in sort(unique(map_data$season))){
   # map
   for (match in sort(unique(map_data$overall_match[(map_data$season == year) & (map_data$overall_match >= min_matches)]))){
     sobj = steph(map_data[(map_data$season == year) & (map_data$overall_match < match),
-                          c('round','team1_lineup','team2_lineup','map_result')])
+                          c('overall_match','team1_lineup','team2_lineup','map_result')])
     pval = predict(sobj, map_data[(map_data$season == year) & (map_data$overall_match == match),
-                                  c('round','team1_lineup','team2_lineup')], tng = min_games)
+                                  c('overall_match','team1_lineup','team2_lineup')], tng = min_games)
     map_data$pred[(map_data$season == year) & (map_data$overall_match == match)] = pval
   }
   
   
-  for (map in unique(map_data$map_name[map_data$season == year])){
+  # for (map in unique(map_data$map_name[map_data$season == year])){
     for (match in sort(unique(map_data$map_match[(map_data$season == year) & (map_data$map_name == map)
-                                                 & (map_data$map_match >= min_rounds)]))){
+                                                 & (map_data$map_match >= min_matches)]))){
       map_sobj = steph(map_data[(map_data$season == year) & (map_data$map_name == map) & (map_data$map_match < match),
                                 c('map_match','team1_lineup','team2_lineup','map_result')])
       map_pval = predict(map_sobj, map_data[(map_data$season == year) & (map_data$map_name == map) & (map_data$map_match == match),
@@ -137,8 +138,26 @@ for (year in sort(unique(map_data$season))){
       map_data$pred_map[(map_data$season == year) & (map_data$map_name == map) & (map_data$map_match == match)] = map_pval
     }
   }
+
   
-  
+  # round
+  for (match in sort(unique(round_data$overall_match[(round_data$season == year) & (round_data$overall_match >= min_matches)]))){
+    sobj = steph(round_data[(round_data$season == year) & (round_data$overall_match < match),
+                          c('overall_match','team1_lineup','team2_lineup','round_result')])
+    pval = predict(sobj, map_data[(map_data$season == year) & (map_data$overall_match == match),
+                                  c('overall_match','team1_lineup','team2_lineup')], tng = min_rounds)
+    map_data$pred_round[(map_data$season == year) & (map_data$overall_match == match)] = pval
+  }
 }
 
+map_data$logloss = -1*(map_data$map_result*log(map_data$pred) + (1 - map_data$map_result)*log(1 - map_data$pred))
+# mean(map_data$logloss[!is.na(map_data$logloss)])
+# 0.6802353
 
+map_data$map_logloss = -1*(map_data$map_result*log(map_data$pred_map) + (1 - map_data$map_result)*log(1 - map_data$pred_map))
+# mean(map_data$map_logloss[!is.na(map_data$map_logloss)])
+# 0.7413087
+
+map_data$round_logloss = -1*(map_data$map_result*log(map_data$pred_round) + (1 - map_data$map_result)*log(1 - map_data$pred_round))
+# mean(map_data$round_logloss[!is.na(map_data$round_logloss)])
+# 0.7864573
