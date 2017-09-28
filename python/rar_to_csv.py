@@ -1,43 +1,97 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 05 13:38:30 2017
-
-@author: wessonmo
-"""
-
 from __future__ import division
 from pyunpack import Archive
 import os
 import pandas as pd
+import numpy as np
 import re
 import csv
 import subprocess
 import getpass
+import urllib2
+import math
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+
+header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 \
+    Safari/537.36'}
+    
+scraped_match_info = pd.read_csv('csv\\hltv_match_info.csv', header = None)
+    
+matches_w_demos = scraped_match_info.loc[pd.isnull(scraped_match_info[2]) == False]
+matches_w_demos.loc[:,8] = matches_w_demos.loc[:,0].apply(lambda x: re.compile('(?<=events\/)[0-9]*(?=\/)').search(x).group(0))
+matches_w_demos.loc[:,9] = matches_w_demos.loc[:,1].apply(lambda x: re.compile('(?<=matches\/)[0-9]*(?=\/)').search(x).group(0))
+
+zipped_folder = r'E:\\CSGO Demos\\zipped'
+unzipped_folder = r'E:\\CSGO Demos\\unzipped'
+json_folder = 'E:\\CSGO Demos\\json'
+
+parse_string1 = 'cd C:\\Users\\' + getpass.getuser() + '\\Documents\\Github\\dem2json && node dem2json.js '
+
+weapon_data = pd.read_csv('csv\\weapon_info.csv')
+
+def rar_download():
+    print('### Rars ###')
+    
+    
+    prev_event = None
+    
+    for eventid in set(matches_w_demos.loc[:,8]):
+        if not os.path.exists(zipped_folder + '\\' + eventid):
+                os.makedirs(zipped_folder + '\\' + eventid)
+        
+        if len(os.listdir(zipped_folder + '\\' + eventid)) < len(matches_w_demos.loc[matches_w_demos[8] == eventid,9]):
+            for matchid in set(matches_w_demos.loc[matches_w_demos[8] == eventid,9]):
+                if not (matchid + '.rar') in os.listdir(zipped_folder + '\\' + eventid):
+                    if not prev_event == matches_w_demos.loc[matches_w_demos[8] == eventid,0].iloc[0]:
+                        print(matches_w_demos.loc[matches_w_demos[8] == eventid,0].iloc[0])
+                        prev_event = matches_w_demos.loc[matches_w_demos[8] == eventid,0].iloc[0]
+                    
+                    try:
+                        match_row = matches_w_demos.loc[matches_w_demos[9] == matchid,:].iloc[0]
+                        demo_url = 'https://www.hltv.org' + match_row[2]
+                        req = urllib2.Request(demo_url,headers = header)
+                        response = urllib2.urlopen(req)
+                        read = response.read()
+                        with open(zipped_folder + '\\' + eventid + '\\' + matchid + '.rar', 'wb+') as file_:
+                            file_.write(read)
+                        file_.close()
+                        print('\t' + match_row[1])
+                    except:
+                        with open(zipped_folder + '\\' + eventid + '\\' + matchid + '.rar', 'wb+') as file_:
+                            file_.write('')
+                        file_.close()
+                        print('\tFAIL - ' + match_row[1])
+rar_download()
 
 def rar_to_demo():
-    print('########## rar to demo ##########')
-    zipped_folder = r'E:\\CSGO Demos\\zipped'
-    unzipped_folder = r'E:\\CSGO Demos\\unzipped'
+    print('### Demos ###')
     
-    for folder in os.listdir(zipped_folder):
-        for file_ in os.listdir(zipped_folder + '\\' + folder):
-            if not os.path.exists(unzipped_folder + '\\' + folder + '\\' + file_[:-4]):
-                os.makedirs(unzipped_folder + '\\' + folder + '\\' + file_[:-4])
+    prev_event = None
+    
+    for eventid in os.listdir(zipped_folder):
+        for matchid in os.listdir(zipped_folder + '\\' + eventid):
+            if not os.path.exists(unzipped_folder + '\\' + eventid + '\\' + matchid[:-4]):
+                os.makedirs(unzipped_folder + '\\' + eventid + '\\' + matchid[:-4])
+                match_row = matches_w_demos.loc[matches_w_demos[9] == matchid[:-4],:].iloc[0]
+                if not prev_event == match_row[0]:
+                    print(match_row[0])
+                    prev_event = match_row[0]
                 try:
-                    Archive(zipped_folder + '\\' + folder + '\\' + file_).extractall(unzipped_folder + '\\' + folder + '\\' + file_[:-4])
-                    print(zipped_folder + '\\' + folder + '\\' + file_)
+                    Archive(zipped_folder + '\\' + eventid + '\\' + matchid).extractall(unzipped_folder + '\\' + eventid + '\\'
+                        + matchid[:-4])
+                    print('\t' + match_row[1])
                 except:
-                    with open('csv\\demo_fails.csv', 'ab') as demofailcsv:
-                        demofailwriter = csv.writer(demofailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                        demofailwriter.writerow([folder,file_[:-4],'fail'])
+                    with open(unzipped_folder + '\\' + eventid + '\\' +  matchid[:-4] + '.dem', 'wb+') as file_:
+                        file_.write('')
+                    file_.close()
+                    print('\tFAIL - ' + match_row[1])
                         
 rar_to_demo()
 
 def demo_to_json():
-    print('########## demo to json ##########')
-    unzipped_folder = 'E:\\CSGO Demos\\unzipped'
-    json_folder = 'E:\\CSGO Demos\\json'
-    parse_string1 = 'cd C:\\Users\\' + getpass.getuser() + '\\Documents\\Github\\dem2json && node dem2json.js '
+    print('### Jsons ###')
+    
+    prev_event = None
     
     for eventid in os.listdir(unzipped_folder):
         for matchid in os.listdir(unzipped_folder + '\\' + eventid):
@@ -47,185 +101,399 @@ def demo_to_json():
                 files = (x for x in files if x[-4:] == '.dem')
                 for idx, item in enumerate(files):
                     if not os.path.exists(json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid + "-" + str(idx) + ".json"):
+                        match_row = matches_w_demos.loc[matches_w_demos[9] == matchid,:].iloc[0]
+                        if not prev_event == match_row[0]:
+                                print(match_row[0])
+                                prev_event = match_row[0]
+                        
                         parse_string2 = "\"" + unzipped_folder + '\\' + eventid + '\\' + matchid + "\\" + item + "\" > "
-                        args = parse_string1 + parse_string2 + "\"" + json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid + "-" + str(idx) + ".json\""
+                        args = (parse_string1 + parse_string2 + "\"" + json_folder + '\\' + eventid + "\\" + matchid + "\\" + matchid
+                            + "-" + str(idx) + ".json\"")
                         try:
                             subprocess.check_output(args, shell = True, stderr=subprocess.STDOUT)
-                            print(matchid + "-" + str(idx))
+                            print('\t' + match_row[1])
                         except Exception as e:
+                            with open(json_folder + '\\' + eventid + '\\' +  matchid + '\\' +  matchid + "-" + str(idx) + '.json',
+                                      'wb+') as file_:
+                                file_.write('')
+                            file_.close()
+                            
                             error_msg = str(e)
                             with open("csv\\json_fails.csv", 'ab') as jsonfailcsv:
                                 jsonfailwriter = csv.writer(jsonfailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 jsonfailwriter.writerow([eventid,matchid,error_msg])
+                            print('\tFAIL - ' + match_row[1])
 
 demo_to_json()
 
 def json_to_csv():
-    print('########## json to csv ##########')
+    print('### json to csv ###')
     try:
-        exist_csv = list(pd.read_csv('csv\\demo_info.csv', header = None)[0].drop_duplicates())
-        try:
-            exist_fail = list(pd.read_csv('csv\\csv_fails.csv', header = None)[1])
-            exist_csv = exist_csv + exist_fail
-        except:
-            pass
+        exist_csv = list(pd.read_csv('csv\\demo_info.csv', header = None)[2].drop_duplicates())
     except:
         exist_csv = []
         
-    weapon_data = pd.read_csv('csv\\weapon_info.csv')
-    json_folder = 'E:\\CSGO Demos\\json'
-    prev_eventid = None
+    prev_event = None
     
-    for eventid in os.listdir(json_folder):
+    import random
+#    for eventid in os.listdir(json_folder):
+    for eventid in random.sample(os.listdir(json_folder),20):
         for matchid in os.listdir(json_folder + '\\' + eventid):
             for file_ in os.listdir(json_folder + '\\' + eventid + '\\' + matchid):
                 if file_[:-5] not in exist_csv:
-                    if prev_eventid != eventid:
-                        print(eventid)
-                        prev_eventid = eventid
+                    match_row = matches_w_demos.loc[matches_w_demos[9] == file_[:-7],:].iloc[0]
+                    if not prev_event == match_row[0]:
+                            print(match_row[0])
+                            prev_event = match_row[0]
                     try:
-                        data = pd.read_json(json_folder + '\\' + eventid + '\\' + matchid + '\\' + file_)
-                        data = pd.merge(data, data.loc[(data['event'] == 'player_connect') & (data['steamid'] != 'BOT'),['userid','steamid']], how = 'left', on = 'userid').rename(index = str, columns = {'steamid_y':'steamid'}).reset_index(drop = True)
+                        try:
+                            init_data = pd.read_json(json_folder + '\\' + eventid + '\\' + matchid + '\\' + file_)
+                        except:
+                            with open('csv\\demo_info.csv', 'ab') as democsv:
+                                demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],None,None,'failed json'])
+                            print('\tFAIL - ' + match_row[1])
+                            continue
                         
-                        match_info = pd.DataFrame(data[data['event']=='info'])
-                        match_info.insert(0,'mapid',file_[:-5])
-                        match_info['mapHash'] = match_info['mapHash'].astype(int).astype(str)
-                        match_info = match_info[['mapid','mapName','mapHash']]
-                        match_info = match_info.drop_duplicates()
-                        with open('csv\\demo_info.csv', 'ab') as infocsv:
-                            match_info.to_csv(infocsv, header = False, index = False)
+                        # test
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2482\\2305536\\2305536-1.json")
                         
+                        # missing round
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307295\\2307295-0.json") final round adds extra point to scoreline
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1986\\2299842\\2299842-1.json") final round adds extra point to scoreline
+
+                        if matchid in ['2309764','2311330','2305232']:
+                            raise ValueError('weird gotv demo')
+
+                        error_msg = None                        
                         
-                        team_switches = data.loc[data['event'] == 'player_team',['tick','event']].groupby('tick').count().reset_index()
-                        team_switches = team_switches.loc[team_switches['event'] == 10]
-                        team_switches['event'] = 'team_switch'
+                        data = pd.merge(init_data, init_data.loc[(init_data['event'] == 'player_connect')
+                            & (init_data['steamid'] != 'BOT'),['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid')\
+                            .rename(index = str, columns = {'steamid_y':'steamid'}).reset_index(drop = True)
+                            
+                        clannames = data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False),['clanname']]\
+                            .drop_duplicates()
+                        clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['clanname']]
                         
-                        rounds = data.loc[data['event'].isin(['round_start','round_end']),['round','tick','event','winner','reason']]
+                        hltv_teams = pd.DataFrame(match_row[[4,6]])
+                        hltv_teams.columns = range(hltv_teams.shape[1])
+                        hltv_teams['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in hltv_teams[0]]
+                        
+                        if len(clannames) == 2:
+                            fuzzy_match0 = process.extractOne(clannames['lower'].iloc[0], hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                            fuzzy_match1 = process.extractOne(clannames['lower'].iloc[1], hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                            if fuzzy_match0[1] > 65:
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'hltv_name'] = hltv_teams\
+                                    .loc[hltv_teams['lower'] == fuzzy_match0[0],0].iloc[0]
+                                other_team_name = hltv_teams.loc[hltv_teams['lower'] != fuzzy_match0[0],0].iloc[0]
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'hltv_name'] = other_team_name
+                            elif fuzzy_match1[1] > 65:
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'hltv_name'] = hltv_teams\
+                                    .loc[hltv_teams['lower'] == fuzzy_match1[0],0].iloc[0]
+                                other_team_name = hltv_teams.loc[hltv_teams['lower'] != fuzzy_match1[0],0].iloc[0]
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'hltv_name'] = other_team_name
+                            else:
+                                raise ValueError('no high-level team name match')
+                        else:
+                            for team_name in clannames['lower']:
+                                fuzzy_match = process.extractOne(team_name, hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                                clannames.loc[clannames['lower'] == team_name,'hltv_name'] = hltv_teams\
+                                        .loc[hltv_teams['lower'] == fuzzy_match[0],0].iloc[0]
+                                if fuzzy_match[1] < 65:
+                                    error_msg = 'team name match only ' + str(fuzzy_match[1])
+                                
+                        if len(clannames['hltv_name'].drop_duplicates()) != 2:
+                            raise ValueError('number of team names')
+                            
+                        data = pd.merge(data, clannames[['clanname','hltv_name']], how = 'left', on = 'clanname')
+                        
+                        players = data.loc[(data['event'] == 'player_team') & (pd.isnull(data['steamid']) == False),
+                                           ['tick','side','steamid','hltv_name']].sort_values('tick')
+                        players['hltv_name'] = np.where(pd.isnull(players['hltv_name']), 'Unknown',players['hltv_name'])
+                        players['rank'] = players.groupby('steamid').rank(axis = 0, method = 'first')['tick']
+                        players = players.loc[players['rank'] == 1,['steamid','side','hltv_name']].drop_duplicates()
+                        for steamid in players['steamid']:
+                            if len(data.loc[(data['steamid'] == steamid) & (data['event'] == 'weapon_fire')]) == 0:
+                                players = players.loc[players['steamid'] != steamid]
+                        if len(players) != 10:
+                            raise ValueError('wrong number of players')
+                        if len(players.loc[players['side'] == 3]) != 5:
+                            raise ValueError('not enough players per side')
+                            
+                        if 'Unknown' in list(players['hltv_name'].drop_duplicates()):
+                            try:
+                                exist_team = players.loc[players['hltv_name'] != 'Unknown','hltv_name'].iloc[0]
+                            except:
+                                raise ValueError('no team names')
+                            miss_team = clannames.loc[clannames['hltv_name'] != exist_team,'clanname'].iloc[0]
+                            players['hltv_name'] = np.where(players['hltv_name'] == 'Unknown', miss_team, players['hltv_name'])
+                            
+                        data = pd.merge(data, players[['steamid','hltv_name']], how = 'left', on = 'steamid').rename(index = str,
+                            columns = {'hltv_name':'hltv_name_old','hltv_name_y':'hltv_name'})
+                        
+                        rounds = data.loc[(data['event'] == 'round_start') | data['winner'].isin([2,3]),
+                                          ['round','tick','event','winner','reason','score_ct','score_t']]\
+                                          .sort_values(['tick','event'], ascending = [True,True])\
+                                          .reset_index(drop = True)
+                        rounds = rounds.sort_values(['tick','event'], ascending = [True,True]).reset_index(drop = True)
                                           
-                        if list(rounds.loc[rounds['event'].str.contains('round'),'event'])[0] == 'round_end':
-                            rounds.loc[rounds.index.max() + 1] = [-2,0,'round_start',None,None]
-                            rounds = rounds.sort_values(['tick','event'], ascending = [True,False]).reset_index(drop = True)
+                        if rounds.loc[rounds['event'].str.contains('round'),'event'].iloc[0] == 'round_end':
+                            rounds.loc[rounds.index.max() + 1] = [-2,0,'round_start',None,None,None,None]
+                            rounds = rounds.sort_values('tick', ascending = True).reset_index(drop = True)
                             
                         rounds['winner'] = rounds['winner'].shift(-1)
                         rounds['reason'] = rounds['reason'].shift(-1)
                         rounds['next_event'] = rounds['event'].shift(-1)
                         rounds['round_decision'] = rounds['tick'].shift(-1)
-                        rounds = rounds.loc[(rounds['event'] == 'round_start') & (rounds['next_event'] == 'round_end'),['round','tick','event','round_decision','winner','reason']].reset_index(drop = True)
-                        rounds['end'] = rounds['tick'].shift(-1) - 1
-                        rounds = pd.concat([rounds,team_switches]).sort_values(['tick','event'], ascending = [True,False]).reset_index(drop = True)[['round','tick','round_decision','end','event','winner','reason']].rename(index = str, columns = {'tick':'start'})
-                        rounds['cumcount'] = rounds.loc[::-1].groupby('round').cumcount()
-                        rounds = rounds.loc[(rounds['event'] == 'team_switch') | (rounds['round'] == 0) | (rounds['cumcount'] == 0),['round','start','round_decision','end','event','winner','reason']]
-                        
+                        rounds['score_ct'] = rounds['score_ct'].shift(-1)
+                        rounds['score_t'] = rounds['score_t'].shift(-1)
+                        rounds['round_score'] = rounds['score_t'] + rounds['score_ct']
+                        rounds = rounds.loc[(rounds['event'] == 'round_start') & (rounds['next_event'] == 'round_end')
+                            & (rounds['winner'] != 1),:].reset_index(drop = True).drop('next_event', axis = 1)\
+                            .rename(index = str, columns = {'tick':'start'})
+                        rounds['end'] = np.where(pd.isnull(rounds['start'].shift(-1)), rounds['round_decision'],
+                            rounds['start'].shift(-1) - 1)
+                            
                         i = 1
                         for index, row in rounds.iterrows():
                             if row['event'] == 'round_start':
                                 rounds.set_value(index, 'round_raw', i)
                                 i += 1
-                        
-                        round_type = pd.merge(data.loc[(data['event'].isin(['player_hurt','item_pickup','item_purchase','item_drop'])) & (data['weapon'] != ''),['tick','weapon']],weapon_data[['weapon','primary_class']],how = 'left', on = 'weapon')[['tick','primary_class']]
-                        for index, row in round_type.iterrows():
-                            for index2, row2 in rounds[rounds['event'] == 'round_start'].iterrows():
-                                if row2['start'] <= row['tick'] <= row2['round_decision']:
-                                    round_type.set_value(index,'round_raw',row2['round_raw'])
-                                    break
-                                else:
-                                    pass
+                                
+                        if len(rounds) == 0:
+                            raise ValueError('broken json')
+                        elif len(rounds) == 1:
+                            raise ValueError('only one round')
+                                
+                        round_type = pd.merge(data.loc[(data['event'] == 'player_hurt') & (data['weapon'] != '') & (data['health'] == 0),
+                                        ['tick','weapon']], weapon_data[['weapon','primary_class']],how = 'left', on = 'weapon')\
+                                        [['tick','primary_class']].drop_duplicates()
+                        for index, row in rounds.iterrows():
+                            round_type.loc[(round_type['tick'] >= row['start']) & (round_type['tick'] != 0)
+                                & (round_type['tick'] <= row['round_decision']),'round_raw'] = row['round_raw']
                         round_type = round_type.loc[pd.isnull(round_type['round_raw']) == False]
-                        round_type = pd.pivot_table(round_type.groupby(['round_raw','primary_class']).size().reset_index(), index = 'round_raw', columns = 'primary_class', aggfunc = 'sum').reset_index().fillna(0)
+                        round_type = pd.pivot_table(round_type.groupby(['round_raw','primary_class']).size().reset_index(),
+                                                index = 'round_raw', columns = 'primary_class', aggfunc = 'sum').reset_index().fillna(0)
                         round_type.columns = round_type.columns.droplevel(0)
+                        round_type['sum'] = round_type.loc[:,round_type.columns != ''].sum(axis = 1)
+                        
+                        if len(data.loc[(data['event'] == 'bomb_exploded'),['tick']]) > 0:
+                            bomb_rounds = data.loc[(data['event'] == 'bomb_exploded'),['tick']]
+                            for index, row in rounds.iterrows():
+                                bomb_rounds.loc[(bomb_rounds['tick'] >= row['start']) & (bomb_rounds['tick'] != 0)
+                                    & (bomb_rounds['tick'] <= row['round_decision']),'round_raw'] = row['round_raw']
+                        else:
+                            bomb_rounds = pd.DataFrame({'round_raw':[]})
+                        
                         try:
-                            round_type = round_type.loc[(round_type['knife'] >= 10) | (round_type['pistol'] + round_type['primary'] >= 5)]
-                        except:
-                            round_type = round_type.loc[round_type['pistol'] + round_type['primary'] >= 5]
+                            if rounds['round_score'].iloc[0] < 5:
+                                knife_round = list(round_type.loc[(round_type['pistol'] + round_type['primary'] == 0),''])
+                                if len(knife_round) > 1:
+                                    error_msg = '> 1 knife round' + (', ' + error_msg if error_msg else '')
+                                rounds['round_score'] = np.where(rounds['round_raw'].isin(knife_round), -1, rounds['round_score'])
+                        except Exception as e:
+                            if e == 'pistol':
+                                raise ValueError('no pistol kills')
+                            if e == 'primary':
+                                print(e)
+                                
+                        prev_rnd = 999
+                        for rnd in list(round_type.loc[(round_type['primary'] == 0) & (round_type['pistol'] > 0),'',].iloc[::-1]):
+                            if int(rnd) >= prev_rnd - 2:
+                                rounds = rounds.loc[~rounds['round_raw'].isin(range(int(rnd),prev_rnd)),].reset_index(drop = True)
+#                                extra_rnds.append()
+                            prev_rnd = int(rnd)
+                            
+                        rounds = rounds.loc[rounds['round_raw'].isin(round_type['']) | rounds['round_raw'].isin(bomb_rounds['round_raw'])
+                            ,].reset_index(drop = True)
                         
-                        for index,row in round_type.iterrows():
-                            if (row['pistol'] == 0) & (row['primary'] == 0):
-                                round_type.set_value(index,'round_type','knife')
-                            elif row['primary'] == 0:
-                                round_type.set_value(index,'round_type','pistol')
-                            else :
-                                round_type.set_value(index,'round_type','mixed')
-                        
-                        if len(round_type.loc[round_type['round_type'] == 'pistol']) != 2:
-                            if round_type.loc[round_type.index.max(),'round_type'] == 'pistol':
-                                round_type = round_type.loc[round_type.index < round_type.index.max()]
-                            else:
-                                raise ValueError('wrong number of pistol rounds')
-                        
-                        rounds = pd.merge(rounds, round_type[['','round_type']], how = 'left', left_on = 'round_raw', right_on = '')[['round_raw','event','start','round_type','round_decision','end','winner','reason']]
-    
-                        rnd_counter = None
-                        pstl_counter = 0
+#                        if file_[:-5] in ['2312366-1','2312069-3']:
+#                            rounds['round_est'] = rounds['round_score']
+#                        else:
+#                            for index, row in rounds.iterrows():
+#                                if row['round_score'] == -1:
+#                                    rounds.set_value(index, 'round_est', row['round_score'])
+#                                else:
+#                                    if row['round_score'] != rounds['round_score'].iloc[int(index) - 1] + 1:
+#                                        try:
+#                                            rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+#                                        except:
+#                                            rounds.set_value(index, 'round_est', rounds['round_est'].iloc[int(index) - 1] + 1)
+#                                    else:
+#                                        rounds.set_value(index, 'round_est', row['round_score'])
+                                        
+#                        if file_[:-5] in ['2312366-1','2312069-3']:
+#                            rounds['round_est'] = rounds['round_score']
+#                        else:
                         for index, row in rounds.iterrows():
-                            if row['round_type'] == 'knife':
-                                rounds.set_value(index, 'round', 0)
-                            if row['round_type'] == 'pistol':
-                                rounds.set_value(index, 'round', (pstl_counter)*15 + 1)                                
-                                rnd_counter = (pstl_counter)*15 + 2
-                                pstl_counter += 1
-                            if row['round_type'] == 'mixed' and rnd_counter != None:
-                                if pstl_counter == 1 and rnd_counter > 15:
-                                    raise ValueError('too many rounds between pistols')
+#                            print(index)
+                            if row['round_score'] == -1:
+                                rounds.set_value(index, 'round_est', row['round_score'])
+                            elif index not in [rounds.index.min(),rounds.index.max()]:
+                                if (row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                    rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+                                elif ((row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 1
+                                            or row['round_score'] == rounds['round_score'].iloc[int(index) - 1])
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                    rounds.set_value(index, 'round_est', None)
+                                
                                 else:
-                                    rounds.set_value(index, 'round', rnd_counter)
-                                    rnd_counter += 1
-                            if row['event'] == 'team_switch':
-                                if pstl_counter != 2:
-                                    rnd_counter = None
+                                    rounds.set_value(index, 'round_est', row['round_score'])
+                            else:
+                                if ((index == rounds.index.max()) & (row['round_score'] <= 30)
+                                    & ((row['score_ct'] > 16) | (row['score_t'] > 16))):
+                                        rounds.set_value(index, 'round_est', rounds['round_est'].iloc[int(index) - 1] + 1)
+                                elif (index == rounds.index.min()
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                    rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+                                elif (index == rounds.index.max()
+                                        and row['round_score'] == rounds['round_est'].iloc[int(index) - 1]):
+                                    rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) - 1] + 1)
+                                elif ((index == rounds.index.min()
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1] - 2
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 2] - 2)
+                                    or (index == rounds.index.max()
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2
+                                        and row['round_score'] == rounds['round_score'].iloc[int(index) - 2] + 2)):
+                                    rounds.set_value(index, 'round_est', row['round_score'])
+                                elif ((index == rounds.index.min()
+                                        and row['round_score'] != rounds['round_score'].iloc[int(index) + 1] - 1)
+                                    or (index == rounds.index.max()
+                                        and row['round_score'] != rounds['round_est'].iloc[int(index) - 1] + 1)):
+                                    raise ValueError('round counting error')
+                                else:
+                                    rounds.set_value(index, 'round_est', row['round_score'])
                         
-                        rounds = rounds.loc[rounds['round'] <= 30].reset_index(drop = True)
+#                        for index, row in rounds.iloc[::-1].iterrows():
+#                            if row['round_est'] == -1:
+#                                continue
+#                            else:
+#                                try:
+#                                    next_round = rounds['round_est'].iloc[int(index) + 1]
+#                                except:
+#                                    continue
+#                                if row['round_est'] in [0,next_round]:
+#                                    rounds.drop(rounds.index[[index]], inplace = True)
+#                                elif next_round - row['round_est'] > 1:
+#                                    rounds = rounds.loc[rounds['round'] <= row['round_est']]
+#                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
+                        
+                        drop_rounds = []
+                        for index, row in rounds.iloc[:-1].iterrows():
+#                            print(row['round_est'])
+                            if row['round_est'] == -1:
+                                continue
+                            else:
+                                if row['round_est'] == 0 or pd.isnull(row['round_est']):
+                                    drop_rounds.append(index)
+                                elif (index == rounds.index.min()) and (rounds['round_est'].iloc[int(index) + 1] - row['round_est'] > 1):
+                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
+                                elif row['round_est'] - rounds.loc[rounds['round_est'] != -1,'round_est'].iloc[int(index) - 1] > 1:
+                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
+                        rounds.drop(rounds.index[[drop_rounds]], inplace = True)
+                                    
+                        rounds = rounds.drop(['event','round','round_raw','round_score'], 1).rename(index = str,
+                            columns = {'round_est':'round'}).reset_index(drop = True)
+                            
                         for index, row in rounds.iterrows():
-                            if row['round'] == 0:
+                            if row['round'] == -1:
                                 rounds.set_value(index, 'phase', 'knife')
                             elif row['round'] <= 15:
                                 rounds.set_value(index, 'phase', 'h1')
-                            else:
+                            elif row['round'] <= 30:
                                 rounds.set_value(index, 'phase', 'h2')
+                            else:
+                                rounds.set_value(index, 'phase', 'ot' + str(int(math.ceil((row['round']-30.0)/6)))
+                                    + str(np.where(int(math.ceil((row['round']-30.0)/3)) % 2 == 0,'b','a')))
+                        
+                        first_blood = pd.DataFrame(data.loc[data['event'] == 'player_hurt','tick'].drop_duplicates().sort_values())
+                        for index, row in rounds.iterrows():
+                            tick = first_blood.loc[(row['start'] <= first_blood['tick'])
+                                & (first_blood['tick'] <= row['round_decision']),'tick'].min()
+                            rounds.set_value(index,'first_blood',tick)
+                            
+                        teams = data.loc[(data['event'] == 'item_purchase') | ((data['event'] == 'player_hurt') & (data['health'] == 0)),
+                                         ['tick','side','hltv_name']].drop_duplicates()
+                        for index, row in rounds.iterrows():
+                            teams.loc[(teams['tick'] >= row['start']) & (teams['tick'] <= row['round_decision']),'round'] = row['round']
+                        
+                        teams = teams.loc[(pd.isnull(teams['round']) == False) & (teams['hltv_name'] != '')
+                            & (pd.isnull(teams['hltv_name']) == False), ['round','hltv_name','side']].drop_duplicates()
+                        for index,rnd in enumerate(set(rounds['round'])):
+                            rnd_data = teams.loc[teams['round'] == rnd,['hltv_name','side']]
+                            print(rnd)
+                            if rnd == -1:
+                                if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
+                                    error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
+                                if rnd_data['hltv_name'].nunique() < 1:
+                                    error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
+                                rounds = rounds.loc[rounds['round'] != rnd]
+                            elif (rnd == 1) | (index == rounds.index.min()):
+                                print(True)
+                                if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
+                                    error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
+                                if rnd_data['hltv_name'].nunique() < 1:
+                                    error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
+                                    raise ValueError(error_msg)
+                            elif len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
+                                error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
+                                rounds = rounds.loc[rounds['round'] < rnd]
+                                
+                        
+                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 3,['round','hltv_name']], how = 'left', on = 'round')\
+                            .rename(index = str, columns = {'hltv_name':'ct_team'}).reset_index(drop = True)
+                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','hltv_name']], how = 'left', on = 'round')\
+                            .rename(index = str, columns = {'hltv_name':'t_team'}).reset_index(drop = True)
+                            
+                        for index, row in rounds.loc[pd.isnull(rounds['ct_team']) | pd.isnull(rounds['t_team'])].iterrows():
+                            if pd.isnull(row['ct_team']):
+                                if row['phase'] == rounds['phase'].iloc[int(index) + 1]:
+                                    rounds.set_value(index,'ct_team',rounds['ct_team'].iloc[int(index) + 1])
+                                else:
+                                    rounds.set_value(index,'ct_team',rounds['t_team'].iloc[int(index) + 1])
+                            if pd.isnull(row['t_team']):
+                                if row['phase'] == rounds['phase'].iloc[int(index) + 1]:
+                                    rounds.set_value(index,'t_team',rounds['t_team'].iloc[int(index) + 1])
+                                else:
+                                    rounds.set_value(index,'t_team',rounds['ct_team'].iloc[int(index) + 1])
                                     
                         for index, row in rounds.iterrows():
-                            if (row['round'] in [0,15,30]) or (pd.isnull(row['end']) == True):
-                                rounds.set_value(index, 'end', row['round_decision'])
-                        
-                        rounds = rounds[['phase','round','start','round_decision','end','winner','reason']]
-                        
-                        first_blood = pd.DataFrame(data.loc[data['event'] == 'player_hurt','tick'])
-                        for index, row in first_blood.iterrows():
-                            for index2, row2 in rounds.loc[rounds['round'] > 0].iterrows():
-                                if row2['start'] <= row['tick'] <= row2['end']:
-                                    first_blood.set_value(index,'round',row2['round'])
-                                    break
-                                else:
-                                    pass
+                            try:
+                                rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'].encode('utf-8'))))
+                            except:
+                                rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'])))
+                            try:
+                                rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'].encode('utf-8'))))
+                            except:
+                                rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'])))
                             
-                        first_blood = first_blood.groupby('round').min().reset_index()
-                        rounds = pd.merge(rounds, first_blood, how = 'left', on = 'round').rename(index = str, columns = {'tick':'first_blood'}).reset_index(drop = True)
+                        for phs in set(rounds['phase']):
+                            ct_teams = rounds.loc[rounds['phase'] == phs,'ct_team'].drop_duplicates()
+                            t_teams = rounds.loc[rounds['phase'] == phs,'t_team'].drop_duplicates()
+                            if max(len(ct_teams),len(t_teams)) > 1:
+                                error_msg = 'team change within phase' + (', ' + error_msg if error_msg else '')
+                                rounds = rounds.loc[rounds['phase'] != phs]
+                                if len(rounds) == 0:
+                                    raise ValueError('no rounds')
                         
-                        teams = data.loc[(data['event'] == 'item_purchase') | ((data['event'] == 'player_hurt') & (data['health'] == 0)),['tick','side','clanname']]
-                        for index, row in teams.iterrows():
-                            for index2, row2 in rounds.iterrows():
-                                if row2['start'] <= row['tick'] <= row2['round_decision']:
-                                    teams.set_value(index, 'round', row2['round'])
-                                    break
-                        
-                        teams = teams.loc[pd.isnull(teams['round']) == False, ['round','clanname','side']].drop_duplicates()
-                        
-                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 3,['round','clanname']], how = 'left', on = 'round').rename(index = str, columns = {'clanname':'ct_team'}).reset_index(drop = True)
-                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','clanname']], how = 'left', on = 'round').rename(index = str, columns = {'clanname':'t_team'}).reset_index(drop = True)
-                        
-                        item_change = data.loc[(data['event'].isin(['defuser_purchase','armor_purchase'])) | ((data['weapon'] != 'c4') & data['event'].isin(['item_purchase','item_pickup','item_drop'])) | (data['health'] == 0) | ((data['event'] == 'weapon_fire') & (data['weapon'].isin(['decoy','flashbang','molotov','smokegrenade','hegrenade','incgrenade']))),['tick','event','steamid','side','health','weapon','boughtHelmet']]
-                        item_change['min_tick'] = rounds.loc[rounds['round'] >= 1,['start','end']].min(axis=1).min()
-                        item_change['max_tick'] = rounds.loc[rounds['round'] >= 1,['start','end']].max(axis=1).max()
-                        item_change = item_change.loc[(item_change['min_tick'] <= item_change['tick']) & (item_change['tick'] <= item_change['max_tick']),['tick','event','steamid','side','health','weapon','boughtHelmet']]
+                        item_change = data.loc[(data['event'].isin(['defuser_purchase','armor_purchase']))
+                            | ((data['weapon'] != 'c4') & data['event'].isin(['item_purchase','item_pickup','item_drop']))
+                            | (data['health'] == 0) | ((data['event'] == 'weapon_fire') & (data['weapon'].isin(
+                                ['decoy','flashbang','molotov','smokegrenade','hegrenade','incgrenade'])))
+                            & (data['tick'] >= rounds.loc[rounds['round'] != -1,'start'].min())
+                            & (data['tick'] <= rounds['end'].max()),
+                            ['tick','event','steamid','side','health','weapon','boughtHelmet']]
                         item_change = pd.merge(item_change, weapon_data, how = 'left', on = 'weapon')
-                        for index, row in item_change.iterrows():
-                            for index2, row2 in rounds.iterrows():
-                                if row2['start'] <= row['tick'] <= row2['end']:
-                                    item_change.set_value(index,'round',row2['round'])
-                                    item_change.set_value(index,'phase',row2['phase'])
-                                    break
-                                else:
-                                    pass
-                        
+                        for index, row in rounds.iterrows():
+                            item_change.loc[(item_change['tick'] >= row['start'])
+                                & (item_change['tick'] <= row['end']),'round'] = row['round']
+                            item_change.loc[(item_change['tick'] >= row['start'])
+                                & (item_change['tick'] <= row['end']),'phase'] = row['phase']                        
                         item_change = item_change.loc[pd.isnull(item_change['round']) == False]
                         item_change = item_change.sort_values(['steamid','tick','event']).reset_index(drop = True)
                         for index, row in item_change.iterrows():
@@ -239,7 +507,8 @@ def json_to_csv():
                             except:
                                 item_change.set_value(index,'phase_change',1)
                         
-                        item_change['life_seq'] = item_change.loc[(item_change['phase_change'] == 1) | (item_change['event'] == 'player_hurt')].groupby('steamid').cumcount()
+                        item_change['life_seq'] = item_change.loc[(item_change['phase_change'] == 1)
+                            | (item_change['event'] == 'player_hurt')].groupby('steamid').cumcount()
                         item_change['life_seq'] = item_change.groupby('steamid')['life_seq'].bfill().ffill()
                         item_change = item_change.sort_values(['tick','event']).reset_index(drop = True)
                         item_change['econ'] = 0
@@ -251,7 +520,8 @@ def json_to_csv():
                                 pi = 0
                                 a = 0
                                 h = 0
-                                for index,row in item_change.loc[(item_change['steamid'] == steamid) & (item_change['life_seq'] == life_seq)].iterrows():
+                                for index,row in item_change.loc[(item_change['steamid'] == steamid)
+                                                                & (item_change['life_seq'] == life_seq)].iterrows():
                                     change = 0
                                     if row['event'] == 'defuser_purchase':
                                         change = 400
@@ -282,7 +552,8 @@ def json_to_csv():
                                         if row['secondary_class'] == 'upgraded':
                                             pi = row['value']
                                             change = row['value']
-                                        if row['weapon'] in ['hegrenade','inferno','flashbang','molotov_projectile','smokegrenade','molotov','incgrenade','inferno','decoy']:
+                                        if row['weapon'] in ['hegrenade','inferno','flashbang','molotov_projectile','smokegrenade',
+                                                'molotov','incgrenade','inferno','decoy']:
                                             g += row['value']
                                             change = row['value']
                                     if row['event'] == 'item_drop':
@@ -305,47 +576,56 @@ def json_to_csv():
     #                    item_change.to_csv('C:\\Users\\wessonmo\\Desktop\\item_change.csv')
                         
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
-                            ct_econ = item_change.loc[(row['start'] <= item_change['tick']) & (item_change['tick'] < row['first_blood']),'ct_econ'].max()
-                            t_econ = item_change.loc[(row['start'] <= item_change['tick']) & (item_change['tick'] < row['first_blood']),'t_econ'].max()
+                            ct_econ = item_change.loc[(row['start'] <= item_change['tick'])
+                                & (item_change['tick'] < row['first_blood']),'ct_econ'].max()
+                            t_econ = item_change.loc[(row['start'] <= item_change['tick'])
+                                & (item_change['tick'] < row['first_blood']),'t_econ'].max()
                             rounds.set_value(index, 'ct_econ_adv', ct_econ - t_econ)
-                            
-                        try:
-                            with open('csv\\demo_knife.csv', 'ab') as knifecsv:
-                                rounds.loc[rounds['round'] == 0,['mapid','t_team','ct_team','winner']].to_csv(knifecsv, header = False, index = False)
-                        except:
-                            pass
                         
-                        with open('csv\\demo_pistol.csv', 'ab') as pistolcsv:
-                                rounds.loc[rounds['round'].isin([1,16]),['mapid','round','t_team','ct_team','winner']].to_csv(pistolcsv, header = False, index = False)
-                                
-                        with open('csv\\demo_primary.csv', 'ab') as primarycsv:
-                            rounds.loc[~rounds['round'].isin([0,1,16]),['mapid','round','t_team','ct_team','ct_econ_adv','winner']].to_csv(primarycsv, header = False, index = False)
+                        rounds['match_href'] = match_row[1]
+                        rounds['map_num'] = int(file_[-6:-5])
+                            
+                        with open('csv\\demo_rounds.csv', 'ab') as democsv:
+                            rounds[['match_href','map_num','phase','round','t_team','ct_team','ct_econ_adv','winner']]\
+                                .to_csv(democsv, header = False, index = False)
+                           
+                        mapname = data.loc[data['event']=='info','mapName'].iloc[0]
+                        maphash = str(int(data.loc[data['event']=='info','mapHash'].iloc[0]))
+                        
+                        with open('csv\\demo_info.csv', 'ab') as democsv:
+                            demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                            demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],mapname,maphash,error_msg])
                             
                         
-                        players = data.loc[(data['event'].isin(['player_hurt','item_purchase','item_pickup','armor_purchase','item_drop'])) & (((data['round'] >= 3) & (data['round'] <= 5)) | ((data['round'] > 16) & (data['round'] <= 20))),['tick','steamid','clanname']]
-                        for index, row in players.iterrows():
-                            for index2, row2 in rounds.iterrows():
-                                if row2['start'] <= row['tick'] <= row2['end']:
-                                    players.set_value(index,'round',row2['round'])
-                                    break
-                                else:
-                                    pass
-                                
-                        players = pd.merge(players.loc[pd.isnull(players['round']) == False,['clanname','steamid']].drop_duplicates(), data.loc[data['event'] == 'player_connect',['steamid','name']], how = 'left', on = 'steamid').rename(index = str, columns = {'clanname':'team'})
-                        for index, row in players.iterrows():
-                            players.set_value(index, 'name', re.sub(r'[^\x00-\x7F]+','',str(row['name'].encode('utf-8'))))
-                            players.set_value(index, 'team', re.sub(r'[^\x00-\x7F]+','',str(row['team'].encode('utf-8'))))
-                        players.insert(0, 'mapid', file_[:-5])
+#                        players = data.loc[(data['event'].isin(['player_hurt','item_purchase','item_pickup','armor_purchase','item_drop']))
+#                            & (((data['round'] >= 3) & (data['round'] <= 5)) | ((data['round'] > 16) & (data['round'] <= 20))),
+#                            ['tick','steamid','hltv_name']]
+#                        for index, row in players.iterrows():
+#                            for index2, row2 in rounds.iterrows():
+#                                if row2['start'] <= row['tick'] <= row2['end']:
+#                                    players.set_value(index,'round',row2['round'])
+#                                    break
+#                                else:
+#                                    pass
+#                                
+#                        players = pd.merge(players.loc[pd.isnull(players['round']) == False,['hltv_name','steamid']].drop_duplicates(),
+#                                       data.loc[data['event'] == 'player_connect',['steamid','name']], how = 'left', on = 'steamid')\
+#                                       .rename(index = str, columns = {'hltv_name':'team'}).drop_duplicates()
+#                        for index, row in players.iterrows():
+#                            players.set_value(index, 'name', re.sub(r'[^\x00-\x7F]+','',str(row['name'].encode('utf-8'))))
+#                            players.set_value(index, 'team', re.sub(r'[^\x00-\x7F]+','',str(row['team'].encode('utf-8'))))
+#                        players.insert(0, 'mapid', file_[:-5])
                         
-                        with open('csv\\demo_players.csv', 'ab') as playercsv:
-                            players[['mapid','steamid','name','team']].to_csv(playercsv, header = False, index = False)
+#                        with open('csv\\demo_players.csv', 'ab') as playercsv:
+#                            players[['mapid','steamid','name','team']].to_csv(playercsv, header = False, index = False)
                             
-                        print(file_[:-5])
+                        print('\t' + match_row[1])
                     
                     except Exception as e:
                             error_msg = str(e)
-                            with open('csv\\csv_fails.csv', 'ab') as csvfailcsv:
-                                csvfailwriter = csv.writer(csvfailcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                csvfailwriter.writerow([eventid,file_[:-5],error_msg])
+                            with open('csv\\demo_info.csv', 'ab') as democsv:
+                                demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],None,None,error_msg])
+                            print('\tFAIL - ' + match_row[1])
                                 
-json_to_csv()
+#json_to_csv()

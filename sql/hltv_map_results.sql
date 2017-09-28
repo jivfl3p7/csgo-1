@@ -4,6 +4,7 @@ drop table if exists csgo.hltv_map_results;
 
 create table csgo.hltv_map_results (
 	match_href	text,
+	map_num		float,
 	map_name	text,
 	team1_href	text,
 	team1_rounds	float,
