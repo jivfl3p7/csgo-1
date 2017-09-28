@@ -2,7 +2,6 @@ echo off
 
 C:\Anaconda2\python.exe -W ignore %~dp0\python\hltv_scrape.py
 ::C:\Anaconda2\python.exe -W ignore %~dp0\python\rar_to_csv.py
-::C:\Anaconda2\python.exe -W ignore %~dp0\python\other\team_name_match.py
 
 for /f %%a in ('psql -U postgres -c "select 1 as result from pg_database where datname='esports'" -t') do set /a check=%%a
 
@@ -24,7 +23,6 @@ psql -U postgres -d esports -qf sql/current_team_lineups.sql
 ::psql -U postgres -d esports -qf sql/demo_info.sql
 ::psql -U postgres -d esports -qf sql/demo_players.sql
 ::psql -U postgres -d esports -qf sql/demo_rounds.sql
-::psql -U postgres -d esports -qf sql/team_name_match.sql
 
 ::placeholder for R script(s)
 
