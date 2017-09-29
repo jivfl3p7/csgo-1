@@ -10183,3 +10183,837 @@
 /matches/2302608/luminosity-vs-g2-esl-pro-league-season-3-finals,4,G2,ban,Overpass
 /matches/2302608/luminosity-vs-g2-esl-pro-league-season-3-finals,5,G2,ban,Inferno
 /matches/2302608/luminosity-vs-g2-esl-pro-league-season-3-finals,6,Luminosity,ban,Cobble
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,1,Crowns,remove,Dust2
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,2,MK,remove,Nuke
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,3,Crowns,pick,Cobble
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,4,MK,pick,Inferno
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,5,Crowns,remove,Overpass
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,6,MK,remove,Mirage
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,7,Crowns,remove,Train
+/matches/2304296/mk-vs-crowns-esea-season-22-mdl-global-challenge,8,Cache was,left,Cache
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,1,Crowns,remove,Nuke
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,2,Echo Fox,remove,Cobble
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,3,Crowns,pick,Mirage
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,4,Echo Fox,pick,Dust2
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,5,Crowns,remove,Train
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,6,Echo Fox,remove,Overpass
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,7,Crowns,remove,Inferno
+/matches/2304295/crowns-vs-echo-fox-esea-season-22-mdl-global-challenge,8,Cache was,left,Cache
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,1,ALTERNATE aTTaX,remove,Inferno
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,2,MK,remove,Nuke
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,3,ALTERNATE aTTaX,pick,Cobble
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,4,MK,pick,Dust2
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,5,ALTERNATE aTTaX,remove,Mirage
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,6,MK,remove,Cache
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,7,ALTERNATE aTTaX,remove,Train
+/matches/2304294/alternate-attax-vs-mk-esea-season-22-mdl-global-challenge,8,Overpass was,left,Overpass
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,1,g3x,remove,Dust2
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,2,MK,remove,Mirage
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,3,g3x,remove,Overpass
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,4,MK,remove,Nuke
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,5,g3x,remove,Inferno
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,6,MK,remove,Cache
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,7,g3x,remove,Cobble
+/matches/2304293/mk-vs-g3x-esea-season-22-mdl-global-challenge,8,Train was,left,Train
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,1,Echo Fox,remove,Mirage
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,2,ENCE,remove,Nuke
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,3,Echo Fox,remove,Train
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,4,ENCE,remove,Overpass
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,5,Echo Fox,remove,Cobble
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,6,ENCE,remove,Dust2
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,7,Echo Fox,remove,Inferno
+/matches/2304292/ence-vs-echo-fox-esea-season-22-mdl-global-challenge,8,Cache was,left,Cache
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,1,Crowns,remove,Inferno
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,2,g3x,remove,Mirage
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,3,Crowns,remove,Dust2
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,4,g3x,remove,Overpass
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,5,Crowns,remove,Train
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,6,g3x,remove,Cobble
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,7,Crowns,remove,Nuke
+/matches/2304291/g3x-vs-crowns-esea-season-22-mdl-global-challenge,8,Cache was,left,Cache
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,1,ALTERNATE aTTaX,remove,Nuke
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,2,Echo Fox,remove,Cobble
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,3,ALTERNATE aTTaX,remove,Train
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,4,Echo Fox,remove,Overpass
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,5,ALTERNATE aTTaX,remove,Dust2
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,6,Echo Fox,remove,Inferno
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,7,ALTERNATE aTTaX,remove,Mirage
+/matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-mdl-global-challenge,8,Cache was,left,Cache
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,1,MK,remove,Nuke
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,2,Pnda,remove,Inferno
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,3,MK,remove,Cache
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,4,Pnda,remove,Dust2
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,5,MK,remove,Mirage
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,6,Pnda,remove,Overpass
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,7,MK,remove,Cobble
+/matches/2304290/mk-vs-pnda-esea-season-22-mdl-global-challenge,8,Train was,left,Train
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,1,Chiefs,remove,Mirage
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,2,ENCE,remove,Nuke
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,3,Chiefs,remove,Dust2
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,4,ENCE,remove,Overpass
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,5,Chiefs,remove,Cobble
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,6,ENCE,remove,Inferno
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,7,Chiefs,remove,Train
+/matches/2304288/ence-vs-chiefs-esea-season-22-mdl-global-challenge,8,Cache was,left,Cache
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,1,Pnda,remove,Cache
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,2,Crowns,remove,Dust2
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,3,Pnda,remove,Train
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,4,Crowns,remove,Nuke
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,5,Pnda,remove,Inferno
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,6,Crowns,remove,Overpass
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,7,Pnda,remove,Cobble
+/matches/2304255/pnda-vs-crowns-esea-season-22-mdl-global-challenge,8,Mirage was,left,Mirage
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,1,g3x,remove,Dust2
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,2,MK,remove,Mirage
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,3,g3x,remove,Overpass
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,4,MK,remove,Nuke
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,5,g3x,remove,Inferno
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,6,MK,remove,Train
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,7,g3x,remove,Cobble
+/matches/2304254/mk-vs-g3x-esea-season-22-mdl-global-challenge,8,Cache was,left,Cache
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,1,ENCE,remove,Cobble
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,2,ALTERNATE aTTaX,remove,Mirage
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,3,ENCE,remove,Overpass
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,4,ALTERNATE aTTaX,remove,Train
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,5,ENCE,remove,Nuke
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,6,ALTERNATE aTTaX,remove,Inferno
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,7,ENCE,remove,Cache
+/matches/2304253/ence-vs-alternate-attax-esea-season-22-mdl-global-challenge,8,Dust2 was,left,Dust2
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,1,Echo Fox,remove,Cobble
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,2,Chiefs,remove,Overpass
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,3,Echo Fox,remove,Train
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,4,Chiefs,remove,Dust2
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,5,Echo Fox,remove,Mirage
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,6,Chiefs,remove,Inferno
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,7,Echo Fox,remove,Cache
+/matches/2304252/echo-fox-vs-chiefs-esea-season-22-mdl-global-challenge,8,Nuke was,left,Nuke
+/matches/2307296/ldlc-vs-rogue-esea-season-23-mdl-global-challenge,1,LDLC,remove,Mirage
+/matches/2307296/ldlc-vs-rogue-esea-season-23-mdl-global-challenge,2,Rogue,remove,Cobble
+/matches/2307296/ldlc-vs-rogue-esea-season-23-mdl-global-challenge,3,LDLC,pick,Dust2
+/matches/2307296/ldlc-vs-rogue-esea-season-23-mdl-global-challenge,4,Rogue,pick,Train
+/matches/2307296/ldlc-vs-rogue-esea-season-23-mdl-global-challenge,5,LDLC,remove,Nuke
+/matches/2307296/ldlc-vs-rogue-esea-season-23-mdl-global-challenge,6,Rogue,remove,Overpass
+/matches/2307296/ldlc-vs-rogue-esea-season-23-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2307295/kinguin-vs-rogue-esea-season-23-mdl-global-challenge,1,Rogue,remove,Cobble
+/matches/2307295/kinguin-vs-rogue-esea-season-23-mdl-global-challenge,2,Kinguin,remove,Train
+/matches/2307295/kinguin-vs-rogue-esea-season-23-mdl-global-challenge,3,Rogue,pick,Mirage
+/matches/2307295/kinguin-vs-rogue-esea-season-23-mdl-global-challenge,4,Kinguin,pick,Overpass
+/matches/2307295/kinguin-vs-rogue-esea-season-23-mdl-global-challenge,5,Rogue,remove,Dust2
+/matches/2307295/kinguin-vs-rogue-esea-season-23-mdl-global-challenge,6,Kinguin,remove,Nuke
+/matches/2307295/kinguin-vs-rogue-esea-season-23-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2307294/ldlc-vs-tainted-minds-esea-season-23-mdl-global-challenge,1,Tainted Minds,remove,Cobble
+/matches/2307294/ldlc-vs-tainted-minds-esea-season-23-mdl-global-challenge,2,LDLC,remove,Mirage
+/matches/2307294/ldlc-vs-tainted-minds-esea-season-23-mdl-global-challenge,3,Tainted Minds,pick,Train
+/matches/2307294/ldlc-vs-tainted-minds-esea-season-23-mdl-global-challenge,4,LDLC,pick,Overpass
+/matches/2307294/ldlc-vs-tainted-minds-esea-season-23-mdl-global-challenge,5,Tainted Minds,remove,Dust2
+/matches/2307294/ldlc-vs-tainted-minds-esea-season-23-mdl-global-challenge,6,LDLC,remove,Nuke
+/matches/2307294/ldlc-vs-tainted-minds-esea-season-23-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2307293/tainted-minds-vs-muffin-lightning-esea-season-23-mdl-global-challenge,1,Muffin Lightning,remove,Train
+/matches/2307293/tainted-minds-vs-muffin-lightning-esea-season-23-mdl-global-challenge,2,Tainted Minds,remove,Cobble
+/matches/2307293/tainted-minds-vs-muffin-lightning-esea-season-23-mdl-global-challenge,3,Muffin Lightning,pick,Dust2
+/matches/2307293/tainted-minds-vs-muffin-lightning-esea-season-23-mdl-global-challenge,4,Tainted Minds,pick,Cache
+/matches/2307293/tainted-minds-vs-muffin-lightning-esea-season-23-mdl-global-challenge,5,Muffin Lightning,remove,Nuke
+/matches/2307293/tainted-minds-vs-muffin-lightning-esea-season-23-mdl-global-challenge,6,Tainted Minds,remove,Overpass
+/matches/2307293/tainted-minds-vs-muffin-lightning-esea-season-23-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2307292/bravado-vs-rogue-esea-season-23-mdl-global-challenge,1,Rogue,remove,Cobble
+/matches/2307292/bravado-vs-rogue-esea-season-23-mdl-global-challenge,2,Bravado,remove,Overpass
+/matches/2307292/bravado-vs-rogue-esea-season-23-mdl-global-challenge,3,Rogue,pick,Train
+/matches/2307292/bravado-vs-rogue-esea-season-23-mdl-global-challenge,4,Bravado,pick,Mirage
+/matches/2307292/bravado-vs-rogue-esea-season-23-mdl-global-challenge,5,Rogue,remove,Dust2
+/matches/2307292/bravado-vs-rogue-esea-season-23-mdl-global-challenge,6,Bravado,remove,Nuke
+/matches/2307292/bravado-vs-rogue-esea-season-23-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2307291/rush-vs-muffin-lightning-esea-season-23-mdl-global-challenge,1,Muffin Lightning,remove,Cobble
+/matches/2307291/rush-vs-muffin-lightning-esea-season-23-mdl-global-challenge,2,Rush,remove,Cache
+/matches/2307291/rush-vs-muffin-lightning-esea-season-23-mdl-global-challenge,3,Muffin Lightning,pick,Dust2
+/matches/2307291/rush-vs-muffin-lightning-esea-season-23-mdl-global-challenge,4,Rush,pick,Overpass
+/matches/2307291/rush-vs-muffin-lightning-esea-season-23-mdl-global-challenge,5,Muffin Lightning,remove,Train
+/matches/2307291/rush-vs-muffin-lightning-esea-season-23-mdl-global-challenge,6,Rush,remove,Nuke
+/matches/2307291/rush-vs-muffin-lightning-esea-season-23-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2307290/tsm-vs-rogue-esea-season-23-mdl-global-challenge,1,Rogue,remove,Cobble
+/matches/2307290/tsm-vs-rogue-esea-season-23-mdl-global-challenge,2,TSM,remove,Overpass
+/matches/2307290/tsm-vs-rogue-esea-season-23-mdl-global-challenge,3,Rogue,pick,Train
+/matches/2307290/tsm-vs-rogue-esea-season-23-mdl-global-challenge,4,TSM,pick,Dust2
+/matches/2307290/tsm-vs-rogue-esea-season-23-mdl-global-challenge,5,Rogue,remove,Cache
+/matches/2307290/tsm-vs-rogue-esea-season-23-mdl-global-challenge,6,TSM,remove,Nuke
+/matches/2307290/tsm-vs-rogue-esea-season-23-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2307289/tainted-minds-vs-kinguin-esea-season-23-mdl-global-challenge,1,Kinguin,remove,Train
+/matches/2307289/tainted-minds-vs-kinguin-esea-season-23-mdl-global-challenge,2,Tainted Minds,remove,Cobble
+/matches/2307289/tainted-minds-vs-kinguin-esea-season-23-mdl-global-challenge,3,Tainted Minds,remove,Overpass
+/matches/2307289/tainted-minds-vs-kinguin-esea-season-23-mdl-global-challenge,4,Kinguin,remove,Dust2
+/matches/2307289/tainted-minds-vs-kinguin-esea-season-23-mdl-global-challenge,5,Kinguin,remove,Nuke
+/matches/2307289/tainted-minds-vs-kinguin-esea-season-23-mdl-global-challenge,6,Tainted Minds,remove,Mirage
+/matches/2307289/tainted-minds-vs-kinguin-esea-season-23-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2307288/bravado-vs-ldlc-esea-season-23-mdl-global-challenge,,,,
+/matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-mdl-global-challenge,1,Muffin Lightning,remove,Cobble
+/matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-mdl-global-challenge,2,Kinguin,remove,Dust2
+/matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-mdl-global-challenge,3,Kinguin,remove,Mirage
+/matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-mdl-global-challenge,4,Muffin Lightning,remove,Nuke
+/matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-mdl-global-challenge,5,Muffin Lightning,remove,Train
+/matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-mdl-global-challenge,6,Kinguin,remove,Cache
+/matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-mdl-global-challenge,7,Overpass was,left,Overpass
+/matches/2307286/tainted-minds-vs-rush-esea-season-23-mdl-global-challenge,1,Rush,remove,Nuke
+/matches/2307286/tainted-minds-vs-rush-esea-season-23-mdl-global-challenge,2,Tainted Minds,remove,Cobble
+/matches/2307286/tainted-minds-vs-rush-esea-season-23-mdl-global-challenge,3,Tainted Minds,remove,Overpass
+/matches/2307286/tainted-minds-vs-rush-esea-season-23-mdl-global-challenge,4,Rush,remove,Cache
+/matches/2307286/tainted-minds-vs-rush-esea-season-23-mdl-global-challenge,5,Rush,remove,Dust2
+/matches/2307286/tainted-minds-vs-rush-esea-season-23-mdl-global-challenge,6,Tainted Minds,remove,Mirage
+/matches/2307286/tainted-minds-vs-rush-esea-season-23-mdl-global-challenge,7,Train was,left,Train
+/matches/2307285/rogue-vs-ldlc-esea-season-23-mdl-global-challenge,1,LDLC,remove,Mirage
+/matches/2307285/rogue-vs-ldlc-esea-season-23-mdl-global-challenge,2,Rogue,remove,Dust2
+/matches/2307285/rogue-vs-ldlc-esea-season-23-mdl-global-challenge,3,Rogue,remove,Cache
+/matches/2307285/rogue-vs-ldlc-esea-season-23-mdl-global-challenge,4,LDLC,remove,Train
+/matches/2307285/rogue-vs-ldlc-esea-season-23-mdl-global-challenge,5,LDLC,remove,Nuke
+/matches/2307285/rogue-vs-ldlc-esea-season-23-mdl-global-challenge,6,Rogue,remove,Cobble
+/matches/2307285/rogue-vs-ldlc-esea-season-23-mdl-global-challenge,7,Overpass was,left,Overpass
+/matches/2307284/bravado-vs-tsm-esea-season-23-mdl-global-challenge,1,Bravado,remove,Cache
+/matches/2307284/bravado-vs-tsm-esea-season-23-mdl-global-challenge,2,TSM,remove,Overpass
+/matches/2307284/bravado-vs-tsm-esea-season-23-mdl-global-challenge,3,TSM,remove,Nuke
+/matches/2307284/bravado-vs-tsm-esea-season-23-mdl-global-challenge,4,Bravado,remove,Dust2
+/matches/2307284/bravado-vs-tsm-esea-season-23-mdl-global-challenge,5,Bravado,remove,Cobble
+/matches/2307284/bravado-vs-tsm-esea-season-23-mdl-global-challenge,6,TSM,remove,Train
+/matches/2307284/bravado-vs-tsm-esea-season-23-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2310689/penta-vs-big-esea-season-24-mdl-global-challenge,1,BIG,remove,Nuke
+/matches/2310689/penta-vs-big-esea-season-24-mdl-global-challenge,2,PENTA,remove,Overpass
+/matches/2310689/penta-vs-big-esea-season-24-mdl-global-challenge,3,BIG,pick,Cache
+/matches/2310689/penta-vs-big-esea-season-24-mdl-global-challenge,4,PENTA,pick,Inferno
+/matches/2310689/penta-vs-big-esea-season-24-mdl-global-challenge,5,BIG,remove,Train
+/matches/2310689/penta-vs-big-esea-season-24-mdl-global-challenge,6,PENTA,remove,Cobble
+/matches/2310689/penta-vs-big-esea-season-24-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2310688/big-vs-godsent-esea-season-24-mdl-global-challenge,1,GODSENT,remove,Cobble
+/matches/2310688/big-vs-godsent-esea-season-24-mdl-global-challenge,2,BIG,remove,Nuke
+/matches/2310688/big-vs-godsent-esea-season-24-mdl-global-challenge,3,GODSENT,pick,Cache
+/matches/2310688/big-vs-godsent-esea-season-24-mdl-global-challenge,4,BIG,pick,Overpass
+/matches/2310688/big-vs-godsent-esea-season-24-mdl-global-challenge,5,GODSENT,remove,Inferno
+/matches/2310688/big-vs-godsent-esea-season-24-mdl-global-challenge,6,BIG,remove,Mirage
+/matches/2310688/big-vs-godsent-esea-season-24-mdl-global-challenge,7,Train was,left,Train
+/matches/2310687/penta-vs-splyce-esea-season-24-mdl-global-challenge,1,Splyce,remove,Cache
+/matches/2310687/penta-vs-splyce-esea-season-24-mdl-global-challenge,2,PENTA,remove,Nuke
+/matches/2310687/penta-vs-splyce-esea-season-24-mdl-global-challenge,3,Splyce,pick,Overpass
+/matches/2310687/penta-vs-splyce-esea-season-24-mdl-global-challenge,4,PENTA,pick,Inferno
+/matches/2310687/penta-vs-splyce-esea-season-24-mdl-global-challenge,5,Splyce,remove,Mirage
+/matches/2310687/penta-vs-splyce-esea-season-24-mdl-global-challenge,6,PENTA,remove,Cobble
+/matches/2310687/penta-vs-splyce-esea-season-24-mdl-global-challenge,7,Train was,left,Train
+/matches/2310686/splyce-vs-pain-esea-season-24-mdl-global-challenge,1,paiN,remove,Cobble
+/matches/2310686/splyce-vs-pain-esea-season-24-mdl-global-challenge,2,Splyce,remove,Cache
+/matches/2310686/splyce-vs-pain-esea-season-24-mdl-global-challenge,3,paiN,remove,Mirage
+/matches/2310686/splyce-vs-pain-esea-season-24-mdl-global-challenge,4,Splyce,remove,Overpass
+/matches/2310686/splyce-vs-pain-esea-season-24-mdl-global-challenge,5,paiN,remove,Nuke
+/matches/2310686/splyce-vs-pain-esea-season-24-mdl-global-challenge,6,Splyce,remove,Inferno
+/matches/2310686/splyce-vs-pain-esea-season-24-mdl-global-challenge,7,Train was,left,Train
+/matches/2310685/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,1,Dark Sided,remove,Cobble
+/matches/2310685/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,2,GODSENT,remove,Nuke
+/matches/2310685/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,3,Dark Sided,remove,Inferno
+/matches/2310685/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,4,GODSENT,remove,Overpass
+/matches/2310685/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,5,Dark Sided,remove,Train
+/matches/2310685/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,6,GODSENT,remove,Mirage
+/matches/2310685/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2310684/pain-vs-ghost-esea-season-24-mdl-global-challenge,1,Ghost,remove,Mirage
+/matches/2310684/pain-vs-ghost-esea-season-24-mdl-global-challenge,2,paiN,remove,Inferno
+/matches/2310684/pain-vs-ghost-esea-season-24-mdl-global-challenge,3,Ghost,remove,Overpass
+/matches/2310684/pain-vs-ghost-esea-season-24-mdl-global-challenge,4,paiN,remove,Cobble
+/matches/2310684/pain-vs-ghost-esea-season-24-mdl-global-challenge,5,Ghost,remove,Nuke
+/matches/2310684/pain-vs-ghost-esea-season-24-mdl-global-challenge,6,paiN,remove,Train
+/matches/2310684/pain-vs-ghost-esea-season-24-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2310680/splyce-vs-big-esea-season-24-mdl-global-challenge,1,BIG,remove,Cobble
+/matches/2310680/splyce-vs-big-esea-season-24-mdl-global-challenge,2,Splyce,remove,Cache
+/matches/2310680/splyce-vs-big-esea-season-24-mdl-global-challenge,3,BIG,remove,Train
+/matches/2310680/splyce-vs-big-esea-season-24-mdl-global-challenge,4,Splyce,remove,Overpass
+/matches/2310680/splyce-vs-big-esea-season-24-mdl-global-challenge,5,BIG,remove,Nuke
+/matches/2310680/splyce-vs-big-esea-season-24-mdl-global-challenge,6,Splyce,remove,Inferno
+/matches/2310680/splyce-vs-big-esea-season-24-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2310683/dark-sided-vs-enigma6-esea-season-24-mdl-global-challenge,1,Dark Sided,remove,Cobble
+/matches/2310683/dark-sided-vs-enigma6-esea-season-24-mdl-global-challenge,2,Enigma6,remove,Mirage
+/matches/2310683/dark-sided-vs-enigma6-esea-season-24-mdl-global-challenge,3,Dark Sided,remove,Inferno
+/matches/2310683/dark-sided-vs-enigma6-esea-season-24-mdl-global-challenge,4,Enigma6,remove,Cache
+/matches/2310683/dark-sided-vs-enigma6-esea-season-24-mdl-global-challenge,5,Dark Sided,remove,Train
+/matches/2310683/dark-sided-vs-enigma6-esea-season-24-mdl-global-challenge,6,Enigma6,remove,Nuke
+/matches/2310683/dark-sided-vs-enigma6-esea-season-24-mdl-global-challenge,7,Overpass was,left,Overpass
+/matches/2310679/godsent-vs-penta-esea-season-24-mdl-global-challenge,1,PENTA,remove,Mirage
+/matches/2310679/godsent-vs-penta-esea-season-24-mdl-global-challenge,2,GODSENT,remove,Inferno
+/matches/2310679/godsent-vs-penta-esea-season-24-mdl-global-challenge,3,PENTA,remove,Cache
+/matches/2310679/godsent-vs-penta-esea-season-24-mdl-global-challenge,4,GODSENT,remove,Cobble
+/matches/2310679/godsent-vs-penta-esea-season-24-mdl-global-challenge,5,PENTA,remove,Overpass
+/matches/2310679/godsent-vs-penta-esea-season-24-mdl-global-challenge,6,GODSENT,remove,Nuke
+/matches/2310679/godsent-vs-penta-esea-season-24-mdl-global-challenge,7,Train was,left,Train
+/matches/2310678/ghost-vs-big-esea-season-24-mdl-global-challenge,1,Ghost,remove,Mirage
+/matches/2310678/ghost-vs-big-esea-season-24-mdl-global-challenge,2,BIG,remove,Cobble
+/matches/2310678/ghost-vs-big-esea-season-24-mdl-global-challenge,3,Ghost,remove,Cache
+/matches/2310678/ghost-vs-big-esea-season-24-mdl-global-challenge,4,BIG,remove,Nuke
+/matches/2310678/ghost-vs-big-esea-season-24-mdl-global-challenge,5,Ghost,remove,Overpass
+/matches/2310678/ghost-vs-big-esea-season-24-mdl-global-challenge,6,BIG,remove,Train
+/matches/2310678/ghost-vs-big-esea-season-24-mdl-global-challenge,7,Inferno was,left,Inferno
+/matches/2310677/splyce-vs-pain-esea-season-24-mdl-global-challenge,1,paiN,remove,Train
+/matches/2310677/splyce-vs-pain-esea-season-24-mdl-global-challenge,2,Splyce,remove,Cache
+/matches/2310677/splyce-vs-pain-esea-season-24-mdl-global-challenge,3,paiN,remove,Mirage
+/matches/2310677/splyce-vs-pain-esea-season-24-mdl-global-challenge,4,Splyce,remove,Overpass
+/matches/2310677/splyce-vs-pain-esea-season-24-mdl-global-challenge,5,paiN,remove,Nuke
+/matches/2310677/splyce-vs-pain-esea-season-24-mdl-global-challenge,6,Splyce,remove,Inferno
+/matches/2310677/splyce-vs-pain-esea-season-24-mdl-global-challenge,7,Cobblestone was,left,Cobble
+/matches/2310676/penta-vs-enigma6-esea-season-24-mdl-global-challenge,1,Enigma6,remove,Train
+/matches/2310676/penta-vs-enigma6-esea-season-24-mdl-global-challenge,2,PENTA,remove,Overpass
+/matches/2310676/penta-vs-enigma6-esea-season-24-mdl-global-challenge,3,Enigma6,remove,Inferno
+/matches/2310676/penta-vs-enigma6-esea-season-24-mdl-global-challenge,4,PENTA,remove,Cobble
+/matches/2310676/penta-vs-enigma6-esea-season-24-mdl-global-challenge,5,Enigma6,remove,Cache
+/matches/2310676/penta-vs-enigma6-esea-season-24-mdl-global-challenge,6,PENTA,remove,Nuke
+/matches/2310676/penta-vs-enigma6-esea-season-24-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2310675/godsent-vs-dark-sided-esea-season-24-mdl-global-challenge,,,,
+/matches/2313913/g2-vs-north-dreamhack-masters-malm-2017,1,G2,remove,Train
+/matches/2313913/g2-vs-north-dreamhack-masters-malm-2017,2,North,remove,Cache
+/matches/2313913/g2-vs-north-dreamhack-masters-malm-2017,3,G2,pick,Inferno
+/matches/2313913/g2-vs-north-dreamhack-masters-malm-2017,4,North,pick,Cobble
+/matches/2313913/g2-vs-north-dreamhack-masters-malm-2017,5,G2,remove,Mirage
+/matches/2313913/g2-vs-north-dreamhack-masters-malm-2017,6,North,remove,Overpass
+/matches/2313913/g2-vs-north-dreamhack-masters-malm-2017,7,Nuke was,left,Nuke
+/matches/2313912/gambit-vs-north-dreamhack-masters-malm-2017,1,Gambit,remove,Nuke
+/matches/2313912/gambit-vs-north-dreamhack-masters-malm-2017,2,North,remove,Cache
+/matches/2313912/gambit-vs-north-dreamhack-masters-malm-2017,3,Gambit,pick,Train
+/matches/2313912/gambit-vs-north-dreamhack-masters-malm-2017,4,North,pick,Cobble
+/matches/2313912/gambit-vs-north-dreamhack-masters-malm-2017,5,Gambit,remove,Inferno
+/matches/2313912/gambit-vs-north-dreamhack-masters-malm-2017,6,North,remove,Mirage
+/matches/2313912/gambit-vs-north-dreamhack-masters-malm-2017,7,Overpass was,left,Overpass
+/matches/2313911/g2-vs-nip-dreamhack-masters-malm-2017,1,G2,remove,Train
+/matches/2313911/g2-vs-nip-dreamhack-masters-malm-2017,2,NiP,remove,Cobble
+/matches/2313911/g2-vs-nip-dreamhack-masters-malm-2017,3,G2,pick,Inferno
+/matches/2313911/g2-vs-nip-dreamhack-masters-malm-2017,4,NiP,pick,Cache
+/matches/2313911/g2-vs-nip-dreamhack-masters-malm-2017,5,G2,remove,Mirage
+/matches/2313911/g2-vs-nip-dreamhack-masters-malm-2017,6,NiP,remove,Overpass
+/matches/2313911/g2-vs-nip-dreamhack-masters-malm-2017,7,Nuke was,left,Nuke
+/matches/2313910/north-vs-immortals-dreamhack-masters-malm-2017,1,Immortals,remove,Nuke
+/matches/2313910/north-vs-immortals-dreamhack-masters-malm-2017,2,North,remove,Cache
+/matches/2313910/north-vs-immortals-dreamhack-masters-malm-2017,3,Immortals,pick,Inferno
+/matches/2313910/north-vs-immortals-dreamhack-masters-malm-2017,4,North,pick,Mirage
+/matches/2313910/north-vs-immortals-dreamhack-masters-malm-2017,5,Immortals,remove,Overpass
+/matches/2313910/north-vs-immortals-dreamhack-masters-malm-2017,6,North,remove,Train
+/matches/2313910/north-vs-immortals-dreamhack-masters-malm-2017,7,Cobblestone was,left,Cobble
+/matches/2313909/astralis-vs-gambit-dreamhack-masters-malm-2017,1,Gambit,remove,Overpass
+/matches/2313909/astralis-vs-gambit-dreamhack-masters-malm-2017,2,Astralis,remove,Cobble
+/matches/2313909/astralis-vs-gambit-dreamhack-masters-malm-2017,3,Gambit,pick,Cache
+/matches/2313909/astralis-vs-gambit-dreamhack-masters-malm-2017,4,Astralis,pick,Mirage
+/matches/2313909/astralis-vs-gambit-dreamhack-masters-malm-2017,5,Gambit,remove,Inferno
+/matches/2313909/astralis-vs-gambit-dreamhack-masters-malm-2017,6,Astralis,remove,Nuke
+/matches/2313909/astralis-vs-gambit-dreamhack-masters-malm-2017,7,Train was,left,Train
+/matches/2313908/nip-vs-natus-vincere-dreamhack-masters-malm-2017,1,Natus Vincere,remove,Cache
+/matches/2313908/nip-vs-natus-vincere-dreamhack-masters-malm-2017,2,NiP,remove,Cobble
+/matches/2313908/nip-vs-natus-vincere-dreamhack-masters-malm-2017,3,Natus Vincere,pick,Train
+/matches/2313908/nip-vs-natus-vincere-dreamhack-masters-malm-2017,4,NiP,pick,Nuke
+/matches/2313908/nip-vs-natus-vincere-dreamhack-masters-malm-2017,5,Natus Vincere,remove,Overpass
+/matches/2313908/nip-vs-natus-vincere-dreamhack-masters-malm-2017,6,NiP,remove,Inferno
+/matches/2313908/nip-vs-natus-vincere-dreamhack-masters-malm-2017,7,Mirage was,left,Mirage
+/matches/2313907/g2-vs-sk-dreamhack-masters-malm-2017,1,SK,remove,Nuke
+/matches/2313907/g2-vs-sk-dreamhack-masters-malm-2017,2,G2,remove,Train
+/matches/2313907/g2-vs-sk-dreamhack-masters-malm-2017,3,SK,pick,Cobble
+/matches/2313907/g2-vs-sk-dreamhack-masters-malm-2017,4,G2,pick,Inferno
+/matches/2313907/g2-vs-sk-dreamhack-masters-malm-2017,5,SK,remove,Overpass
+/matches/2313907/g2-vs-sk-dreamhack-masters-malm-2017,6,G2,remove,Cache
+/matches/2313907/g2-vs-sk-dreamhack-masters-malm-2017,7,Mirage was,left,Mirage
+/matches/2313906/fnatic-vs-immortals-dreamhack-masters-malm-2017,1,fnatic,remove,Inferno
+/matches/2313906/fnatic-vs-immortals-dreamhack-masters-malm-2017,2,Immortals,remove,Nuke
+/matches/2313906/fnatic-vs-immortals-dreamhack-masters-malm-2017,3,fnatic,pick,Cache
+/matches/2313906/fnatic-vs-immortals-dreamhack-masters-malm-2017,4,Immortals,pick,Train
+/matches/2313906/fnatic-vs-immortals-dreamhack-masters-malm-2017,5,fnatic,remove,Overpass
+/matches/2313906/fnatic-vs-immortals-dreamhack-masters-malm-2017,6,Immortals,remove,Mirage
+/matches/2313906/fnatic-vs-immortals-dreamhack-masters-malm-2017,7,Cobblestone was,left,Cobble
+/matches/2313905/faze-vs-gambit-dreamhack-masters-malm-2017,1,FaZe,remove,Cobble
+/matches/2313905/faze-vs-gambit-dreamhack-masters-malm-2017,2,Gambit,remove,Overpass
+/matches/2313905/faze-vs-gambit-dreamhack-masters-malm-2017,3,FaZe,pick,Mirage
+/matches/2313905/faze-vs-gambit-dreamhack-masters-malm-2017,4,Gambit,pick,Train
+/matches/2313905/faze-vs-gambit-dreamhack-masters-malm-2017,5,FaZe,remove,Cache
+/matches/2313905/faze-vs-gambit-dreamhack-masters-malm-2017,6,Gambit,remove,Inferno
+/matches/2313905/faze-vs-gambit-dreamhack-masters-malm-2017,7,Nuke was,left,Nuke
+/matches/2313904/renegades-vs-natus-vincere-dreamhack-masters-malm-2017,1,Renegades,remove,Inferno
+/matches/2313904/renegades-vs-natus-vincere-dreamhack-masters-malm-2017,2,Natus Vincere,remove,Cache
+/matches/2313904/renegades-vs-natus-vincere-dreamhack-masters-malm-2017,3,Renegades,pick,Cobble
+/matches/2313904/renegades-vs-natus-vincere-dreamhack-masters-malm-2017,4,Natus Vincere,pick,Train
+/matches/2313904/renegades-vs-natus-vincere-dreamhack-masters-malm-2017,5,Renegades,remove,Overpass
+/matches/2313904/renegades-vs-natus-vincere-dreamhack-masters-malm-2017,6,Natus Vincere,remove,Mirage
+/matches/2313904/renegades-vs-natus-vincere-dreamhack-masters-malm-2017,7,Nuke was,left,Nuke
+/matches/2313903/cloud9-vs-sk-dreamhack-masters-malm-2017,1,Cloud9,remove,Overpass
+/matches/2313903/cloud9-vs-sk-dreamhack-masters-malm-2017,2,SK,remove,Nuke
+/matches/2313903/cloud9-vs-sk-dreamhack-masters-malm-2017,3,Cloud9,pick,Train
+/matches/2313903/cloud9-vs-sk-dreamhack-masters-malm-2017,4,SK,pick,Cobble
+/matches/2313903/cloud9-vs-sk-dreamhack-masters-malm-2017,5,Cloud9,remove,Cache
+/matches/2313903/cloud9-vs-sk-dreamhack-masters-malm-2017,6,SK,remove,Inferno
+/matches/2313903/cloud9-vs-sk-dreamhack-masters-malm-2017,7,Mirage was,left,Mirage
+/matches/2313902/immortals-vs-g2-dreamhack-masters-malm-2017,1,Immortals,remove,Nuke
+/matches/2313902/immortals-vs-g2-dreamhack-masters-malm-2017,2,G2,remove,Train
+/matches/2313902/immortals-vs-g2-dreamhack-masters-malm-2017,3,Immortals,pick,Mirage
+/matches/2313902/immortals-vs-g2-dreamhack-masters-malm-2017,4,G2,pick,Inferno
+/matches/2313902/immortals-vs-g2-dreamhack-masters-malm-2017,5,Immortals,remove,Cobble
+/matches/2313902/immortals-vs-g2-dreamhack-masters-malm-2017,6,G2,remove,Cache
+/matches/2313902/immortals-vs-g2-dreamhack-masters-malm-2017,7,Overpass was,left,Overpass
+/matches/2313901/gambit-vs-nip-dreamhack-masters-malm-2017,1,NiP,remove,Cobble
+/matches/2313901/gambit-vs-nip-dreamhack-masters-malm-2017,2,Gambit,remove,Nuke
+/matches/2313901/gambit-vs-nip-dreamhack-masters-malm-2017,3,NiP,pick,Cache
+/matches/2313901/gambit-vs-nip-dreamhack-masters-malm-2017,4,Gambit,pick,Overpass
+/matches/2313901/gambit-vs-nip-dreamhack-masters-malm-2017,5,NiP,remove,Inferno
+/matches/2313901/gambit-vs-nip-dreamhack-masters-malm-2017,6,Gambit,remove,Mirage
+/matches/2313901/gambit-vs-nip-dreamhack-masters-malm-2017,7,Train was,left,Train
+/matches/2313900/astralis-vs-natus-vincere-dreamhack-masters-malm-2017,1,Astralis,remove,Cobble
+/matches/2313900/astralis-vs-natus-vincere-dreamhack-masters-malm-2017,2,Natus Vincere,remove,Cache
+/matches/2313900/astralis-vs-natus-vincere-dreamhack-masters-malm-2017,3,Astralis,pick,Overpass
+/matches/2313900/astralis-vs-natus-vincere-dreamhack-masters-malm-2017,4,Natus Vincere,pick,Mirage
+/matches/2313900/astralis-vs-natus-vincere-dreamhack-masters-malm-2017,5,Astralis,remove,Inferno
+/matches/2313900/astralis-vs-natus-vincere-dreamhack-masters-malm-2017,6,Natus Vincere,remove,Nuke
+/matches/2313900/astralis-vs-natus-vincere-dreamhack-masters-malm-2017,7,Train was,left,Train
+/matches/2313899/sk-vs-north-dreamhack-masters-malm-2017,1,North,remove,Cache
+/matches/2313899/sk-vs-north-dreamhack-masters-malm-2017,2,SK,remove,Nuke
+/matches/2313899/sk-vs-north-dreamhack-masters-malm-2017,3,North,pick,Cobble
+/matches/2313899/sk-vs-north-dreamhack-masters-malm-2017,4,SK,pick,Train
+/matches/2313899/sk-vs-north-dreamhack-masters-malm-2017,5,North,remove,Mirage
+/matches/2313899/sk-vs-north-dreamhack-masters-malm-2017,6,SK,remove,Overpass
+/matches/2313899/sk-vs-north-dreamhack-masters-malm-2017,7,Inferno was,left,Inferno
+/matches/2313897/mousesports-vs-faze-dreamhack-masters-malm-2017,1,mousesports,remove,Overpass
+/matches/2313897/mousesports-vs-faze-dreamhack-masters-malm-2017,2,FaZe,remove,Cache
+/matches/2313897/mousesports-vs-faze-dreamhack-masters-malm-2017,3,mousesports,remove,Train
+/matches/2313897/mousesports-vs-faze-dreamhack-masters-malm-2017,4,FaZe,remove,Cobble
+/matches/2313897/mousesports-vs-faze-dreamhack-masters-malm-2017,5,mousesports,remove,Inferno
+/matches/2313897/mousesports-vs-faze-dreamhack-masters-malm-2017,6,FaZe,remove,Nuke
+/matches/2313897/mousesports-vs-faze-dreamhack-masters-malm-2017,7,Mirage was,left,Mirage
+/matches/2313898/fnatic-vs-envyus-dreamhack-masters-malm-2017,1,fnatic,remove,Train
+/matches/2313898/fnatic-vs-envyus-dreamhack-masters-malm-2017,2,EnVyUs,remove,Mirage
+/matches/2313898/fnatic-vs-envyus-dreamhack-masters-malm-2017,3,fnatic,remove,Nuke
+/matches/2313898/fnatic-vs-envyus-dreamhack-masters-malm-2017,4,EnVyUs,remove,Overpass
+/matches/2313898/fnatic-vs-envyus-dreamhack-masters-malm-2017,5,fnatic,remove,Inferno
+/matches/2313898/fnatic-vs-envyus-dreamhack-masters-malm-2017,6,EnVyUs,remove,Cache
+/matches/2313898/fnatic-vs-envyus-dreamhack-masters-malm-2017,7,Cobblestone was,left,Cobble
+/matches/2313895/renegades-vs-virtuspro-dreamhack-masters-malm-2017,1,Virtus.pro,remove,Mirage
+/matches/2313895/renegades-vs-virtuspro-dreamhack-masters-malm-2017,2,Renegades,remove,Inferno
+/matches/2313895/renegades-vs-virtuspro-dreamhack-masters-malm-2017,3,Virtus.pro,remove,Overpass
+/matches/2313895/renegades-vs-virtuspro-dreamhack-masters-malm-2017,4,Renegades,remove,Nuke
+/matches/2313895/renegades-vs-virtuspro-dreamhack-masters-malm-2017,5,Virtus.pro,remove,Cobble
+/matches/2313895/renegades-vs-virtuspro-dreamhack-masters-malm-2017,6,Renegades,remove,Train
+/matches/2313895/renegades-vs-virtuspro-dreamhack-masters-malm-2017,7,Cache was,left,Cache
+/matches/2313896/boot-ds-vs-cloud9-dreamhack-masters-malm-2017,1,Cloud9,remove,Cache
+/matches/2313896/boot-ds-vs-cloud9-dreamhack-masters-malm-2017,2,B.O.O.T-d[S],remove,Cobble
+/matches/2313896/boot-ds-vs-cloud9-dreamhack-masters-malm-2017,3,Cloud9,remove,Overpass
+/matches/2313896/boot-ds-vs-cloud9-dreamhack-masters-malm-2017,4,B.O.O.T-d[S],remove,Train
+/matches/2313896/boot-ds-vs-cloud9-dreamhack-masters-malm-2017,5,Cloud9,remove,Nuke
+/matches/2313896/boot-ds-vs-cloud9-dreamhack-masters-malm-2017,6,B.O.O.T-d[S],remove,Inferno
+/matches/2313896/boot-ds-vs-cloud9-dreamhack-masters-malm-2017,7,Mirage was,left,Mirage
+/matches/2313894/g2-vs-envyus-dreamhack-masters-malm-2017,1,G2,remove,Cache
+/matches/2313894/g2-vs-envyus-dreamhack-masters-malm-2017,2,EnVyUs,remove,Nuke
+/matches/2313894/g2-vs-envyus-dreamhack-masters-malm-2017,3,G2,remove,Train
+/matches/2313894/g2-vs-envyus-dreamhack-masters-malm-2017,4,EnVyUs,remove,Overpass
+/matches/2313894/g2-vs-envyus-dreamhack-masters-malm-2017,5,G2,remove,Cobble
+/matches/2313894/g2-vs-envyus-dreamhack-masters-malm-2017,6,EnVyUs,remove,Mirage
+/matches/2313894/g2-vs-envyus-dreamhack-masters-malm-2017,7,Inferno was,left,Inferno
+/matches/2313893/faze-vs-nip-dreamhack-masters-malm-2017,1,FaZe,remove,Cache
+/matches/2313893/faze-vs-nip-dreamhack-masters-malm-2017,2,NiP,remove,Overpass
+/matches/2313893/faze-vs-nip-dreamhack-masters-malm-2017,3,FaZe,remove,Cobble
+/matches/2313893/faze-vs-nip-dreamhack-masters-malm-2017,4,NiP,remove,Inferno
+/matches/2313893/faze-vs-nip-dreamhack-masters-malm-2017,5,FaZe,remove,Train
+/matches/2313893/faze-vs-nip-dreamhack-masters-malm-2017,6,NiP,remove,Mirage
+/matches/2313893/faze-vs-nip-dreamhack-masters-malm-2017,7,Nuke was,left,Nuke
+/matches/2313892/gambit-vs-mousesports-dreamhack-masters-malm-2017,1,Gambit,remove,Cache
+/matches/2313892/gambit-vs-mousesports-dreamhack-masters-malm-2017,2,mousesports,remove,Overpass
+/matches/2313892/gambit-vs-mousesports-dreamhack-masters-malm-2017,3,Gambit,remove,Mirage
+/matches/2313892/gambit-vs-mousesports-dreamhack-masters-malm-2017,4,mousesports,remove,Inferno
+/matches/2313892/gambit-vs-mousesports-dreamhack-masters-malm-2017,5,Gambit,remove,Nuke
+/matches/2313892/gambit-vs-mousesports-dreamhack-masters-malm-2017,6,mousesports,remove,Cobble
+/matches/2313892/gambit-vs-mousesports-dreamhack-masters-malm-2017,7,Train was,left,Train
+/matches/2313891/immortals-vs-fnatic-dreamhack-masters-malm-2017,1,fnatic,remove,Overpass
+/matches/2313891/immortals-vs-fnatic-dreamhack-masters-malm-2017,2,Immortals,remove,Nuke
+/matches/2313891/immortals-vs-fnatic-dreamhack-masters-malm-2017,3,fnatic,remove,Inferno
+/matches/2313891/immortals-vs-fnatic-dreamhack-masters-malm-2017,4,Immortals,remove,Mirage
+/matches/2313891/immortals-vs-fnatic-dreamhack-masters-malm-2017,5,fnatic,remove,Cache
+/matches/2313891/immortals-vs-fnatic-dreamhack-masters-malm-2017,6,Immortals,remove,Train
+/matches/2313891/immortals-vs-fnatic-dreamhack-masters-malm-2017,7,Cobblestone was,left,Cobble
+/matches/2313890/cloud9-vs-north-dreamhack-masters-malm-2017,1,North,remove,Train
+/matches/2313890/cloud9-vs-north-dreamhack-masters-malm-2017,2,Cloud9,remove,Nuke
+/matches/2313890/cloud9-vs-north-dreamhack-masters-malm-2017,3,North,remove,Cache
+/matches/2313890/cloud9-vs-north-dreamhack-masters-malm-2017,4,Cloud9,remove,Overpass
+/matches/2313890/cloud9-vs-north-dreamhack-masters-malm-2017,5,North,remove,Mirage
+/matches/2313890/cloud9-vs-north-dreamhack-masters-malm-2017,6,Cloud9,remove,Cobble
+/matches/2313890/cloud9-vs-north-dreamhack-masters-malm-2017,7,Inferno was,left,Inferno
+/matches/2313889/virtuspro-vs-natus-vincere-dreamhack-masters-malm-2017,1,Natus Vincere,remove,Nuke
+/matches/2313889/virtuspro-vs-natus-vincere-dreamhack-masters-malm-2017,2,Virtus.pro,remove,Overpass
+/matches/2313889/virtuspro-vs-natus-vincere-dreamhack-masters-malm-2017,3,Natus Vincere,remove,Cache
+/matches/2313889/virtuspro-vs-natus-vincere-dreamhack-masters-malm-2017,4,Virtus.pro,remove,Train
+/matches/2313889/virtuspro-vs-natus-vincere-dreamhack-masters-malm-2017,5,Natus Vincere,remove,Cobble
+/matches/2313889/virtuspro-vs-natus-vincere-dreamhack-masters-malm-2017,6,Virtus.pro,remove,Mirage
+/matches/2313889/virtuspro-vs-natus-vincere-dreamhack-masters-malm-2017,7,Inferno was,left,Inferno
+/matches/2313888/astralis-vs-renegades-dreamhack-masters-malm-2017,1,Renegades,remove,Overpass
+/matches/2313888/astralis-vs-renegades-dreamhack-masters-malm-2017,2,Astralis,remove,Cobble
+/matches/2313888/astralis-vs-renegades-dreamhack-masters-malm-2017,3,Renegades,remove,Inferno
+/matches/2313888/astralis-vs-renegades-dreamhack-masters-malm-2017,4,Astralis,remove,Cache
+/matches/2313888/astralis-vs-renegades-dreamhack-masters-malm-2017,5,Renegades,remove,Nuke
+/matches/2313888/astralis-vs-renegades-dreamhack-masters-malm-2017,6,Astralis,remove,Mirage
+/matches/2313888/astralis-vs-renegades-dreamhack-masters-malm-2017,7,Train was,left,Train
+/matches/2313887/sk-vs-boot-ds-dreamhack-masters-malm-2017,1,B.O.O.T-d[S],remove,Train
+/matches/2313887/sk-vs-boot-ds-dreamhack-masters-malm-2017,2,SK,remove,Nuke
+/matches/2313887/sk-vs-boot-ds-dreamhack-masters-malm-2017,3,B.O.O.T-d[S],remove,Cobble
+/matches/2313887/sk-vs-boot-ds-dreamhack-masters-malm-2017,4,SK,remove,Cache
+/matches/2313887/sk-vs-boot-ds-dreamhack-masters-malm-2017,5,B.O.O.T-d[S],remove,Inferno
+/matches/2313887/sk-vs-boot-ds-dreamhack-masters-malm-2017,6,SK,remove,Overpass
+/matches/2313887/sk-vs-boot-ds-dreamhack-masters-malm-2017,7,Mirage was,left,Mirage
+/matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,1,mousesports,remove,Overpass
+/matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,2,Liquid,remove,Cache
+/matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,3,mousesports,pick,Cobble
+/matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,4,Liquid,pick,Inferno
+/matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,5,mousesports,pick,Train
+/matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,6,Liquid,pick,Mirage
+/matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,7,Nuke was,left,Nuke
+/matches/2314538/virtuspro-vs-sk-esg-tour-mykonos-2017,1,Virtus.pro,remove,Overpass
+/matches/2314538/virtuspro-vs-sk-esg-tour-mykonos-2017,2,SK,remove,Nuke
+/matches/2314538/virtuspro-vs-sk-esg-tour-mykonos-2017,3,Virtus.pro,pick,Train
+/matches/2314538/virtuspro-vs-sk-esg-tour-mykonos-2017,4,SK,pick,Cobble
+/matches/2314538/virtuspro-vs-sk-esg-tour-mykonos-2017,5,Virtus.pro,remove,Mirage
+/matches/2314538/virtuspro-vs-sk-esg-tour-mykonos-2017,6,SK,remove,Cache
+/matches/2314538/virtuspro-vs-sk-esg-tour-mykonos-2017,7,Inferno was,left,Inferno
+/matches/2314537/sk-vs-liquid-esg-tour-mykonos-2017,1,Liquid,remove,Cache
+/matches/2314537/sk-vs-liquid-esg-tour-mykonos-2017,2,SK,remove,Nuke
+/matches/2314537/sk-vs-liquid-esg-tour-mykonos-2017,3,Liquid,pick,Inferno
+/matches/2314537/sk-vs-liquid-esg-tour-mykonos-2017,4,SK,pick,Cobble
+/matches/2314537/sk-vs-liquid-esg-tour-mykonos-2017,5,Liquid,remove,Mirage
+/matches/2314537/sk-vs-liquid-esg-tour-mykonos-2017,6,SK,remove,Train
+/matches/2314537/sk-vs-liquid-esg-tour-mykonos-2017,7,Overpass was,left,Overpass
+/matches/2314536/virtuspro-vs-mousesports-esg-tour-mykonos-2017,1,mousesports,remove,Nuke
+/matches/2314536/virtuspro-vs-mousesports-esg-tour-mykonos-2017,2,Virtus.pro,remove,Inferno
+/matches/2314536/virtuspro-vs-mousesports-esg-tour-mykonos-2017,3,mousesports,pick,Cache
+/matches/2314536/virtuspro-vs-mousesports-esg-tour-mykonos-2017,4,Virtus.pro,pick,Overpass
+/matches/2314536/virtuspro-vs-mousesports-esg-tour-mykonos-2017,5,mousesports,remove,Mirage
+/matches/2314536/virtuspro-vs-mousesports-esg-tour-mykonos-2017,6,Virtus.pro,remove,Cobble
+/matches/2314536/virtuspro-vs-mousesports-esg-tour-mykonos-2017,7,Train was,left,Train
+/matches/2314535/liquid-vs-big-esg-tour-mykonos-2017,1,BIG,remove,Nuke
+/matches/2314535/liquid-vs-big-esg-tour-mykonos-2017,2,Liquid,remove,Cache
+/matches/2314535/liquid-vs-big-esg-tour-mykonos-2017,3,BIG,pick,Train
+/matches/2314535/liquid-vs-big-esg-tour-mykonos-2017,4,Liquid,pick,Mirage
+/matches/2314535/liquid-vs-big-esg-tour-mykonos-2017,5,BIG,remove,Inferno
+/matches/2314535/liquid-vs-big-esg-tour-mykonos-2017,6,Liquid,remove,Overpass
+/matches/2314535/liquid-vs-big-esg-tour-mykonos-2017,7,Cobblestone was,left,Cobble
+/matches/2314534/gambit-vs-mousesports-esg-tour-mykonos-2017,1,mousesports,remove,Overpass
+/matches/2314534/gambit-vs-mousesports-esg-tour-mykonos-2017,2,Gambit,remove,Cache
+/matches/2314534/gambit-vs-mousesports-esg-tour-mykonos-2017,3,mousesports,pick,Cobble
+/matches/2314534/gambit-vs-mousesports-esg-tour-mykonos-2017,4,Gambit,pick,Train
+/matches/2314534/gambit-vs-mousesports-esg-tour-mykonos-2017,5,mousesports,remove,Mirage
+/matches/2314534/gambit-vs-mousesports-esg-tour-mykonos-2017,6,Gambit,remove,Nuke
+/matches/2314534/gambit-vs-mousesports-esg-tour-mykonos-2017,7,Inferno was,left,Inferno
+/matches/2314533/big-vs-envyus-esg-tour-mykonos-2017,1,EnVyUs,remove,Overpass
+/matches/2314533/big-vs-envyus-esg-tour-mykonos-2017,2,BIG,remove,Nuke
+/matches/2314533/big-vs-envyus-esg-tour-mykonos-2017,3,EnVyUs,pick,Inferno
+/matches/2314533/big-vs-envyus-esg-tour-mykonos-2017,4,BIG,pick,Mirage
+/matches/2314533/big-vs-envyus-esg-tour-mykonos-2017,5,EnVyUs,remove,Cache
+/matches/2314533/big-vs-envyus-esg-tour-mykonos-2017,6,BIG,remove,Cobble
+/matches/2314533/big-vs-envyus-esg-tour-mykonos-2017,7,Train was,left,Train
+/matches/2314532/heroic-vs-mousesports-esg-tour-mykonos-2017,1,mousesports,remove,Overpass
+/matches/2314532/heroic-vs-mousesports-esg-tour-mykonos-2017,2,Heroic,remove,Cache
+/matches/2314532/heroic-vs-mousesports-esg-tour-mykonos-2017,3,mousesports,pick,Train
+/matches/2314532/heroic-vs-mousesports-esg-tour-mykonos-2017,4,Heroic,pick,Nuke
+/matches/2314532/heroic-vs-mousesports-esg-tour-mykonos-2017,5,mousesports,remove,Mirage
+/matches/2314532/heroic-vs-mousesports-esg-tour-mykonos-2017,6,Heroic,remove,Cobble
+/matches/2314532/heroic-vs-mousesports-esg-tour-mykonos-2017,7,Inferno was,left,Inferno
+/matches/2314531/gambit-vs-sk-esg-tour-mykonos-2017,1,Gambit,remove,Inferno
+/matches/2314531/gambit-vs-sk-esg-tour-mykonos-2017,2,SK,remove,Nuke
+/matches/2314531/gambit-vs-sk-esg-tour-mykonos-2017,3,Gambit,remove,Cobble
+/matches/2314531/gambit-vs-sk-esg-tour-mykonos-2017,4,SK,remove,Train
+/matches/2314531/gambit-vs-sk-esg-tour-mykonos-2017,5,Gambit,remove,Mirage
+/matches/2314531/gambit-vs-sk-esg-tour-mykonos-2017,6,SK,remove,Cache
+/matches/2314531/gambit-vs-sk-esg-tour-mykonos-2017,7,Overpass was,left,Overpass
+/matches/2314530/sk-vs-mousesports-esg-tour-mykonos-2017,1,SK,remove,Nuke
+/matches/2314530/sk-vs-mousesports-esg-tour-mykonos-2017,2,mousesports,remove,Overpass
+/matches/2314530/sk-vs-mousesports-esg-tour-mykonos-2017,3,SK,remove,Train
+/matches/2314530/sk-vs-mousesports-esg-tour-mykonos-2017,4,mousesports,remove,Mirage
+/matches/2314530/sk-vs-mousesports-esg-tour-mykonos-2017,5,SK,remove,Cache
+/matches/2314530/sk-vs-mousesports-esg-tour-mykonos-2017,6,mousesports,remove,Cobble
+/matches/2314530/sk-vs-mousesports-esg-tour-mykonos-2017,7,Inferno was,left,Inferno
+/matches/2314529/gambit-vs-heroic-esg-tour-mykonos-2017,1,Heroic,remove,Cache
+/matches/2314529/gambit-vs-heroic-esg-tour-mykonos-2017,2,Gambit,remove,Nuke
+/matches/2314529/gambit-vs-heroic-esg-tour-mykonos-2017,3,Heroic,remove,Train
+/matches/2314529/gambit-vs-heroic-esg-tour-mykonos-2017,4,Gambit,remove,Inferno
+/matches/2314529/gambit-vs-heroic-esg-tour-mykonos-2017,5,Heroic,remove,Cobble
+/matches/2314529/gambit-vs-heroic-esg-tour-mykonos-2017,6,Gambit,remove,Overpass
+/matches/2314529/gambit-vs-heroic-esg-tour-mykonos-2017,7,Mirage was,left,Mirage
+/matches/2314528/liquid-vs-virtuspro-esg-tour-mykonos-2017,1,Liquid,remove,Nuke
+/matches/2314528/liquid-vs-virtuspro-esg-tour-mykonos-2017,2,Virtus.pro,remove,Overpass
+/matches/2314528/liquid-vs-virtuspro-esg-tour-mykonos-2017,3,Liquid,remove,Train
+/matches/2314528/liquid-vs-virtuspro-esg-tour-mykonos-2017,4,Virtus.pro,remove,Cobble
+/matches/2314528/liquid-vs-virtuspro-esg-tour-mykonos-2017,5,Liquid,remove,Cache
+/matches/2314528/liquid-vs-virtuspro-esg-tour-mykonos-2017,6,Virtus.pro,remove,Inferno
+/matches/2314528/liquid-vs-virtuspro-esg-tour-mykonos-2017,7,Mirage was,left,Mirage
+/matches/2314527/virtuspro-vs-envyus-esg-tour-mykonos-2017,1,EnVyUs,remove,Nuke
+/matches/2314527/virtuspro-vs-envyus-esg-tour-mykonos-2017,2,Virtus.pro,remove,Cache
+/matches/2314527/virtuspro-vs-envyus-esg-tour-mykonos-2017,3,EnVyUs,remove,Overpass
+/matches/2314527/virtuspro-vs-envyus-esg-tour-mykonos-2017,4,Virtus.pro,remove,Cobble
+/matches/2314527/virtuspro-vs-envyus-esg-tour-mykonos-2017,5,EnVyUs,remove,Mirage
+/matches/2314527/virtuspro-vs-envyus-esg-tour-mykonos-2017,6,Virtus.pro,remove,Inferno
+/matches/2314527/virtuspro-vs-envyus-esg-tour-mykonos-2017,7,Train was,left,Train
+/matches/2314526/liquid-vs-big-esg-tour-mykonos-2017,1,Liquid,remove,Cache
+/matches/2314526/liquid-vs-big-esg-tour-mykonos-2017,2,BIG,remove,Nuke
+/matches/2314526/liquid-vs-big-esg-tour-mykonos-2017,3,Liquid,remove,Train
+/matches/2314526/liquid-vs-big-esg-tour-mykonos-2017,4,BIG,remove,Mirage
+/matches/2314526/liquid-vs-big-esg-tour-mykonos-2017,5,Liquid,remove,Inferno
+/matches/2314526/liquid-vs-big-esg-tour-mykonos-2017,6,BIG,remove,Cobble
+/matches/2314526/liquid-vs-big-esg-tour-mykonos-2017,7,Overpass was,left,Overpass
+/matches/2314559/immortals-vs-north-dreamhack-open-montreal-2017,1,North,remove,Cache
+/matches/2314559/immortals-vs-north-dreamhack-open-montreal-2017,2,Immortals,remove,Nuke
+/matches/2314559/immortals-vs-north-dreamhack-open-montreal-2017,3,North,pick,Mirage
+/matches/2314559/immortals-vs-north-dreamhack-open-montreal-2017,4,Immortals,pick,Cobble
+/matches/2314559/immortals-vs-north-dreamhack-open-montreal-2017,5,North,remove,Overpass
+/matches/2314559/immortals-vs-north-dreamhack-open-montreal-2017,6,Immortals,remove,Train
+/matches/2314559/immortals-vs-north-dreamhack-open-montreal-2017,7,Inferno was,left,Inferno
+/matches/2314558/north-vs-cloud9-dreamhack-open-montreal-2017,1,Cloud9,remove,Nuke
+/matches/2314558/north-vs-cloud9-dreamhack-open-montreal-2017,2,North,remove,Cache
+/matches/2314558/north-vs-cloud9-dreamhack-open-montreal-2017,3,Cloud9,pick,Train
+/matches/2314558/north-vs-cloud9-dreamhack-open-montreal-2017,4,North,pick,Cobble
+/matches/2314558/north-vs-cloud9-dreamhack-open-montreal-2017,5,Cloud9,remove,Overpass
+/matches/2314558/north-vs-cloud9-dreamhack-open-montreal-2017,6,North,remove,Mirage
+/matches/2314558/north-vs-cloud9-dreamhack-open-montreal-2017,7,Inferno was,left,Inferno
+/matches/2314557/immortals-vs-clg-dreamhack-open-montreal-2017,1,CLG,remove,Cobble
+/matches/2314557/immortals-vs-clg-dreamhack-open-montreal-2017,2,Immortals,remove,Nuke
+/matches/2314557/immortals-vs-clg-dreamhack-open-montreal-2017,3,CLG,pick,Train
+/matches/2314557/immortals-vs-clg-dreamhack-open-montreal-2017,4,Immortals,pick,Inferno
+/matches/2314557/immortals-vs-clg-dreamhack-open-montreal-2017,5,CLG,remove,Mirage
+/matches/2314557/immortals-vs-clg-dreamhack-open-montreal-2017,6,Immortals,remove,Cache
+/matches/2314557/immortals-vs-clg-dreamhack-open-montreal-2017,7,Overpass was,left,Overpass
+/matches/2314556/cloud9-vs-luminosity-dreamhack-open-montreal-2017,1,Luminosity,remove,Mirage
+/matches/2314556/cloud9-vs-luminosity-dreamhack-open-montreal-2017,2,Cloud9,remove,Nuke
+/matches/2314556/cloud9-vs-luminosity-dreamhack-open-montreal-2017,3,Luminosity,pick,Cache
+/matches/2314556/cloud9-vs-luminosity-dreamhack-open-montreal-2017,4,Cloud9,pick,Train
+/matches/2314556/cloud9-vs-luminosity-dreamhack-open-montreal-2017,5,Luminosity,remove,Overpass
+/matches/2314556/cloud9-vs-luminosity-dreamhack-open-montreal-2017,6,Cloud9,remove,Cobble
+/matches/2314556/cloud9-vs-luminosity-dreamhack-open-montreal-2017,7,Inferno was,left,Inferno
+/matches/2314554/kinguin-vs-clg-dreamhack-open-montreal-2017,1,CLG,remove,Nuke
+/matches/2314554/kinguin-vs-clg-dreamhack-open-montreal-2017,2,Kinguin,remove,Cache
+/matches/2314554/kinguin-vs-clg-dreamhack-open-montreal-2017,3,CLG,pick,Train
+/matches/2314554/kinguin-vs-clg-dreamhack-open-montreal-2017,4,Kinguin,pick,Mirage
+/matches/2314554/kinguin-vs-clg-dreamhack-open-montreal-2017,5,CLG,remove,Inferno
+/matches/2314554/kinguin-vs-clg-dreamhack-open-montreal-2017,6,Kinguin,remove,Cobble
+/matches/2314554/kinguin-vs-clg-dreamhack-open-montreal-2017,7,Overpass was,left,Overpass
+/matches/2314555/complexity-vs-luminosity-dreamhack-open-montreal-2017,1,Luminosity,remove,Mirage
+/matches/2314555/complexity-vs-luminosity-dreamhack-open-montreal-2017,2,compLexity,remove,Cache
+/matches/2314555/complexity-vs-luminosity-dreamhack-open-montreal-2017,3,Luminosity,pick,Inferno
+/matches/2314555/complexity-vs-luminosity-dreamhack-open-montreal-2017,4,compLexity,pick,Train
+/matches/2314555/complexity-vs-luminosity-dreamhack-open-montreal-2017,5,Luminosity,remove,Nuke
+/matches/2314555/complexity-vs-luminosity-dreamhack-open-montreal-2017,6,compLexity,remove,Overpass
+/matches/2314555/complexity-vs-luminosity-dreamhack-open-montreal-2017,7,Cobblestone was,left,Cobble
+/matches/2314553/gale-force-vs-clg-dreamhack-open-montreal-2017,1,Gale Force,remove,Train
+/matches/2314553/gale-force-vs-clg-dreamhack-open-montreal-2017,2,CLG,remove,Inferno
+/matches/2314553/gale-force-vs-clg-dreamhack-open-montreal-2017,3,Gale Force,pick,Overpass
+/matches/2314553/gale-force-vs-clg-dreamhack-open-montreal-2017,4,CLG,pick,Cache
+/matches/2314553/gale-force-vs-clg-dreamhack-open-montreal-2017,5,Gale Force,remove,Nuke
+/matches/2314553/gale-force-vs-clg-dreamhack-open-montreal-2017,6,CLG,remove,Mirage
+/matches/2314553/gale-force-vs-clg-dreamhack-open-montreal-2017,7,Cobblestone was,left,Cobble
+/matches/2314552/cloud9-vs-immortals-dreamhack-open-montreal-2017,1,Immortals,remove,Nuke
+/matches/2314552/cloud9-vs-immortals-dreamhack-open-montreal-2017,2,Cloud9,remove,Overpass
+/matches/2314552/cloud9-vs-immortals-dreamhack-open-montreal-2017,3,Immortals,remove,Train
+/matches/2314552/cloud9-vs-immortals-dreamhack-open-montreal-2017,4,Cloud9,remove,Cobble
+/matches/2314552/cloud9-vs-immortals-dreamhack-open-montreal-2017,5,Immortals,remove,Mirage
+/matches/2314552/cloud9-vs-immortals-dreamhack-open-montreal-2017,6,Cloud9,remove,Inferno
+/matches/2314552/cloud9-vs-immortals-dreamhack-open-montreal-2017,7,Cache was,left,Cache
+/matches/2314551/north-vs-kinguin-dreamhack-open-montreal-2017,1,North,remove,Cache
+/matches/2314551/north-vs-kinguin-dreamhack-open-montreal-2017,2,Kinguin,remove,Inferno
+/matches/2314551/north-vs-kinguin-dreamhack-open-montreal-2017,3,North,remove,Overpass
+/matches/2314551/north-vs-kinguin-dreamhack-open-montreal-2017,4,Kinguin,remove,Train
+/matches/2314551/north-vs-kinguin-dreamhack-open-montreal-2017,5,North,remove,Cobble
+/matches/2314551/north-vs-kinguin-dreamhack-open-montreal-2017,6,Kinguin,remove,Nuke
+/matches/2314551/north-vs-kinguin-dreamhack-open-montreal-2017,7,Mirage was,left,Mirage
+/matches/2314550/immortals-vs-luminosity-dreamhack-open-montreal-2017,1,Luminosity,remove,Cobble
+/matches/2314550/immortals-vs-luminosity-dreamhack-open-montreal-2017,2,Immortals,remove,Nuke
+/matches/2314550/immortals-vs-luminosity-dreamhack-open-montreal-2017,3,Luminosity,remove,Mirage
+/matches/2314550/immortals-vs-luminosity-dreamhack-open-montreal-2017,4,Immortals,remove,Cache
+/matches/2314550/immortals-vs-luminosity-dreamhack-open-montreal-2017,5,Luminosity,remove,Overpass
+/matches/2314550/immortals-vs-luminosity-dreamhack-open-montreal-2017,6,Immortals,remove,Train
+/matches/2314550/immortals-vs-luminosity-dreamhack-open-montreal-2017,7,Inferno was,left,Inferno
+/matches/2314549/clg-vs-kinguin-dreamhack-open-montreal-2017,1,CLG,remove,Nuke
+/matches/2314549/clg-vs-kinguin-dreamhack-open-montreal-2017,2,Kinguin,remove,Overpass
+/matches/2314549/clg-vs-kinguin-dreamhack-open-montreal-2017,3,CLG,remove,Inferno
+/matches/2314549/clg-vs-kinguin-dreamhack-open-montreal-2017,4,Kinguin,remove,Cache
+/matches/2314549/clg-vs-kinguin-dreamhack-open-montreal-2017,5,CLG,remove,Cobble
+/matches/2314549/clg-vs-kinguin-dreamhack-open-montreal-2017,6,Kinguin,remove,Train
+/matches/2314549/clg-vs-kinguin-dreamhack-open-montreal-2017,7,Mirage was,left,Mirage
+/matches/2314547/north-vs-gale-force-dreamhack-open-montreal-2017,1,North,remove,Cache
+/matches/2314547/north-vs-gale-force-dreamhack-open-montreal-2017,2,Gale Force,remove,Nuke
+/matches/2314547/north-vs-gale-force-dreamhack-open-montreal-2017,3,North,remove,Overpass
+/matches/2314547/north-vs-gale-force-dreamhack-open-montreal-2017,4,Gale Force,remove,Train
+/matches/2314547/north-vs-gale-force-dreamhack-open-montreal-2017,5,North,remove,Mirage
+/matches/2314547/north-vs-gale-force-dreamhack-open-montreal-2017,6,Gale Force,remove,Inferno
+/matches/2314547/north-vs-gale-force-dreamhack-open-montreal-2017,7,Cobblestone was,left,Cobble
+/matches/2314548/cloud9-vs-complexity-dreamhack-open-montreal-2017,1,compLexity,remove,Cache
+/matches/2314548/cloud9-vs-complexity-dreamhack-open-montreal-2017,2,Cloud9,remove,Overpass
+/matches/2314548/cloud9-vs-complexity-dreamhack-open-montreal-2017,3,compLexity,remove,Cobble
+/matches/2314548/cloud9-vs-complexity-dreamhack-open-montreal-2017,4,Cloud9,remove,Nuke
+/matches/2314548/cloud9-vs-complexity-dreamhack-open-montreal-2017,5,compLexity,remove,Mirage
+/matches/2314548/cloud9-vs-complexity-dreamhack-open-montreal-2017,6,Cloud9,remove,Inferno
+/matches/2314548/cloud9-vs-complexity-dreamhack-open-montreal-2017,7,Train was,left,Train
+/matches/2314764/liquid-vs-faze-esl-one-new-york-2017,1,Liquid,remove,Cache
+/matches/2314764/liquid-vs-faze-esl-one-new-york-2017,2,FaZe,remove,Cobble
+/matches/2314764/liquid-vs-faze-esl-one-new-york-2017,3,Liquid,pick,Inferno
+/matches/2314764/liquid-vs-faze-esl-one-new-york-2017,4,FaZe,pick,Overpass
+/matches/2314764/liquid-vs-faze-esl-one-new-york-2017,5,Liquid,pick,Mirage
+/matches/2314764/liquid-vs-faze-esl-one-new-york-2017,6,FaZe,pick,Nuke
+/matches/2314764/liquid-vs-faze-esl-one-new-york-2017,7,Train was,left,Train
+/matches/2314763/faze-vs-cloud9-esl-one-new-york-2017,1,Cloud9,remove,Nuke
+/matches/2314763/faze-vs-cloud9-esl-one-new-york-2017,2,FaZe,remove,Cobble
+/matches/2314763/faze-vs-cloud9-esl-one-new-york-2017,3,Cloud9,pick,Mirage
+/matches/2314763/faze-vs-cloud9-esl-one-new-york-2017,4,FaZe,pick,Overpass
+/matches/2314763/faze-vs-cloud9-esl-one-new-york-2017,5,Cloud9,remove,Inferno
+/matches/2314763/faze-vs-cloud9-esl-one-new-york-2017,6,FaZe,remove,Train
+/matches/2314763/faze-vs-cloud9-esl-one-new-york-2017,7,Cache was,left,Cache
+/matches/2314762/sk-vs-liquid-esl-one-new-york-2017,1,Liquid,remove,Cache
+/matches/2314762/sk-vs-liquid-esl-one-new-york-2017,2,SK,remove,Nuke
+/matches/2314762/sk-vs-liquid-esl-one-new-york-2017,3,Liquid,pick,Inferno
+/matches/2314762/sk-vs-liquid-esl-one-new-york-2017,4,SK,pick,Overpass
+/matches/2314762/sk-vs-liquid-esl-one-new-york-2017,5,Liquid,remove,Train
+/matches/2314762/sk-vs-liquid-esl-one-new-york-2017,6,SK,remove,Mirage
+/matches/2314762/sk-vs-liquid-esl-one-new-york-2017,7,Cobblestone was,left,Cobble
+/matches/2314761/astralis-vs-liquid-esl-one-new-york-2017,1,Liquid,remove,Nuke
+/matches/2314761/astralis-vs-liquid-esl-one-new-york-2017,2,Astralis,remove,Cobble
+/matches/2314761/astralis-vs-liquid-esl-one-new-york-2017,3,Liquid,pick,Inferno
+/matches/2314761/astralis-vs-liquid-esl-one-new-york-2017,4,Astralis,pick,Cache
+/matches/2314761/astralis-vs-liquid-esl-one-new-york-2017,5,Liquid,remove,Train
+/matches/2314761/astralis-vs-liquid-esl-one-new-york-2017,6,Astralis,remove,Overpass
+/matches/2314761/astralis-vs-liquid-esl-one-new-york-2017,7,Mirage was,left,Mirage
+/matches/2314760/cloud9-vs-natus-vincere-esl-one-new-york-2017,1,Cloud9,remove,Nuke
+/matches/2314760/cloud9-vs-natus-vincere-esl-one-new-york-2017,2,Natus Vincere,remove,Cache
+/matches/2314760/cloud9-vs-natus-vincere-esl-one-new-york-2017,3,Cloud9,pick,Mirage
+/matches/2314760/cloud9-vs-natus-vincere-esl-one-new-york-2017,4,Natus Vincere,pick,Train
+/matches/2314760/cloud9-vs-natus-vincere-esl-one-new-york-2017,5,Cloud9,remove,Cobble
+/matches/2314760/cloud9-vs-natus-vincere-esl-one-new-york-2017,6,Natus Vincere,remove,Inferno
+/matches/2314760/cloud9-vs-natus-vincere-esl-one-new-york-2017,7,Overpass was,left,Overpass
+/matches/2314759/virtuspro-vs-liquid-esl-one-new-york-2017,1,Liquid,remove,Cache
+/matches/2314759/virtuspro-vs-liquid-esl-one-new-york-2017,2,Virtus.pro,remove,Overpass
+/matches/2314759/virtuspro-vs-liquid-esl-one-new-york-2017,3,Liquid,pick,Inferno
+/matches/2314759/virtuspro-vs-liquid-esl-one-new-york-2017,4,Virtus.pro,pick,Nuke
+/matches/2314759/virtuspro-vs-liquid-esl-one-new-york-2017,5,Liquid,remove,Train
+/matches/2314759/virtuspro-vs-liquid-esl-one-new-york-2017,6,Virtus.pro,remove,Cobble
+/matches/2314759/virtuspro-vs-liquid-esl-one-new-york-2017,7,Mirage was,left,Mirage
+/matches/2314758/envyus-vs-natus-vincere-esl-one-new-york-2017,1,Natus Vincere,remove,Cache
+/matches/2314758/envyus-vs-natus-vincere-esl-one-new-york-2017,2,EnVyUs,remove,Mirage
+/matches/2314758/envyus-vs-natus-vincere-esl-one-new-york-2017,3,Natus Vincere,pick,Train
+/matches/2314758/envyus-vs-natus-vincere-esl-one-new-york-2017,4,EnVyUs,pick,Cobble
+/matches/2314758/envyus-vs-natus-vincere-esl-one-new-york-2017,5,Natus Vincere,remove,Nuke
+/matches/2314758/envyus-vs-natus-vincere-esl-one-new-york-2017,6,EnVyUs,remove,Overpass
+/matches/2314758/envyus-vs-natus-vincere-esl-one-new-york-2017,7,Inferno was,left,Inferno
+/matches/2314757/faze-vs-astralis-esl-one-new-york-2017,1,FaZe,remove,Nuke
+/matches/2314757/faze-vs-astralis-esl-one-new-york-2017,2,Astralis,remove,Cache
+/matches/2314757/faze-vs-astralis-esl-one-new-york-2017,3,Astralis,remove,Cobble
+/matches/2314757/faze-vs-astralis-esl-one-new-york-2017,4,FaZe,remove,Train
+/matches/2314757/faze-vs-astralis-esl-one-new-york-2017,5,FaZe,remove,Overpass
+/matches/2314757/faze-vs-astralis-esl-one-new-york-2017,6,Astralis,remove,Mirage
+/matches/2314757/faze-vs-astralis-esl-one-new-york-2017,7,Inferno was,left,Inferno
+/matches/2314756/sk-vs-cloud9-esl-one-new-york-2017,1,Cloud9,remove,Overpass
+/matches/2314756/sk-vs-cloud9-esl-one-new-york-2017,2,SK,remove,Nuke
+/matches/2314756/sk-vs-cloud9-esl-one-new-york-2017,3,SK,remove,Inferno
+/matches/2314756/sk-vs-cloud9-esl-one-new-york-2017,4,Cloud9,remove,Cobble
+/matches/2314756/sk-vs-cloud9-esl-one-new-york-2017,5,Cloud9,remove,Cache
+/matches/2314756/sk-vs-cloud9-esl-one-new-york-2017,6,SK,remove,Mirage
+/matches/2314756/sk-vs-cloud9-esl-one-new-york-2017,7,Train was,left,Train
+/matches/2314754/cloud9-vs-natus-vincere-esl-one-new-york-2017,1,Natus Vincere,remove,Cache
+/matches/2314754/cloud9-vs-natus-vincere-esl-one-new-york-2017,2,Cloud9,remove,Nuke
+/matches/2314754/cloud9-vs-natus-vincere-esl-one-new-york-2017,3,Cloud9,remove,Train
+/matches/2314754/cloud9-vs-natus-vincere-esl-one-new-york-2017,4,Natus Vincere,remove,Cobble
+/matches/2314754/cloud9-vs-natus-vincere-esl-one-new-york-2017,5,Natus Vincere,remove,Mirage
+/matches/2314754/cloud9-vs-natus-vincere-esl-one-new-york-2017,6,Cloud9,remove,Overpass
+/matches/2314754/cloud9-vs-natus-vincere-esl-one-new-york-2017,7,Inferno was,left,Inferno
+/matches/2314755/astralis-vs-liquid-esl-one-new-york-2017,1,Liquid,remove,Cache
+/matches/2314755/astralis-vs-liquid-esl-one-new-york-2017,2,Astralis,remove,Cobble
+/matches/2314755/astralis-vs-liquid-esl-one-new-york-2017,3,Astralis,remove,Overpass
+/matches/2314755/astralis-vs-liquid-esl-one-new-york-2017,4,Liquid,remove,Nuke
+/matches/2314755/astralis-vs-liquid-esl-one-new-york-2017,5,Liquid,remove,Train
+/matches/2314755/astralis-vs-liquid-esl-one-new-york-2017,6,Astralis,remove,Inferno
+/matches/2314755/astralis-vs-liquid-esl-one-new-york-2017,7,Mirage was,left,Mirage
+/matches/2314752/sk-vs-envyus-esl-one-new-york-2017,1,SK,remove,Mirage
+/matches/2314752/sk-vs-envyus-esl-one-new-york-2017,2,EnVyUs,remove,Nuke
+/matches/2314752/sk-vs-envyus-esl-one-new-york-2017,3,EnVyUs,remove,Inferno
+/matches/2314752/sk-vs-envyus-esl-one-new-york-2017,4,SK,remove,Overpass
+/matches/2314752/sk-vs-envyus-esl-one-new-york-2017,5,SK,remove,Train
+/matches/2314752/sk-vs-envyus-esl-one-new-york-2017,6,EnVyUs,remove,Cache
+/matches/2314752/sk-vs-envyus-esl-one-new-york-2017,7,Cobblestone was,left,Cobble
+/matches/2314753/faze-vs-virtuspro-esl-one-new-york-2017,1,Virtus.pro,remove,Overpass
+/matches/2314753/faze-vs-virtuspro-esl-one-new-york-2017,2,FaZe,remove,Cobble
+/matches/2314753/faze-vs-virtuspro-esl-one-new-york-2017,3,FaZe,remove,Nuke
+/matches/2314753/faze-vs-virtuspro-esl-one-new-york-2017,4,Virtus.pro,remove,Mirage
+/matches/2314753/faze-vs-virtuspro-esl-one-new-york-2017,5,Virtus.pro,remove,Inferno
+/matches/2314753/faze-vs-virtuspro-esl-one-new-york-2017,6,FaZe,remove,Train
+/matches/2314753/faze-vs-virtuspro-esl-one-new-york-2017,7,Cache was,left,Cache
+/matches/2315040/space-soldiers-vs-flipsid3-esea-season-25-mdl-global-challenge,1,FlipSid3,remove,Cobble
+/matches/2315040/space-soldiers-vs-flipsid3-esea-season-25-mdl-global-challenge,2,Space Soldiers,remove,Nuke
+/matches/2315040/space-soldiers-vs-flipsid3-esea-season-25-mdl-global-challenge,3,FlipSid3,pick,Overpass
+/matches/2315040/space-soldiers-vs-flipsid3-esea-season-25-mdl-global-challenge,4,Space Soldiers,pick,Cache
+/matches/2315040/space-soldiers-vs-flipsid3-esea-season-25-mdl-global-challenge,5,FlipSid3,remove,Mirage
+/matches/2315040/space-soldiers-vs-flipsid3-esea-season-25-mdl-global-challenge,6,Space Soldiers,remove,Inferno
+/matches/2315040/space-soldiers-vs-flipsid3-esea-season-25-mdl-global-challenge,7,Train was,left,Train
+/matches/2315039/flipsid3-vs-kinguin-esea-season-25-mdl-global-challenge,1,Kinguin,remove,Nuke
+/matches/2315039/flipsid3-vs-kinguin-esea-season-25-mdl-global-challenge,2,FlipSid3,remove,Cobble
+/matches/2315039/flipsid3-vs-kinguin-esea-season-25-mdl-global-challenge,3,Kinguin,pick,Mirage
+/matches/2315039/flipsid3-vs-kinguin-esea-season-25-mdl-global-challenge,4,FlipSid3,pick,Train
+/matches/2315039/flipsid3-vs-kinguin-esea-season-25-mdl-global-challenge,5,Kinguin,remove,Overpass
+/matches/2315039/flipsid3-vs-kinguin-esea-season-25-mdl-global-challenge,6,FlipSid3,remove,Inferno
+/matches/2315039/flipsid3-vs-kinguin-esea-season-25-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,1,Rise Nation,remove,Cache
+/matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,2,Space Soldiers,remove,Nuke
+/matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,3,Rise Nation,pick,Inferno
+/matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,4,Space Soldiers,pick,Train
+/matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,5,Rise Nation,remove,Overpass
+/matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,6,Space Soldiers,remove,Mirage
+/matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,7,Cobblestone was,left,Cobble
+/matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,1,TeamOne,remove,Cobble
+/matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,2,Rise Nation,remove,Cache
+/matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,3,Rise Nation,remove,Overpass
+/matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,4,TeamOne,remove,Inferno
+/matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,5,TeamOne,remove,Nuke
+/matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,6,Rise Nation,remove,Train
+/matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,1,Kinguin,remove,Cache
+/matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,2,Grayhound,remove,Cobble
+/matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,3,Grayhound,remove,Train
+/matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,4,Kinguin,remove,Overpass
+/matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,5,Kinguin,remove,Inferno
+/matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,6,Grayhound,remove,Mirage
+/matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,7,Nuke was,left,Nuke
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,1,TeamOne,remove,Cache
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,2,Mythic,remove,Nuke
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,3,Mythic,remove,Train
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,4,TeamOne,remove,Cobble
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,5,TeamOne,remove,Inferno
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,6,Mythic,remove,Overpass
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,1,FRENCH CANADIANS,remove,Cobble
+/matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,2,Grayhound,remove,Inferno
+/matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,3,Grayhound,remove,Train
+/matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,4,FRENCH CANADIANS,remove,Nuke
+/matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,5,FRENCH CANADIANS,remove,Overpass
+/matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,6,Grayhound,remove,Mirage
+/matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,1,FlipSid3,remove,Cobble
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,2,Rise Nation,remove,Cache
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,3,Rise Nation,remove,Overpass
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,4,FlipSid3,remove,Mirage
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,5,FlipSid3,remove,Inferno
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,6,Rise Nation,remove,Train
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,7,Nuke was,left,Nuke
+/matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,1,Rise Nation,remove,Cache
+/matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,2,TeamOne,remove,Nuke
+/matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,3,TeamOne,remove,Inferno
+/matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,4,Rise Nation,remove,Overpass
+/matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,5,Rise Nation,remove,Train
+/matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,6,TeamOne,remove,Mirage
+/matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,7,Cobblestone was,left,Cobble
+/matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,1,Kinguin,remove,Inferno
+/matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,2,Space Soldiers,remove,Mirage
+/matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,3,Space Soldiers,remove,Nuke
+/matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,4,Kinguin,remove,Train
+/matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,5,Kinguin,remove,Cache
+/matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,6,Space Soldiers,remove,Cobble
+/matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,7,Overpass was,left,Overpass
+/matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,1,FlipSid3,remove,Cobble
+/matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,2,Mythic,remove,Overpass
+/matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,3,FlipSid3,remove,Train
+/matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,4,Mythic,remove,Cache
+/matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,5,FlipSid3,remove,Inferno
+/matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,6,Mythic,remove,Nuke
+/matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,7,Mirage was,left,Mirage
+/matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,1,FRENCH CANADIANS,remove,Cobble
+/matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,2,Kinguin,remove,Nuke
+/matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,3,FRENCH CANADIANS,remove,Overpass
+/matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,4,Kinguin,remove,Inferno
+/matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,5,FRENCH CANADIANS,remove,Train
+/matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,6,Kinguin,remove,Mirage
+/matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,7,Cache was,left,Cache
+/matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,1,Grayhound,remove,Cache
+/matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,2,Space Soldiers,remove,Nuke
+/matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,3,Grayhound,remove,Cobble
+/matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,4,Space Soldiers,remove,Overpass
+/matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,5,Grayhound,remove,Train
+/matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,6,Space Soldiers,remove,Inferno
+/matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,7,Mirage was,left,Mirage

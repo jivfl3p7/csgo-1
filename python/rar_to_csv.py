@@ -127,7 +127,7 @@ def demo_to_json():
 demo_to_json()
 
 def json_to_csv():
-    print('### json to csv ###')
+    print('### Csvs ###')
     try:
         exist_csv = list(pd.read_csv('csv\\demo_info.csv', header = None)[2].drop_duplicates())
     except:
@@ -135,9 +135,9 @@ def json_to_csv():
         
     prev_event = None
     
-    import random
-#    for eventid in os.listdir(json_folder):
-    for eventid in random.sample(os.listdir(json_folder),20):
+#    import random
+    for eventid in os.listdir(json_folder):
+#    for eventid in random.sample(os.listdir(json_folder),30):
         for matchid in os.listdir(json_folder + '\\' + eventid):
             for file_ in os.listdir(json_folder + '\\' + eventid + '\\' + matchid):
                 if file_[:-5] not in exist_csv:
@@ -156,7 +156,7 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2482\\2305536\\2305536-1.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2135\\2302767\\2302767-0.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
@@ -172,8 +172,11 @@ def json_to_csv():
                             & (init_data['steamid'] != 'BOT'),['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid')\
                             .rename(index = str, columns = {'steamid_y':'steamid'}).reset_index(drop = True)
                             
-                        clannames = data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False),['clanname']]\
-                            .drop_duplicates()
+                        clannames = data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False)
+                            & (data['clanname'] != '1'),['clanname']].drop_duplicates()
+                        clannames['clanname'] = np.where(clannames['clanname'] == u'Na\xc2\xb4Vi Team','Natus Vincere',
+                            clannames['clanname'])
+                        clannames = clannames.drop_duplicates()
                         clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['clanname']]
                         
                         hltv_teams = pd.DataFrame(match_row[[4,6]])
@@ -302,88 +305,56 @@ def json_to_csv():
                         for rnd in list(round_type.loc[(round_type['primary'] == 0) & (round_type['pistol'] > 0),'',].iloc[::-1]):
                             if int(rnd) >= prev_rnd - 2:
                                 rounds = rounds.loc[~rounds['round_raw'].isin(range(int(rnd),prev_rnd)),].reset_index(drop = True)
-#                                extra_rnds.append()
                             prev_rnd = int(rnd)
                             
                         rounds = rounds.loc[rounds['round_raw'].isin(round_type['']) | rounds['round_raw'].isin(bomb_rounds['round_raw'])
                             ,].reset_index(drop = True)
-                        
-#                        if file_[:-5] in ['2312366-1','2312069-3']:
-#                            rounds['round_est'] = rounds['round_score']
-#                        else:
-#                            for index, row in rounds.iterrows():
-#                                if row['round_score'] == -1:
-#                                    rounds.set_value(index, 'round_est', row['round_score'])
-#                                else:
-#                                    if row['round_score'] != rounds['round_score'].iloc[int(index) - 1] + 1:
-#                                        try:
-#                                            rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
-#                                        except:
-#                                            rounds.set_value(index, 'round_est', rounds['round_est'].iloc[int(index) - 1] + 1)
-#                                    else:
-#                                        rounds.set_value(index, 'round_est', row['round_score'])
                                         
-#                        if file_[:-5] in ['2312366-1','2312069-3']:
-#                            rounds['round_est'] = rounds['round_score']
-#                        else:
-                        for index, row in rounds.iterrows():
-#                            print(index)
-                            if row['round_score'] == -1:
-                                rounds.set_value(index, 'round_est', row['round_score'])
-                            elif index not in [rounds.index.min(),rounds.index.max()]:
-                                if (row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2
-                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
-                                    rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
-                                elif ((row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 1
-                                            or row['round_score'] == rounds['round_score'].iloc[int(index) - 1])
-                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
-                                    rounds.set_value(index, 'round_est', None)
-                                
-                                else:
+                        if file_[:-5] in ['2312366-1','2312069-3']:
+                            rounds['round_est'] = rounds['round_score']
+                        else:
+                            for index, row in rounds.iterrows():
+                                if row['round_score'] == -1:
                                     rounds.set_value(index, 'round_est', row['round_score'])
-                            else:
-                                if ((index == rounds.index.max()) & (row['round_score'] <= 30)
-                                    & ((row['score_ct'] > 16) | (row['score_t'] > 16))):
+                                elif index not in [rounds.index.min(),rounds.index.max()]:
+                                    if (row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2)\
+                                            and (row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                        rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+                                    elif (((row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 1)
+                                                or (row['round_score'] == rounds['round_score'].iloc[int(index) - 1]))
+                                            and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
+                                        rounds.set_value(index, 'round_est', None)
+                                    else:
+                                        rounds.set_value(index, 'round_est', row['round_score'])
+                                elif index == rounds.index.min():
+                                    if (row['round_score'] == 1) and (rounds['round_score'].iloc[int(index) + 1] == -1)\
+                                            and (rounds['round_score'].iloc[int(index) + 2] == 1):
+                                        rounds.set_value(index, 'round_est', None)
+                                    elif row['round_score'] == rounds['round_score'].iloc[int(index) + 1]:
+                                        rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
+                                    elif (row['round_score'] == rounds['round_score'].iloc[int(index) + 1] - 2)\
+                                            and (row['round_score'] == rounds['round_score'].iloc[int(index) + 2] - 2):
+                                        rounds.set_value(index, 'round_est', row['round_score'])
+                                    elif row['round_score'] != rounds['round_score'].iloc[int(index) + 1] - 1:
+                                        raise ValueError('round counting error')
+                                    else:
+                                        rounds.set_value(index, 'round_est', row['round_score'])
+                                elif index == rounds.index.max():
+                                    if (row['round_score'] <= 30) and ((row['score_ct'] > 16) or (row['score_t'] > 16)):
                                         rounds.set_value(index, 'round_est', rounds['round_est'].iloc[int(index) - 1] + 1)
-                                elif (index == rounds.index.min()
-                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1]):
-                                    rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) + 1] - 1)
-                                elif (index == rounds.index.max()
-                                        and row['round_score'] == rounds['round_est'].iloc[int(index) - 1]):
-                                    rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) - 1] + 1)
-                                elif ((index == rounds.index.min()
-                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 1] - 2
-                                        and row['round_score'] == rounds['round_score'].iloc[int(index) + 2] - 2)
-                                    or (index == rounds.index.max()
-                                        and row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2
-                                        and row['round_score'] == rounds['round_score'].iloc[int(index) - 2] + 2)):
-                                    rounds.set_value(index, 'round_est', row['round_score'])
-                                elif ((index == rounds.index.min()
-                                        and row['round_score'] != rounds['round_score'].iloc[int(index) + 1] - 1)
-                                    or (index == rounds.index.max()
-                                        and row['round_score'] != rounds['round_est'].iloc[int(index) - 1] + 1)):
-                                    raise ValueError('round counting error')
-                                else:
-                                    rounds.set_value(index, 'round_est', row['round_score'])
-                        
-#                        for index, row in rounds.iloc[::-1].iterrows():
-#                            if row['round_est'] == -1:
-#                                continue
-#                            else:
-#                                try:
-#                                    next_round = rounds['round_est'].iloc[int(index) + 1]
-#                                except:
-#                                    continue
-#                                if row['round_est'] in [0,next_round]:
-#                                    rounds.drop(rounds.index[[index]], inplace = True)
-#                                elif next_round - row['round_est'] > 1:
-#                                    rounds = rounds.loc[rounds['round'] <= row['round_est']]
-#                                    error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
+                                    elif row['round_score'] == rounds['round_est'].iloc[int(index) - 1]:
+                                        rounds.set_value(index, 'round_est', rounds['round_score'].iloc[int(index) - 1] + 1)
+                                    elif (row['round_score'] == rounds['round_score'].iloc[int(index) - 1] + 2)\
+                                            and (row['round_score'] == rounds['round_score'].iloc[int(index) - 2] + 2):
+                                        rounds.set_value(index, 'round_est', row['round_score'])
+                                    elif row['round_score'] != rounds['round_est'].iloc[int(index) - 1] + 1:
+                                        raise ValueError('round counting error')
+                                    else:
+                                        rounds.set_value(index, 'round_est', row['round_score'])
                         
                         drop_rounds = []
                         for index, row in rounds.iloc[:-1].iterrows():
-#                            print(row['round_est'])
-                            if row['round_est'] == -1:
+                            if (row['round_est'] == -1) or (rounds['round_est'].iloc[int(index) - 1] == -1):
                                 continue
                             else:
                                 if row['round_est'] == 0 or pd.isnull(row['round_est']):
@@ -391,7 +362,7 @@ def json_to_csv():
                                 elif (index == rounds.index.min()) and (rounds['round_est'].iloc[int(index) + 1] - row['round_est'] > 1):
                                     error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
-                                elif row['round_est'] - rounds.loc[rounds['round_est'] != -1,'round_est'].iloc[int(index) - 1] > 1:
+                                elif row['round_est'] - rounds['round_est'].iloc[int(index) - 1] > 1:
                                     error_msg = 'missing round' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
                         rounds.drop(rounds.index[[drop_rounds]], inplace = True)
@@ -425,15 +396,14 @@ def json_to_csv():
                             & (pd.isnull(teams['hltv_name']) == False), ['round','hltv_name','side']].drop_duplicates()
                         for index,rnd in enumerate(set(rounds['round'])):
                             rnd_data = teams.loc[teams['round'] == rnd,['hltv_name','side']]
-                            print(rnd)
                             if rnd == -1:
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                     error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
+                                    rounds = rounds.loc[rounds['round'] != rnd]
                                 if rnd_data['hltv_name'].nunique() < 1:
                                     error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
-                                rounds = rounds.loc[rounds['round'] != rnd]
+                                    rounds = rounds.loc[rounds['round'] != rnd]
                             elif (rnd == 1) | (index == rounds.index.min()):
-                                print(True)
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                     error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
@@ -572,8 +542,6 @@ def json_to_csv():
                         item_change['t_econ'] = item_change[['phase','t_econ']].groupby('phase')['t_econ'].ffill().fillna(0)
                         item_change['ct_econ'] = item_change.loc[item_change['side'] == 3,['phase','econ']].groupby('phase').cumsum()
                         item_change['ct_econ'] = item_change[['phase','ct_econ']].groupby('phase')['ct_econ'].ffill().fillna(0)
-    #                    item_change.loc[item_change['steamid'] == 'STEAM_1:0:78128774',['steamid','event','weapon','econ','t_econ']]
-    #                    item_change.to_csv('C:\\Users\\wessonmo\\Desktop\\item_change.csv')
                         
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
                             ct_econ = item_change.loc[(row['start'] <= item_change['tick'])
@@ -596,29 +564,6 @@ def json_to_csv():
                             demowriter = csv.writer(democsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                             demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],mapname,maphash,error_msg])
                             
-                        
-#                        players = data.loc[(data['event'].isin(['player_hurt','item_purchase','item_pickup','armor_purchase','item_drop']))
-#                            & (((data['round'] >= 3) & (data['round'] <= 5)) | ((data['round'] > 16) & (data['round'] <= 20))),
-#                            ['tick','steamid','hltv_name']]
-#                        for index, row in players.iterrows():
-#                            for index2, row2 in rounds.iterrows():
-#                                if row2['start'] <= row['tick'] <= row2['end']:
-#                                    players.set_value(index,'round',row2['round'])
-#                                    break
-#                                else:
-#                                    pass
-#                                
-#                        players = pd.merge(players.loc[pd.isnull(players['round']) == False,['hltv_name','steamid']].drop_duplicates(),
-#                                       data.loc[data['event'] == 'player_connect',['steamid','name']], how = 'left', on = 'steamid')\
-#                                       .rename(index = str, columns = {'hltv_name':'team'}).drop_duplicates()
-#                        for index, row in players.iterrows():
-#                            players.set_value(index, 'name', re.sub(r'[^\x00-\x7F]+','',str(row['name'].encode('utf-8'))))
-#                            players.set_value(index, 'team', re.sub(r'[^\x00-\x7F]+','',str(row['team'].encode('utf-8'))))
-#                        players.insert(0, 'mapid', file_[:-5])
-                        
-#                        with open('csv\\demo_players.csv', 'ab') as playercsv:
-#                            players[['mapid','steamid','name','team']].to_csv(playercsv, header = False, index = False)
-                            
                         print('\t' + match_row[1])
                     
                     except Exception as e:
@@ -628,4 +573,4 @@ def json_to_csv():
                                 demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],None,None,error_msg])
                             print('\tFAIL - ' + match_row[1])
                                 
-#json_to_csv()
+json_to_csv()

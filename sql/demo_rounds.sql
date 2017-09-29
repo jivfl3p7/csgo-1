@@ -2,7 +2,7 @@ begin;
 
 drop table if exists csgo.demo_rounds;
 
-create table csgo.demo_primary (
+create table csgo.demo_rounds (
 	match_href		text,
 	map_num			float,
 	phase			text,

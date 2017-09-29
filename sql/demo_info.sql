@@ -5,6 +5,7 @@ drop table if exists csgo.demo_info;
 create table csgo.demo_info (
 	match_href	text,
 	map_num		float,
+	map_id		text,
 	map_name	text,
 	map_hash	float,
 	error		text
