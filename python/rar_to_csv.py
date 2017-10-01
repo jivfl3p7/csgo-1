@@ -156,7 +156,7 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-1.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\3046\\2315032\\2315032-0.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
@@ -165,8 +165,10 @@ def json_to_csv():
 
                         if matchid in ['2309764','2311330','2305232','2311680']:
                             raise ValueError('weird gotv demo')
-
-                        error_msg = None                        
+                        if file_[:-5] in ['2315035-0','2315033-0']:
+                            raise ValueError('too many teams in demo')
+                            
+                        error_msg = None
                         
                         data = pd.merge(init_data, init_data.loc[(init_data['event'] == 'player_connect')
                             & (init_data['steamid'] != 'BOT'),['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid')\
@@ -207,6 +209,9 @@ def json_to_csv():
                                 clannames.loc[clannames['lower'] == team_name,'team_href'] = hltv_teams.loc[team_href_row,0].iloc[0]
                                 if fuzzy_match[1] < 65:
                                     error_msg = 'team name match only ' + str(fuzzy_match[1])
+                                    with open('csv\\team_name_matches.csv', 'ab') as teamnamecsv:
+                                        teamnamewriter = csv.writer(teamnamecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                        teamnamewriter.writerow([matchid,team_name,fuzzy_match[0],fuzzy_match[1]])
                                 
                         if len(clannames['team_href'].drop_duplicates()) != 2:
                             raise ValueError('number of team names')
