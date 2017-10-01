@@ -179,16 +179,20 @@ def json_to_csv():
                         clannames = clannames.drop_duplicates()
                         clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['clanname']]
                         
-                        hltv_teams = pd.DataFrame(match_row[[4,6]])
+                        hltv_teams = pd.DataFrame(match_row[range(4,8)])
                         hltv_teams.columns = range(hltv_teams.shape[1])
                         hltv_teams['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in hltv_teams[0]]
                         
                         if len(clannames) == 2:
-                            fuzzy_match0 = process.extractOne(clannames['lower'].iloc[0], hltv_teams['lower'], scorer=fuzz.partial_ratio)
-                            fuzzy_match1 = process.extractOne(clannames['lower'].iloc[1], hltv_teams['lower'], scorer=fuzz.partial_ratio)
+                            fuzzy_match0 = process.extractOne(clannames['lower'].iloc[0], hltv_teams.loc[:,'lower'].iloc[[0,2]],
+                                                              scorer=fuzz.partial_ratio)
+                            fuzzy_match1 = process.extractOne(clannames['lower'].iloc[1], hltv_teams.loc[:,'lower'].iloc[[0,2]],
+                                                              scorer=fuzz.partial_ratio)
                             if fuzzy_match0[1] > 65:
-                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'hltv_name'] = hltv_teams\
-                                    .loc[hltv_teams['lower'] == fuzzy_match0[0],0].iloc[0]
+                                team1_href_row = hltv_teams.loc[hltv_teams['lower'] == fuzzy_match0[0]].index + 1
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'team_href'] = hltv_teams\
+                                    .loc[team1_href_row,0]
+                                team2_href_row = hltv_teams.loc[~hltv_teams.index.isin(team1_href_row),]
                                 other_team_name = hltv_teams.loc[hltv_teams['lower'] != fuzzy_match0[0],0].iloc[0]
                                 clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'hltv_name'] = other_team_name
                             elif fuzzy_match1[1] > 65:
