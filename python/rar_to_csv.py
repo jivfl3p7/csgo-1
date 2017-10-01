@@ -190,36 +190,34 @@ def json_to_csv():
                                                               scorer=fuzz.partial_ratio)
                             if fuzzy_match0[1] > 65:
                                 team1_href_row = hltv_teams.loc[hltv_teams['lower'] == fuzzy_match0[0]].index + 1
-                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'team_href'] = hltv_teams\
-                                    .loc[team1_href_row,0]
-                                team2_href_row = hltv_teams.loc[~hltv_teams.index.isin(team1_href_row),]
-                                other_team_name = hltv_teams.loc[hltv_teams['lower'] != fuzzy_match0[0],0].iloc[0]
-                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'hltv_name'] = other_team_name
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'team_href'] = hltv_teams.loc[team1_href_row,0].iloc[0]
+                                team2_href_row = hltv_teams.loc[~hltv_teams.index.isin(team1_href_row) & (hltv_teams.index % 2 != 0),0]
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'team_href'] = team2_href_row.iloc[0]
                             elif fuzzy_match1[1] > 65:
-                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'hltv_name'] = hltv_teams\
-                                    .loc[hltv_teams['lower'] == fuzzy_match1[0],0].iloc[0]
-                                other_team_name = hltv_teams.loc[hltv_teams['lower'] != fuzzy_match1[0],0].iloc[0]
-                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'hltv_name'] = other_team_name
+                                team1_href_row = hltv_teams.loc[hltv_teams['lower'] == fuzzy_match1[0]].index + 1
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[1],'team_href'] = hltv_teams.loc[team1_href_row,0].iloc[0]
+                                team2_href_row = hltv_teams.loc[~hltv_teams.index.isin(team1_href_row) & (hltv_teams.index % 2 != 0),0]
+                                clannames.loc[clannames['lower'] == clannames['lower'].iloc[0],'team_href'] = team2_href_row.iloc[0]
                             else:
                                 raise ValueError('no high-level team name match')
                         else:
                             for team_name in clannames['lower']:
-                                fuzzy_match = process.extractOne(team_name, hltv_teams['lower'], scorer=fuzz.partial_ratio)
-                                clannames.loc[clannames['lower'] == team_name,'hltv_name'] = hltv_teams\
-                                        .loc[hltv_teams['lower'] == fuzzy_match[0],0].iloc[0]
+                                fuzzy_match = process.extractOne(team_name, hltv_teams.loc[:,'lower'].iloc[[0,2]], scorer=fuzz.partial_ratio)
+                                team_href_row = hltv_teams.loc[hltv_teams['lower'] == fuzzy_match[0]].index + 1
+                                clannames.loc[clannames['lower'] == team_name,'team_href'] = hltv_teams.loc[team_href_row,0].iloc[0]
                                 if fuzzy_match[1] < 65:
                                     error_msg = 'team name match only ' + str(fuzzy_match[1])
                                 
-                        if len(clannames['hltv_name'].drop_duplicates()) != 2:
+                        if len(clannames['team_href'].drop_duplicates()) != 2:
                             raise ValueError('number of team names')
                             
-                        data = pd.merge(data, clannames[['clanname','hltv_name']], how = 'left', on = 'clanname')
+                        data = pd.merge(data, clannames[['clanname','team_href']], how = 'left', on = 'clanname')
                         
                         players = data.loc[(data['event'] == 'player_team') & (pd.isnull(data['steamid']) == False),
-                                           ['tick','side','steamid','hltv_name']].sort_values('tick')
-                        players['hltv_name'] = np.where(pd.isnull(players['hltv_name']), 'Unknown',players['hltv_name'])
+                                           ['tick','side','steamid','team_href']].sort_values('tick')
+                        players['team_href'] = np.where(pd.isnull(players['team_href']), 'Unknown',players['team_href'])
                         players['rank'] = players.groupby('steamid').rank(axis = 0, method = 'first')['tick']
-                        players = players.loc[players['rank'] == 1,['steamid','side','hltv_name']].drop_duplicates()
+                        players = players.loc[players['rank'] == 1,['steamid','side','team_href']].drop_duplicates()
                         for steamid in players['steamid']:
                             if len(data.loc[(data['steamid'] == steamid) & (data['event'] == 'weapon_fire')]) == 0:
                                 players = players.loc[players['steamid'] != steamid]
@@ -228,16 +226,16 @@ def json_to_csv():
                         if len(players.loc[players['side'] == 3]) != 5:
                             raise ValueError('not enough players per side')
                             
-                        if 'Unknown' in list(players['hltv_name'].drop_duplicates()):
+                        if 'Unknown' in list(players['team_href'].drop_duplicates()):
                             try:
-                                exist_team = players.loc[players['hltv_name'] != 'Unknown','hltv_name'].iloc[0]
+                                exist_team = players.loc[players['team_href'] != 'Unknown','team_href'].iloc[0]
                             except:
                                 raise ValueError('no team names')
-                            miss_team = clannames.loc[clannames['hltv_name'] != exist_team,'clanname'].iloc[0]
-                            players['hltv_name'] = np.where(players['hltv_name'] == 'Unknown', miss_team, players['hltv_name'])
+                            miss_team = clannames.loc[clannames['team_href'] != exist_team,'clanname'].iloc[0]
+                            players['team_href'] = np.where(players['team_href'] == 'Unknown', miss_team, players['team_href'])
                             
-                        data = pd.merge(data, players[['steamid','hltv_name']], how = 'left', on = 'steamid').rename(index = str,
-                            columns = {'hltv_name':'hltv_name_old','hltv_name_y':'hltv_name'})
+                        data = pd.merge(data, players[['steamid','team_href']], how = 'left', on = 'steamid').rename(index = str,
+                            columns = {'team_href':'team_href_old','team_href_y':'team_href'})
                         
                         rounds = data.loc[(data['event'] == 'round_start') | data['winner'].isin([2,3]),
                                           ['round','tick','event','winner','reason','score_ct','score_t']]\
@@ -392,26 +390,26 @@ def json_to_csv():
                             rounds.set_value(index,'first_blood',tick)
                             
                         teams = data.loc[(data['event'] == 'item_purchase') | ((data['event'] == 'player_hurt') & (data['health'] == 0)),
-                                         ['tick','side','hltv_name']].drop_duplicates()
+                                         ['tick','side','team_href']].drop_duplicates()
                         for index, row in rounds.iterrows():
                             teams.loc[(teams['tick'] >= row['start']) & (teams['tick'] <= row['round_decision']),'round'] = row['round']
                         
-                        teams = teams.loc[(pd.isnull(teams['round']) == False) & (teams['hltv_name'] != '')
-                            & (pd.isnull(teams['hltv_name']) == False), ['round','hltv_name','side']].drop_duplicates()
+                        teams = teams.loc[(pd.isnull(teams['round']) == False) & (teams['team_href'] != '')
+                            & (pd.isnull(teams['team_href']) == False), ['round','team_href','side']].drop_duplicates()
                         for index,rnd in enumerate(set(rounds['round'])):
-                            rnd_data = teams.loc[teams['round'] == rnd,['hltv_name','side']]
+                            rnd_data = teams.loc[teams['round'] == rnd,['team_href','side']]
                             if rnd == -1:
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                     error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
                                     rounds = rounds.loc[rounds['round'] != rnd]
-                                if rnd_data['hltv_name'].nunique() < 1:
+                                if rnd_data['team_href'].nunique() < 1:
                                     error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
                                     rounds = rounds.loc[rounds['round'] != rnd]
                             elif (rnd == 1) | (index == rounds.index.min()):
                                 if len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
                                     error_msg = 'too many teams per side' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
-                                if rnd_data['hltv_name'].nunique() < 1:
+                                if rnd_data['team_href'].nunique() < 1:
                                     error_msg = 'not enough teams per side' + (', ' + error_msg if error_msg else '')
                                     raise ValueError(error_msg)
                             elif len(rnd_data.loc[rnd_data['side'] == 2]) > 1 or len(rnd_data.loc[rnd_data['side'] == 3]) > 1:
@@ -419,36 +417,36 @@ def json_to_csv():
                                 rounds = rounds.loc[rounds['round'] < rnd]
                                 
                         
-                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 3,['round','hltv_name']], how = 'left', on = 'round')\
-                            .rename(index = str, columns = {'hltv_name':'ct_team'}).reset_index(drop = True)
-                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','hltv_name']], how = 'left', on = 'round')\
-                            .rename(index = str, columns = {'hltv_name':'t_team'}).reset_index(drop = True)
+                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 3,['round','team_href']], how = 'left', on = 'round')\
+                            .rename(index = str, columns = {'team_href':'ct_href'}).reset_index(drop = True)
+                        rounds = pd.merge(rounds, teams.loc[teams['side'] == 2,['round','team_href']], how = 'left', on = 'round')\
+                            .rename(index = str, columns = {'team_href':'t_href'}).reset_index(drop = True)
                             
-                        for index, row in rounds.loc[pd.isnull(rounds['ct_team']) | pd.isnull(rounds['t_team'])].iterrows():
-                            if pd.isnull(row['ct_team']):
+                        for index, row in rounds.loc[pd.isnull(rounds['ct_href']) | pd.isnull(rounds['t_href'])].iterrows():
+                            if pd.isnull(row['ct_href']):
                                 if row['phase'] == rounds['phase'].iloc[int(index) + 1]:
-                                    rounds.set_value(index,'ct_team',rounds['ct_team'].iloc[int(index) + 1])
+                                    rounds.set_value(index,'ct_href',rounds['ct_href'].iloc[int(index) + 1])
                                 else:
-                                    rounds.set_value(index,'ct_team',rounds['t_team'].iloc[int(index) + 1])
-                            if pd.isnull(row['t_team']):
+                                    rounds.set_value(index,'ct_href',rounds['t_href'].iloc[int(index) + 1])
+                            if pd.isnull(row['t_href']):
                                 if row['phase'] == rounds['phase'].iloc[int(index) + 1]:
-                                    rounds.set_value(index,'t_team',rounds['t_team'].iloc[int(index) + 1])
+                                    rounds.set_value(index,'t_href',rounds['t_href'].iloc[int(index) + 1])
                                 else:
-                                    rounds.set_value(index,'t_team',rounds['ct_team'].iloc[int(index) + 1])
+                                    rounds.set_value(index,'t_href',rounds['ct_href'].iloc[int(index) + 1])
                                     
                         for index, row in rounds.iterrows():
                             try:
-                                rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'].encode('utf-8'))))
+                                rounds.set_value(index, 'ct_href', re.sub(r'[^\x00-\x7F]+','',str(row['ct_href'].encode('utf-8'))))
                             except:
-                                rounds.set_value(index, 'ct_team', re.sub(r'[^\x00-\x7F]+','',str(row['ct_team'])))
+                                rounds.set_value(index, 'ct_href', re.sub(r'[^\x00-\x7F]+','',str(row['ct_href'])))
                             try:
-                                rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'].encode('utf-8'))))
+                                rounds.set_value(index, 't_href', re.sub(r'[^\x00-\x7F]+','',str(row['t_href'].encode('utf-8'))))
                             except:
-                                rounds.set_value(index, 't_team', re.sub(r'[^\x00-\x7F]+','',str(row['t_team'])))
+                                rounds.set_value(index, 't_href', re.sub(r'[^\x00-\x7F]+','',str(row['t_href'])))
                             
                         for phs in set(rounds['phase']):
-                            ct_teams = rounds.loc[rounds['phase'] == phs,'ct_team'].drop_duplicates()
-                            t_teams = rounds.loc[rounds['phase'] == phs,'t_team'].drop_duplicates()
+                            ct_teams = rounds.loc[rounds['phase'] == phs,'ct_href'].drop_duplicates()
+                            t_teams = rounds.loc[rounds['phase'] == phs,'t_href'].drop_duplicates()
                             if max(len(ct_teams),len(t_teams)) > 1:
                                 error_msg = 'team change within phase' + (', ' + error_msg if error_msg else '')
                                 rounds = rounds.loc[rounds['phase'] != phs]
@@ -558,7 +556,7 @@ def json_to_csv():
                         rounds['map_num'] = int(file_[-6:-5])
                             
                         with open('csv\\demo_rounds.csv', 'ab') as democsv:
-                            rounds[['match_href','map_num','phase','round','t_team','ct_team','ct_econ_adv','winner']]\
+                            rounds[['match_href','map_num','phase','round','t_href','ct_href','ct_econ_adv','winner']]\
                                 .to_csv(democsv, header = False, index = False)
                            
                         mapname = data.loc[data['event']=='info','mapName'].iloc[0]

@@ -7,8 +7,8 @@ create table csgo.demo_rounds (
 	map_num			float,
 	phase			text,
 	round			float,
-	t_team			text,
-	ct_team			text,
+	t_href			text,
+	ct_href			text,
 	ct_econ_adv		float,
 	winner			float
 );
