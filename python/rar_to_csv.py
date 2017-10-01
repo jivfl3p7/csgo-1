@@ -156,14 +156,14 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2135\\2302767\\2302767-0.json")
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2889\\2311680\\2311680-1.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307295\\2307295-0.json") final round adds extra point to scoreline
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1986\\2299842\\2299842-1.json") final round adds extra point to scoreline
 
-                        if matchid in ['2309764','2311330','2305232']:
+                        if matchid in ['2309764','2311330','2305232','2311680']:
                             raise ValueError('weird gotv demo')
 
                         error_msg = None                        
