@@ -12,6 +12,7 @@ create table csgo.hltv_team_ranks (
 
 truncate table csgo.hltv_team_ranks;
 
-copy csgo.hltv_team_ranks from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\hltv_team_ranks.csv' with delimiter as ',' csv quote as '"';
+\set full_path '\'' :init_path '\\hltv_team_ranks.csv\''
+copy csgo.hltv_team_ranks from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

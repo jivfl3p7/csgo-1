@@ -13,6 +13,7 @@ create table csgo.hltv_events (
 
 truncate table csgo.hltv_events;
 
-copy csgo.hltv_events from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\hltv_events.csv' with delimiter as ',' csv quote as '"';
+\set full_path '\'' :init_path '\\hltv_events.csv\''
+copy csgo.hltv_events from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

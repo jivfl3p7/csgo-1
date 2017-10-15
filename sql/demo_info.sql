@@ -13,6 +13,7 @@ create table csgo.demo_info (
 
 truncate table csgo.demo_info;
 
-copy csgo.demo_info from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\demo_info.csv' with delimiter as ',' csv quote as '"';
+\set full_path '\'' :init_path '\\demo_info.csv\''
+copy csgo.demo_info from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

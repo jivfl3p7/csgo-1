@@ -12,10 +12,7 @@ create table csgo.hltv_vetos (
 
 truncate table csgo.hltv_vetos;
 
-copy csgo.hltv_vetos from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\hltv_vetos.csv' with delimiter as ',' csv quote as '"';
-
---update csgo.hltv_vetos set match_id = substring(match_id from '[0-9]{1,}(?=\/)');
-
---alter table csgo.hltv_vetos alter column match_id type int using (match_id::integer);
+\set full_path '\'' :init_path '\\hltv_vetos.csv\''
+copy csgo.hltv_vetos from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

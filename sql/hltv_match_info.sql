@@ -15,6 +15,7 @@ create table csgo.hltv_match_info (
 
 truncate table csgo.hltv_match_info;
 
-copy csgo.hltv_match_info from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\hltv_match_info.csv' with delimiter as ',' csv quote as '"';
+\set full_path '\'' :init_path '\\hltv_match_info.csv\''
+copy csgo.hltv_match_info from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

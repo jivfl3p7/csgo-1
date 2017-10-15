@@ -16,6 +16,7 @@ create table csgo.hltv_map_results (
 
 truncate table csgo.hltv_map_results;
 
-copy csgo.hltv_map_results from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\hltv_map_results.csv' with delimiter as ',' csv quote as '"';
+\set full_path '\'' :init_path '\\hltv_map_results.csv\''
+copy csgo.hltv_map_results from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

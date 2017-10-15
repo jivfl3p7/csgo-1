@@ -15,6 +15,7 @@ create table csgo.demo_rounds (
 
 truncate table csgo.demo_rounds;
 
-copy csgo.demo_rounds from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\demo_rounds.csv' with delimiter as ',' csv quote as '"';
+\set full_path '\'' :init_path '\\demo_rounds.csv\''
+copy csgo.demo_rounds from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

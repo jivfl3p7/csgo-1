@@ -13,7 +13,8 @@ create table csgo.hltv_player_stats (
 
 truncate table csgo.hltv_player_stats;
 
-copy csgo.hltv_player_stats from 'C:\Users\wessonmo\Documents\GitHub\csgo\csv\hltv_player_stats.csv' with delimiter as ',' csv quote as '"';
+\set full_path '\'' :init_path '\\hltv_player_stats.csv\''
+copy csgo.hltv_player_stats from :full_path with delimiter as ',' csv quote as '"';
 
 update csgo.hltv_player_stats set player_href = (case when player_href is null then replace(player_name, '%', '') else replace(player_href, '%', '') end);
 
