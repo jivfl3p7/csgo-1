@@ -30,15 +30,15 @@ def rank_data():
     
     date_list = []
     
-    for year_href in reversed(year_hrefs):
+    for year_href in year_hrefs:
         year_url = 'https://www.hltv.org' + year_href.get('href')
         year_req = requests.get(year_url, headers = header)
         month_hrefs = BeautifulSoup(year_req.content, 'lxml').find_all('div', {'class': 'filter-column-content'})[1].contents
-        for month_href in reversed(month_hrefs):
+        for month_href in month_hrefs:
             month_url = 'https://www.hltv.org' + month_href.get('href')
             month_req = requests.get(month_url, headers = header)
             day_hrefs = BeautifulSoup(month_req.content, 'lxml').find_all('div', {'class': 'filter-column-content'})[2].contents
-            for day_href in reversed(day_hrefs):
+            for day_href in day_hrefs:
                 day_url = 'https://www.hltv.org' + day_href.get('href')
                 day_req = requests.get(day_url, headers = header)
                 year = re.compile('(?<=teams\/)[0-9]{4}(?=\/)').search(day_url).group(0)
