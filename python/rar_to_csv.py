@@ -156,7 +156,8 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\3046\\2315032\\2315032-0.json")
+#                        match_row = matches_w_demos.loc[matches_w_demos[9] == '2305974',:].iloc[0]
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2410\\2305974\\2305974-0.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
@@ -307,12 +308,17 @@ def json_to_csv():
                                 raise ValueError('no pistol kills')
                             if e == 'primary':
                                 print(e)
-                                
-                        prev_rnd = 999
-                        for rnd in list(round_type.loc[(round_type['primary'] == 0) & (round_type['pistol'] > 0),'',].iloc[::-1]):
-                            if int(rnd) >= prev_rnd - 2:
-                                rounds = rounds.loc[~rounds['round_raw'].isin(range(int(rnd),prev_rnd)),].reset_index(drop = True)
-                            prev_rnd = int(rnd)
+                        
+                        if file_[:-5] == '2309398-0':
+                            rounds = rounds.loc[rounds['round_raw'] > 10].reset_index(drop = True)
+                        elif file_[:-5] == '2302683-0':
+                            rounds = rounds.loc[rounds['round_raw'] > 13].reset_index(drop = True)
+                        else:
+                            prev_rnd = 999
+                            for rnd in list(round_type.loc[(round_type['primary'] == 0) & (round_type['pistol'] > 0),'',].iloc[::-1]):
+                                if int(rnd) >= prev_rnd - 2:
+                                    rounds = rounds.loc[~rounds['round_raw'].isin(range(int(rnd),prev_rnd)),].reset_index(drop = True)
+                                prev_rnd = int(rnd)
                             
                         rounds = rounds.loc[rounds['round_raw'].isin(round_type['']) | rounds['round_raw'].isin(bomb_rounds['round_raw'])
                             ,].reset_index(drop = True)
@@ -559,6 +565,13 @@ def json_to_csv():
                         
                         rounds['match_href'] = match_row[1]
                         rounds['map_num'] = int(file_[-6:-5])
+                        
+                        missing_econ_rds = rounds.loc[pd.isnull(rounds['ct_econ_adv'])]
+                        
+                        if len(missing_econ_rds) > 0:
+                            rounds = rounds.loc[(rounds['round'] < min(list(missing_econ_rds['round'])))
+                                | ~rounds['phase'].isin(set(missing_econ_rds['phase']))]
+                            error_msg = 'round with no econ value' + (', ' + error_msg if error_msg else '')
                             
                         with open('csv\\demo_rounds.csv', 'ab') as democsv:
                             rounds[['match_href','map_num','phase','round','t_href','ct_href','ct_econ_adv','winner']]\
