@@ -11230,3 +11230,52 @@
 /matches/2314491/faze-vs-renegades-eleague-csgo-premier-2017,4,FaZe,remove,Nuke
 /matches/2314491/faze-vs-renegades-eleague-csgo-premier-2017,5,Renegades,remove,Train
 /matches/2314491/faze-vs-renegades-eleague-csgo-premier-2017,6,,,Mirage
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,1,mousesports,remove,Train
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,2,Gambit,remove,Mirage
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,3,mousesports,remove,Inferno
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,4,Gambit,remove,Cache
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,5,mousesports,pick,Overpass
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,6,Gambit,pick,Nuke
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,7,Cobblestone was,left,Cobble
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,1,Seed,remove,Overpass
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,2,Gambit,remove,Mirage
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,3,Seed,remove,Nuke
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,4,Gambit,remove,Cache
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,5,Seed,pick,Cobble
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,6,Gambit,pick,Train
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,7,Inferno was,left,Inferno
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,1,Vega Squadron,remove,Cobble
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,2,mousesports,remove,Train
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,3,Vega Squadron,remove,Overpass
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,4,mousesports,remove,Cache
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,5,Vega Squadron,pick,Mirage
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,6,mousesports,pick,Nuke
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,7,Inferno was,left,Inferno
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,1,Gambit,remove,Mirage
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,2,Singularity,remove,Nuke
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,3,Gambit,remove,Cache
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,4,Singularity,remove,Overpass
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,5,Gambit,pick,Train
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,6,Singularity,pick,Inferno
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,7,Cobblestone was,left,Cobble
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,1,Tricked,remove,Cache
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,2,Seed,remove,Overpass
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,3,Tricked,remove,Inferno
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,4,Seed,remove,Nuke
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,5,Tricked,pick,Train
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,6,Seed,pick,Cobble
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,7,Mirage was,left,Mirage
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,1,mousesports,remove,Overpass
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,2,ALTERNATE aTTaX,remove,Nuke
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,3,mousesports,remove,Cache
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,4,ALTERNATE aTTaX,remove,Mirage
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,5,mousesports,pick,Cobble
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,6,ALTERNATE aTTaX,pick,Train
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,7,Inferno was,left,Inferno
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,1,Vega Squadron,remove,Cobble
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,2,PANTHERS,remove,Nuke
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,3,Vega Squadron,remove,Overpass
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,4,PANTHERS,remove,Mirage
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,5,Vega Squadron,pick,Inferno
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,6,PANTHERS,pick,Train
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,7,Cache was,left,Cache

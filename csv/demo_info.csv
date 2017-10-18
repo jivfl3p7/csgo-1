@@ -187,9 +187,6 @@
 /matches/2300297/vs-fnatic-sl-i-league-starseries-xiv-finals,2,2300297-2,de_inferno,3454318515,
 /matches/2300315/g2-vs-fnatic-sl-i-league-starseries-xiv-finals,0,2300315-0,de_cache,597569438,
 /matches/2300315/g2-vs-fnatic-sl-i-league-starseries-xiv-finals,1,2300315-1,de_inferno,3454318515,
-/matches/2300316/natus-vincere-vs-sl-i-league-starseries-xiv-finals,0,2300316-0,de_dust2,3406488821,
-/matches/2300316/natus-vincere-vs-sl-i-league-starseries-xiv-finals,1,2300316-1,de_overpass,3965900419,
-/matches/2300316/natus-vincere-vs-sl-i-league-starseries-xiv-finals,2,2300316-2,de_mirage,1450024005,
 /matches/2300317/luminosity-vs-fnatic-sl-i-league-starseries-xiv-finals,0,2300317-0,de_mirage,1450024005,
 /matches/2300317/luminosity-vs-fnatic-sl-i-league-starseries-xiv-finals,1,2300317-1,de_cache,597569438,
 /matches/2300317/luminosity-vs-fnatic-sl-i-league-starseries-xiv-finals,2,2300317-2,de_inferno,3454318515,
@@ -477,8 +474,7 @@
 /matches/2300163/csgl-vs-optic-eleague-road-to-vegas,1,2300163-1,de_cbble,211399940,
 /matches/2302057/luminosity-vs-tyloo-dreamhack-masters-malm-2016,0,2302057-0,de_mirage,2966862683,
 /matches/2302058/liquid-vs-mousesports-dreamhack-masters-malm-2016,0,2302058-0,de_dust2,3406488821,
-/matches/2302059/natus-vincere-vs-godsent-dreamhack-masters-malm-2016,0,2302059-0,de_train,4074319541,team name match only 40
-/matches/2302060/g2-vs-clg-dreamhack-masters-malm-2016,0,2302060-0,de_dust2,3406488821,
+/matches/2302059/natus-vincere-vs-godsent-dreamhack-masters-malm-2016,0,2302059-0,de_train,4074319541,team name match only 60
 /matches/2302061/astralis-vs-csgl-dreamhack-masters-malm-2016,0,2302061-0,de_mirage,2966862683,
 /matches/2302062/nip-vs-dignitas-dreamhack-masters-malm-2016,0,2302062-0,de_overpass,2285880676,
 /matches/2302063/virtuspro-vs-faze-dreamhack-masters-malm-2016,0,2302063-0,de_train,4074319541,
@@ -611,7 +607,6 @@
 /matches/2304824/cloud9-vs-envyus-dreamhack-zowie-open-bucharest-2016,2,2304824-2,de_dust2,3406488821,
 /matches/2304840/cloud9-vs-virtuspro-dreamhack-zowie-open-bucharest-2016,0,2304840-0,de_train,4074319541,
 /matches/2304840/cloud9-vs-virtuspro-dreamhack-zowie-open-bucharest-2016,1,2304840-1,de_cbble,787242208,
-/matches/2302607/astralis-vs-optic-esl-pro-league-season-3-finals,0,2302607-0,de_inferno,3454318515,
 /matches/2302608/luminosity-vs-g2-esl-pro-league-season-3-finals,0,2302608-0,de_train,4074319541,
 /matches/2302609/fnatic-vs-cloud9-esl-pro-league-season-3-finals,0,2302609-0,de_inferno,3454318515,
 /matches/2302609/fnatic-vs-cloud9-esl-pro-league-season-3-finals,1,2302609-1,,,wrong number of players
@@ -873,7 +868,6 @@
 /matches/2302682/virtuspro-vs-worst-players-sl-i-league-invitational-1,0,2302682-0,de_mirage,2494823213,
 /matches/2302682/virtuspro-vs-worst-players-sl-i-league-invitational-1,1,2302682-1,de_cache,2515589719,
 /matches/2302682/virtuspro-vs-worst-players-sl-i-league-invitational-1,2,2302682-2,de_cbble,211399940,
-/matches/2302683/sk-vs-worst-players-sl-i-league-invitational-1,0,2302683-0,de_mirage,2494823213,
 /matches/2302683/sk-vs-worst-players-sl-i-league-invitational-1,1,2302683-1,de_cache,2515589719,
 /matches/2302684/flipsid3-vs-godsent-sl-i-league-invitational-1,0,2302684-0,de_cbble,211399940,
 /matches/2302684/flipsid3-vs-godsent-sl-i-league-invitational-1,1,2302684-1,,,missing round
@@ -976,7 +970,7 @@
 /matches/2303037/tyloo-vs-splyce-esl-one-cologne-2016-main-qualifier,0,2303037-0,de_mirage,2494823213,
 /matches/2303038/dignitas-vs-renegades-esl-one-cologne-2016-main-qualifier,0,2303038-0,de_dust2,3406488821,
 /matches/2303039/flipsid3-vs-immortals-esl-one-cologne-2016-main-qualifier,0,2303039-0,de_train,4074319541,
-/matches/2303040/hellraisers-vs-optic-esl-one-cologne-2016-main-qualifier,0,2303040-0,de_cache,2087624451,team name match only 29
+/matches/2303040/hellraisers-vs-optic-esl-one-cologne-2016-main-qualifier,0,2303040-0,de_cache,2087624451,team name match only 33
 /matches/2303041/envyus-vs-cloud9-esl-one-cologne-2016-main-qualifier,0,2303041-0,de_cbble,211399940,
 /matches/2303042/gambit-vs-g2-esl-one-cologne-2016-main-qualifier,0,2303042-0,de_train,4074319541,
 /matches/2303043/hellraisers-vs-flipsid3-esl-one-cologne-2016-main-qualifier,0,2303043-0,de_overpass,2285880676,
@@ -1211,7 +1205,7 @@
 /matches/2306101/igamecom-vs-red-instinct-eswc-2016,0,2306101-0,de_dust2,3406488821,
 /matches/2306104/gambit-vs-godsent-academy-eswc-2016,0,2306104-0,,,failed json
 /matches/2306105/bpro-vs-norse-eswc-2016,0,2306105-0,,,round counting error
-/matches/2306106/alternate-attax-vs-ftw-eswc-2016,0,2306106-0,,,not enough players per side
+/matches/2306106/alternate-attax-vs-ftw-eswc-2016,0,2306106-0,,,number of team names
 /matches/2306108/kinguin-vs-sector-one-eswc-2016,0,2306108-0,,,failed json
 /matches/2306109/preparation-vs-wyvern-eswc-2016,0,2306109-0,de_overpass,2285880676,
 /matches/2306110/penta-vs-archangels-eswc-2016,0,2306110-0,,,not enough players per side
@@ -1241,12 +1235,10 @@
 /matches/2306196/rogue-vs-ence-eswc-2016,1,2306196-1,de_cbble,787242208,
 /matches/2306197/fnatic-academy-vs-pain-eswc-2016,0,2306197-0,de_mirage,1953099299,
 /matches/2306202/archangels-vs-pride-eswc-2016,0,2306202-0,de_mirage,1953099299,
-/matches/2306206/luminosity-vs-millenium-eswc-2016,0,2306206-0,de_overpass,2285880676,
 /matches/2306206/luminosity-vs-millenium-eswc-2016,1,2306206-1,de_dust2,3406488821,
 /matches/2306208/sector-one-vs-wyvern-eswc-2016,0,2306208-0,de_cbble,787242208,
 /matches/2306208/sector-one-vs-wyvern-eswc-2016,1,2306208-1,de_cache,1903442639,
 /matches/2306208/sector-one-vs-wyvern-eswc-2016,2,2306208-2,de_dust2,3406488821,
-/matches/2306209/kinguin-vs-preparation-eswc-2016,0,2306209-0,de_dust2,3406488821,
 /matches/2306214/penta-vs-pride-eswc-2016,0,2306214-0,de_dust2,3406488821,
 /matches/2306214/penta-vs-pride-eswc-2016,1,2306214-1,de_mirage,1953099299,
 /matches/2306214/penta-vs-pride-eswc-2016,2,2306214-2,de_cbble,787242208,
@@ -1280,7 +1272,6 @@
 /matches/2304253/ence-vs-alternate-attax-esea-season-22-global-challenge,0,2304253-0,de_dust2,3406488821,
 /matches/2304254/mk-vs-g3x-esea-season-22-global-challenge,0,2304254-0,de_cache,4167847735,
 /matches/2304255/pnda-vs-crowns-esea-season-22-global-challenge,0,2304255-0,de_mirage,1953099299,
-/matches/2304288/ence-vs-chiefs-esea-season-22-global-challenge,0,2304288-0,de_cache,4167847735,
 /matches/2304289/echo-fox-vs-alternate-attax-esea-season-22-global-challenge,0,2304289-0,de_cache,4167847735,
 /matches/2304290/mk-vs-pnda-esea-season-22-global-challenge,0,2304290-0,de_train,4074319541,
 /matches/2304291/g3x-vs-crowns-esea-season-22-global-challenge,0,2304291-0,de_cache,4167847735,
@@ -1391,7 +1382,6 @@
 /matches/2305810/fnatic-vs-virtuspro-epicenter-moscow,0,2305810-0,de_mirage,1953099299,
 /matches/2305973/g2-vs-sk-epicenter-moscow,0,2305973-0,de_dust2,3406488821,
 /matches/2305973/g2-vs-sk-epicenter-moscow,1,2305973-1,de_cbble,787242208,
-/matches/2305974/fnatic-vs-dignitas-epicenter-moscow,0,2305974-0,de_train,4074319541,
 /matches/2305974/fnatic-vs-dignitas-epicenter-moscow,1,2305974-1,de_cbble,787242208,
 /matches/2305974/fnatic-vs-dignitas-epicenter-moscow,2,2305974-2,de_mirage,1953099299,
 /matches/2305975/virtuspro-vs-sk-epicenter-moscow,0,2305975-0,de_train,4074319541,
@@ -1468,7 +1458,6 @@
 /matches/2306435/rogue-vs-euronics-predator-masters-3,0,2306435-0,de_cbble,787242208,
 /matches/2306435/rogue-vs-euronics-predator-masters-3,1,2306435-1,de_mirage,1953099299,
 /matches/2306436/gambit-vs-kinguin-predator-masters-3,0,2306436-0,de_dust2,3406488821,
-/matches/2306436/gambit-vs-kinguin-predator-masters-3,1,2306436-1,de_train,4074319541,
 /matches/2306442/fnatic-academy-vs-rogue-predator-masters-3,0,2306442-0,de_mirage,1953099299,
 /matches/2306442/fnatic-academy-vs-rogue-predator-masters-3,1,2306442-1,de_cache,1903442639,
 /matches/2306442/fnatic-academy-vs-rogue-predator-masters-3,2,2306442-2,de_train,4074319541,
@@ -1528,7 +1517,6 @@
 /matches/2307527/north-vs-hellraisers-eleague-major-2017,0,2307527-0,de_mirage,2683197182,
 /matches/2307528/gambit-vs-virtuspro-eleague-major-2017,0,2307528-0,de_train,487988445,
 /matches/2307529/astralis-vs-g2-eleague-major-2017,0,2307529-0,de_train,487988445,
-/matches/2307530/sk-vs-natus-vincere-eleague-major-2017,0,2307530-0,de_dust2,1954603074,
 /matches/2307531/liquid-vs-faze-eleague-major-2017,0,2307531-0,de_nuke,198936178,
 /matches/2307532/flipsid3-vs-optic-eleague-major-2017,0,2307532-0,de_train,487988445,
 /matches/2307533/north-vs-g2-eleague-major-2017,0,2307533-0,de_overpass,2285880676,
@@ -1664,7 +1652,6 @@
 /matches/2307287/muffin-lightning-vs-kinguin-esea-season-23-global-challenge,0,2307287-0,de_overpass,2285880676,
 /matches/2307288/bravado-vs-ldlc-esea-season-23-global-challenge,0,2307288-0,de_overpass,2285880676,
 /matches/2307289/tainted-minds-vs-kinguin-esea-season-23-global-challenge,0,2307289-0,de_cache,1903442639,
-/matches/2307290/tsm-vs-rogue-esea-season-23-global-challenge,0,2307290-0,de_train,487988445,
 /matches/2307290/tsm-vs-rogue-esea-season-23-global-challenge,1,2307290-1,de_dust2,1954603074,
 /matches/2307291/rush-vs-muffin-lightning-esea-season-23-global-challenge,0,2307291-0,de_dust2,1954603074,
 /matches/2307291/rush-vs-muffin-lightning-esea-season-23-global-challenge,1,2307291-1,,,round counting error
@@ -1828,7 +1815,6 @@
 /matches/2307346/quetzal-vs-tyloo-wesg-2016-world-finals,1,2307346-1,de_overpass,2285880676,
 /matches/2307347/k23-vs-vgcyberzen-wesg-2016-world-finals,0,2307347-0,de_dust2,1954603074,
 /matches/2307347/k23-vs-vgcyberzen-wesg-2016-world-finals,1,2307347-1,de_cache,1903442639,
-/matches/2307348/reak-vs-enzo-wesg-2016-world-finals,0,2307348-0,de_mirage,1953099299,
 /matches/2307348/reak-vs-enzo-wesg-2016-world-finals,1,2307348-1,de_train,487988445,
 /matches/2307349/igamecom-vs-colombia-wesg-2016-world-finals,0,2307349-0,de_cache,1903442639,
 /matches/2307349/igamecom-vs-colombia-wesg-2016-world-finals,1,2307349-1,de_dust2,1954603074,
@@ -1979,7 +1965,7 @@
 /matches/2310116/immortals-vs-gambit-dreamhack-open-austin-2017,0,2310116-0,de_train,2834104219,
 /matches/2310116/immortals-vs-gambit-dreamhack-open-austin-2017,1,2310116-1,de_inferno,1966908865,
 /matches/2310289/natus-vincere-vs-misfits-dreamhack-open-tours-2017,0,2310289-0,de_train,2834104219,
-/matches/2310293/natus-vincere-vs-mousesports-dreamhack-open-tours-2017,0,2310293-0,de_mirage,2683197182,team name match only 40
+/matches/2310293/natus-vincere-vs-mousesports-dreamhack-open-tours-2017,0,2310293-0,de_mirage,2683197182,team name match only 60
 /matches/2310294/tricked-vs-hellraisers-dreamhack-open-tours-2017,0,2310294-0,de_train,2834104219,
 /matches/2310295/misfits-vs-heroic-dreamhack-open-tours-2017,0,2310295-0,de_mirage,2683197182,
 /matches/2310295/misfits-vs-heroic-dreamhack-open-tours-2017,1,2310295-1,de_nuke,1429090831,
@@ -2269,7 +2255,7 @@
 /matches/2308164/natus-vincere-vs-heroic-iem-katowice-2017,0,2308164-0,de_overpass,1151705951,
 /matches/2308165/heroic-vs-virtuspro-iem-katowice-2017,0,2308165-0,de_nuke,679560331,
 /matches/2308166/north-vs-sk-iem-katowice-2017,0,2308166-0,de_cbble,988540422,
-/matches/2308167/cloud9-vs-natus-vincere-iem-katowice-2017,0,2308167-0,de_mirage,2683197182,team name match only 44
+/matches/2308167/cloud9-vs-natus-vincere-iem-katowice-2017,0,2308167-0,de_mirage,2683197182,team name match only 56
 /matches/2308168/immortals-vs-north-iem-katowice-2017,0,2308168-0,de_cache,1060854352,
 /matches/2308168/immortals-vs-north-iem-katowice-2017,1,2308168-1,,,missing round
 /matches/2308168/immortals-vs-north-iem-katowice-2017,2,2308168-2,de_cbble,988540422,
@@ -2408,7 +2394,7 @@
 /matches/2309428/north-vs-hellraisers-sl-i-league-starseries-season-3-finals,0,2309428-0,de_cbble,2718369684,
 /matches/2309428/north-vs-hellraisers-sl-i-league-starseries-season-3-finals,1,2309428-1,de_cache,1560576749,
 /matches/2309428/north-vs-hellraisers-sl-i-league-starseries-season-3-finals,2,2309428-2,de_overpass,1151705951,
-/matches/2309429/natus-vincere-vs-fnatic-sl-i-league-starseries-season-3-finals,0,2309429-0,de_overpass,1151705951,team name match only 50
+/matches/2309429/natus-vincere-vs-fnatic-sl-i-league-starseries-season-3-finals,0,2309429-0,de_overpass,1151705951,team name match only 56
 /matches/2309429/natus-vincere-vs-fnatic-sl-i-league-starseries-season-3-finals,1,2309429-1,de_inferno,1966908865,
 /matches/2309429/natus-vincere-vs-fnatic-sl-i-league-starseries-season-3-finals,2,2309429-2,de_mirage,2683197182,
 /matches/2309430/clg-vs-astralis-sl-i-league-starseries-season-3-finals,0,2309430-0,de_cache,1560576749,
@@ -2783,17 +2769,73 @@
 /matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,0,2311678-0,de_nuke,1429090831,
 /matches/2311678/natus-vincere-vs-flipsid3-adrenaline-cyber-league-2017,1,2311678-1,de_inferno,1730240413,
 /matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,0,2311680-0,,,failed json
-/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,1,2311680-1,,,'pistol'
-/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,2,2311680-2,,,'pistol'
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,1,2311680-1,,,weird gotv demo
+/matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,2,2311680-2,,,weird gotv demo
 /matches/2311680/natus-vincere-vs-virtuspro-adrenaline-cyber-league-2017,3,2311680-3,,,failed json
+/matches/2314491/faze-vs-renegades-eleague-csgo-premier-2017,0,2314491-0,,,failed json
+/matches/2314492/g2-vs-natus-vincere-eleague-csgo-premier-2017,0,2314492-0,,,failed json
+/matches/2314492/g2-vs-natus-vincere-eleague-csgo-premier-2017,1,2314492-1,,,failed json
+/matches/2314493/faze-vs-natus-vincere-eleague-csgo-premier-2017,0,2314493-0,,,failed json
+/matches/2314494/renegades-vs-g2-eleague-csgo-premier-2017,0,2314494-0,,,failed json
+/matches/2314494/renegades-vs-g2-eleague-csgo-premier-2017,1,2314494-1,,,failed json
+/matches/2314495/natus-vincere-vs-g2-eleague-csgo-premier-2017,0,2314495-0,,,failed json
+/matches/2314495/natus-vincere-vs-g2-eleague-csgo-premier-2017,1,2314495-1,,,failed json
+/matches/2314495/natus-vincere-vs-g2-eleague-csgo-premier-2017,2,2314495-2,,,failed json
+/matches/2314496/north-vs-fnatic-eleague-csgo-premier-2017,0,2314496-0,,,failed json
+/matches/2314497/mousesports-vs-immortals-eleague-csgo-premier-2017,0,2314497-0,,,failed json
+/matches/2314497/mousesports-vs-immortals-eleague-csgo-premier-2017,1,2314497-1,,,failed json
+/matches/2314498/immortals-vs-north-eleague-csgo-premier-2017,0,2314498-0,,,failed json
+/matches/2314498/immortals-vs-north-eleague-csgo-premier-2017,1,2314498-1,,,failed json
+/matches/2314498/immortals-vs-north-eleague-csgo-premier-2017,2,2314498-2,,,failed json
+/matches/2314498/immortals-vs-north-eleague-csgo-premier-2017,3,2314498-3,,,failed json
+/matches/2314498/immortals-vs-north-eleague-csgo-premier-2017,4,2314498-4,,,failed json
+/matches/2314498/immortals-vs-north-eleague-csgo-premier-2017,5,2314498-5,,,failed json
+/matches/2314499/mousesports-vs-fnatic-eleague-csgo-premier-2017,0,2314499-0,,,failed json
+/matches/2314499/mousesports-vs-fnatic-eleague-csgo-premier-2017,1,2314499-1,,,failed json
+/matches/2314499/mousesports-vs-fnatic-eleague-csgo-premier-2017,2,2314499-2,,,failed json
+/matches/2314500/immortals-vs-fnatic-eleague-csgo-premier-2017,0,2314500-0,,,failed json
+/matches/2314500/immortals-vs-fnatic-eleague-csgo-premier-2017,1,2314500-1,,,failed json
+/matches/2314501/virtuspro-vs-envyus-eleague-csgo-premier-2017,0,2314501-0,,,failed json
+/matches/2314502/cloud9-vs-nip-eleague-csgo-premier-2017,0,2314502-0,,,failed json
+/matches/2314503/envyus-vs-cloud9-eleague-csgo-premier-2017,0,2314503-0,,,failed json
+/matches/2314504/virtuspro-vs-nip-eleague-csgo-premier-2017,0,2314504-0,,,failed json
+/matches/2314504/virtuspro-vs-nip-eleague-csgo-premier-2017,1,2314504-1,,,failed json
+/matches/2314505/envyus-vs-nip-eleague-csgo-premier-2017,0,2314505-0,,,failed json
+/matches/2314505/envyus-vs-nip-eleague-csgo-premier-2017,1,2314505-1,,,failed json
+/matches/2314505/envyus-vs-nip-eleague-csgo-premier-2017,2,2314505-2,,,failed json
+/matches/2314506/astralis-vs-liquid-eleague-csgo-premier-2017,0,2314506-0,,,failed json
+/matches/2314507/sk-vs-heroic-eleague-csgo-premier-2017,0,2314507-0,,,failed json
+/matches/2314508/astralis-vs-heroic-eleague-csgo-premier-2017,0,2314508-0,,,failed json
+/matches/2314509/liquid-vs-sk-eleague-csgo-premier-2017,0,2314509-0,,,failed json
+/matches/2314509/liquid-vs-sk-eleague-csgo-premier-2017,1,2314509-1,,,failed json
+/matches/2314509/liquid-vs-sk-eleague-csgo-premier-2017,2,2314509-2,,,failed json
+/matches/2314510/heroic-vs-sk-eleague-csgo-premier-2017,0,2314510-0,,,failed json
+/matches/2314510/heroic-vs-sk-eleague-csgo-premier-2017,1,2314510-1,,,failed json
+/matches/2314510/heroic-vs-sk-eleague-csgo-premier-2017,2,2314510-2,,,failed json
+/matches/2315519/g2-vs-cloud9-eleague-csgo-premier-2017,0,2315519-0,,,failed json
+/matches/2315519/g2-vs-cloud9-eleague-csgo-premier-2017,1,2315519-1,,,failed json
+/matches/2315520/astralis-vs-fnatic-eleague-csgo-premier-2017,0,2315520-0,,,failed json
+/matches/2315520/astralis-vs-fnatic-eleague-csgo-premier-2017,1,2315520-1,,,failed json
+/matches/2315520/astralis-vs-fnatic-eleague-csgo-premier-2017,2,2315520-2,,,failed json
+/matches/2315521/faze-vs-envyus-eleague-csgo-premier-2017,0,2315521-0,,,failed json
+/matches/2315521/faze-vs-envyus-eleague-csgo-premier-2017,1,2315521-1,,,failed json
+/matches/2315522/heroic-vs-north-eleague-csgo-premier-2017,0,2315522-0,,,failed json
+/matches/2315522/heroic-vs-north-eleague-csgo-premier-2017,1,2315522-1,,,failed json
+/matches/2315689/cloud9-vs-astralis-eleague-csgo-premier-2017,0,2315689-0,,,failed json
+/matches/2315689/cloud9-vs-astralis-eleague-csgo-premier-2017,1,2315689-1,,,failed json
+/matches/2315689/cloud9-vs-astralis-eleague-csgo-premier-2017,2,2315689-2,,,failed json
+/matches/2315690/faze-vs-north-eleague-csgo-premier-2017,0,2315690-0,,,failed json
+/matches/2315690/faze-vs-north-eleague-csgo-premier-2017,1,2315690-1,,,failed json
+/matches/2315739/astralis-vs-faze-eleague-csgo-premier-2017,0,2315739-0,,,failed json
+/matches/2315739/astralis-vs-faze-eleague-csgo-premier-2017,1,2315739-1,,,failed json
 /matches/2315028/space-soldiers-vs-grayhound-esea-season-25-mdl-global-challenge,0,2315028-0,,,no team names
 /matches/2315029/kinguin-vs-french-canadians-esea-season-25-mdl-global-challenge,0,2315029-0,,,no team names
 /matches/2315030/flipsid3-vs-mythic-esea-season-25-mdl-global-challenge,0,2315030-0,de_mirage,2683197182,team name match only 40
 /matches/2315031/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,0,2315031-0,,,round counting error
 /matches/2315032/space-soldiers-vs-kinguin-esea-season-25-mdl-global-challenge,0,2315032-0,de_overpass,1611470151,team name match only 17
-/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,0,2315033-0,de_nuke,1429090831,team name match only 50
+/matches/2315033/flipsid3-vs-rise-nation-esea-season-25-mdl-global-challenge,0,2315033-0,,,too many teams in demo
 /matches/2315034/grayhound-vs-french-canadians-esea-season-25-mdl-global-challenge,0,2315034-0,de_cache,745019601,team name match only 33
-/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,0,2315035-0,de_mirage,2683197182,team name match only 55
+/matches/2315035/mythic-vs-teamone-esea-season-25-mdl-global-challenge,0,2315035-0,,,too many teams in demo
 /matches/2315036/kinguin-vs-grayhound-esea-season-25-mdl-global-challenge,0,2315036-0,,,"missing round, team name match only 36"
 /matches/2315037/rise-nation-vs-teamone-esea-season-25-mdl-global-challenge,0,2315037-0,de_mirage,2683197182,team name match only 33
 /matches/2315038/space-soldiers-vs-rise-nation-esea-season-25-mdl-global-challenge,0,2315038-0,,,round counting error
@@ -2829,3 +2871,46 @@
 /matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,2,2314539-2,de_train,2834104219,
 /matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,3,2314539-3,de_mirage,2683197182,
 /matches/2314539/mousesports-vs-liquid-esg-tour-mykonos-2017,4,2314539-4,de_nuke,1429090831,
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,0,2315884-0,,,failed json
+/matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,1,2315884-1,,,failed json
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,0,2315885-0,,,failed json
+/matches/2315885/mousesports-vs-alternate-attax-rog-masters-2017-emea-finals,1,2315885-1,,,failed json
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,0,2315886-0,,,failed json
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,1,2315886-1,,,failed json
+/matches/2315886/tricked-vs-seed-rog-masters-2017-emea-finals,2,2315886-2,,,failed json
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,0,2315887-0,,,failed json
+/matches/2315887/gambit-vs-singularity-rog-masters-2017-emea-finals,1,2315887-1,,,failed json
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,0,2315888-0,,,failed json
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,1,2315888-1,,,failed json
+/matches/2315888/vega-squadron-vs-mousesports-rog-masters-2017-emea-finals,2,2315888-2,,,failed json
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,0,2315889-0,,,failed json
+/matches/2315889/seed-vs-gambit-rog-masters-2017-emea-finals,1,2315889-1,,,failed json
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,0,2315890-0,,,failed json
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,1,2315890-1,,,failed json
+/matches/2315890/mousesports-vs-gambit-rog-masters-2017-emea-finals,2,2315890-2,,,failed json
+/matches/2315380/goldenmix-vs-vici-china-top-2017,0,2315380-0,de_inferno,3345967379,
+/matches/2315380/goldenmix-vs-vici-china-top-2017,1,2315380-1,,,missing round
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017,0,2315381-0,de_mirage,2683197182,
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017,1,2315381-1,de_train,2834104219,
+/matches/2315409/boot-ds-vs-goldenmix-china-top-2017,0,2315409-0,,,no team names
+/matches/2315409/boot-ds-vs-goldenmix-china-top-2017,1,2315409-1,de_inferno,3345967379,
+/matches/2315410/vega-squadron-vs-vici-china-top-2017,0,2315410-0,de_inferno,3345967379,
+/matches/2315410/vega-squadron-vs-vici-china-top-2017,1,2315410-1,,,number of team names
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017,0,2315430-0,de_inferno,3345967379,
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017,1,2315430-1,de_mirage,2683197182,
+/matches/2315431/vici-vs-vega-squadron-china-top-2017,0,2315431-0,de_overpass,1611470151,
+/matches/2315431/vici-vs-vega-squadron-china-top-2017,1,2315431-1,de_train,2834104219,
+/matches/2300316/natus-vincere-vs-sl-i-league-starseries-xiv-finals,0,2300316-0,de_dust2,3406488821,
+/matches/2300316/natus-vincere-vs-sl-i-league-starseries-xiv-finals,1,2300316-1,de_overpass,3965900419,round with no econ value
+/matches/2300316/natus-vincere-vs-sl-i-league-starseries-xiv-finals,2,2300316-2,de_mirage,1450024005,
+/matches/2302060/g2-vs-clg-dreamhack-masters-malm-2016,0,2302060-0,de_dust2,3406488821,round with no econ value
+/matches/2302607/astralis-vs-optic-esl-pro-league-season-3-finals,0,2302607-0,de_inferno,3454318515,round with no econ value
+/matches/2302683/sk-vs-worst-players-sl-i-league-invitational-1,0,2302683-0,de_mirage,2494823213,
+/matches/2306206/luminosity-vs-millenium-eswc-2016,0,2306206-0,de_overpass,2285880676,round with no econ value
+/matches/2306209/kinguin-vs-preparation-eswc-2016,0,2306209-0,de_dust2,3406488821,round with no econ value
+/matches/2304288/ence-vs-chiefs-esea-season-22-global-challenge,0,2304288-0,de_cache,4167847735,round with no econ value
+/matches/2305974/fnatic-vs-dignitas-epicenter-moscow,0,2305974-0,de_train,4074319541,round with no econ value
+/matches/2306436/gambit-vs-kinguin-predator-masters-3,1,2306436-1,de_train,4074319541,round with no econ value
+/matches/2307530/sk-vs-natus-vincere-eleague-major-2017,0,2307530-0,de_dust2,1954603074,round with no econ value
+/matches/2307290/tsm-vs-rogue-esea-season-23-global-challenge,0,2307290-0,de_train,487988445,round with no econ value
+/matches/2307348/reak-vs-enzo-wesg-2016-world-finals,0,2307348-0,de_mirage,1953099299,round with no econ value
