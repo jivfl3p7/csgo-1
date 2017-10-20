@@ -2,6 +2,7 @@ library(RPostgreSQL)
 library(lme4)
 library(plyr)
 library(dplyr)
+library(sm)
 
 drv <- dbDriver('PostgreSQL')
 
@@ -23,6 +24,7 @@ select distinct
   ,ctl2.team_name||'_'||(ctl2.rk)::text as ct_team
   ,ctl.lineup_id as ct_lineup
   ,dr.ct_econ_adv as ct_econ_adv
+  ,dr.ct_reward_diff
   ,dr.winner as winner
 from csgo.demo_rounds as dr
   left join csgo.demo_info as di
@@ -62,11 +64,31 @@ order by
 
 round_data = fetch(round_query,n=-1)
 
-hist(sample(round_data[(round_data$round %in% c(2,15)),'ct_econ_adv'],2500))
-max(round_data[(round_data$round %in% c(2,15)),'ct_econ_adv'])
+ignore_rds = c(1,2,3,4,14,15)
+ignore_list = c(-1, ignore_rds, ignore_rds + 15)
+econ_by_rd = round_data[!(round_data$round %in% ignore_list),c('round','ct_econ_adv')]
 
-unique(round_data[is.na(round_data$ct_econ_adv) & (round_data$round != -1),'match_href'])
+phase_round = factor(ifelse(econ_by_rd$round > 15, econ_by_rd$round - 15, econ_by_rd$round))
 
-hist(sample(round_data[!(round_data$round %in% c(-1,1,2,15,16)),'ct_econ_adv'],10000))
-hist(sample(round_data[!(round_data$round %in% c(-1,1,2,3,15,16,17)),'ct_econ_adv'],10000))
-hist(sample(round_data[!(round_data$round %in% c(-1,1,2,3,4,15,16,17,18)),'ct_econ_adv'],10000))
+sm.density.compare(econ_by_rd$ct_econ_adv,phase_round, xlab="ct econ adv")
+
+colfill<-c(2:(2+length(levels(phase_round)))) 
+legend(0.75*par('usr')[2],0.95*par('usr')[4], levels(phase_round), fill=colfill)
+
+
+
+plot(density(round_data[!is.na(round_data$ct_reward_diff),'ct_reward_diff']))
+
+unique(round_data$ct_reward_diff)
+
+nrow()
+
+nrow(round_data[which((round_data$ct_econ_adv > 29000) | (round_data$ct_econ_adv < -29000)),])
+nrow(round_data[round_data$round != -1,])
+
+unique(round_data[(round_data$ct_econ_adv > 29000) | (round_data$ct_econ_adv < -29000),'match_href'])
+
+round_data[is.na(round_data$match_href),]
+
+hist(sample(round_data[(round_data$round %in% c(2,17)),'ct_econ_adv'],4000))
+
