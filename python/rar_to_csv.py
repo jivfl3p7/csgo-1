@@ -183,8 +183,8 @@ def json_to_csv():
                             
                         clannames = data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False)
                             & (data['clanname'] != '1'),['clanname']].drop_duplicates()
-                        clannames['clanname'] = np.where(re.compile('na.?vi.*', re.I).search(clannames['clanname']),'Natus Vincere',
-                            clannames['clanname'])
+                        clannames['clanname'] = clannames['clanname'].apply(lambda x: 'Natus Vincere' if re.compile('na.?vi.*', re.I)
+                            .search(x) else x)
                         clannames = clannames.drop_duplicates()
                         clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['clanname']]
                         
