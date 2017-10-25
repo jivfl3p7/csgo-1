@@ -519,7 +519,6 @@ def json_to_csv():
                                         if d != 1:
                                             d = 1
                                             item_change.set_value(index, 'defuse', 1)
-                                        break
                                     elif row['event'] == 'armor_purchase':
                                         if a != 1:
                                             if row['boughtHelmet'] == 0:
