@@ -11,6 +11,7 @@ create table csgo.demo_rounds (
 	ct_href			text,
 	ct_econ_adv		float,
 	ct_reward_diff		float,
+	defuse			float,
 	winner			float
 );
 
