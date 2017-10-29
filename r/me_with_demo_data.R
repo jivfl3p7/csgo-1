@@ -64,7 +64,12 @@ order by
 
 round_data = fetch(round_query,n=-1)
 
-ignore_rds = c(1,2,3,4,14,15)
+# check for econ numbers outside theoretical limit
+nrow(round_data[which((round_data$ct_econ_adv > 29000) | (round_data$ct_econ_adv < -29000)),])
+
+
+# separate rounds by econ adv distributions
+ignore_rds = c(1:4,14:15)
 ignore_list = c(-1, ignore_rds, ignore_rds + 15)
 econ_by_rd = round_data[!(round_data$round %in% ignore_list),c('round','ct_econ_adv')]
 
@@ -74,21 +79,19 @@ sm.density.compare(econ_by_rd$ct_econ_adv,phase_round, xlab="ct econ adv")
 
 colfill<-c(2:(2+length(levels(phase_round)))) 
 legend(0.75*par('usr')[2],0.95*par('usr')[4], levels(phase_round), fill=colfill)
+# separate models for rounds 1,2,3,4,5-13,14,15
 
 
 
-plot(density(round_data[!is.na(round_data$ct_reward_diff),'ct_reward_diff']))
+side = 3
+ignore_rds = c(1,2,3,4,14,15)
+ignore_list = c(-1, ignore_rds, ignore_rds + 15)
+reward_by_rd = round_data[!(round_data$round %in% ignore_list) & (round_data$winner == side),c('round','ct_reward_diff')]
 
-unique(round_data$ct_reward_diff)
+phase_round = factor(ifelse(reward_by_rd$round > 15, reward_by_rd$round - 15, reward_by_rd$round))
 
-nrow()
+sm.density.compare(reward_by_rd$ct_reward_diff,phase_round, xlab='ct_reward_diff')
 
-nrow(round_data[which((round_data$ct_econ_adv > 29000) | (round_data$ct_econ_adv < -29000)),])
-nrow(round_data[round_data$round != -1,])
-
-unique(round_data[(round_data$ct_econ_adv > 29000) | (round_data$ct_econ_adv < -29000),'match_href'])
-
-round_data[is.na(round_data$match_href),]
-
-hist(sample(round_data[(round_data$round %in% c(2,17)),'ct_econ_adv'],4000))
-
+colfill<-c(2:(2+length(levels(phase_round)))) 
+legend(0.75*par('usr')[2],0.95*par('usr')[4], levels(phase_round), fill=colfill)
+# legend(0.25*par('usr')[1],0.95*par('usr')[4], levels(phase_round), fill=colfill)
