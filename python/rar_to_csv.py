@@ -295,13 +295,21 @@ def json_to_csv():
                         round_type.columns = round_type.columns.droplevel(0)
                         round_type['sum'] = round_type.loc[:,round_type.columns != ''].sum(axis = 1)
                         
+                        rounds['plant'] = 0
                         if len(data.loc[(data['event'] == 'bomb_exploded'),['tick']]) > 0:
-                            bomb_rounds = data.loc[(data['event'] == 'bomb_exploded'),['tick']]
+                            bomb_rnds = data.loc[(data['event'] == 'bomb_exploded'),['tick']]
                             for index, row in rounds.iterrows():
-                                bomb_rounds.loc[(bomb_rounds['tick'] >= row['start']) & (bomb_rounds['tick'] != 0)
-                                    & (bomb_rounds['tick'] <= row['round_decision']),'round_raw'] = row['round_raw']
+#                                if row['round_raw'] == 4:
+#                                    break
+                                bomb_rnds.loc[(bomb_rnds['tick'] >= row['start']) & (bomb_rnds['tick'] != 0)
+                                    & (bomb_rnds['tick'] <= row['end']),'round_raw'] = row['round_raw']
+                                try:
+                                    if bomb_rnds.loc[bomb_rnds['round_raw'] == row['round_raw'],'tick'].iloc[0] < row['round_decision']:
+                                        rounds.set_value(index,'plant',1)
+                                except:
+                                    pass
                         else:
-                            bomb_rounds = pd.DataFrame({'round_raw':[]})
+                            bomb_rnds = pd.DataFrame({'round_raw':[]})
                         
                         try:
                             if rounds['round_score'].iloc[0] < 5:
@@ -322,11 +330,11 @@ def json_to_csv():
                         else:
                             prev_rnd = 999
                             for rnd in list(round_type.loc[(round_type['primary'] == 0) & (round_type['pistol'] > 0),'',].iloc[::-1]):
-                                if (int(rnd) >= prev_rnd - 2) & (prev_rnd not in list(bomb_rounds['round_raw'])):
+                                if (int(rnd) >= prev_rnd - 2) & (prev_rnd not in list(bomb_rnds['round_raw'])):
                                     rounds = rounds.loc[~rounds['round_raw'].isin(range(int(rnd),prev_rnd)),].reset_index(drop = True)
                                 prev_rnd = int(rnd)
                             
-                        rounds = rounds.loc[rounds['round_raw'].isin(round_type['']) | rounds['round_raw'].isin(bomb_rounds['round_raw'])
+                        rounds = rounds.loc[rounds['round_raw'].isin(round_type['']) | rounds['round_raw'].isin(bomb_rnds['round_raw'])
                             ,].reset_index(drop = True)
                                         
                         if file_[:-5] in ['2312366-1','2312069-3']:
@@ -688,7 +696,7 @@ def json_to_csv():
                             
                         with open('csv\\demo_rounds.csv', 'ab') as democsv:
                             rounds[['match_href','map_num','phase','round','t_href','ct_href','ct_econ_adv','ct_reward_diff','defuse',
-                                    'winner']].to_csv(democsv, header = False, index = False)
+                                    'plant','winner']].to_csv(democsv, header = False, index = False)
                            
                         mapname = data.loc[data['event']=='info','mapName'].iloc[0]
                         maphash = str(int(data.loc[data['event']=='info','mapHash'].iloc[0]))
