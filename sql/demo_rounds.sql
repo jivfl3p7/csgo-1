@@ -12,6 +12,7 @@ create table csgo.demo_rounds (
 	ct_econ_adv		float,
 	ct_reward_diff		float,
 	defuse			float,
+	plant			float,
 	winner			float
 );
 
