@@ -299,15 +299,8 @@ def json_to_csv():
                         if len(data.loc[(data['event'] == 'bomb_exploded'),['tick']]) > 0:
                             bomb_rnds = data.loc[(data['event'] == 'bomb_exploded'),['tick']]
                             for index, row in rounds.iterrows():
-#                                if row['round_raw'] == 4:
-#                                    break
                                 bomb_rnds.loc[(bomb_rnds['tick'] >= row['start']) & (bomb_rnds['tick'] != 0)
                                     & (bomb_rnds['tick'] <= row['end']),'round_raw'] = row['round_raw']
-                                try:
-                                    if bomb_rnds.loc[bomb_rnds['round_raw'] == row['round_raw'],'tick'].iloc[0] < row['round_decision']:
-                                        rounds.set_value(index,'plant',1)
-                                except:
-                                    pass
                         else:
                             bomb_rnds = pd.DataFrame({'round_raw':[]})
                         
@@ -668,18 +661,23 @@ def json_to_csv():
                                     & (temp_df['tick'] > row['round_decision'])]
                                 ct_value += 5*3250
                                 t_value += (5 - len(time_deaths))*1400
+                                rounds.set_value(index,'plant',0)
                             elif row['reason'] == 9:
                                 t_value += 5*3250
                                 ct_value += 5*1400
+                                rounds.set_value(index,'plant',0)
                             elif row['reason'] <= 2:
                                 t_value += 5*3500
                                 ct_value += 5*1400
+                                rounds.set_value(index,'plant',1)
                             elif row['reason'] == 8:
                                 ct_value += 5*3250
                                 t_value += 5*1400
+                                rounds.set_value(index,'plant',0)
                             elif row['reason'] == 7:
                                 ct_value += 5*3500
                                 t_value += 5*(1400+800)
+                                rounds.set_value(index,'plant',1)
                             else:
                                 raise ValueError('round reward error')
                             rounds.set_value(index,'ct_reward_diff',ct_value - t_value)                            
