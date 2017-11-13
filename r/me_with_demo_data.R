@@ -25,6 +25,8 @@ select distinct
   ,ctl.lineup_id as ct_lineup
   ,dr.ct_econ_adv as ct_econ_adv
   ,dr.ct_reward_diff
+  --,dr.defuse as defuse_kits
+  --,dr.plant
   ,dr.winner as winner
 from csgo.demo_rounds as dr
   left join csgo.demo_info as di
@@ -66,6 +68,8 @@ round_data = fetch(round_query,n=-1)
 
 # check for econ numbers outside theoretical limit
 nrow(round_data[which((round_data$ct_econ_adv > 29000) | (round_data$ct_econ_adv < -29000)),])
+# match_hrefs of rounds outside theoretical limit
+unique(round_data[which((round_data$ct_econ_adv > 29000) | (round_data$ct_econ_adv < -29000)),'match_href'])
 
 
 # separate rounds by econ adv distributions
