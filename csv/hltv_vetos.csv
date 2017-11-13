@@ -11279,3 +11279,669 @@
 /matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,5,Vega Squadron,pick,Inferno
 /matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,6,PANTHERS,pick,Train
 /matches/2315884/vega-squadron-vs-panthers-rog-masters-2017-emea-finals,7,Cache was,left,Cache
+/matches/2315431/vici-vs-vega-squadron-china-top-2017-kunshan,1,ViCi,remove,Cache
+/matches/2315431/vici-vs-vega-squadron-china-top-2017-kunshan,2,Vega Squadron,remove,Cobble
+/matches/2315431/vici-vs-vega-squadron-china-top-2017-kunshan,3,ViCi,pick,Overpass
+/matches/2315431/vici-vs-vega-squadron-china-top-2017-kunshan,4,Vega Squadron,pick,Train
+/matches/2315431/vici-vs-vega-squadron-china-top-2017-kunshan,5,Vega Squadron,remove,Nuke
+/matches/2315431/vici-vs-vega-squadron-china-top-2017-kunshan,6,ViCi,remove,Mirage
+/matches/2315431/vici-vs-vega-squadron-china-top-2017-kunshan,7,Inferno was,left,Inferno
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017-kunshan,1,Vega Squadron,remove,Cobble
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017-kunshan,2,B.O.O.T-d[S],remove,Nuke
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017-kunshan,3,Vega Squadron,pick,Inferno
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017-kunshan,4,B.O.O.T-d[S],pick,Mirage
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017-kunshan,5,B.O.O.T-d[S],remove,Train
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017-kunshan,6,Vega Squadron,remove,Overpass
+/matches/2315430/boot-ds-vs-vega-squadron-china-top-2017-kunshan,7,Cache was,left,Cache
+/matches/2315410/vega-squadron-vs-vici-china-top-2017-kunshan,1,ViCi,remove,Cache
+/matches/2315410/vega-squadron-vs-vici-china-top-2017-kunshan,2,Vega Squadron,remove,Cobble
+/matches/2315410/vega-squadron-vs-vici-china-top-2017-kunshan,3,ViCi,pick,Inferno
+/matches/2315410/vega-squadron-vs-vici-china-top-2017-kunshan,4,Vega Squadron,pick,Nuke
+/matches/2315410/vega-squadron-vs-vici-china-top-2017-kunshan,5,Vega Squadron,remove,Overpass
+/matches/2315410/vega-squadron-vs-vici-china-top-2017-kunshan,6,ViCi,remove,Train
+/matches/2315410/vega-squadron-vs-vici-china-top-2017-kunshan,7,Mirage was,left,Mirage
+/matches/2315409/boot-ds-vs-goldenmix-china-top-2017-kunshan,,,,
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017-kunshan,1,B.O.O.T-d[S],remove,Nuke
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017-kunshan,2,Vega Squadron,remove,Cobble
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017-kunshan,3,B.O.O.T-d[S],pick,Mirage
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017-kunshan,4,Vega Squadron,pick,Train
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017-kunshan,5,Vega Squadron,remove,Overpass
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017-kunshan,6,B.O.O.T-d[S],remove,Inferno
+/matches/2315381/vega-squadron-vs-boot-ds-china-top-2017-kunshan,7,Cache was,left,Cache
+/matches/2315380/goldenmix-vs-vici-china-top-2017-kunshan,1,GoldenMix,remove,Train
+/matches/2315380/goldenmix-vs-vici-china-top-2017-kunshan,2,ViCi,remove,Mirage
+/matches/2315380/goldenmix-vs-vici-china-top-2017-kunshan,3,GoldenMix,pick,Inferno
+/matches/2315380/goldenmix-vs-vici-china-top-2017-kunshan,4,ViCi,pick,Cobble
+/matches/2315380/goldenmix-vs-vici-china-top-2017-kunshan,5,ViCi,remove,Cache
+/matches/2315380/goldenmix-vs-vici-china-top-2017-kunshan,6,GoldenMix,remove,Nuke
+/matches/2315380/goldenmix-vs-vici-china-top-2017-kunshan,7,Overpass was,left,Overpass
+/matches/2316156/big-vs-cloud9-dreamhack-open-denver-2017,1,BIG,remove,Mirage
+/matches/2316156/big-vs-cloud9-dreamhack-open-denver-2017,2,Cloud9,remove,Nuke
+/matches/2316156/big-vs-cloud9-dreamhack-open-denver-2017,3,BIG,pick,Cache
+/matches/2316156/big-vs-cloud9-dreamhack-open-denver-2017,4,Cloud9,pick,Train
+/matches/2316156/big-vs-cloud9-dreamhack-open-denver-2017,5,BIG,remove,Inferno
+/matches/2316156/big-vs-cloud9-dreamhack-open-denver-2017,6,Cloud9,remove,Overpass
+/matches/2316156/big-vs-cloud9-dreamhack-open-denver-2017,7,Cobblestone was,left,Cobble
+/matches/2316155/cloud9-vs-mousesports-dreamhack-open-denver-2017,1,mousesports,remove,Train
+/matches/2316155/cloud9-vs-mousesports-dreamhack-open-denver-2017,2,Cloud9,remove,Nuke
+/matches/2316155/cloud9-vs-mousesports-dreamhack-open-denver-2017,3,mousesports,pick,Cobble
+/matches/2316155/cloud9-vs-mousesports-dreamhack-open-denver-2017,4,Cloud9,pick,Mirage
+/matches/2316155/cloud9-vs-mousesports-dreamhack-open-denver-2017,5,mousesports,remove,Cache
+/matches/2316155/cloud9-vs-mousesports-dreamhack-open-denver-2017,6,Cloud9,remove,Inferno
+/matches/2316155/cloud9-vs-mousesports-dreamhack-open-denver-2017,7,Overpass was,left,Overpass
+/matches/2316154/big-vs-renegades-dreamhack-open-denver-2017,1,Renegades,remove,Overpass
+/matches/2316154/big-vs-renegades-dreamhack-open-denver-2017,2,BIG,remove,Mirage
+/matches/2316154/big-vs-renegades-dreamhack-open-denver-2017,3,Renegades,pick,Cobble
+/matches/2316154/big-vs-renegades-dreamhack-open-denver-2017,4,BIG,pick,Cache
+/matches/2316154/big-vs-renegades-dreamhack-open-denver-2017,5,Renegades,remove,Nuke
+/matches/2316154/big-vs-renegades-dreamhack-open-denver-2017,6,BIG,remove,Inferno
+/matches/2316154/big-vs-renegades-dreamhack-open-denver-2017,7,Train was,left,Train
+/matches/2316152/mousesports-vs-ldlc-dreamhack-open-denver-2017,1,LDLC,remove,Train
+/matches/2316152/mousesports-vs-ldlc-dreamhack-open-denver-2017,2,mousesports,remove,Overpass
+/matches/2316152/mousesports-vs-ldlc-dreamhack-open-denver-2017,3,LDLC,pick,Nuke
+/matches/2316152/mousesports-vs-ldlc-dreamhack-open-denver-2017,4,mousesports,pick,Cobble
+/matches/2316152/mousesports-vs-ldlc-dreamhack-open-denver-2017,5,LDLC,remove,Mirage
+/matches/2316152/mousesports-vs-ldlc-dreamhack-open-denver-2017,6,mousesports,remove,Cache
+/matches/2316152/mousesports-vs-ldlc-dreamhack-open-denver-2017,7,Inferno was,left,Inferno
+/matches/2316151/renegades-vs-clg-dreamhack-open-denver-2017,1,CLG,remove,Cache
+/matches/2316151/renegades-vs-clg-dreamhack-open-denver-2017,2,Renegades,remove,Nuke
+/matches/2316151/renegades-vs-clg-dreamhack-open-denver-2017,3,CLG,pick,Mirage
+/matches/2316151/renegades-vs-clg-dreamhack-open-denver-2017,4,Renegades,pick,Cobble
+/matches/2316151/renegades-vs-clg-dreamhack-open-denver-2017,5,CLG,remove,Train
+/matches/2316151/renegades-vs-clg-dreamhack-open-denver-2017,6,Renegades,remove,Overpass
+/matches/2316151/renegades-vs-clg-dreamhack-open-denver-2017,7,Inferno was,left,Inferno
+/matches/2316150/ldlc-vs-nrg-dreamhack-open-denver-2017,1,LDLC,remove,Mirage
+/matches/2316150/ldlc-vs-nrg-dreamhack-open-denver-2017,2,NRG,remove,Cache
+/matches/2316150/ldlc-vs-nrg-dreamhack-open-denver-2017,3,LDLC,pick,Overpass
+/matches/2316150/ldlc-vs-nrg-dreamhack-open-denver-2017,4,NRG,pick,Train
+/matches/2316150/ldlc-vs-nrg-dreamhack-open-denver-2017,5,LDLC,remove,Cobble
+/matches/2316150/ldlc-vs-nrg-dreamhack-open-denver-2017,6,NRG,remove,Nuke
+/matches/2316150/ldlc-vs-nrg-dreamhack-open-denver-2017,7,Inferno was,left,Inferno
+/matches/2316149/tempo-storm-vs-clg-dreamhack-open-denver-2017,1,CLG,remove,Nuke
+/matches/2316149/tempo-storm-vs-clg-dreamhack-open-denver-2017,2,Tempo Storm,remove,Mirage
+/matches/2316149/tempo-storm-vs-clg-dreamhack-open-denver-2017,3,CLG,pick,Inferno
+/matches/2316149/tempo-storm-vs-clg-dreamhack-open-denver-2017,4,Tempo Storm,pick,Cobble
+/matches/2316149/tempo-storm-vs-clg-dreamhack-open-denver-2017,5,CLG,remove,Overpass
+/matches/2316149/tempo-storm-vs-clg-dreamhack-open-denver-2017,6,Tempo Storm,remove,Cache
+/matches/2316149/tempo-storm-vs-clg-dreamhack-open-denver-2017,7,Train was,left,Train
+/matches/2316148/mousesports-vs-big-dreamhack-open-denver-2017,1,BIG,remove,Nuke
+/matches/2316148/mousesports-vs-big-dreamhack-open-denver-2017,2,mousesports,remove,Overpass
+/matches/2316148/mousesports-vs-big-dreamhack-open-denver-2017,3,BIG,remove,Inferno
+/matches/2316148/mousesports-vs-big-dreamhack-open-denver-2017,4,mousesports,remove,Cache
+/matches/2316148/mousesports-vs-big-dreamhack-open-denver-2017,5,BIG,remove,Mirage
+/matches/2316148/mousesports-vs-big-dreamhack-open-denver-2017,6,mousesports,remove,Cobble
+/matches/2316148/mousesports-vs-big-dreamhack-open-denver-2017,7,Train was,left,Train
+/matches/2316147/cloud9-vs-renegades-dreamhack-open-denver-2017,1,Renegades,remove,Inferno
+/matches/2316147/cloud9-vs-renegades-dreamhack-open-denver-2017,2,Cloud9,remove,Cobble
+/matches/2316147/cloud9-vs-renegades-dreamhack-open-denver-2017,3,Renegades,remove,Mirage
+/matches/2316147/cloud9-vs-renegades-dreamhack-open-denver-2017,4,Cloud9,remove,Cache
+/matches/2316147/cloud9-vs-renegades-dreamhack-open-denver-2017,5,Renegades,remove,Nuke
+/matches/2316147/cloud9-vs-renegades-dreamhack-open-denver-2017,6,Cloud9,remove,Overpass
+/matches/2316147/cloud9-vs-renegades-dreamhack-open-denver-2017,7,Train was,left,Train
+/matches/2316146/big-vs-nrg-dreamhack-open-denver-2017,1,BIG,remove,Mirage
+/matches/2316146/big-vs-nrg-dreamhack-open-denver-2017,2,NRG,remove,Cache
+/matches/2316146/big-vs-nrg-dreamhack-open-denver-2017,3,BIG,remove,Nuke
+/matches/2316146/big-vs-nrg-dreamhack-open-denver-2017,4,NRG,remove,Overpass
+/matches/2316146/big-vs-nrg-dreamhack-open-denver-2017,5,BIG,remove,Inferno
+/matches/2316146/big-vs-nrg-dreamhack-open-denver-2017,6,NRG,remove,Train
+/matches/2316146/big-vs-nrg-dreamhack-open-denver-2017,7,Cobblestone was,left,Cobble
+/matches/2316145/clg-vs-renegades-dreamhack-open-denver-2017,1,CLG,remove,Cache
+/matches/2316145/clg-vs-renegades-dreamhack-open-denver-2017,2,Renegades,remove,Mirage
+/matches/2316145/clg-vs-renegades-dreamhack-open-denver-2017,3,CLG,remove,Train
+/matches/2316145/clg-vs-renegades-dreamhack-open-denver-2017,4,Renegades,remove,Overpass
+/matches/2316145/clg-vs-renegades-dreamhack-open-denver-2017,5,CLG,remove,Nuke
+/matches/2316145/clg-vs-renegades-dreamhack-open-denver-2017,6,Renegades,remove,Inferno
+/matches/2316145/clg-vs-renegades-dreamhack-open-denver-2017,7,Cobblestone was,left,Cobble
+/matches/2316144/mousesports-vs-ldlc-dreamhack-open-denver-2017,1,LDLC,remove,Mirage
+/matches/2316144/mousesports-vs-ldlc-dreamhack-open-denver-2017,2,mousesports,remove,Overpass
+/matches/2316144/mousesports-vs-ldlc-dreamhack-open-denver-2017,3,LDLC,remove,Train
+/matches/2316144/mousesports-vs-ldlc-dreamhack-open-denver-2017,4,mousesports,remove,Inferno
+/matches/2316144/mousesports-vs-ldlc-dreamhack-open-denver-2017,5,LDLC,remove,Cobble
+/matches/2316144/mousesports-vs-ldlc-dreamhack-open-denver-2017,6,mousesports,remove,Cache
+/matches/2316144/mousesports-vs-ldlc-dreamhack-open-denver-2017,7,Nuke was,left,Nuke
+/matches/2316143/cloud9-vs-tempo-storm-dreamhack-open-denver-2017,1,Tempo Storm,remove,Mirage
+/matches/2316143/cloud9-vs-tempo-storm-dreamhack-open-denver-2017,2,Cloud9,remove,Nuke
+/matches/2316143/cloud9-vs-tempo-storm-dreamhack-open-denver-2017,3,Tempo Storm,remove,Train
+/matches/2316143/cloud9-vs-tempo-storm-dreamhack-open-denver-2017,4,Cloud9,remove,Overpass
+/matches/2316143/cloud9-vs-tempo-storm-dreamhack-open-denver-2017,5,Tempo Storm,remove,Cache
+/matches/2316143/cloud9-vs-tempo-storm-dreamhack-open-denver-2017,6,Cloud9,remove,Cobble
+/matches/2316143/cloud9-vs-tempo-storm-dreamhack-open-denver-2017,7,Inferno was,left,Inferno
+/matches/2316199/liquid-vs-vega-squadron-epicenter-2017-wild-card-qualifier,1,Liquid,remove,Nuke
+/matches/2316199/liquid-vs-vega-squadron-epicenter-2017-wild-card-qualifier,2,Vega Squadron,remove,Cobble
+/matches/2316199/liquid-vs-vega-squadron-epicenter-2017-wild-card-qualifier,3,Liquid,pick,Inferno
+/matches/2316199/liquid-vs-vega-squadron-epicenter-2017-wild-card-qualifier,4,Vega Squadron,pick,Cache
+/matches/2316199/liquid-vs-vega-squadron-epicenter-2017-wild-card-qualifier,5,Liquid,remove,Train
+/matches/2316199/liquid-vs-vega-squadron-epicenter-2017-wild-card-qualifier,6,Vega Squadron,remove,Overpass
+/matches/2316199/liquid-vs-vega-squadron-epicenter-2017-wild-card-qualifier,7,Mirage was,left,Mirage
+/matches/2316198/faze-vs-tyloo-epicenter-2017-wild-card-qualifier,1,FaZe,remove,Cobble
+/matches/2316198/faze-vs-tyloo-epicenter-2017-wild-card-qualifier,2,TyLoo,remove,Nuke
+/matches/2316198/faze-vs-tyloo-epicenter-2017-wild-card-qualifier,3,FaZe,pick,Inferno
+/matches/2316198/faze-vs-tyloo-epicenter-2017-wild-card-qualifier,4,TyLoo,pick,Cache
+/matches/2316198/faze-vs-tyloo-epicenter-2017-wild-card-qualifier,5,FaZe,remove,Mirage
+/matches/2316198/faze-vs-tyloo-epicenter-2017-wild-card-qualifier,6,TyLoo,remove,Train
+/matches/2316198/faze-vs-tyloo-epicenter-2017-wild-card-qualifier,7,Overpass was,left,Overpass
+/matches/2316478/sk-vs-virtuspro-epicenter-2017,1,SK,remove,Nuke
+/matches/2316478/sk-vs-virtuspro-epicenter-2017,2,Virtus.pro,remove,Overpass
+/matches/2316478/sk-vs-virtuspro-epicenter-2017,3,SK,pick,Mirage
+/matches/2316478/sk-vs-virtuspro-epicenter-2017,4,Virtus.pro,pick,Inferno
+/matches/2316478/sk-vs-virtuspro-epicenter-2017,5,SK,pick,Train
+/matches/2316478/sk-vs-virtuspro-epicenter-2017,6,Virtus.pro,pick,Cache
+/matches/2316478/sk-vs-virtuspro-epicenter-2017,7,Cobblestone was,left,Cobble
+/matches/2316477/astralis-vs-g2-epicenter-2017,1,G2,remove,Train
+/matches/2316477/astralis-vs-g2-epicenter-2017,2,Astralis,remove,Cobble
+/matches/2316477/astralis-vs-g2-epicenter-2017,3,G2,pick,Nuke
+/matches/2316477/astralis-vs-g2-epicenter-2017,4,Astralis,pick,Mirage
+/matches/2316477/astralis-vs-g2-epicenter-2017,5,G2,remove,Overpass
+/matches/2316477/astralis-vs-g2-epicenter-2017,6,Astralis,remove,Cache
+/matches/2316477/astralis-vs-g2-epicenter-2017,7,Inferno was,left,Inferno
+/matches/2316476/g2-vs-virtuspro-epicenter-2017,1,G2,remove,Train
+/matches/2316476/g2-vs-virtuspro-epicenter-2017,2,Virtus.pro,remove,Overpass
+/matches/2316476/g2-vs-virtuspro-epicenter-2017,3,G2,pick,Cache
+/matches/2316476/g2-vs-virtuspro-epicenter-2017,4,Virtus.pro,pick,Nuke
+/matches/2316476/g2-vs-virtuspro-epicenter-2017,5,G2,remove,Mirage
+/matches/2316476/g2-vs-virtuspro-epicenter-2017,6,Virtus.pro,remove,Cobble
+/matches/2316476/g2-vs-virtuspro-epicenter-2017,7,Inferno was,left,Inferno
+/matches/2316475/sk-vs-astralis-epicenter-2017,1,Astralis,remove,Cobble
+/matches/2316475/sk-vs-astralis-epicenter-2017,2,SK,remove,Nuke
+/matches/2316475/sk-vs-astralis-epicenter-2017,3,Astralis,pick,Train
+/matches/2316475/sk-vs-astralis-epicenter-2017,4,SK,pick,Mirage
+/matches/2316475/sk-vs-astralis-epicenter-2017,5,Astralis,remove,Inferno
+/matches/2316475/sk-vs-astralis-epicenter-2017,6,SK,remove,Cache
+/matches/2316475/sk-vs-astralis-epicenter-2017,7,Overpass was,left,Overpass
+/matches/2316289/astralis-vs-north-epicenter-2017,1,Astralis,remove,Cobble
+/matches/2316289/astralis-vs-north-epicenter-2017,2,North,remove,Cache
+/matches/2316289/astralis-vs-north-epicenter-2017,3,Astralis,pick,Train
+/matches/2316289/astralis-vs-north-epicenter-2017,4,North,pick,Mirage
+/matches/2316289/astralis-vs-north-epicenter-2017,5,Astralis,remove,Inferno
+/matches/2316289/astralis-vs-north-epicenter-2017,6,North,remove,Nuke
+/matches/2316289/astralis-vs-north-epicenter-2017,7,Overpass was,left,Overpass
+/matches/2316288/virtuspro-vs-faze-epicenter-2017,1,FaZe,remove,Nuke
+/matches/2316288/virtuspro-vs-faze-epicenter-2017,2,Virtus.pro,remove,Overpass
+/matches/2316288/virtuspro-vs-faze-epicenter-2017,3,FaZe,pick,Mirage
+/matches/2316288/virtuspro-vs-faze-epicenter-2017,4,Virtus.pro,pick,Cobble
+/matches/2316288/virtuspro-vs-faze-epicenter-2017,5,FaZe,remove,Train
+/matches/2316288/virtuspro-vs-faze-epicenter-2017,6,Virtus.pro,remove,Cache
+/matches/2316288/virtuspro-vs-faze-epicenter-2017,7,Inferno was,left,Inferno
+/matches/2316287/g2-vs-north-epicenter-2017,1,North,remove,Cache
+/matches/2316287/g2-vs-north-epicenter-2017,2,G2,remove,Train
+/matches/2316287/g2-vs-north-epicenter-2017,3,North,pick,Mirage
+/matches/2316287/g2-vs-north-epicenter-2017,4,G2,pick,Nuke
+/matches/2316287/g2-vs-north-epicenter-2017,5,North,remove,Inferno
+/matches/2316287/g2-vs-north-epicenter-2017,6,G2,remove,Cobble
+/matches/2316287/g2-vs-north-epicenter-2017,7,Overpass was,left,Overpass
+/matches/2316286/sk-vs-faze-epicenter-2017,1,FaZe,remove,Cobble
+/matches/2316286/sk-vs-faze-epicenter-2017,2,SK,remove,Nuke
+/matches/2316286/sk-vs-faze-epicenter-2017,3,FaZe,pick,Inferno
+/matches/2316286/sk-vs-faze-epicenter-2017,4,SK,pick,Overpass
+/matches/2316286/sk-vs-faze-epicenter-2017,5,FaZe,remove,Train
+/matches/2316286/sk-vs-faze-epicenter-2017,6,SK,remove,Cache
+/matches/2316286/sk-vs-faze-epicenter-2017,7,Mirage was,left,Mirage
+/matches/2316285/astralis-vs-liquid-epicenter-2017,1,Liquid,remove,Nuke
+/matches/2316285/astralis-vs-liquid-epicenter-2017,2,Astralis,remove,Cobble
+/matches/2316285/astralis-vs-liquid-epicenter-2017,3,Liquid,pick,Inferno
+/matches/2316285/astralis-vs-liquid-epicenter-2017,4,Astralis,pick,Train
+/matches/2316285/astralis-vs-liquid-epicenter-2017,5,Liquid,remove,Overpass
+/matches/2316285/astralis-vs-liquid-epicenter-2017,6,Astralis,remove,Mirage
+/matches/2316285/astralis-vs-liquid-epicenter-2017,7,Cache was,left,Cache
+/matches/2316284/virtuspro-vs-gambit-epicenter-2017,1,Virtus.pro,remove,Overpass
+/matches/2316284/virtuspro-vs-gambit-epicenter-2017,2,Gambit,remove,Nuke
+/matches/2316284/virtuspro-vs-gambit-epicenter-2017,3,Virtus.pro,pick,Inferno
+/matches/2316284/virtuspro-vs-gambit-epicenter-2017,4,Gambit,pick,Train
+/matches/2316284/virtuspro-vs-gambit-epicenter-2017,5,Virtus.pro,remove,Cobble
+/matches/2316284/virtuspro-vs-gambit-epicenter-2017,6,Gambit,remove,Mirage
+/matches/2316284/virtuspro-vs-gambit-epicenter-2017,7,Cache was,left,Cache
+/matches/2316283/north-vs-liquid-epicenter-2017,1,Liquid,remove,Train
+/matches/2316283/north-vs-liquid-epicenter-2017,2,North,remove,Cache
+/matches/2316283/north-vs-liquid-epicenter-2017,3,Liquid,pick,Inferno
+/matches/2316283/north-vs-liquid-epicenter-2017,4,North,pick,Mirage
+/matches/2316283/north-vs-liquid-epicenter-2017,5,Liquid,remove,Nuke
+/matches/2316283/north-vs-liquid-epicenter-2017,6,North,remove,Overpass
+/matches/2316283/north-vs-liquid-epicenter-2017,7,Cobblestone was,left,Cobble
+/matches/2316282/gambit-vs-faze-epicenter-2017,1,Gambit,remove,Overpass
+/matches/2316282/gambit-vs-faze-epicenter-2017,2,FaZe,remove,Cobble
+/matches/2316282/gambit-vs-faze-epicenter-2017,3,Gambit,pick,Train
+/matches/2316282/gambit-vs-faze-epicenter-2017,4,FaZe,pick,Inferno
+/matches/2316282/gambit-vs-faze-epicenter-2017,5,Gambit,remove,Mirage
+/matches/2316282/gambit-vs-faze-epicenter-2017,6,FaZe,remove,Nuke
+/matches/2316282/gambit-vs-faze-epicenter-2017,7,Cache was,left,Cache
+/matches/2316281/astralis-vs-g2-epicenter-2017,1,G2,remove,Train
+/matches/2316281/astralis-vs-g2-epicenter-2017,2,Astralis,remove,Cobble
+/matches/2316281/astralis-vs-g2-epicenter-2017,3,G2,pick,Cache
+/matches/2316281/astralis-vs-g2-epicenter-2017,4,Astralis,pick,Inferno
+/matches/2316281/astralis-vs-g2-epicenter-2017,5,G2,remove,Mirage
+/matches/2316281/astralis-vs-g2-epicenter-2017,6,Astralis,remove,Nuke
+/matches/2316281/astralis-vs-g2-epicenter-2017,7,Overpass was,left,Overpass
+/matches/2316280/sk-vs-virtuspro-epicenter-2017,1,Virtus.pro,remove,Overpass
+/matches/2316280/sk-vs-virtuspro-epicenter-2017,2,SK,remove,Nuke
+/matches/2316280/sk-vs-virtuspro-epicenter-2017,3,Virtus.pro,pick,Train
+/matches/2316280/sk-vs-virtuspro-epicenter-2017,4,SK,pick,Mirage
+/matches/2316280/sk-vs-virtuspro-epicenter-2017,5,Virtus.pro,remove,Cobble
+/matches/2316280/sk-vs-virtuspro-epicenter-2017,6,SK,remove,Cache
+/matches/2316280/sk-vs-virtuspro-epicenter-2017,7,Inferno was,left,Inferno
+/matches/2316508/renegades-vs-tyloo-asia-minor-eleague-major-2018,1,TyLoo,remove,Cobble
+/matches/2316508/renegades-vs-tyloo-asia-minor-eleague-major-2018,2,Renegades,remove,Inferno
+/matches/2316508/renegades-vs-tyloo-asia-minor-eleague-major-2018,3,TyLoo,pick,Cache
+/matches/2316508/renegades-vs-tyloo-asia-minor-eleague-major-2018,4,Renegades,pick,Train
+/matches/2316508/renegades-vs-tyloo-asia-minor-eleague-major-2018,5,Renegades,remove,Overpass
+/matches/2316508/renegades-vs-tyloo-asia-minor-eleague-major-2018,6,TyLoo,remove,Nuke
+/matches/2316508/renegades-vs-tyloo-asia-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316507/tyloo-vs-flash-asia-minor-eleague-major-2018,1,TyLoo,remove,Train
+/matches/2316507/tyloo-vs-flash-asia-minor-eleague-major-2018,2,Flash,remove,Mirage
+/matches/2316507/tyloo-vs-flash-asia-minor-eleague-major-2018,3,TyLoo,pick,Inferno
+/matches/2316507/tyloo-vs-flash-asia-minor-eleague-major-2018,4,Flash,pick,Cache
+/matches/2316507/tyloo-vs-flash-asia-minor-eleague-major-2018,5,Flash,remove,Nuke
+/matches/2316507/tyloo-vs-flash-asia-minor-eleague-major-2018,6,TyLoo,remove,Overpass
+/matches/2316507/tyloo-vs-flash-asia-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316506/flash-vs-mvp-pk-asia-minor-eleague-major-2018,1,MVP PK,remove,Overpass
+/matches/2316506/flash-vs-mvp-pk-asia-minor-eleague-major-2018,2,Flash,remove,Nuke
+/matches/2316506/flash-vs-mvp-pk-asia-minor-eleague-major-2018,3,MVP PK,pick,Inferno
+/matches/2316506/flash-vs-mvp-pk-asia-minor-eleague-major-2018,4,Flash,pick,Cache
+/matches/2316506/flash-vs-mvp-pk-asia-minor-eleague-major-2018,5,Flash,remove,Mirage
+/matches/2316506/flash-vs-mvp-pk-asia-minor-eleague-major-2018,6,MVP PK,remove,Train
+/matches/2316506/flash-vs-mvp-pk-asia-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316505/renegades-vs-tyloo-asia-minor-eleague-major-2018,1,TyLoo,remove,Train
+/matches/2316505/renegades-vs-tyloo-asia-minor-eleague-major-2018,2,Renegades,remove,Overpass
+/matches/2316505/renegades-vs-tyloo-asia-minor-eleague-major-2018,3,TyLoo,pick,Inferno
+/matches/2316505/renegades-vs-tyloo-asia-minor-eleague-major-2018,4,Renegades,pick,Cobble
+/matches/2316505/renegades-vs-tyloo-asia-minor-eleague-major-2018,5,Renegades,remove,Nuke
+/matches/2316505/renegades-vs-tyloo-asia-minor-eleague-major-2018,6,TyLoo,remove,Cache
+/matches/2316505/renegades-vs-tyloo-asia-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316504/tyloo-vs-mvp-pk-asia-minor-eleague-major-2018,1,TyLoo,remove,Nuke
+/matches/2316504/tyloo-vs-mvp-pk-asia-minor-eleague-major-2018,2,MVP PK,remove,Overpass
+/matches/2316504/tyloo-vs-mvp-pk-asia-minor-eleague-major-2018,3,TyLoo,pick,Cache
+/matches/2316504/tyloo-vs-mvp-pk-asia-minor-eleague-major-2018,4,MVP PK,pick,Train
+/matches/2316504/tyloo-vs-mvp-pk-asia-minor-eleague-major-2018,5,TyLoo,remove,Cobble
+/matches/2316504/tyloo-vs-mvp-pk-asia-minor-eleague-major-2018,6,MVP PK,remove,Inferno
+/matches/2316504/tyloo-vs-mvp-pk-asia-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316503/renegades-vs-flash-asia-minor-eleague-major-2018,1,Flash,remove,Nuke
+/matches/2316503/renegades-vs-flash-asia-minor-eleague-major-2018,2,Renegades,remove,Overpass
+/matches/2316503/renegades-vs-flash-asia-minor-eleague-major-2018,3,Flash,pick,Inferno
+/matches/2316503/renegades-vs-flash-asia-minor-eleague-major-2018,4,Renegades,pick,Cache
+/matches/2316503/renegades-vs-flash-asia-minor-eleague-major-2018,5,Renegades,remove,Train
+/matches/2316503/renegades-vs-flash-asia-minor-eleague-major-2018,6,Flash,remove,Mirage
+/matches/2316503/renegades-vs-flash-asia-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316402/flash-vs-tainted-minds-asia-minor-eleague-major-2018,1,Tainted Minds,remove,Cache
+/matches/2316402/flash-vs-tainted-minds-asia-minor-eleague-major-2018,2,Flash,remove,Nuke
+/matches/2316402/flash-vs-tainted-minds-asia-minor-eleague-major-2018,3,Tainted Minds,pick,Overpass
+/matches/2316402/flash-vs-tainted-minds-asia-minor-eleague-major-2018,4,Flash,pick,Inferno
+/matches/2316402/flash-vs-tainted-minds-asia-minor-eleague-major-2018,5,Flash,remove,Cobble
+/matches/2316402/flash-vs-tainted-minds-asia-minor-eleague-major-2018,6,Tainted Minds,remove,Mirage
+/matches/2316402/flash-vs-tainted-minds-asia-minor-eleague-major-2018,7,Train was,left,Train
+/matches/2316401/tainted-minds-vs-boot-ds-asia-minor-eleague-major-2018,1,Tainted Minds,remove,Nuke
+/matches/2316401/tainted-minds-vs-boot-ds-asia-minor-eleague-major-2018,2,B.O.O.T-d[S],remove,Cobble
+/matches/2316401/tainted-minds-vs-boot-ds-asia-minor-eleague-major-2018,3,Tainted Minds,pick,Overpass
+/matches/2316401/tainted-minds-vs-boot-ds-asia-minor-eleague-major-2018,4,B.O.O.T-d[S],pick,Mirage
+/matches/2316401/tainted-minds-vs-boot-ds-asia-minor-eleague-major-2018,5,Tainted Minds,remove,Train
+/matches/2316401/tainted-minds-vs-boot-ds-asia-minor-eleague-major-2018,6,B.O.O.T-d[S],remove,Inferno
+/matches/2316401/tainted-minds-vs-boot-ds-asia-minor-eleague-major-2018,7,Cache was,left,Cache
+/matches/2316400/tyloo-vs-flash-asia-minor-eleague-major-2018,,,,
+/matches/2316399/flash-vs-boot-ds-asia-minor-eleague-major-2018,1,B.O.O.T-d[S],remove,Cobble
+/matches/2316399/flash-vs-boot-ds-asia-minor-eleague-major-2018,2,B.O.O.T-d[S],remove,Cache
+/matches/2316399/flash-vs-boot-ds-asia-minor-eleague-major-2018,3,Flash,remove,Nuke
+/matches/2316399/flash-vs-boot-ds-asia-minor-eleague-major-2018,4,Flash,remove,Mirage
+/matches/2316399/flash-vs-boot-ds-asia-minor-eleague-major-2018,5,Flash,remove,Overpass
+/matches/2316399/flash-vs-boot-ds-asia-minor-eleague-major-2018,6,B.O.O.T-d[S],remove,Train
+/matches/2316399/flash-vs-boot-ds-asia-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316398/tyloo-vs-tainted-minds-asia-minor-eleague-major-2018,1,TyLoo,remove,Overpass
+/matches/2316398/tyloo-vs-tainted-minds-asia-minor-eleague-major-2018,2,TyLoo,remove,Nuke
+/matches/2316398/tyloo-vs-tainted-minds-asia-minor-eleague-major-2018,3,Tainted Minds,remove,Mirage
+/matches/2316398/tyloo-vs-tainted-minds-asia-minor-eleague-major-2018,4,Tainted Minds,remove,Cache
+/matches/2316398/tyloo-vs-tainted-minds-asia-minor-eleague-major-2018,5,Tainted Minds,remove,Inferno
+/matches/2316398/tyloo-vs-tainted-minds-asia-minor-eleague-major-2018,6,TyLoo,remove,Train
+/matches/2316398/tyloo-vs-tainted-minds-asia-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316397/kings-vs-mvp-pk-asia-minor-eleague-major-2018,1,MVP PK,remove,Overpass
+/matches/2316397/kings-vs-mvp-pk-asia-minor-eleague-major-2018,2,Kings,remove,Cobble
+/matches/2316397/kings-vs-mvp-pk-asia-minor-eleague-major-2018,3,MVP PK,pick,Train
+/matches/2316397/kings-vs-mvp-pk-asia-minor-eleague-major-2018,4,Kings,pick,Mirage
+/matches/2316397/kings-vs-mvp-pk-asia-minor-eleague-major-2018,5,Kings,remove,Nuke
+/matches/2316397/kings-vs-mvp-pk-asia-minor-eleague-major-2018,6,MVP PK,pick,Inferno
+/matches/2316396/themongolz-vs-mvp-pk-asia-minor-eleague-major-2018,1,MVP PK,remove,Mirage
+/matches/2316396/themongolz-vs-mvp-pk-asia-minor-eleague-major-2018,2,TheMongolz,remove,Nuke
+/matches/2316396/themongolz-vs-mvp-pk-asia-minor-eleague-major-2018,3,MVP PK,pick,Cobble
+/matches/2316396/themongolz-vs-mvp-pk-asia-minor-eleague-major-2018,4,TheMongolz,pick,Cache
+/matches/2316396/themongolz-vs-mvp-pk-asia-minor-eleague-major-2018,5,MVP PK,remove,Train
+/matches/2316396/themongolz-vs-mvp-pk-asia-minor-eleague-major-2018,6,TheMongolz,remove,Overpass
+/matches/2316396/themongolz-vs-mvp-pk-asia-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316395/renegades-vs-kings-asia-minor-eleague-major-2018,1,Renegades,remove,Nuke
+/matches/2316395/renegades-vs-kings-asia-minor-eleague-major-2018,2,Renegades,remove,Inferno
+/matches/2316395/renegades-vs-kings-asia-minor-eleague-major-2018,3,Kings,remove,Cache
+/matches/2316395/renegades-vs-kings-asia-minor-eleague-major-2018,4,Kings,remove,Cobble
+/matches/2316395/renegades-vs-kings-asia-minor-eleague-major-2018,5,Kings,remove,Train
+/matches/2316395/renegades-vs-kings-asia-minor-eleague-major-2018,6,Renegades,remove,Overpass
+/matches/2316395/renegades-vs-kings-asia-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316394/kings-vs-mvp-pk-asia-minor-eleague-major-2018,1,MVP PK,remove,Mirage
+/matches/2316394/kings-vs-mvp-pk-asia-minor-eleague-major-2018,2,MVP PK,remove,Overpass
+/matches/2316394/kings-vs-mvp-pk-asia-minor-eleague-major-2018,3,Kings,remove,Cobble
+/matches/2316394/kings-vs-mvp-pk-asia-minor-eleague-major-2018,4,Kings,remove,Nuke
+/matches/2316394/kings-vs-mvp-pk-asia-minor-eleague-major-2018,5,Kings,remove,Cache
+/matches/2316394/kings-vs-mvp-pk-asia-minor-eleague-major-2018,6,MVP PK,remove,Train
+/matches/2316394/kings-vs-mvp-pk-asia-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316393/renegades-vs-themongolz-asia-minor-eleague-major-2018,1,Renegades,remove,Nuke
+/matches/2316393/renegades-vs-themongolz-asia-minor-eleague-major-2018,2,Renegades,remove,Inferno
+/matches/2316393/renegades-vs-themongolz-asia-minor-eleague-major-2018,3,TheMongolz,remove,Overpass
+/matches/2316393/renegades-vs-themongolz-asia-minor-eleague-major-2018,4,TheMongolz,remove,Cobble
+/matches/2316393/renegades-vs-themongolz-asia-minor-eleague-major-2018,5,TheMongolz,remove,Train
+/matches/2316393/renegades-vs-themongolz-asia-minor-eleague-major-2018,6,Renegades,remove,Mirage
+/matches/2316393/renegades-vs-themongolz-asia-minor-eleague-major-2018,7,Cache was,left,Cache
+/matches/2316585/virtuspro-vs-renegades-sl-i-league-invitational-shanghai-2017,1,Renegades,remove,Nuke
+/matches/2316585/virtuspro-vs-renegades-sl-i-league-invitational-shanghai-2017,2,Virtus.pro,remove,Cache
+/matches/2316585/virtuspro-vs-renegades-sl-i-league-invitational-shanghai-2017,3,Renegades,pick,Mirage
+/matches/2316585/virtuspro-vs-renegades-sl-i-league-invitational-shanghai-2017,4,Virtus.pro,pick,Train
+/matches/2316585/virtuspro-vs-renegades-sl-i-league-invitational-shanghai-2017,5,Renegades,remove,Inferno
+/matches/2316585/virtuspro-vs-renegades-sl-i-league-invitational-shanghai-2017,6,Virtus.pro,remove,Overpass
+/matches/2316585/virtuspro-vs-renegades-sl-i-league-invitational-shanghai-2017,7,Cobblestone was,left,Cobble
+/matches/2316584/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,1,Heroic,remove,Cache
+/matches/2316584/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,2,HellRaisers,remove,Nuke
+/matches/2316584/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,3,Heroic,pick,Train
+/matches/2316584/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,4,HellRaisers,pick,Cobble
+/matches/2316584/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,5,Heroic,remove,Overpass
+/matches/2316584/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,6,HellRaisers,remove,Mirage
+/matches/2316584/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,7,Inferno was,left,Inferno
+/matches/2316583/hellraisers-vs-renegades-sl-i-league-invitational-shanghai-2017,1,Renegades,remove,Nuke
+/matches/2316583/hellraisers-vs-renegades-sl-i-league-invitational-shanghai-2017,2,HellRaisers,remove,Inferno
+/matches/2316583/hellraisers-vs-renegades-sl-i-league-invitational-shanghai-2017,3,Renegades,pick,Cobble
+/matches/2316583/hellraisers-vs-renegades-sl-i-league-invitational-shanghai-2017,4,HellRaisers,pick,Overpass
+/matches/2316583/hellraisers-vs-renegades-sl-i-league-invitational-shanghai-2017,5,Renegades,remove,Cache
+/matches/2316583/hellraisers-vs-renegades-sl-i-league-invitational-shanghai-2017,6,HellRaisers,remove,Train
+/matches/2316583/hellraisers-vs-renegades-sl-i-league-invitational-shanghai-2017,7,Mirage was,left,Mirage
+/matches/2316582/virtuspro-vs-heroic-sl-i-league-invitational-shanghai-2017,1,Heroic,remove,Cobble
+/matches/2316582/virtuspro-vs-heroic-sl-i-league-invitational-shanghai-2017,2,Virtus.pro,remove,Overpass
+/matches/2316582/virtuspro-vs-heroic-sl-i-league-invitational-shanghai-2017,3,Heroic,pick,Nuke
+/matches/2316582/virtuspro-vs-heroic-sl-i-league-invitational-shanghai-2017,4,Virtus.pro,pick,Cache
+/matches/2316582/virtuspro-vs-heroic-sl-i-league-invitational-shanghai-2017,5,Heroic,remove,Mirage
+/matches/2316582/virtuspro-vs-heroic-sl-i-league-invitational-shanghai-2017,6,Virtus.pro,remove,Train
+/matches/2316582/virtuspro-vs-heroic-sl-i-league-invitational-shanghai-2017,7,Inferno was,left,Inferno
+/matches/2316581/flash-vs-renegades-sl-i-league-invitational-shanghai-2017,1,Flash,remove,Nuke
+/matches/2316581/flash-vs-renegades-sl-i-league-invitational-shanghai-2017,2,Renegades,remove,Overpass
+/matches/2316581/flash-vs-renegades-sl-i-league-invitational-shanghai-2017,3,Flash,pick,Inferno
+/matches/2316581/flash-vs-renegades-sl-i-league-invitational-shanghai-2017,4,Renegades,pick,Mirage
+/matches/2316581/flash-vs-renegades-sl-i-league-invitational-shanghai-2017,5,Flash,remove,Cobble
+/matches/2316581/flash-vs-renegades-sl-i-league-invitational-shanghai-2017,6,Renegades,remove,Train
+/matches/2316581/flash-vs-renegades-sl-i-league-invitational-shanghai-2017,7,Cache was,left,Cache
+/matches/2316580/spirit-vs-heroic-sl-i-league-invitational-shanghai-2017,1,Spirit,remove,Train
+/matches/2316580/spirit-vs-heroic-sl-i-league-invitational-shanghai-2017,2,Heroic,remove,Cobble
+/matches/2316580/spirit-vs-heroic-sl-i-league-invitational-shanghai-2017,3,Spirit,pick,Mirage
+/matches/2316580/spirit-vs-heroic-sl-i-league-invitational-shanghai-2017,4,Heroic,pick,Nuke
+/matches/2316580/spirit-vs-heroic-sl-i-league-invitational-shanghai-2017,5,Spirit,remove,Inferno
+/matches/2316580/spirit-vs-heroic-sl-i-league-invitational-shanghai-2017,6,Heroic,remove,Cache
+/matches/2316580/spirit-vs-heroic-sl-i-league-invitational-shanghai-2017,7,Overpass was,left,Overpass
+/matches/2316579/renegades-vs-virtuspro-sl-i-league-invitational-shanghai-2017,1,Renegades,remove,Nuke
+/matches/2316579/renegades-vs-virtuspro-sl-i-league-invitational-shanghai-2017,2,Virtus.pro,remove,Cache
+/matches/2316579/renegades-vs-virtuspro-sl-i-league-invitational-shanghai-2017,3,Renegades,pick,Cobble
+/matches/2316579/renegades-vs-virtuspro-sl-i-league-invitational-shanghai-2017,4,Virtus.pro,pick,Inferno
+/matches/2316579/renegades-vs-virtuspro-sl-i-league-invitational-shanghai-2017,5,Renegades,remove,Overpass
+/matches/2316579/renegades-vs-virtuspro-sl-i-league-invitational-shanghai-2017,6,Virtus.pro,remove,Mirage
+/matches/2316579/renegades-vs-virtuspro-sl-i-league-invitational-shanghai-2017,7,Train was,left,Train
+/matches/2316578/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,1,Heroic,remove,Cobble
+/matches/2316578/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,2,HellRaisers,remove,Nuke
+/matches/2316578/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,3,Heroic,pick,Train
+/matches/2316578/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,4,HellRaisers,pick,Cache
+/matches/2316578/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,5,Heroic,remove,Mirage
+/matches/2316578/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,6,HellRaisers,remove,Inferno
+/matches/2316578/heroic-vs-hellraisers-sl-i-league-invitational-shanghai-2017,7,Overpass was,left,Overpass
+/matches/2316577/havu-vs-flash-sl-i-league-invitational-shanghai-2017,1,Flash,remove,Nuke
+/matches/2316577/havu-vs-flash-sl-i-league-invitational-shanghai-2017,2,HAVU,remove,Cobble
+/matches/2316577/havu-vs-flash-sl-i-league-invitational-shanghai-2017,3,Flash,pick,Cache
+/matches/2316577/havu-vs-flash-sl-i-league-invitational-shanghai-2017,4,HAVU,pick,Overpass
+/matches/2316577/havu-vs-flash-sl-i-league-invitational-shanghai-2017,5,Flash,remove,Inferno
+/matches/2316577/havu-vs-flash-sl-i-league-invitational-shanghai-2017,6,HAVU,remove,Mirage
+/matches/2316577/havu-vs-flash-sl-i-league-invitational-shanghai-2017,7,Train was,left,Train
+/matches/2316576/spirit-vs-tyloo-sl-i-league-invitational-shanghai-2017,1,TyLoo,remove,Nuke
+/matches/2316576/spirit-vs-tyloo-sl-i-league-invitational-shanghai-2017,2,Spirit,remove,Cache
+/matches/2316576/spirit-vs-tyloo-sl-i-league-invitational-shanghai-2017,3,TyLoo,pick,Train
+/matches/2316576/spirit-vs-tyloo-sl-i-league-invitational-shanghai-2017,4,Spirit,pick,Mirage
+/matches/2316576/spirit-vs-tyloo-sl-i-league-invitational-shanghai-2017,5,TyLoo,remove,Overpass
+/matches/2316576/spirit-vs-tyloo-sl-i-league-invitational-shanghai-2017,6,Spirit,remove,Cobble
+/matches/2316576/spirit-vs-tyloo-sl-i-league-invitational-shanghai-2017,7,Inferno was,left,Inferno
+/matches/2316575/virtuspro-vs-flash-sl-i-league-invitational-shanghai-2017,1,Flash,remove,Nuke
+/matches/2316575/virtuspro-vs-flash-sl-i-league-invitational-shanghai-2017,2,Virtus.pro,remove,Overpass
+/matches/2316575/virtuspro-vs-flash-sl-i-league-invitational-shanghai-2017,3,Flash,pick,Cache
+/matches/2316575/virtuspro-vs-flash-sl-i-league-invitational-shanghai-2017,4,Virtus.pro,pick,Mirage
+/matches/2316575/virtuspro-vs-flash-sl-i-league-invitational-shanghai-2017,5,Flash,remove,Train
+/matches/2316575/virtuspro-vs-flash-sl-i-league-invitational-shanghai-2017,6,Virtus.pro,remove,Inferno
+/matches/2316575/virtuspro-vs-flash-sl-i-league-invitational-shanghai-2017,7,Cobblestone was,left,Cobble
+/matches/2316573/tyloo-vs-hellraisers-sl-i-league-invitational-shanghai-2017,1,TyLoo,remove,Overpass
+/matches/2316573/tyloo-vs-hellraisers-sl-i-league-invitational-shanghai-2017,2,HellRaisers,remove,Inferno
+/matches/2316573/tyloo-vs-hellraisers-sl-i-league-invitational-shanghai-2017,3,TyLoo,pick,Cobble
+/matches/2316573/tyloo-vs-hellraisers-sl-i-league-invitational-shanghai-2017,4,HellRaisers,pick,Mirage
+/matches/2316573/tyloo-vs-hellraisers-sl-i-league-invitational-shanghai-2017,5,TyLoo,remove,Cache
+/matches/2316573/tyloo-vs-hellraisers-sl-i-league-invitational-shanghai-2017,6,HellRaisers,remove,Train
+/matches/2316573/tyloo-vs-hellraisers-sl-i-league-invitational-shanghai-2017,7,Nuke was,left,Nuke
+/matches/2316574/renegades-vs-havu-sl-i-league-invitational-shanghai-2017,1,HAVU,remove,Cobble
+/matches/2316574/renegades-vs-havu-sl-i-league-invitational-shanghai-2017,2,Renegades,remove,Nuke
+/matches/2316574/renegades-vs-havu-sl-i-league-invitational-shanghai-2017,3,HAVU,pick,Overpass
+/matches/2316574/renegades-vs-havu-sl-i-league-invitational-shanghai-2017,4,Renegades,pick,Mirage
+/matches/2316574/renegades-vs-havu-sl-i-league-invitational-shanghai-2017,5,HAVU,remove,Cache
+/matches/2316574/renegades-vs-havu-sl-i-league-invitational-shanghai-2017,6,Renegades,remove,Inferno
+/matches/2316574/renegades-vs-havu-sl-i-league-invitational-shanghai-2017,7,Train was,left,Train
+/matches/2316572/heroic-vs-spirit-sl-i-league-invitational-shanghai-2017,1,Spirit,remove,Train
+/matches/2316572/heroic-vs-spirit-sl-i-league-invitational-shanghai-2017,2,Heroic,remove,Cobble
+/matches/2316572/heroic-vs-spirit-sl-i-league-invitational-shanghai-2017,3,Spirit,pick,Mirage
+/matches/2316572/heroic-vs-spirit-sl-i-league-invitational-shanghai-2017,4,Heroic,pick,Nuke
+/matches/2316572/heroic-vs-spirit-sl-i-league-invitational-shanghai-2017,5,Spirit,remove,Overpass
+/matches/2316572/heroic-vs-spirit-sl-i-league-invitational-shanghai-2017,6,Heroic,remove,Cache
+/matches/2316572/heroic-vs-spirit-sl-i-league-invitational-shanghai-2017,7,Inferno was,left,Inferno
+/matches/2316707/space-soldiers-vs-envyus-europe-minor-eleague-major-2018,1,Space Soldiers,remove,Nuke
+/matches/2316707/space-soldiers-vs-envyus-europe-minor-eleague-major-2018,2,EnVyUs,remove,Mirage
+/matches/2316707/space-soldiers-vs-envyus-europe-minor-eleague-major-2018,3,Space Soldiers,pick,Cobble
+/matches/2316707/space-soldiers-vs-envyus-europe-minor-eleague-major-2018,4,EnVyUs,pick,Inferno
+/matches/2316707/space-soldiers-vs-envyus-europe-minor-eleague-major-2018,5,EnVyUs,remove,Cache
+/matches/2316707/space-soldiers-vs-envyus-europe-minor-eleague-major-2018,6,Space Soldiers,remove,Train
+/matches/2316707/space-soldiers-vs-envyus-europe-minor-eleague-major-2018,7,Overpass was,left,Overpass
+/matches/2316706/optic-vs-envyus-europe-minor-eleague-major-2018,1,EnVyUs,remove,Mirage
+/matches/2316706/optic-vs-envyus-europe-minor-eleague-major-2018,2,OpTic,remove,Cobble
+/matches/2316706/optic-vs-envyus-europe-minor-eleague-major-2018,3,EnVyUs,pick,Inferno
+/matches/2316706/optic-vs-envyus-europe-minor-eleague-major-2018,4,OpTic,pick,Train
+/matches/2316706/optic-vs-envyus-europe-minor-eleague-major-2018,5,OpTic,remove,Cache
+/matches/2316706/optic-vs-envyus-europe-minor-eleague-major-2018,6,EnVyUs,remove,Overpass
+/matches/2316706/optic-vs-envyus-europe-minor-eleague-major-2018,7,Nuke was,left,Nuke
+/matches/2316705/envyus-vs-ago-europe-minor-eleague-major-2018,1,EnVyUs,remove,Mirage
+/matches/2316705/envyus-vs-ago-europe-minor-eleague-major-2018,2,AGO,remove,Nuke
+/matches/2316705/envyus-vs-ago-europe-minor-eleague-major-2018,3,EnVyUs,pick,Cobble
+/matches/2316705/envyus-vs-ago-europe-minor-eleague-major-2018,4,AGO,pick,Overpass
+/matches/2316705/envyus-vs-ago-europe-minor-eleague-major-2018,5,AGO,remove,Inferno
+/matches/2316705/envyus-vs-ago-europe-minor-eleague-major-2018,6,EnVyUs,remove,Train
+/matches/2316705/envyus-vs-ago-europe-minor-eleague-major-2018,7,Cache was,left,Cache
+/matches/2316704/space-soldiers-vs-optic-europe-minor-eleague-major-2018,1,OpTic,remove,Cobble
+/matches/2316704/space-soldiers-vs-optic-europe-minor-eleague-major-2018,2,Space Soldiers,remove,Nuke
+/matches/2316704/space-soldiers-vs-optic-europe-minor-eleague-major-2018,3,OpTic,pick,Overpass
+/matches/2316704/space-soldiers-vs-optic-europe-minor-eleague-major-2018,4,Space Soldiers,pick,Cache
+/matches/2316704/space-soldiers-vs-optic-europe-minor-eleague-major-2018,5,Space Soldiers,remove,Train
+/matches/2316704/space-soldiers-vs-optic-europe-minor-eleague-major-2018,6,OpTic,remove,Inferno
+/matches/2316704/space-soldiers-vs-optic-europe-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316703/optic-vs-ago-europe-minor-eleague-major-2018,1,OpTic,remove,Cobble
+/matches/2316703/optic-vs-ago-europe-minor-eleague-major-2018,2,AGO,remove,Nuke
+/matches/2316703/optic-vs-ago-europe-minor-eleague-major-2018,3,OpTic,pick,Mirage
+/matches/2316703/optic-vs-ago-europe-minor-eleague-major-2018,4,AGO,pick,Train
+/matches/2316703/optic-vs-ago-europe-minor-eleague-major-2018,5,AGO,remove,Inferno
+/matches/2316703/optic-vs-ago-europe-minor-eleague-major-2018,6,OpTic,remove,Cache
+/matches/2316703/optic-vs-ago-europe-minor-eleague-major-2018,7,Overpass was,left,Overpass
+/matches/2316702/envyus-vs-space-soldiers-europe-minor-eleague-major-2018,1,Space Soldiers,remove,Nuke
+/matches/2316702/envyus-vs-space-soldiers-europe-minor-eleague-major-2018,2,EnVyUs,remove,Mirage
+/matches/2316702/envyus-vs-space-soldiers-europe-minor-eleague-major-2018,3,Space Soldiers,pick,Overpass
+/matches/2316702/envyus-vs-space-soldiers-europe-minor-eleague-major-2018,4,EnVyUs,pick,Inferno
+/matches/2316702/envyus-vs-space-soldiers-europe-minor-eleague-major-2018,5,EnVyUs,remove,Train
+/matches/2316702/envyus-vs-space-soldiers-europe-minor-eleague-major-2018,6,Space Soldiers,remove,Cobble
+/matches/2316702/envyus-vs-space-soldiers-europe-minor-eleague-major-2018,7,Cache was,left,Cache
+/matches/2316701/space-soldiers-vs-pride-europe-minor-eleague-major-2018,1,PRIDE,remove,Overpass
+/matches/2316701/space-soldiers-vs-pride-europe-minor-eleague-major-2018,2,Space Soldiers,remove,Nuke
+/matches/2316701/space-soldiers-vs-pride-europe-minor-eleague-major-2018,3,PRIDE,pick,Mirage
+/matches/2316701/space-soldiers-vs-pride-europe-minor-eleague-major-2018,4,Space Soldiers,pick,Cobble
+/matches/2316701/space-soldiers-vs-pride-europe-minor-eleague-major-2018,5,Space Soldiers,remove,Cache
+/matches/2316701/space-soldiers-vs-pride-europe-minor-eleague-major-2018,6,PRIDE,remove,Inferno
+/matches/2316701/space-soldiers-vs-pride-europe-minor-eleague-major-2018,7,Train was,left,Train
+/matches/2316700/extatus-vs-pride-europe-minor-eleague-major-2018,1,PRIDE,remove,Inferno
+/matches/2316700/extatus-vs-pride-europe-minor-eleague-major-2018,2,eXtatus,remove,Nuke
+/matches/2316700/extatus-vs-pride-europe-minor-eleague-major-2018,3,PRIDE,pick,Cache
+/matches/2316700/extatus-vs-pride-europe-minor-eleague-major-2018,4,eXtatus,pick,Mirage
+/matches/2316700/extatus-vs-pride-europe-minor-eleague-major-2018,5,eXtatus,remove,Overpass
+/matches/2316700/extatus-vs-pride-europe-minor-eleague-major-2018,6,PRIDE,remove,Cobble
+/matches/2316700/extatus-vs-pride-europe-minor-eleague-major-2018,7,Train was,left,Train
+/matches/2316699/space-soldiers-vs-optic-europe-minor-eleague-major-2018,1,OpTic,remove,Cache
+/matches/2316699/space-soldiers-vs-optic-europe-minor-eleague-major-2018,2,OpTic,remove,Cobble
+/matches/2316699/space-soldiers-vs-optic-europe-minor-eleague-major-2018,3,Space Soldiers,remove,Mirage
+/matches/2316699/space-soldiers-vs-optic-europe-minor-eleague-major-2018,4,Space Soldiers,remove,Nuke
+/matches/2316699/space-soldiers-vs-optic-europe-minor-eleague-major-2018,5,Space Soldiers,remove,Inferno
+/matches/2316699/space-soldiers-vs-optic-europe-minor-eleague-major-2018,6,OpTic,remove,Overpass
+/matches/2316699/space-soldiers-vs-optic-europe-minor-eleague-major-2018,7,Train was,left,Train
+/matches/2316698/optic-vs-pride-europe-minor-eleague-major-2018,1,OpTic,remove,Cobble
+/matches/2316698/optic-vs-pride-europe-minor-eleague-major-2018,2,OpTic,remove,Cache
+/matches/2316698/optic-vs-pride-europe-minor-eleague-major-2018,3,PRIDE,remove,Mirage
+/matches/2316698/optic-vs-pride-europe-minor-eleague-major-2018,4,PRIDE,remove,Inferno
+/matches/2316698/optic-vs-pride-europe-minor-eleague-major-2018,5,PRIDE,remove,Overpass
+/matches/2316698/optic-vs-pride-europe-minor-eleague-major-2018,6,OpTic,remove,Train
+/matches/2316698/optic-vs-pride-europe-minor-eleague-major-2018,7,Nuke was,left,Nuke
+/matches/2316697/space-soldiers-vs-extatus-europe-minor-eleague-major-2018,1,eXtatus,remove,Cache
+/matches/2316697/space-soldiers-vs-extatus-europe-minor-eleague-major-2018,2,eXtatus,remove,Overpass
+/matches/2316697/space-soldiers-vs-extatus-europe-minor-eleague-major-2018,3,Space Soldiers,remove,Mirage
+/matches/2316697/space-soldiers-vs-extatus-europe-minor-eleague-major-2018,4,Space Soldiers,remove,Inferno
+/matches/2316697/space-soldiers-vs-extatus-europe-minor-eleague-major-2018,5,Space Soldiers,remove,Nuke
+/matches/2316697/space-soldiers-vs-extatus-europe-minor-eleague-major-2018,6,eXtatus,remove,Cobble
+/matches/2316697/space-soldiers-vs-extatus-europe-minor-eleague-major-2018,7,Train was,left,Train
+/matches/2316690/ago-vs-godsent-europe-minor-eleague-major-2018,1,GODSENT,remove,Train
+/matches/2316690/ago-vs-godsent-europe-minor-eleague-major-2018,2,AGO,remove,Overpass
+/matches/2316690/ago-vs-godsent-europe-minor-eleague-major-2018,3,GODSENT,pick,Mirage
+/matches/2316690/ago-vs-godsent-europe-minor-eleague-major-2018,4,AGO,pick,Cobble
+/matches/2316690/ago-vs-godsent-europe-minor-eleague-major-2018,5,AGO,remove,Nuke
+/matches/2316690/ago-vs-godsent-europe-minor-eleague-major-2018,6,GODSENT,remove,Cache
+/matches/2316690/ago-vs-godsent-europe-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316689/windigo-vs-godsent-europe-minor-eleague-major-2018,1,GODSENT,remove,Cobble
+/matches/2316689/windigo-vs-godsent-europe-minor-eleague-major-2018,2,Windigo,remove,Nuke
+/matches/2316689/windigo-vs-godsent-europe-minor-eleague-major-2018,3,GODSENT,pick,Mirage
+/matches/2316689/windigo-vs-godsent-europe-minor-eleague-major-2018,4,Windigo,pick,Overpass
+/matches/2316689/windigo-vs-godsent-europe-minor-eleague-major-2018,5,Windigo,remove,Cache
+/matches/2316689/windigo-vs-godsent-europe-minor-eleague-major-2018,6,GODSENT,remove,Train
+/matches/2316689/windigo-vs-godsent-europe-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316688/envyus-vs-ago-europe-minor-eleague-major-2018,1,EnVyUs,remove,Overpass
+/matches/2316688/envyus-vs-ago-europe-minor-eleague-major-2018,2,EnVyUs,remove,Mirage
+/matches/2316688/envyus-vs-ago-europe-minor-eleague-major-2018,3,AGO,remove,Nuke
+/matches/2316688/envyus-vs-ago-europe-minor-eleague-major-2018,4,AGO,remove,Cobble
+/matches/2316688/envyus-vs-ago-europe-minor-eleague-major-2018,5,AGO,remove,Cache
+/matches/2316688/envyus-vs-ago-europe-minor-eleague-major-2018,6,EnVyUs,remove,Train
+/matches/2316688/envyus-vs-ago-europe-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316687/ago-vs-godsent-europe-minor-eleague-major-2018,1,GODSENT,remove,Train
+/matches/2316687/ago-vs-godsent-europe-minor-eleague-major-2018,2,GODSENT,remove,Cobble
+/matches/2316687/ago-vs-godsent-europe-minor-eleague-major-2018,3,AGO,remove,Overpass
+/matches/2316687/ago-vs-godsent-europe-minor-eleague-major-2018,4,AGO,remove,Nuke
+/matches/2316687/ago-vs-godsent-europe-minor-eleague-major-2018,5,AGO,remove,Mirage
+/matches/2316687/ago-vs-godsent-europe-minor-eleague-major-2018,6,GODSENT,remove,Inferno
+/matches/2316687/ago-vs-godsent-europe-minor-eleague-major-2018,7,Cache was,left,Cache
+/matches/2316686/envyus-vs-windigo-europe-minor-eleague-major-2018,1,EnVyUs,remove,Overpass
+/matches/2316686/envyus-vs-windigo-europe-minor-eleague-major-2018,2,EnVyUs,remove,Mirage
+/matches/2316686/envyus-vs-windigo-europe-minor-eleague-major-2018,3,Windigo,remove,Nuke
+/matches/2316686/envyus-vs-windigo-europe-minor-eleague-major-2018,4,Windigo,remove,Cache
+/matches/2316686/envyus-vs-windigo-europe-minor-eleague-major-2018,5,Windigo,remove,Train
+/matches/2316686/envyus-vs-windigo-europe-minor-eleague-major-2018,6,EnVyUs,remove,Inferno
+/matches/2316686/envyus-vs-windigo-europe-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316696/misfits-vs-liquid-americas-minor-eleague-major-2018,1,Liquid,remove,Nuke
+/matches/2316696/misfits-vs-liquid-americas-minor-eleague-major-2018,2,Misfits,remove,Inferno
+/matches/2316696/misfits-vs-liquid-americas-minor-eleague-major-2018,3,Liquid,pick,Cobble
+/matches/2316696/misfits-vs-liquid-americas-minor-eleague-major-2018,4,Misfits,pick,Train
+/matches/2316696/misfits-vs-liquid-americas-minor-eleague-major-2018,5,Misfits,remove,Overpass
+/matches/2316696/misfits-vs-liquid-americas-minor-eleague-major-2018,6,Liquid,remove,Cache
+/matches/2316696/misfits-vs-liquid-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316695/clg-vs-liquid-americas-minor-eleague-major-2018,1,Liquid,remove,Train
+/matches/2316695/clg-vs-liquid-americas-minor-eleague-major-2018,2,CLG,remove,Nuke
+/matches/2316695/clg-vs-liquid-americas-minor-eleague-major-2018,3,Liquid,pick,Inferno
+/matches/2316695/clg-vs-liquid-americas-minor-eleague-major-2018,4,CLG,pick,Cache
+/matches/2316695/clg-vs-liquid-americas-minor-eleague-major-2018,5,CLG,remove,Overpass
+/matches/2316695/clg-vs-liquid-americas-minor-eleague-major-2018,6,Liquid,remove,Mirage
+/matches/2316695/clg-vs-liquid-americas-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316694/liquid-vs-complexity-americas-minor-eleague-major-2018,1,Liquid,remove,Nuke
+/matches/2316694/liquid-vs-complexity-americas-minor-eleague-major-2018,2,compLexity,remove,Overpass
+/matches/2316694/liquid-vs-complexity-americas-minor-eleague-major-2018,3,Liquid,pick,Inferno
+/matches/2316694/liquid-vs-complexity-americas-minor-eleague-major-2018,4,compLexity,pick,Cobble
+/matches/2316694/liquid-vs-complexity-americas-minor-eleague-major-2018,5,compLexity,remove,Cache
+/matches/2316694/liquid-vs-complexity-americas-minor-eleague-major-2018,6,Liquid,remove,Train
+/matches/2316694/liquid-vs-complexity-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316693/misfits-vs-clg-americas-minor-eleague-major-2018,1,CLG,remove,Nuke
+/matches/2316693/misfits-vs-clg-americas-minor-eleague-major-2018,2,Misfits,remove,Train
+/matches/2316693/misfits-vs-clg-americas-minor-eleague-major-2018,3,CLG,pick,Cobble
+/matches/2316693/misfits-vs-clg-americas-minor-eleague-major-2018,4,Misfits,pick,Overpass
+/matches/2316693/misfits-vs-clg-americas-minor-eleague-major-2018,5,Misfits,remove,Inferno
+/matches/2316693/misfits-vs-clg-americas-minor-eleague-major-2018,6,CLG,remove,Cache
+/matches/2316693/misfits-vs-clg-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316692/complexity-vs-clg-americas-minor-eleague-major-2018,1,CLG,remove,Nuke
+/matches/2316692/complexity-vs-clg-americas-minor-eleague-major-2018,2,compLexity,remove,Overpass
+/matches/2316692/complexity-vs-clg-americas-minor-eleague-major-2018,3,CLG,pick,Cache
+/matches/2316692/complexity-vs-clg-americas-minor-eleague-major-2018,4,compLexity,pick,Inferno
+/matches/2316692/complexity-vs-clg-americas-minor-eleague-major-2018,5,compLexity,remove,Mirage
+/matches/2316692/complexity-vs-clg-americas-minor-eleague-major-2018,6,CLG,remove,Cobble
+/matches/2316692/complexity-vs-clg-americas-minor-eleague-major-2018,7,Train was,left,Train
+/matches/2316691/liquid-vs-misfits-americas-minor-eleague-major-2018,1,Liquid,remove,Nuke
+/matches/2316691/liquid-vs-misfits-americas-minor-eleague-major-2018,2,Misfits,remove,Inferno
+/matches/2316691/liquid-vs-misfits-americas-minor-eleague-major-2018,3,Liquid,pick,Cobble
+/matches/2316691/liquid-vs-misfits-americas-minor-eleague-major-2018,4,Misfits,pick,Train
+/matches/2316691/liquid-vs-misfits-americas-minor-eleague-major-2018,5,Misfits,remove,Overpass
+/matches/2316691/liquid-vs-misfits-americas-minor-eleague-major-2018,6,Liquid,remove,Cache
+/matches/2316691/liquid-vs-misfits-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316685/luminosity-vs-misfits-americas-minor-eleague-major-2018,1,Luminosity,remove,Overpass
+/matches/2316685/luminosity-vs-misfits-americas-minor-eleague-major-2018,2,Misfits,remove,Inferno
+/matches/2316685/luminosity-vs-misfits-americas-minor-eleague-major-2018,3,Luminosity,pick,Cobble
+/matches/2316685/luminosity-vs-misfits-americas-minor-eleague-major-2018,4,Misfits,pick,Cache
+/matches/2316685/luminosity-vs-misfits-americas-minor-eleague-major-2018,5,Misfits,remove,Train
+/matches/2316685/luminosity-vs-misfits-americas-minor-eleague-major-2018,6,Luminosity,remove,Nuke
+/matches/2316685/luminosity-vs-misfits-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316684/misfits-vs-rise-nation-americas-minor-eleague-major-2018,1,Rise Nation,remove,Cache
+/matches/2316684/misfits-vs-rise-nation-americas-minor-eleague-major-2018,2,Misfits,remove,Cobble
+/matches/2316684/misfits-vs-rise-nation-americas-minor-eleague-major-2018,3,Rise Nation,pick,Nuke
+/matches/2316684/misfits-vs-rise-nation-americas-minor-eleague-major-2018,4,Misfits,pick,Overpass
+/matches/2316684/misfits-vs-rise-nation-americas-minor-eleague-major-2018,5,Misfits,remove,Inferno
+/matches/2316684/misfits-vs-rise-nation-americas-minor-eleague-major-2018,6,Rise Nation,remove,Train
+/matches/2316684/misfits-vs-rise-nation-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316683/clg-vs-luminosity-americas-minor-eleague-major-2018,1,CLG,remove,Nuke
+/matches/2316683/clg-vs-luminosity-americas-minor-eleague-major-2018,2,CLG,remove,Overpass
+/matches/2316683/clg-vs-luminosity-americas-minor-eleague-major-2018,3,Luminosity,remove,Cobble
+/matches/2316683/clg-vs-luminosity-americas-minor-eleague-major-2018,4,Luminosity,remove,Mirage
+/matches/2316683/clg-vs-luminosity-americas-minor-eleague-major-2018,5,Luminosity,remove,Inferno
+/matches/2316683/clg-vs-luminosity-americas-minor-eleague-major-2018,6,CLG,remove,Cache
+/matches/2316683/clg-vs-luminosity-americas-minor-eleague-major-2018,7,Train was,left,Train
+/matches/2316682/luminosity-vs-rise-nation-americas-minor-eleague-major-2018,1,Rise Nation,remove,Cache
+/matches/2316682/luminosity-vs-rise-nation-americas-minor-eleague-major-2018,2,Rise Nation,remove,Train
+/matches/2316682/luminosity-vs-rise-nation-americas-minor-eleague-major-2018,3,Luminosity,remove,Mirage
+/matches/2316682/luminosity-vs-rise-nation-americas-minor-eleague-major-2018,4,Luminosity,remove,Nuke
+/matches/2316682/luminosity-vs-rise-nation-americas-minor-eleague-major-2018,5,Luminosity,remove,Cobble
+/matches/2316682/luminosity-vs-rise-nation-americas-minor-eleague-major-2018,6,Rise Nation,remove,Overpass
+/matches/2316682/luminosity-vs-rise-nation-americas-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316681/clg-vs-misfits-americas-minor-eleague-major-2018,1,CLG,remove,Nuke
+/matches/2316681/clg-vs-misfits-americas-minor-eleague-major-2018,2,CLG,remove,Overpass
+/matches/2316681/clg-vs-misfits-americas-minor-eleague-major-2018,3,Misfits,remove,Train
+/matches/2316681/clg-vs-misfits-americas-minor-eleague-major-2018,4,Misfits,remove,Cobble
+/matches/2316681/clg-vs-misfits-americas-minor-eleague-major-2018,5,Misfits,remove,Inferno
+/matches/2316681/clg-vs-misfits-americas-minor-eleague-major-2018,6,CLG,remove,Cache
+/matches/2316681/clg-vs-misfits-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316680/nrg-vs-complexity-americas-minor-eleague-major-2018,1,NRG,remove,Train
+/matches/2316680/nrg-vs-complexity-americas-minor-eleague-major-2018,2,compLexity,remove,Overpass
+/matches/2316680/nrg-vs-complexity-americas-minor-eleague-major-2018,3,NRG,pick,Mirage
+/matches/2316680/nrg-vs-complexity-americas-minor-eleague-major-2018,4,compLexity,pick,Inferno
+/matches/2316680/nrg-vs-complexity-americas-minor-eleague-major-2018,5,compLexity,remove,Cache
+/matches/2316680/nrg-vs-complexity-americas-minor-eleague-major-2018,6,NRG,remove,Nuke
+/matches/2316680/nrg-vs-complexity-americas-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316679/teamone-vs-complexity-americas-minor-eleague-major-2018,1,TeamOne,remove,Overpass
+/matches/2316679/teamone-vs-complexity-americas-minor-eleague-major-2018,2,compLexity,remove,Cache
+/matches/2316679/teamone-vs-complexity-americas-minor-eleague-major-2018,3,TeamOne,pick,Nuke
+/matches/2316679/teamone-vs-complexity-americas-minor-eleague-major-2018,4,compLexity,pick,Train
+/matches/2316679/teamone-vs-complexity-americas-minor-eleague-major-2018,5,compLexity,remove,Inferno
+/matches/2316679/teamone-vs-complexity-americas-minor-eleague-major-2018,6,TeamOne,remove,Mirage
+/matches/2316679/teamone-vs-complexity-americas-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
+/matches/2316678/liquid-vs-nrg-americas-minor-eleague-major-2018,1,Liquid,remove,Nuke
+/matches/2316678/liquid-vs-nrg-americas-minor-eleague-major-2018,2,Liquid,remove,Train
+/matches/2316678/liquid-vs-nrg-americas-minor-eleague-major-2018,3,NRG,remove,Cache
+/matches/2316678/liquid-vs-nrg-americas-minor-eleague-major-2018,4,NRG,remove,Overpass
+/matches/2316678/liquid-vs-nrg-americas-minor-eleague-major-2018,5,NRG,remove,Cobble
+/matches/2316678/liquid-vs-nrg-americas-minor-eleague-major-2018,6,Liquid,remove,Mirage
+/matches/2316678/liquid-vs-nrg-americas-minor-eleague-major-2018,7,Inferno was,left,Inferno
+/matches/2316613/nrg-vs-complexity-americas-minor-eleague-major-2018,1,NRG,remove,Train
+/matches/2316613/nrg-vs-complexity-americas-minor-eleague-major-2018,2,NRG,remove,Cache
+/matches/2316613/nrg-vs-complexity-americas-minor-eleague-major-2018,3,compLexity,remove,Inferno
+/matches/2316613/nrg-vs-complexity-americas-minor-eleague-major-2018,4,compLexity,remove,Overpass
+/matches/2316613/nrg-vs-complexity-americas-minor-eleague-major-2018,5,compLexity,remove,Nuke
+/matches/2316613/nrg-vs-complexity-americas-minor-eleague-major-2018,6,NRG,remove,Cobble
+/matches/2316613/nrg-vs-complexity-americas-minor-eleague-major-2018,7,Mirage was,left,Mirage
+/matches/2316612/liquid-vs-teamone-americas-minor-eleague-major-2018,1,Liquid,remove,Nuke
+/matches/2316612/liquid-vs-teamone-americas-minor-eleague-major-2018,2,Liquid,remove,Inferno
+/matches/2316612/liquid-vs-teamone-americas-minor-eleague-major-2018,3,TeamOne,remove,Overpass
+/matches/2316612/liquid-vs-teamone-americas-minor-eleague-major-2018,4,TeamOne,remove,Mirage
+/matches/2316612/liquid-vs-teamone-americas-minor-eleague-major-2018,5,TeamOne,remove,Train
+/matches/2316612/liquid-vs-teamone-americas-minor-eleague-major-2018,6,Liquid,remove,Cache
+/matches/2316612/liquid-vs-teamone-americas-minor-eleague-major-2018,7,Cobblestone was,left,Cobble
