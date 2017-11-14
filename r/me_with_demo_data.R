@@ -3,6 +3,7 @@ library(lme4)
 library(plyr)
 library(dplyr)
 library(sm)
+library(stringr)
 
 drv <- dbDriver('PostgreSQL')
 
@@ -84,7 +85,7 @@ map_name = as.factor(map_name)
 rounds = list(-1,c(1,16),c(2,17),c(3,18),c(4,19),c(c(5:13),c(20:28)),c(14,29),c(15,30))
 round_types = c('knife', 'pistol', 'rd2', 'rd3', 'rd4', 'main', 'rd14', 'rd15')
 
-glmer.function <- function(formula, temp_data, map, round_type, team_str){
+glmer.function <- function(formula, temp_data, map, round_type){
   model = glmer(formula, data = temp_data, family = binomial, verbose = 2)
   
   relgrad <- with(model@optinfo$derivs,solve(Hessian,gradient))
@@ -93,7 +94,7 @@ glmer.function <- function(formula, temp_data, map, round_type, team_str){
   }
   
   # summary(model)
-  eff <- ranef(model, condVar=TRUE)
+  eff <- ranef(model, condVar = T)
   
   t = eff$t_team
   t$map_name = map
@@ -113,7 +114,7 @@ glmer.function <- function(formula, temp_data, map, round_type, team_str){
   colnames(ct)[c(2,6)] <- c("int","rounds")
   ct$round_type = round_type
   
-  team_str = rbind(team_str,rbind(ct,t))
+  return(rbind(t,ct))
 }
 
 team_str = data.frame()
@@ -124,14 +125,14 @@ for (map in c('all',unique(round_data$map_name))){
   
   if (map == 'all'){
     temp_data = round_data[round != -1,]
-    glmer.function(update(formula, ~ . + (1|map_name)), temp_data, NA, 'all', team_str)
+    team_str = rbind(team_str,glmer.function(update(formula, ~ . + (1|map_name)), temp_data, NA, 'all'))
   } else {
     for (i in c(1:8)){
       temp_data = round_data[(map_name == map) & (round %in% rounds[[i]]),]
       if (i %in% c(1,2)){
-        glmer.function(update(formula, ~ . - (1|ct_econ_group)), temp_data, map, round_types[i], team_str)
+        team_str = rbind(team_str,glmer.function(update(formula, ~ . - (1|ct_econ_group)), temp_data, map, round_types[i]))
       } else {
-        glmer.function(formula, temp_data, map, round_types[i], team_str) 
+        team_str = rbind(team_str,glmer.function(formula, temp_data, map, round_types[i]))
       }
     }
   }
@@ -139,11 +140,15 @@ for (map in c('all',unique(round_data$map_name))){
 
 
 
+current_ct = team_str[(team_str$side == 'ct') & (team_str$round_type == 'all') & (str_sub(team_str$team, start = -2) == '_0'),]
+# current_ct$str = current_ct$int - current_ct$var
+current_t = team_str[(team_str$side == 't') & (team_str$round_type == 'all') & (str_sub(team_str$team, start = -2) == '_0'),]
+# current_t$str = current_t$int + current_t$var
 
-
-current_ct = ct[str_sub(ct$team, start = -2) == '_0',]
+# head(current_ct[order(-current_ct$str),],25)
 head(current_ct[order(-current_ct$int),],25)
-
+# head(current_t[order(current_t$str),],25)
+head(current_t[order(current_t$int),],25)
 
 
 
