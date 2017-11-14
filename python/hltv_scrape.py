@@ -185,9 +185,10 @@ def event_data():
                 
 event_data()
 
-
 def match_data():
     print('### Matches ###')
+    
+    active_teams = False
     
     scraped_events = pd.read_csv('csv\\hltv_events.csv', header = None)
     
@@ -437,6 +438,7 @@ def match_data():
                                 resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 resultwriter.writerow([match_href, map_num, map_name, match_team1_href, team1_rounds,
                                                        match_team2_href, team2_rounds, result, abs_result])
+                            active_teams = True
                         if row[6] == 1:
                             for half in [1,2]:
                                 team1_side = map_.contents[3].contents[4*half].get('class')[0]
@@ -462,5 +464,33 @@ def match_data():
                     with open("csv\\hltv_round_results.csv", 'ab') as roundcsv:
                         roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                         roundwriter.writerow([match_href, map_num, None, None, None, None, None, None, None, None])
+    return active_teams
                         
-match_data()
+team_check = match_data()
+
+def active_teams():
+    print('### Active Teams ###')
+    
+    active_team_pd = pd.DataFrame(columns = [0,1])
+    
+    if team_check == True:
+        map_results = pd.read_csv('csv\\hltv_map_results.csv', header = None)
+        team_hrefs = set(list(map_results.loc[pd.isnull(map_results[3]) == False,3].drop_duplicates()) + list(map_results.loc[pd.isnull(map_results[5]) == False,5].drop_duplicates()))
+        for team_href in team_hrefs:
+            team_url = 'https://www.hltv.org' + team_href
+            team_req = requests.get(team_url, headers = header)
+            team_soup = BeautifulSoup(team_req.content, 'lxml')
+            
+            players = team_soup.find('div', {'class': 'standard-box profileTopBox clearfix'}).find_all('div', {'class': 'standard-box overlayImageFrame'})
+            player_names = ''
+            for player in players:
+                player_names = player.contents[2].text + player_names
+            
+            if player_names == '?????':
+                active_team_pd.loc[len(active_team_pd),] = [team_href,0]
+            else:
+                active_team_pd.loc[len(active_team_pd),] = [team_href,1]
+                                   
+        active_team_pd.to_csv('csv\\hltv_active_teams.csv', index = False, header = False)
+            
+active_teams()
