@@ -128,7 +128,11 @@ for (map in c('all',unique(round_data$map_name))){
   } else {
     for (i in c(1:8)){
       temp_data = round_data[(map_name == map) & (round %in% rounds[[i]]),]
-      glmer.function(formula, temp_data, map, round_types[i], team_str) 
+      if (i %in% c(1,2)){
+        glmer.function(update(formula, ~ . - (1|ct_econ_group)), temp_data, map, round_types[i], team_str)
+      } else {
+        glmer.function(formula, temp_data, map, round_types[i], team_str) 
+      }
     }
   }
 }
