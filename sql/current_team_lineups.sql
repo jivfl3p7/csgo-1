@@ -9,7 +9,7 @@ create table csgo.current_team_lineups as (
 		,a.match_href
 		,a.datetime_utc
 		,a.lineup_id
-		,sum(a.new_lineup) OVER (partition by a.team_href order by a.datetime_utc) as rk
+		,sum(a.new_lineup) OVER (partition by a.team_href order by a.datetime_utc desc) as rk
 	from (
 		select distinct
 			a.team_href
@@ -17,8 +17,8 @@ create table csgo.current_team_lineups as (
 			,a.match_href
 			,a.lineup_id
 			,case
-				when lag(a.team_href) over () != team_href then 0
-				when lag(a.lineup_id) over () != lineup_id then 1
+				when lead(a.team_href) over () != team_href then 0
+				when lead(a.lineup_id) over () != lineup_id then 1
 				else 0
 			end as new_lineup
 			,a.datetime_utc
@@ -47,16 +47,16 @@ create table csgo.current_team_lineups as (
 					on ml.team_href = tn.team_href
 			order by
 				ml.team_href
-				,ml.datetime_utc
+				,ml.datetime_utc desc
 			) as a
 		order by
 			a.team_href
-			,a.datetime_utc
+			,a.datetime_utc desc
 			,a.lineup_id
 		) as a
 	order by
 		a.team_href
-		,a.datetime_utc
+		,a.datetime_utc desc
 		,a.lineup_id
 );
 
