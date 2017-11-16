@@ -4,7 +4,7 @@ drop table if exists csgo.hltv_active_teams;
 
 create table csgo.hltv_active_teams (
 	team_href	text,
-	active		float
+	lineup		text
 );
 
 truncate table csgo.hltv_active_teams;

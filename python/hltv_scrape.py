@@ -471,9 +471,9 @@ team_check = match_data()
 def active_teams():
     print('### Active Teams ###')
     
-    active_team_pd = pd.DataFrame(columns = [0,1])
-    
     if team_check == True:
+        active_team_pd = pd.DataFrame(columns = [0,1])
+        
         map_results = pd.read_csv('csv\\hltv_map_results.csv', header = None)
         team_hrefs = set(list(map_results.loc[pd.isnull(map_results[3]) == False,3].drop_duplicates()) + list(map_results.loc[pd.isnull(map_results[5]) == False,5].drop_duplicates()))
         for team_href in team_hrefs:
@@ -482,14 +482,22 @@ def active_teams():
             team_soup = BeautifulSoup(team_req.content, 'lxml')
             
             players = team_soup.find('div', {'class': 'standard-box profileTopBox clearfix'}).find_all('div', {'class': 'standard-box overlayImageFrame'})
-            player_names = ''
+            href_list,active = [],True
             for player in players:
-                player_names = player.contents[2].text + player_names
+                try:
+                    href_list.append(player.contents[2].contents[2].get('href'))
+                except:
+                    active = False
+                    break
             
-            if player_names == '?????':
-                active_team_pd.loc[len(active_team_pd),] = [team_href,0]
+            if active == False:
+                active_team_pd.loc[len(active_team_pd),] = [team_href,None]
             else:
-                active_team_pd.loc[len(active_team_pd),] = [team_href,1]
+                href_list.sort()
+                lineup = ''
+                for player_href in href_list:
+                    lineup = lineup + player_href
+                active_team_pd.loc[len(active_team_pd),] = [team_href,lineup]
                                    
         active_team_pd.to_csv('csv\\hltv_active_teams.csv', index = False, header = False)
             
