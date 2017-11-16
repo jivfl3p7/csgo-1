@@ -171,4 +171,4 @@ current_ranks = ov_str[(str_sub(ov_str$team, start = -2) == '_0') & (str_sub(ov_
 
 head(current_ranks[order(-current_ranks$ov_int),],30)
 
-dbWriteTable(con, c('csgo', 'test'), current_ranks[order(-current_ranks$ov_int),], row.names = F, overwrite = T)
+dbWriteTable(con, c('csgo', 'team_rankings'), current_ranks[order(-current_ranks$ov_int),], row.names = F, overwrite = T)
