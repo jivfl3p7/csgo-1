@@ -31,6 +31,6 @@ psql -U postgres -d esports -qf sql/current_team_lineups.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/demo_info.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/demo_rounds.sql
 
-::placeholder for R script(s)
+::Rscript --silent r\me_with_demo_data.R
 
 pause
