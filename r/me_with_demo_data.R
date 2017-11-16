@@ -160,64 +160,15 @@ for (map in c('all','knife',unique(round_data$map_name))){
   }
 }
 
+hist((ov_str$ct_var - mean(ov_str$ct_var))/sd(ov_str$ct_var))
 
-team_str$ct_str = 
+ov_str = team_str[team_str$round_type == 'all',!(colnames(team_str) %in% c('map_name','round_type'))]
+ov_str$ov_int = ((ov_str$ct_int*ov_str$ct_rounds) - (ov_str$t_int*ov_str$t_rounds))/(ov_str$ct_rounds + ov_str$t_rounds)
+ov_str$ov_var = ((ov_str$ct_var*ov_str$ct_rounds) + (ov_str$t_var*ov_str$t_rounds))/(ov_str$ct_rounds + ov_str$t_rounds)
+ov_str$ov_rds = ov_str$ct_rounds + ov_str$t_rounds
 
+current_ranks = ov_str[(str_sub(ov_str$team, start = -2) == '_0') & (str_sub(ov_str$team, end = -3) %in% active_teams),]
 
-current_ct = team_str[(team_str$side == 'ct') & (team_str$round_type == 'all') & (str_sub(team_str$team, start = -2) == '_0') & (str_sub(team_str$team, end = -3) %in% active_teams),]
-# current_ct$str = current_ct$int - current_ct$var
-current_t = team_str[(team_str$side == 't') & (team_str$round_type == 'all') & (str_sub(team_str$team, start = -2) == '_0') & (str_sub(team_str$team, end = -3) %in% active_teams),]
-# current_t$str = current_t$int + current_t$var
+head(current_ranks[order(-current_ranks$ov_int),],30)
 
-# head(current_ct[order(-current_ct$str),],25)
-head(current_ct[order(-current_ct$int),],25)
-# head(current_t[order(current_t$str),],25)
-head(current_t[order(current_t$int),],25)
-
-
-hist(team_str[team_str$side == 't','int'])
-hist(team_str[team_str$side == 'ct','int'])
-
-
-
-map_side_est = data.frame()
-for (map in unique(round_data$map_name)){
-  model = glmer(full_formula, data = round_data[round_data$map_name == map,], family = binomial, verbose = 2)
-  ct_val = 3
-  
-  relgrad <- with(model@optinfo$derivs,solve(Hessian,gradient))
-  
-  if (max(abs(relgrad)) > 0.001){
-    model = glmer(abg_formula, data = round_data[round_data$map_name == map,], family = binomial, verbose = 2)
-    relgrad <- with(model@optinfo$derivs,solve(Hessian,gradient))
-    ct_val = 1
-  }
-  
-  if (max(abs(relgrad)) < 0.001){
-    
-    
-    t = eff$t_team
-    t$map_name = map
-    t$side = 't'
-    t$team = rownames(t)
-    t$var = sqrt(attr(eff[[2]], "postVar")[1, 1, ])
-    t = merge(t, data.frame(table(round_data$t_team[round_data$map_name == map])), by.x = 'team', by.y = 'Var1', all.x = T)
-    colnames(t)[c(2,6)] <- c("int","rounds")
-    t$int = -1*t$int
-    t$int_good = t$int + t$var
-    t$int_bad = t$int - t$var
-    
-    ct = eff$ct_team
-    ct$map_name = map
-    ct$side = 'ct'
-    ct$team = rownames(ct)
-    ct$var = sqrt(attr(eff[[ct_val]], "postVar")[1, 1, ])
-    ct = merge(ct, data.frame(table(round_data$ct_team[round_data$map_name == map])), by.x = 'team', by.y = 'Var1', all.x = T)
-    colnames(ct)[c(2,6)] <- c("int","rounds")
-    ct$int_good = ct$int + ct$var
-    ct$int_bad = ct$int - ct$var
-    
-    map_side_est = rbind(map_side_est,rbind(ct,t))
-  }
-  
-}
+dbWriteTable(con, c('csgo', 'test'), current_ranks[order(-current_ranks$ov_int),], row.names = F, overwrite = T)
