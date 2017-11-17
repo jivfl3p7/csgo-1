@@ -352,6 +352,7 @@ def match_data():
                 prev_match = match_href
                 
             map_stats = match_soup.find_all('div', {'class': 'stats-content'})
+            player_list,lineup = [],''
             if not map_stats == []:
                 for map_ in map_stats:
                     if map_.get('id') != 'all-content':
@@ -365,6 +366,7 @@ def match_data():
                             team_href = map_.contents[team].contents[1].contents[1].contents[1].contents[1].get('href')
                             for player in player_rows:
                                 player_href = player.contents[1].contents[0].get('href')
+                                player_list.append(player_href)
                                 player_name = player.contents[1].contents[0].contents[1].contents[4].text.encode('utf-8')
                                 if int(player.contents[3].text.split('-')[1]) == 0:
                                     kd = int(player.contents[3].text.split('-')[0])/1
@@ -373,6 +375,13 @@ def match_data():
                                 with open("csv\\hltv_player_stats.csv", 'ab') as statscsv:
                                     statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                     statswriter.writerow([match_href, map_name, team_href, player_href, player_name, kd])
+                            
+                            player_list.sort()
+                            for player_href in player_list:
+                                lineup = lineup + player_href
+                            with open("csv\\hltv_match_lineups.csv", 'ab') as lineupcsv:
+                                lineupwriter = csv.writer(lineupcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                lineupwriter.writerow([match_href, map_name, team_href, lineup])
             else:
                 map_lineups = match_soup.find_all('div', {'class': 'lineups'})
                 map_results = match_soup.find_all('div', {'class': 'mapholder'})
@@ -384,6 +393,7 @@ def match_data():
                             'player'})
                         for player in players:
                             player_href = player.contents[0].get('href')
+                            player_list.append(player_href)
                             if '\'' in player.contents[0].contents[1].contents[0].get('title'):
                                 player_name = re.sub('\'','',re.compile('(?=\').*(?<=\')').search(
                                     player.contents[0].contents[1].contents[0].get('title')).group(0))
@@ -392,7 +402,14 @@ def match_data():
                             with open("csv\\hltv_player_stats.csv", 'ab') as statscsv:
                                 statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 statswriter.writerow([match_href, map_name, team_href, player_href, player_name, None])
-                                    
+                                
+                        player_list.sort()
+                        for player_href in player_list:
+                            lineup = lineup + player_href
+                        with open("csv\\hltv_match_lineups.csv", 'ab') as lineupcsv:
+                            lineupwriter = csv.writer(lineupcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                            lineupwriter.writerow([match_href, map_name, team_href, lineup])
+            
         if (row[5] == 1) | (row[6] == 1):
             if match_href != prev_match:
                 print('\t' + match_href)
@@ -472,7 +489,7 @@ def active_teams():
     print('### Active Teams ###')
     
     if team_check == True:
-        active_team_pd = pd.DataFrame(columns = [0,1])
+        active_teams_pd = pd.DataFrame(columns = [0,1,2])
         
         map_results = pd.read_csv('csv\\hltv_map_results.csv', header = None)
         team_hrefs = set(list(map_results.loc[pd.isnull(map_results[3]) == False,3].drop_duplicates()) + list(map_results.loc[pd.isnull(map_results[5]) == False,5].drop_duplicates()))
@@ -480,6 +497,8 @@ def active_teams():
             team_url = 'https://www.hltv.org' + team_href
             team_req = requests.get(team_url, headers = header)
             team_soup = BeautifulSoup(team_req.content, 'lxml')
+            
+            team_name = team_soup.find('div', {'class': 'standard-box profileTopBox clearfix'}).contents[-2].contents[0].text
             
             players = team_soup.find('div', {'class': 'standard-box profileTopBox clearfix'}).find_all('div', {'class': 'standard-box overlayImageFrame'})
             href_list,active = [],True
@@ -491,14 +510,15 @@ def active_teams():
                     break
             
             if active == False:
-                active_team_pd.loc[len(active_team_pd),] = [team_href,None]
+                active_teams_pd.loc[len(active_teams_pd),] = [team_href,team_name,None]
             else:
                 href_list.sort()
                 lineup = ''
                 for player_href in href_list:
                     lineup = lineup + player_href
-                active_team_pd.loc[len(active_team_pd),] = [team_href,lineup]
-                                   
-        active_team_pd.to_csv('csv\\hltv_active_teams.csv', index = False, header = False)
+                active_teams_pd.loc[len(active_teams_pd),] = [team_href,team_name,lineup]
+        
+        active_teams_pd[1] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in active_teams_pd[1]]
+        active_teams_pd.to_csv('csv\\hltv_active_teams.csv', index = False, header = False)
             
 active_teams()

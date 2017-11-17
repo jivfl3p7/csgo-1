@@ -24,10 +24,9 @@ psql -U postgres -d esports -v init_path=%init_path% -qf sql/hltv_match_info.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/hltv_map_results.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/hltv_round_results.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/hltv_player_stats.sql
+psql -U postgres -d esports -v init_path=%init_path% -qf sql/hltv_match_lineups.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/hltv_vetos.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/hltv_active_teams.sql
-psql -U postgres -d esports -qf sql/match_lineups.sql
-psql -U postgres -d esports -qf sql/current_team_lineups.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/demo_info.sql
 psql -U postgres -d esports -v init_path=%init_path% -qf sql/demo_rounds.sql
 
