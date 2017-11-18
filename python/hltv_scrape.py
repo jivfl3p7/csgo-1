@@ -219,8 +219,13 @@ def match_data():
         exist_map_rounds = pd.read_csv('csv\\hltv_round_results.csv', header = None)
     except:
         exist_map_rounds = pd.DataFrame(index = range(0), columns = [0])
+        
+    try:
+        exist_match_lineups = pd.read_csv('csv\\hltv_match_lineups.csv', header = None)
+    except:
+        exist_match_lineups = pd.DataFrame(index = range(0), columns = [0])
     
-    match_iterator = pd.DataFrame(index = range(0), columns = [0,1,2,3,4,5,6])
+    match_iterator = pd.DataFrame(index = range(0), columns = range(0,8))
     
     for index, row in scraped_events.iterrows():
         event_href = row[0]
@@ -231,12 +236,12 @@ def match_data():
             for match in result_rows:
                 match_href = match.contents[0].get('href')
                 if match_href in list(exist_match_info[1]):
-                    match_iterator.loc[len(match_iterator)] = [None,match_href,0,0,0,0,0]
+                    match_iterator.loc[len(match_iterator)] = [None,match_href,0,0,0,0,0,0]
                 else:
-                    match_iterator.loc[len(match_iterator)] = [event_href,match_href,1,0,0,0,0]
+                    match_iterator.loc[len(match_iterator)] = [event_href,match_href,1,0,0,0,0,0]
         else:
             for match_href in set(exist_match_info.loc[exist_match_info[0] == event_href,1]):
-                match_iterator.loc[len(match_iterator)] = [None,match_href,0,0,0,0,0]
+                match_iterator.loc[len(match_iterator)] = [None,match_href,0,0,0,0,0,0]
                 
     for match_href in set(match_iterator[1]):
         if match_href not in set(exist_vetos[0]):
@@ -247,6 +252,8 @@ def match_data():
             match_iterator.loc[match_iterator[1] == match_href,5] = 1
         if match_href not in set(exist_map_rounds[0]):
             match_iterator.loc[match_iterator[1] == match_href,6] = 1
+        if match_href not in set(exist_match_lineups[0]):
+            match_iterator.loc[match_iterator[1] == match_href,7] = 1
             
     prev_match = None
             
@@ -260,7 +267,7 @@ def match_data():
             if match_href != prev_match:
                 print('\t' + match_href)
                 prev_match = match_href
-                
+            
             try:
                 match_team1_name = match_soup.find_all('div', {'class': 'teamName'})[0].text.encode('utf-8').strip()
                 try:
@@ -286,6 +293,37 @@ def match_data():
                     with open("csv\\hltv_match_info.csv", 'ab') as matchcsv:
                         matchwriter = csv.writer(matchcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                         matchwriter.writerow([event_href, match_href, None, None, None, None, None, None])
+                        
+        if row[7] == 1:
+            teams = match_soup.find('div', {'class': 'stats-content', 'id': 'all-content'})
+            if not teams == None:
+                for team in [1,3]:
+                    team_href = teams.contents[team].find_all('a')[0].get('href')
+                    players = teams.contents[team].find_all('a')
+                    player_list,lineup = [],''
+                    for player in range(1,6):
+                        player_list.append(players[player].get('href'))
+                    player_list.sort()
+                    for player_href in player_list:
+                        lineup = lineup + player_href
+                    with open("csv\\hltv_match_lineups.csv", 'ab') as lineupcsv:
+                        lineupwriter = csv.writer(lineupcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                        lineupwriter.writerow([match_href, team_href, lineup])
+            else:
+                teams = match_soup.find('div', {'class': 'lineups'}).find_all('div', {'class': 'lineup standard-box'})
+                for team in teams:
+                    team_href = team.contents[1].contents[1].get('href')
+                    players = team.contents[3].contents[1].contents[1].contents
+                    player_list,lineup = [],''
+                    for player in [1,3,5,7,9]:
+                        player_list.append(players[player].contents[0].get('href'))
+                    player_list.sort()
+                    for player_href in player_list:
+                        lineup = lineup + player_href
+                    with open("csv\\hltv_match_lineups.csv", 'ab') as lineupcsv:
+                        lineupwriter = csv.writer(lineupcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                        lineupwriter.writerow([match_href, team_href, lineup])
+                    
         
         if row[3] == 1:
             if match_href != prev_match:
@@ -376,12 +414,6 @@ def match_data():
                                     statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                     statswriter.writerow([match_href, map_name, team_href, player_href, player_name, kd])
                             
-                            player_list.sort()
-                            for player_href in player_list:
-                                lineup = lineup + player_href
-                            with open("csv\\hltv_match_lineups.csv", 'ab') as lineupcsv:
-                                lineupwriter = csv.writer(lineupcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                lineupwriter.writerow([match_href, map_name, team_href, lineup])
             else:
                 map_lineups = match_soup.find_all('div', {'class': 'lineups'})
                 map_results = match_soup.find_all('div', {'class': 'mapholder'})
@@ -402,13 +434,6 @@ def match_data():
                             with open("csv\\hltv_player_stats.csv", 'ab') as statscsv:
                                 statswriter = csv.writer(statscsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
                                 statswriter.writerow([match_href, map_name, team_href, player_href, player_name, None])
-                                
-                        player_list.sort()
-                        for player_href in player_list:
-                            lineup = lineup + player_href
-                        with open("csv\\hltv_match_lineups.csv", 'ab') as lineupcsv:
-                            lineupwriter = csv.writer(lineupcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                            lineupwriter.writerow([match_href, map_name, team_href, lineup])
             
         if (row[5] == 1) | (row[6] == 1):
             if match_href != prev_match:

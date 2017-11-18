@@ -4,7 +4,6 @@ drop table if exists csgo.hltv_match_lineups;
 
 create table csgo.hltv_match_lineups (
 	match_href	text,
-	map_name	text,
 	team_href	text,
 	lineup		text
 );
