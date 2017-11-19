@@ -1,12 +1,5 @@
 library(RPostgreSQL)
 library(lme4)
-library(plyr)
-library(dplyr)
-library(sm)
-library(stringr)
-library(ggplot2)
-library(ggrepel)
-library(ggjoy)
 
 drv <- dbDriver('PostgreSQL')
 
@@ -20,21 +13,19 @@ select distinct
   ,dr.match_href
   ,dr.map_num
   ,di.map_name
+  ,case
+  when v.team_href = dr.t_href then -1
+  when v.team_href = dr.ct_href then 1
+  when v.action_ = 'remain' then 0
+  else 999
+  end as pick
   ,dr.round
   ,dr.t_href
   ,tl2.team_name as t_team
-  ,tl.lineup_id as t_lineup
-  ,case
-    when tl3.team_href is null then 0
-    else 1
-  end as t_active
+  ,tl.lineup as t_lineup
   ,dr.ct_href
   ,ctl2.team_name as ct_team
-  ,ctl.lineup_id as ct_lineup
-  ,case
-    when ctl3.team_href is null then 0
-    else 1
-  end as ct_active
+  ,ctl.lineup as ct_lineup
   ,dr.ct_econ_adv as ct_econ_adv
   ,dr.ct_reward_diff
   ,dr.defuse as defuse_kits
@@ -43,32 +34,28 @@ select distinct
 from csgo.demo_rounds as dr
   left join csgo.demo_info as di
     on
-    dr.match_href = di.match_href
-    and dr.map_num = di.map_num
+      dr.match_href = di.match_href
+      and dr.map_num = di.map_num
   left join csgo.hltv_match_info as mi
     on dr.match_href = mi.match_href
   left join csgo.hltv_events as e
     on mi.event_href = e.event_href
-  left join csgo.match_lineups as tl
+  left join csgo.hltv_match_lineups as tl
     on
-    dr.match_href = tl.match_href
-    and dr.t_href = tl.team_href
-  left join csgo.current_team_lineups as tl2
+      dr.match_href = tl.match_href
+      and dr.t_href = tl.team_href
+  left join csgo.hltv_active_teams as tl2
+    on tl.lineup = tl2.lineup
+  left join csgo.hltv_match_lineups as ctl
     on
-    tl.lineup_id = tl2.lineup_id
-    and tl.match_href = tl2.match_href
-  left join csgo.hltv_active_teams as tl3
-    on tl.lineup_id = tl3.lineup
-  left join csgo.match_lineups as ctl
+      dr.match_href = ctl.match_href
+      and dr.ct_href = ctl.team_href
+  left join csgo.hltv_active_teams as ctl2
+    on ctl.lineup = ctl2.lineup
+  left join csgo.hltv_vetos as v
     on
-    dr.match_href = ctl.match_href
-    and dr.ct_href = ctl.team_href
-  left join csgo.current_team_lineups as ctl2
-    on
-    ctl.lineup_id = ctl2.lineup_id
-    and ctl.match_href = ctl2.match_href
-  left join csgo.hltv_active_teams as ctl3
-    on ctl.lineup_id = ctl3.lineup
+      dr.match_href = v.match_href
+      and di.map_name = v.map_name
 where
   di.map_name is not null
   and dr.round <= 30
@@ -87,8 +74,8 @@ round_data$ct_win = ifelse(round_data$winner == 3,1,0)
 round_data$ct_econ_group = ifelse(round(round_data$ct_econ_adv/5000) <= -4, -4, ifelse(round(round_data$ct_econ_adv/5000) >= 4, 4,round(round_data$ct_econ_adv/5000)))
 round_data$rd_type = ifelse(round_data$round %in% c(1,2), round_data$round, 0)
 
-active_teams = unique(c(round_data[round_data$t_active == 1,'t_lineup'],round_data[round_data$ct_active == 1,'ct_lineup']))
-unique(round_data[round_data$t_lineup == '/player/2023/FalleN/player/8564/fer/player/9216/coldzera/player/9217/TACO/player/9219/felps',c('t_team','t_active')])
+active_teams = unique(c(round_data[!is.na(round_data$t_team),'t_lineup'],round_data[!is.na(round_data$ct_team),'ct_lineup']))
+
 attach(round_data)
 
 ct_win = as.factor(ct_win)
@@ -100,10 +87,11 @@ event_href = as.factor(event_href)
 ct_econ_group = as.factor(ct_econ_group)
 map_name = as.factor(map_name)
 rd_type = as.factor(rd_type)
+pick = as.factor(pick)
 
 rounds = list(c(1,16),c(2,17),c(c(3:15),c(18:30)))
 round_types = c('pistol', 'rd2', 'main')
-formula = ct_win ~ (1|ct_lineup) + (1|t_lineup) + (1|ct_econ_group)
+formula = ct_win ~ (1|ct_lineup) + (1|t_lineup) + (1|ct_econ_group) + (1|pick)
 
 glmer.function <- function(formula, temp_data, map, round_type){
   model = glmer(formula, data = temp_data, family = binomial, verbose = 0)
@@ -131,29 +119,64 @@ glmer.function <- function(formula, temp_data, map, round_type){
   comb = merge(ct, t, by = 'lineup', all.x = T)
   comb$map_name = map
   comb$round_type = round_type
-
+  
   int_val = data.frame(variable = rownames(coef(summary(model))), coef(summary(model)), row.names = NULL)
   int_val$map_name = map
   int_val$round_type = round_type
+  
+  if ('pick' %in% names(eff)){
+    pick = eff$pick
+    pick$map_name = map
+    pick$round_type = round_type
+    pick$var = sqrt(attr(eff$pick, "postVar")[1, 1, ])
+    
+    rtn_list = list(comb,pick,int_val)
+  } else {
+    rtn_list = list(comb,int_val)
+  }
+  
+  if ('ct_econ_group' %in% names(eff)){
+    ct_econ = eff$ct_econ_group
+    ct_econ$map_name = map
+    ct_econ$round_type = round_type
+    ct_econ$var = sqrt(attr(eff$ct_econ_group, "postVar")[1, 1, ])
+    
+    rtn_list[[length(rtn_list) + 1]] = ct_econ
+  }
+  
+  if ('map_name:rd_type' %in% names(eff)){
+    mprt = eff$`map_name:rd_type`
+    mprt$map_name = map
+    mprt$round_type = round_type
+    mprt$var = sqrt(attr(eff$`map_name:rd_type`, "postVar")[1, 1, ])
+    
+    rtn_list[[length(rtn_list) + 1]] = mprt
+  }
 
-  return(list(comb,int_val))
+  return(rtn_list)
 }
 
-team_str = data.frame()
-fix_eff = data.frame()
+team_eff = data.frame()
+pick_eff = data.frame()
+int_eff = data.frame()
+econ_eff = data.frame()
+mprt_eff = data.frame()
 
 for (map in c('all','knife',unique(round_data$map_name))){
 
   if (map == 'all'){
     temp_data = round_data[round != -1,]
     rtrn = glmer.function(update(formula, ~ . + (1|map_name:rd_type)), temp_data, NA, map)
-    team_str = rbind(team_str,rtrn[[1]])
-    fix_eff = rbind(fix_eff,rtrn[[2]])
+    team_eff = rbind(team_eff,rtrn[[1]])
+    pick_eff = rbind(pick_eff,rtrn[[2]])
+    int_eff = rbind(int_eff,rtrn[[3]])
+    econ_eff = rbind(econ_eff,rtrn[[4]])
+    mprt_eff = rbind(mprt_eff,rtrn[[5]])
   } else if (map == 'knife'){
     temp_data = round_data[round == -1,]
-    rtrn = glmer.function(update(formula, ~ . - (1|ct_econ_group)), temp_data, NA, map)
-    team_str = rbind(team_str,rtrn[[1]])
-    fix_eff = rbind(fix_eff,rtrn[[2]])
+    rtrn = glmer.function(update(formula, ~ . - (1|ct_econ_group) - (1|pick)), temp_data, NA, map)
+    team_eff = rbind(team_eff,rtrn[[1]])
+    int_eff = rbind(int_eff,rtrn[[2]])
   } else {
     for (i in c(1:3)){
       print(c(map, i))
@@ -162,102 +185,28 @@ for (map in c('all','knife',unique(round_data$map_name))){
         rtrn = glmer.function(update(formula, ~ . - (1|ct_econ_group)), temp_data, map, round_types[i])
       } else {
         rtrn = glmer.function(formula, temp_data, map, round_types[i])
+        econ_eff = rbind(econ_eff,rtrn[[4]])
       }
-      team_str = rbind(team_str,rtrn[[1]])
-      fix_eff = rbind(fix_eff,rtrn[[2]])
+      team_eff = rbind(team_eff,rtrn[[1]])
+      pick_eff = rbind(pick_eff,rtrn[[2]])
+      int_eff = rbind(int_eff,rtrn[[3]])
     }
   }
 }
 
-head(team_str)
+dbWriteTable(con, c('csgo', 'glmer_team_eff'), team_eff, row.names = F, overwrite = T)
+dbWriteTable(con, c('csgo', 'glmer_pick_eff'), pick_eff, row.names = F, overwrite = T)
+dbWriteTable(con, c('csgo', 'glmer_int_eff'), int_eff, row.names = F, overwrite = T)
+dbWriteTable(con, c('csgo', 'glmer_econ_eff'), econ_eff, row.names = F, overwrite = T)
+dbWriteTable(con, c('csgo', 'glmer_mprt_eff'), mprt_eff, row.names = F, overwrite = T)
 
-ov_str = team_str[team_str$round_type == 'all',!(colnames(team_str) %in% c('map_name','round_type'))]
+
+ov_str = team_eff[team_eff$round_type == 'all',!(colnames(team_eff) %in% c('map_name','round_type'))]
 ov_str$ov_int = ((ov_str$ct_int - mean(ov_str$ct_int))*ov_str$ct_rounds - (ov_str$t_int - mean(ov_str$t_int))*ov_str$t_rounds)/(ov_str$ct_rounds + ov_str$t_rounds)
 ov_str$ov_var = ((ov_str$ct_var*ov_str$ct_rounds) + (ov_str$t_var*ov_str$t_rounds))/(ov_str$ct_rounds + ov_str$t_rounds)
 ov_str$ov_rds = ov_str$ct_rounds + ov_str$t_rounds
 
-current_ranks = merge(ov_str[(ov_str$ov_rds >= 200) & (ov_str$lineup %in% active_teams),],unique(round_data[round_data$t_active == 1,c('t_lineup','t_team')]), by.x = 'lineup', by.y = 't_lineup', all.x = T)
+current_ranks = merge(ov_str[(ov_str$lineup %in% active_teams),],unique(round_data[!is.na(round_data$t_team),c('t_lineup','t_team')]), by.x = 'lineup', by.y = 't_lineup', all.x = T)
 colnames(current_ranks)[11] = 'team'
                         
-dbWriteTable(con, c('csgo', 'team_rankings'), current_ranks[order(-current_ranks$ov_int),], row.names = F, overwrite = T)
-
-top_25 = head(current_ranks[order(-current_ranks$ov_int),c('team', 'lineup', 'ov_int', 'ov_var','ov_rds')],25)
-
-# joy_viz_df = data.frame()
-# for (i in c(1:nrow(top_25))){
-#   rvals = rnorm(10000,mean = top_25[i,'ov_int'], sd = top_25[i,'ov_var'])
-#   temp_df = data.frame(team = rep(top_25[i,'team'],10000), ov_int = top_25[i,'ov_int'], rval = rvals)
-#   joy_viz_df = rbind(joy_viz_df, temp_df)
-# }
-# 
-# ggplot(joy_viz_df, aes(x = rval, y = reorder(team,ov_int), fill = team)) +
-#   geom_joy(scale = 2, rel_min_height = 0.01) +
-#   theme_joy() +
-#   scale_fill_manual(values=rep(c('gray', 'lightblue'), nrow(joy_viz_df)/2)) +
-#   scale_y_discrete(expand = c(0.01, 0)) +
-#   scale_x_continuous(expand = c(0, 0)) +
-#   theme(legend.position = "None",
-#         axis.ticks.x = element_blank(),
-#         axis.ticks.y = element_blank(),
-#         axis.text.y = element_blank(),
-#         panel.grid.minor.x = element_blank(),
-#         panel.grid.major.y = element_blank(),
-#         panel.grid.minor.y = element_blank(),
-#         panel.background = element_rect(fill = NA)) +
-#   labs(x="team strength" ,y="") +
-#   geom_text_repel(
-#     data = top_25,
-#     aes(x = ov_int, y = reorder(team,ov_int), label = str_sub(team, end = -3)),
-#     size = 3,
-#     nudge_x = -0.2,
-#     nudge_y = 0.4,
-#     segment.color = NA
-#   )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ypos = c((nrow(top_25) - 1):0)
-xmin25 = top_25$ov_int - sqrt(top_25$ov_var)
-xmax25 = top_25$ov_int + sqrt(top_25$ov_var)
-line_segments = aes(y = ypos, yend = ypos, x = xmin25, xend = xmax25)
-
-ggplot(top_25, aes(x = ov_int, y = ypos, fill = team)) +
-  geom_segment(data = top_25, line_segments, color = 'black') +
-  geom_point(aes(x = ov_int, y = ypos, color = 'red'), size = 2) +
-  xlim(min(xmin25) - 0.02,max(xmax25)) +
-  theme(legend.position = "None",
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.background = element_rect(fill = NA)) +
-  labs(x="team strength" ,y="") +
-  geom_text_repel(
-    data = top_25,
-    aes(x = xmin25, y = ypos, label = team),
-    size = 3,
-    nudge_x = -0.01,
-    segment.color = NA
-  )
+dbWriteTable(con, c('csgo', 'glmer_team_ranks'), current_ranks[order(-current_ranks$ov_int),], row.names = F, overwrite = T)
