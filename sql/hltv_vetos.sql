@@ -5,9 +5,9 @@ drop table if exists csgo.hltv_vetos;
 create table csgo.hltv_vetos (
 	match_href	text,
 	step		float,
-	team_name	text,
+	team_href	text,
 	action_		text,
-	map		text
+	map_name	text
 );
 
 truncate table csgo.hltv_vetos;

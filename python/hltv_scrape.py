@@ -6,6 +6,8 @@ import re
 import math
 import datetime
 import csv
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 \
     Safari/537.36'}
@@ -190,6 +192,9 @@ def match_data():
     
     active_teams = False
     
+    map_search_re = 'nuke|c(o)*bble|mirage|inferno|cache|dust( )*2|overpass|train'
+    veto_words_re = 'remove|pick|veto|choose|ban'
+    
     scraped_events = pd.read_csv('csv\\hltv_events.csv', header = None)
     
     try:
@@ -201,9 +206,6 @@ def match_data():
         exist_vetos = pd.read_csv('csv\\hltv_vetos.csv', header = None)
     except:
         exist_vetos = pd.DataFrame(index = range(0), columns = [0])
-    
-    map_search_re = 'nuke|c(o)*bble|mirage|inferno|cache|dust( )*2|overpass|train'
-    veto_words_re = 'remove|pick|remain|left|veto|choose|ban'
         
     try:
         exist_player_stats = pd.read_csv('csv\\hltv_player_stats.csv', header = None)
@@ -330,6 +332,9 @@ def match_data():
                 print('\t' + match_href)
                 prev_match = match_href
                 
+            team_href_list = [x.get('href') for x in match_soup.find_all('a', {'class': 'teamName'})[0:2]]
+            team_name_list = [x.text for x in match_soup.find_all('a', {'class': 'teamName'})[0:2]]
+                
             match_veto_box = match_soup.find_all('div', {'class': 'standard-box veto-box'})
                         
             match_veto_process = None
@@ -354,31 +359,44 @@ def match_data():
                                                 pass
             if not match_veto_process == None:
                 for veto_step in match_veto_process:
-                        i = 1
-                        if re.compile(veto_words_re).search(veto_step.encode('utf-8')):
-                            try:
-                                step = int(veto_step.encode('utf-8')[0])
-                            except:
-                                step = i
-                            try:
-                                if re.compile('random|decider').search(veto_step.encode('utf-8')):
-                                    team = None
-                                    action = None
-                                else:
-                                    team = re.sub('^[0-9]\.( )*','',re.compile('.*(?= ' + veto_words_re + ')').search(
-                                        veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
-                                    action = re.compile(veto_words_re).search(veto_step.encode('utf-8')).group(0)
-                            except:
+                    i = 1
+                    if re.compile(veto_words_re).search(veto_step.encode('utf-8')):
+                        try:
+                            step = int(veto_step.encode('utf-8')[0])
+                        except:
+                            step = i
+                        try:
+                            if re.compile('decider').search(veto_step.encode('utf-8')):
                                 team = None
                                 action = None
-                            try:
-                                map_ = re.compile(map_search_re, re.I).search(veto_step.encode('utf-8')).group(0)
-                            except:
-                                continue
-                            with open("csv\\hltv_vetos.csv", 'ab') as vetocsv:
-                                vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-                                vetowriter.writerow([match_href, step, team, action, map_])
-                            i += 1
+                            elif re.compile('remain|left|random').search(veto_step.encode('utf-8')):
+                                team = None
+                                action = 'remain'
+                            else:
+                                team = re.sub('^[0-9]\.( )*','',re.compile('.*(?= ' + veto_words_re + ')').search(
+                                    veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
+                                if team == '?'
+                                    veto_team_href == '/team/6548/-'
+                                else:
+                                    match = process.extractOne(team,team_name_list)
+                                    if match[0] == team_name_list[0]:
+                                        veto_team_href = team_href_list[0]
+                                    else:
+                                        veto_team_href = team_href_list[1]
+                                action = re.compile(veto_words_re).search(veto_step.encode('utf-8')).group(0)
+                        except:
+                            team = None
+                            action = None
+                        try:
+                            hltv_map = re.compile(map_search_re, re.I).search(veto_step.encode('utf-8')).group(0)
+                            demo_map = process.extractOne(hltv_map,['de_cbble','de_overpass','de_mirage','de_dust2','de_cache',
+                                                                'de_inferno','de_train','de_nuke'])
+                        except:
+                            continue
+                        with open("csv\\hltv_vetos.csv", 'ab') as vetocsv:
+                            vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                            vetowriter.writerow([match_href, step, veto_team_href, action, demo_map])
+                        i += 1
             else:
                 with open("csv\\hltv_vetos.csv", 'ab') as vetocsv:
                     vetowriter = csv.writer(vetocsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
