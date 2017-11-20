@@ -79,26 +79,29 @@ active_teams = unique(c(round_data[!is.na(round_data$t_team),'t_lineup'],round_d
 attach(round_data)
 
 ct_win = as.factor(ct_win)
-season = as.factor(season)
 ct_lineup = as.factor(ct_lineup)
 t_lineup = as.factor(t_lineup)
-match_href = as.factor(match_href)
-event_href = as.factor(event_href)
 ct_econ_group = as.factor(ct_econ_group)
 map_name = as.factor(map_name)
 rd_type = as.factor(rd_type)
 pick = as.factor(pick)
+plant = as.factor(plant)
 
 rounds = list(c(1,16),c(2,17),c(c(3:15),c(18:30)))
 round_types = c('pistol', 'rd2', 'main')
-formula = ct_win ~ (1|ct_lineup) + (1|t_lineup) + (1|ct_econ_group) + (1|pick)
 
-glmer.function <- function(formula, temp_data, map, round_type){
+glmer.function <- function(formula, temp_data, map, round_type, dep_var){
   model = glmer(formula, data = temp_data, family = binomial, verbose = 0)
 
   relgrad <- with(model@optinfo$derivs,solve(Hessian,gradient))
-  if (max(abs(relgrad)) > 0.001){
+  if (max(abs(relgrad)) > 0.0003){
     print('##### converge issue #####')
+    model = glmer(update(formula, ~ . - (1|pick)), data = temp_data, family = binomial, verbose = 0)
+    
+    relgrad <- with(model@optinfo$derivs,solve(Hessian,gradient))
+    if (max(abs(relgrad)) > 0.0003){
+      stop(c(dep_var,i,map))
+    }
   }
 
   print(summary(model))
@@ -119,20 +122,23 @@ glmer.function <- function(formula, temp_data, map, round_type){
   comb = merge(ct, t, by = 'lineup', all.x = T)
   comb$map_name = map
   comb$round_type = round_type
+  comb$dep_var = dep_var
   
   int_val = data.frame(variable = rownames(coef(summary(model))), coef(summary(model)), row.names = NULL)
   int_val$map_name = map
   int_val$round_type = round_type
+  int_val$dep_var = dep_var
   
   if ('pick' %in% names(eff)){
     pick = eff$pick
     pick$map_name = map
     pick$round_type = round_type
     pick$var = sqrt(attr(eff$pick, "postVar")[1, 1, ])
+    pick$dep_var = dep_var
     
     rtn_list = list(comb,pick,int_val)
   } else {
-    rtn_list = list(comb,int_val)
+    rtn_list = list(comb,data.frame(),int_val)
   }
   
   if ('ct_econ_group' %in% names(eff)){
@@ -140,8 +146,11 @@ glmer.function <- function(formula, temp_data, map, round_type){
     ct_econ$map_name = map
     ct_econ$round_type = round_type
     ct_econ$var = sqrt(attr(eff$ct_econ_group, "postVar")[1, 1, ])
+    ct_econ$dep_var = dep_var
     
-    rtn_list[[length(rtn_list) + 1]] = ct_econ
+    rtn_list[[4]] = ct_econ
+  } else {
+    rtn_list[[4]] = data.frame()
   }
   
   if ('map_name:rd_type' %in% names(eff)){
@@ -149,9 +158,14 @@ glmer.function <- function(formula, temp_data, map, round_type){
     mprt$map_name = map
     mprt$round_type = round_type
     mprt$var = sqrt(attr(eff$`map_name:rd_type`, "postVar")[1, 1, ])
+    mprt$dep_var = dep_var
     
-    rtn_list[[length(rtn_list) + 1]] = mprt
+    rtn_list[[5]] = mprt
+  } else {
+    rtn_list[[5]] = data.frame()
   }
+  
+  names(rtn_list) = c('team_eff','pick_eff','int_eff','econ_eff','mprt_eff')
 
   return(rtn_list)
 }
@@ -162,51 +176,63 @@ int_eff = data.frame()
 econ_eff = data.frame()
 mprt_eff = data.frame()
 
-for (map in c('all','knife',unique(round_data$map_name))){
-
-  if (map == 'all'){
-    temp_data = round_data[round != -1,]
-    rtrn = glmer.function(update(formula, ~ . + (1|map_name:rd_type)), temp_data, NA, map)
-    team_eff = rbind(team_eff,rtrn[[1]])
-    pick_eff = rbind(pick_eff,rtrn[[2]])
-    int_eff = rbind(int_eff,rtrn[[3]])
-    econ_eff = rbind(econ_eff,rtrn[[4]])
-    mprt_eff = rbind(mprt_eff,rtrn[[5]])
-  } else if (map == 'knife'){
-    temp_data = round_data[round == -1,]
-    rtrn = glmer.function(update(formula, ~ . - (1|ct_econ_group) - (1|pick)), temp_data, NA, map)
-    team_eff = rbind(team_eff,rtrn[[1]])
-    int_eff = rbind(int_eff,rtrn[[2]])
+for (dep_var in c('ct_win','plant')){
+  if (dep_var == 'ct_win'){
+    formula = ct_win ~ (1|ct_lineup) + (1|t_lineup) + (1|ct_econ_group) + (1|pick)
   } else {
-    for (i in c(1:3)){
-      print(c(map, i))
-      temp_data = round_data[(map_name == map) & (round %in% rounds[[i]]),]
-      if (i == 1){
-        rtrn = glmer.function(update(formula, ~ . - (1|ct_econ_group)), temp_data, map, round_types[i])
-      } else {
-        rtrn = glmer.function(formula, temp_data, map, round_types[i])
-        econ_eff = rbind(econ_eff,rtrn[[4]])
-      }
+    formula = plant ~ (1|ct_lineup) + (1|t_lineup) + (1|ct_econ_group) + (1|pick)
+  }
+  
+  for (map in c('all','knife',unique(round_data$map_name))){
+    if ((map == 'all') & (dep_var == 'ct_win')){
+      temp_data = round_data[round != -1,]
+      rtrn = glmer.function(update(formula, ~ . + (1|map_name:rd_type)), temp_data, NA, map, dep_var)
       team_eff = rbind(team_eff,rtrn[[1]])
       pick_eff = rbind(pick_eff,rtrn[[2]])
       int_eff = rbind(int_eff,rtrn[[3]])
+      econ_eff = rbind(econ_eff,rtrn[[4]])
+      mprt_eff = rbind(mprt_eff,rtrn[[5]])
+    } else if ((map == 'knife') & (dep_var == 'ct_win')){
+      temp_data = round_data[round == -1,]
+      rtrn = glmer.function(update(formula, ~ . - (1|ct_econ_group) - (1|pick)), temp_data, NA, map, dep_var)
+      team_eff = rbind(team_eff,rtrn[[1]])
+      pick_eff = rbind(pick_eff,rtrn[[2]])
+      int_eff = rbind(int_eff,rtrn[[3]])
+      econ_eff = rbind(econ_eff,rtrn[[4]])
+      mprt_eff = rbind(mprt_eff,rtrn[[5]])
+    } else if (!(map %in% c('all','knife'))){
+      for (i in c(1:3)){
+        print(c(dep_var,map, i))
+        temp_data = round_data[(map_name == map) & (round %in% rounds[[i]]),]
+        if (i == 1){
+          rtrn = glmer.function(update(formula, ~ . - (1|ct_econ_group)), temp_data, map, round_types[i], dep_var)
+        } else {
+          rtrn = glmer.function(formula, temp_data, map, round_types[i], dep_var)
+        }
+        team_eff = rbind(team_eff,rtrn[[1]])
+        pick_eff = rbind(pick_eff,rtrn[[2]])
+        int_eff = rbind(int_eff,rtrn[[3]])
+        econ_eff = rbind(econ_eff,rtrn[[4]])
+        mprt_eff = rbind(mprt_eff,rtrn[[5]])
+      }
     }
   }
+  
+  dbWriteTable(con, c('csgo', paste0('glmer_team_eff','_',dep_var)), team_eff, row.names = F, overwrite = T)
+  dbWriteTable(con, c('csgo', paste0('glmer_pick_eff','_',dep_var)), pick_eff, row.names = F, overwrite = T)
+  dbWriteTable(con, c('csgo', paste0('glmer_int_eff','_',dep_var)), int_eff, row.names = F, overwrite = T)
+  dbWriteTable(con, c('csgo', paste0('glmer_econ_eff','_',dep_var)), econ_eff, row.names = F, overwrite = T)
+  dbWriteTable(con, c('csgo', paste0('glmer_mprt_eff','_',dep_var)), mprt_eff, row.names = F, overwrite = T)
+  
+  if (dep_var == 'ct_win'){
+    ov_str = team_eff[(team_eff$round_type == 'all'),!(colnames(team_eff) %in% c('map_name','round_type'))]
+    ov_str$ov_int = ((ov_str$ct_int - mean(ov_str$ct_int))*ov_str$ct_rounds - (ov_str$t_int - mean(ov_str$t_int))*ov_str$t_rounds)/(ov_str$ct_rounds + ov_str$t_rounds)
+    ov_str$ov_var = ((ov_str$ct_var*ov_str$ct_rounds) + (ov_str$t_var*ov_str$t_rounds))/(ov_str$ct_rounds + ov_str$t_rounds)
+    ov_str$ov_rds = ov_str$ct_rounds + ov_str$t_rounds
+    
+    current_ranks = merge(ov_str[(ov_str$lineup %in% active_teams),],unique(round_data[!is.na(round_data$t_team),c('t_lineup','t_team')]), by.x = 'lineup', by.y = 't_lineup', all.x = T)
+    colnames(current_ranks)[11] = 'team'
+    
+    dbWriteTable(con, c('csgo', 'glmer_ranking'), current_ranks[order(-current_ranks$ov_int),], row.names = F, overwrite = T)
+  }
 }
-
-dbWriteTable(con, c('csgo', 'glmer_team_eff'), team_eff, row.names = F, overwrite = T)
-dbWriteTable(con, c('csgo', 'glmer_pick_eff'), pick_eff, row.names = F, overwrite = T)
-dbWriteTable(con, c('csgo', 'glmer_int_eff'), int_eff, row.names = F, overwrite = T)
-dbWriteTable(con, c('csgo', 'glmer_econ_eff'), econ_eff, row.names = F, overwrite = T)
-dbWriteTable(con, c('csgo', 'glmer_mprt_eff'), mprt_eff, row.names = F, overwrite = T)
-
-
-ov_str = team_eff[team_eff$round_type == 'all',!(colnames(team_eff) %in% c('map_name','round_type'))]
-ov_str$ov_int = ((ov_str$ct_int - mean(ov_str$ct_int))*ov_str$ct_rounds - (ov_str$t_int - mean(ov_str$t_int))*ov_str$t_rounds)/(ov_str$ct_rounds + ov_str$t_rounds)
-ov_str$ov_var = ((ov_str$ct_var*ov_str$ct_rounds) + (ov_str$t_var*ov_str$t_rounds))/(ov_str$ct_rounds + ov_str$t_rounds)
-ov_str$ov_rds = ov_str$ct_rounds + ov_str$t_rounds
-
-current_ranks = merge(ov_str[(ov_str$lineup %in% active_teams),],unique(round_data[!is.na(round_data$t_team),c('t_lineup','t_team')]), by.x = 'lineup', by.y = 't_lineup', all.x = T)
-colnames(current_ranks)[11] = 'team'
-                        
-dbWriteTable(con, c('csgo', 'glmer_team_ranks'), current_ranks[order(-current_ranks$ov_int),], row.names = F, overwrite = T)
