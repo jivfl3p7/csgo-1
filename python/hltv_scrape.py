@@ -375,7 +375,7 @@ def match_data():
                             else:
                                 team = re.sub('^[0-9]\.( )*','',re.compile('.*(?= ' + veto_words_re + ')').search(
                                     veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
-                                if team == '?'
+                                if team == '?':
                                     veto_team_href == '/team/6548/-'
                                 else:
                                     match = process.extractOne(team,team_name_list)
