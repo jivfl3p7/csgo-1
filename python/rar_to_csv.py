@@ -162,8 +162,8 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        match_row = matches_w_demos.loc[matches_w_demos[9] == '2300763',:].iloc[0]
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1958\\2300763\\2300763-0.json")
+#                        match_row = matches_w_demos.loc[matches_w_demos[9] == '2302524',:].iloc[0]
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1954\\2302524\\2302524-0.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
@@ -181,16 +181,25 @@ def json_to_csv():
                             & (init_data['steamid'] != 'BOT'),['userid','steamid']].drop_duplicates(), how = 'left', on = 'userid')\
                             .rename(index = str, columns = {'steamid_y':'steamid'}).reset_index(drop = True)
                             
+                        rds_miss_clanname = list(data.loc[data['clanname'] == '','round'].drop_duplicates())
+                        if len(rds_miss_clanname) > 0:
+                            if (len(rds_miss_clanname) > 1) or rds_miss_clanname[0] != -1:
+                                raise ValueError('missing clanname issue')
+                            
+                        data = data.loc[data['clanname'] != '']
+                            
                         clannames = data.loc[(data['clanname'] != '') & (pd.isnull(data['clanname']) == False)
                             & (data['clanname'] != '1'),['clanname']].drop_duplicates()
-                        clannames['clanname'] = clannames['clanname'].apply(lambda x: 'Natus Vincere' if re.compile('na.?vi.*', re.I)
+#                        clannames['clanname'] = clannames['clanname'].apply(lambda x: 'Natus Vincere' if re.compile('na.?vi.*', re.I)
+#                            .search(x) else x)
+                        clannames['demoname'] = clannames['clanname'].apply(lambda x: 'Natus Vincere' if re.compile('na.?vi.*', re.I)
                             .search(x) else x)
                         clannames = clannames.drop_duplicates()
-                        clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['clanname']]
+                        clannames['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in clannames['demoname']]
                         
                         hltv_teams = pd.DataFrame(match_row[range(4,8)])
                         hltv_teams.columns = range(hltv_teams.shape[1])
-                        hltv_teams['lower'] = [re.sub(r'[^\x00-\x7F]+','',x.lower()) for x in hltv_teams[0]]
+                        hltv_teams['lower'] = [re.sub(r'([^\x00-\x7F]+)|(team( )*)','',x.lower()) for x in hltv_teams[0]]
                         
                         if len(clannames) == 2:
                             fuzzy_match0 = process.extractOne(clannames['lower'].iloc[0], hltv_teams.loc[:,'lower'].iloc[[0,2]],
@@ -212,9 +221,11 @@ def json_to_csv():
                         else:
                             for team_name in clannames['lower']:
                                 fuzzy_match = process.extractOne(team_name, hltv_teams.loc[:,'lower'].iloc[[0,2]], scorer=fuzz.partial_ratio)
-                                team_href_row = hltv_teams.loc[hltv_teams['lower'] == fuzzy_match[0]].index + 1
-                                clannames.loc[clannames['lower'] == team_name,'team_href'] = hltv_teams.loc[team_href_row,0].iloc[0]
-                                if (fuzzy_match[1] < 65) and (matchid not in exist_tname):
+                                if fuzzy_match[1] < 50:
+                                    raise ValueError('bad team name match')
+                                elif (fuzzy_match[1] < 65) and (matchid not in exist_tname):
+                                    team_href_row = hltv_teams.loc[hltv_teams['lower'] == fuzzy_match[0]].index + 1
+                                    clannames.loc[clannames['lower'] == team_name,'team_href'] = hltv_teams.loc[team_href_row,0].iloc[0]
                                     error_msg = 'team name match only ' + str(fuzzy_match[1])
                                     with open('csv\\team_name_matches.csv', 'ab') as teamnamecsv:
                                         teamnamewriter = csv.writer(teamnamecsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
@@ -636,6 +647,7 @@ def json_to_csv():
 #						 9 = No CTs remain (pre-plant)
 #						 12 = Time expired
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
+                        for index, row in rounds.loc[rounds['round'] == 5].iterrows():
                             t_value,ct_value = [0,0]
                             temp_df = round_reward.loc[(round_reward['tick'] >= row['start'])
                                 & (round_reward['tick'] <= row['end']),]
@@ -691,6 +703,10 @@ def json_to_csv():
                             rounds = rounds.loc[(rounds['round'] < min(list(missing_econ_rds['round'])))
                                 | ~rounds['phase'].isin(set(missing_econ_rds['phase']))]
                             error_msg = 'round with no econ value' + (', ' + error_msg if error_msg else '')
+                            
+                        if file_[:-5] in ['2302524-1']:
+                            rounds = rounds.loc[rounds['round'] > 15]
+                            error_msg = 'missing knife deaths' + (', ' + error_msg if error_msg else '')
                             
                         with open('csv\\demo_rounds.csv', 'ab') as democsv:
                             rounds[['match_href','map_num','phase','round','t_href','ct_href','ct_econ_adv','ct_reward_diff','defuse',
