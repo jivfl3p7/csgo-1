@@ -1,13 +1,13 @@
 library(RPostgreSQL)
 library(ggplot2)
 library(ggrepel)
-library(ggjoy)
+# library(ggjoy)
 
 drv <- dbDriver('PostgreSQL')
 
-con <- dbConnect(drv, user='postgres', password='', host='localhost', port=5432, dbname='esports')
+con <- dbConnect(drv, user='postgres', password='', host='localhost', port=5432, dbname='csgo')
 
-rank_query <- dbSendQuery(con, "select * from csgo.glmer_team_ranks where ov_rds > 200;")
+rank_query <- dbSendQuery(con, "select * from glmer.team_ranking where ov_rds > 200;")
 
 rank_data = fetch(rank_query,n=-1)
 
@@ -49,7 +49,7 @@ xmin25 = top_25$ov_int - top_25$ov_var
 xmax25 = top_25$ov_int + top_25$ov_var
 line_segments = aes(y = ypos, yend = ypos, x = xmin25, xend = xmax25)
 
-ggplot(top_25, aes(x = ov_int, y = ypos, fill = team)) +
+plot = ggplot(top_25, aes(x = ov_int, y = ypos, fill = team)) +
   # geom_vline(xintercept = 0, color = "gray", size = 0.5) +
   geom_segment(data = top_25, line_segments, color = 'black') +
   geom_point(aes(x = ov_int, y = ypos, color = 'red'), size = 2) +
@@ -71,3 +71,7 @@ ggplot(top_25, aes(x = ov_int, y = ypos, fill = team)) +
     segment.color = NA,
     direction = 'x'
   )
+
+png(filename = 'png/rankings.png', bg = 'transparent', units = 'px', width = 861, height = 546)
+plot(plot)
+dev.off()
