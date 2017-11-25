@@ -1,8 +1,8 @@
 begin;
 
-drop table if exists csgo.hltv_map_results;
+drop table if exists hltv.map_results;
 
-create table csgo.hltv_map_results (
+create table hltv.map_results (
 	match_href	text,
 	map_num		float,
 	map_name	text,
@@ -14,9 +14,9 @@ create table csgo.hltv_map_results (
 	abs_result	float
 );
 
-truncate table csgo.hltv_map_results;
+truncate table hltv.map_results;
 
 \set full_path '\'' :init_path '\\hltv_map_results.csv\''
-copy csgo.hltv_map_results from :full_path with delimiter as ',' csv quote as '"';
+copy hltv.map_results from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

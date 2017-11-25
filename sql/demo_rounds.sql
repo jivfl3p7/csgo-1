@@ -1,8 +1,8 @@
 begin;
 
-drop table if exists csgo.demo_rounds;
+drop table if exists demo.rounds;
 
-create table csgo.demo_rounds (
+create table demo.rounds (
 	match_href		text,
 	map_num			float,
 	phase			text,
@@ -16,9 +16,9 @@ create table csgo.demo_rounds (
 	winner			float
 );
 
-truncate table csgo.demo_rounds;
+truncate table demo.rounds;
 
 \set full_path '\'' :init_path '\\demo_rounds.csv\''
-copy csgo.demo_rounds from :full_path with delimiter as ',' csv quote as '"';
+copy demo.rounds from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

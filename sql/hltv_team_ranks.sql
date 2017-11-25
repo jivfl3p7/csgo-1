@@ -1,8 +1,8 @@
 begin;
 
-drop table if exists csgo.hltv_team_ranks;
+drop table if exists hltv.team_ranks;
 
-create table csgo.hltv_team_ranks (
+create table hltv.team_ranks (
 	date_		date,
 	rank		float,
 	team_name	text,
@@ -10,9 +10,9 @@ create table csgo.hltv_team_ranks (
 	points		float
 );
 
-truncate table csgo.hltv_team_ranks;
+truncate table hltv.team_ranks;
 
 \set full_path '\'' :init_path '\\hltv_team_ranks.csv\''
-copy csgo.hltv_team_ranks from :full_path with delimiter as ',' csv quote as '"';
+copy hltv.team_ranks from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

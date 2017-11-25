@@ -1,8 +1,8 @@
 begin;
 
-drop table if exists csgo.demo_info;
+drop table if exists demo.info;
 
-create table csgo.demo_info (
+create table demo.info (
 	match_href	text,
 	map_num		float,
 	map_id		text,
@@ -11,9 +11,9 @@ create table csgo.demo_info (
 	error		text
 );
 
-truncate table csgo.demo_info;
+truncate table demo.info;
 
 \set full_path '\'' :init_path '\\demo_info.csv\''
-copy csgo.demo_info from :full_path with delimiter as ',' csv quote as '"';
+copy demo.info from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

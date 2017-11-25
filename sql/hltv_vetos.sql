@@ -1,8 +1,8 @@
 begin;
 
-drop table if exists csgo.hltv_vetos;
+drop table if exists hltv.vetos;
 
-create table csgo.hltv_vetos (
+create table hltv.vetos (
 	match_href	text,
 	step		float,
 	team_href	text,
@@ -10,9 +10,9 @@ create table csgo.hltv_vetos (
 	map_name	text
 );
 
-truncate table csgo.hltv_vetos;
+truncate table hltv.vetos;
 
 \set full_path '\'' :init_path '\\hltv_vetos.csv\''
-copy csgo.hltv_vetos from :full_path with delimiter as ',' csv quote as '"';
+copy hltv.vetos from :full_path with delimiter as ',' csv quote as '"';
 
 commit;

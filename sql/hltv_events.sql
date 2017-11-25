@@ -1,8 +1,8 @@
 begin;
 
-drop table if exists csgo.hltv_events;
+drop table if exists hltv.events;
 
-create table csgo.hltv_events (
+create table hltv.events (
 	event_href	text,
 	event_name	text,
 	event_end_date	date,
@@ -11,9 +11,9 @@ create table csgo.hltv_events (
 	hltv_rank_dt	date
 );
 
-truncate table csgo.hltv_events;
+truncate table hltv.events;
 
 \set full_path '\'' :init_path '\\hltv_events.csv\''
-copy csgo.hltv_events from :full_path with delimiter as ',' csv quote as '"';
+copy hltv.events from :full_path with delimiter as ',' csv quote as '"';
 
 commit;
