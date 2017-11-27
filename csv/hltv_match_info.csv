@@ -2077,3 +2077,39 @@
 /events/2956/iem-oakland-2017,/matches/2317266/cloud9-vs-themongolz-iem-oakland-2017,/download/demo/34645,2017-11-14T20:35:00,Cloud9,/team/5752/cloud9,TheMongolz,/team/6248/themongolz
 /events/2956/iem-oakland-2017,/matches/2317264/envyus-vs-sk-iem-oakland-2017,/download/demo/34638,2017-11-14T19:05:00,EnVyUs,/team/5991/envyus,SK,/team/6137/sk
 /events/2956/iem-oakland-2017,/matches/2317263/nip-vs-astralis-iem-oakland-2017,/download/demo/34637,2017-11-14T19:05:00,NiP,/team/4411/nip,Astralis,/team/6665/astralis
+/events/3292/china-top-2017-shenzhen,/matches/2317503/ago-vs-vega-squadron-china-top-2017-shenzhen,/download/demo/34829,2017-11-22T07:55:00,AGO,/team/8068/ago,Vega Squadron,/team/6094/vega-squadron
+/events/3292/china-top-2017-shenzhen,/matches/2317502/vega-squadron-vs-tyloo-china-top-2017-shenzhen,/download/demo/34828,2017-11-22T04:00:00,Vega Squadron,/team/6094/vega-squadron,TyLoo,/team/4863/tyloo
+/events/3292/china-top-2017-shenzhen,/matches/2317444/tyloo-vs-ago-china-top-2017-shenzhen,/download/demo/34807,2017-11-21T05:10:00,TyLoo,/team/4863/tyloo,AGO,/team/8068/ago
+/events/3292/china-top-2017-shenzhen,/matches/2317443/vega-squadron-vs-flash-china-top-2017-shenzhen,/download/demo/34779,2017-11-20T04:50:00,Vega Squadron,/team/6094/vega-squadron,Flash,/team/7660/flash
+/events/3292/china-top-2017-shenzhen,/matches/2317414/flash-vs-ago-china-top-2017-shenzhen,/download/demo/34771,2017-11-19T06:00:00,Flash,/team/7660/flash,AGO,/team/8068/ago
+/events/3292/china-top-2017-shenzhen,/matches/2317413/tyloo-vs-vega-squadron-china-top-2017-shenzhen,/download/demo/34770,2017-11-19T02:30:00,TyLoo,/team/4863/tyloo,Vega Squadron,/team/6094/vega-squadron
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316782/astralis-vs-sk-blast-pro-series-copenhagen-2017,/download/demo/34959,2017-11-25T18:25:00,Astralis,/team/6665/astralis,SK,/team/6137/sk
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316780/faze-vs-north-blast-pro-series-copenhagen-2017,,2017-11-25T17:10:00,FaZe,/team/6667/faze,North,/team/7533/north
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316778/astralis-vs-faze-blast-pro-series-copenhagen-2017,/download/demo/34943,2017-11-25T15:25:00,Astralis,/team/6665/astralis,FaZe,/team/6667/faze
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316777/north-vs-sk-blast-pro-series-copenhagen-2017,/download/demo/34942,2017-11-25T15:25:00,North,/team/7533/north,SK,/team/6137/sk
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316779/g2-vs-nip-blast-pro-series-copenhagen-2017,/download/demo/34941,2017-11-25T15:25:00,G2,/team/5995/g2,NiP,/team/4411/nip
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316775/sk-vs-faze-blast-pro-series-copenhagen-2017,/download/demo/34938,2017-11-25T14:10:00,SK,/team/6137/sk,FaZe,/team/6667/faze
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316776/astralis-vs-g2-blast-pro-series-copenhagen-2017,/download/demo/34937,2017-11-25T14:10:00,Astralis,/team/6665/astralis,G2,/team/5995/g2
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316774/nip-vs-north-blast-pro-series-copenhagen-2017,/download/demo/34936,2017-11-25T14:10:00,NiP,/team/4411/nip,North,/team/7533/north
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316771/astralis-vs-north-blast-pro-series-copenhagen-2017,,2017-11-25T13:00:00,Astralis,/team/6665/astralis,North,/team/7533/north
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316773/g2-vs-faze-blast-pro-series-copenhagen-2017,/download/demo/34929,2017-11-25T13:00:00,G2,/team/5995/g2,FaZe,/team/6667/faze
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316772/nip-vs-sk-blast-pro-series-copenhagen-2017,/download/demo/34928,2017-11-25T13:00:00,NiP,/team/4411/nip,SK,/team/6137/sk
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316768/faze-vs-north-blast-pro-series-copenhagen-2017,/download/demo/34924,2017-11-25T10:45:00,FaZe,/team/6667/faze,North,/team/7533/north
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316770/astralis-vs-nip-blast-pro-series-copenhagen-2017,/download/demo/34926,2017-11-25T10:45:00,Astralis,/team/6665/astralis,NiP,/team/4411/nip
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316769/sk-vs-g2-blast-pro-series-copenhagen-2017,/download/demo/34925,2017-11-25T10:45:00,SK,/team/6137/sk,G2,/team/5995/g2
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316767/north-vs-g2-blast-pro-series-copenhagen-2017,,2017-11-25T09:00:00,North,/team/7533/north,G2,/team/5995/g2
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316766/faze-vs-nip-blast-pro-series-copenhagen-2017,,2017-11-25T09:00:00,FaZe,/team/6667/faze,NiP,/team/4411/nip
+/events/2998/blast-pro-series-copenhagen-2017,/matches/2316765/astralis-vs-sk-blast-pro-series-copenhagen-2017,/download/demo/34923,2017-11-25T09:00:00,Astralis,/team/6665/astralis,SK,/team/6137/sk
+/events/3224/fcdb-cup-2017,/matches/2317534/hellraisers-vs-kinguin-fcdb-cup-2017,/download/demo/34969,2017-11-26T15:30:00,HellRaisers,/team/5310/hellraisers,Kinguin,/team/6134/kinguin
+/events/3224/fcdb-cup-2017,/matches/2317533/kinguin-vs-goodjob-fcdb-cup-2017,/download/demo/34966,2017-11-26T11:45:00,Kinguin,/team/6134/kinguin,GoodJob,/team/7820/goodjob
+/events/3224/fcdb-cup-2017,/matches/2317532/hellraisers-vs-avangar-fcdb-cup-2017,/download/demo/34965,2017-11-26T08:15:00,HellRaisers,/team/5310/hellraisers,AVANGAR,/team/8120/avangar
+/events/3224/fcdb-cup-2017,/matches/2317531/passions-vs-avangar-fcdb-cup-2017,/download/demo/34949,2017-11-25T18:45:00,passions,/team/7124/passions,AVANGAR,/team/8120/avangar
+/events/3224/fcdb-cup-2017,/matches/2317530/wasd-vs-goodjob-fcdb-cup-2017,/download/demo/34948,2017-11-25T16:30:00,WASD,/team/7668/wasd,GoodJob,/team/7820/goodjob
+/events/3224/fcdb-cup-2017,/matches/2317529/avangar-vs-kinguin-fcdb-cup-2017,/download/demo/34940,2017-11-25T14:50:00,AVANGAR,/team/8120/avangar,Kinguin,/team/6134/kinguin
+/events/3224/fcdb-cup-2017,/matches/2317528/passions-vs-tricked-fcdb-cup-2017,/download/demo/34930,2017-11-25T13:15:00,passions,/team/7124/passions,Tricked,/team/4602/tricked
+/events/3224/fcdb-cup-2017,/matches/2317527/hellraisers-vs-goodjob-fcdb-cup-2017,/download/demo/34932,2017-11-25T13:00:00,HellRaisers,/team/5310/hellraisers,GoodJob,/team/7820/goodjob
+/events/3224/fcdb-cup-2017,/matches/2317526/wasd-vs-eclipse-fcdb-cup-2017,/download/demo/34931,2017-11-25T11:20:00,WASD,/team/7668/wasd,Eclipse,/team/7892/eclipse
+/events/3224/fcdb-cup-2017,/matches/2317525/kinguin-vs-tricked-fcdb-cup-2017,/download/demo/34927,2017-11-25T11:10:00,Kinguin,/team/6134/kinguin,Tricked,/team/4602/tricked
+/events/3224/fcdb-cup-2017,/matches/2317524/passions-vs-avangar-fcdb-cup-2017,/download/demo/34922,2017-11-25T09:25:00,passions,/team/7124/passions,AVANGAR,/team/8120/avangar
+/events/3224/fcdb-cup-2017,/matches/2317523/goodjob-vs-eclipse-fcdb-cup-2017,/download/demo/34921,2017-11-25T08:45:00,GoodJob,/team/7820/goodjob,Eclipse,/team/7892/eclipse
+/events/3224/fcdb-cup-2017,/matches/2317522/wasd-vs-hellraisers-fcdb-cup-2017,/download/demo/34919,2017-11-25T07:00:00,WASD,/team/7668/wasd,HellRaisers,/team/5310/hellraisers
