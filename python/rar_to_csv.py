@@ -162,8 +162,8 @@ def json_to_csv():
                             continue
                         
                         # test
-#                        match_row = matches_w_demos.loc[matches_w_demos[9] == '2302524',:].iloc[0]
-#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\1954\\2302524\\2302524-0.json")
+#                        match_row = matches_w_demos.loc[matches_w_demos[9] == '2317297',:].iloc[0]
+#                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2956\\2317297\\2317297-4.json")
                         
                         # missing round
 #                        init_data = pd.read_json("E:\\CSGO Demos\\json\\2538\\2307291\\2307291-1.json") final round adds extra point to scoreline
@@ -480,17 +480,38 @@ def json_to_csv():
                                 rounds = rounds.loc[rounds['phase'] != phs]
                                 if len(rounds) == 0:
                                     raise ValueError('no rounds')
-                        
+                                    
+                        for phs in set(rounds.loc[rounds['round'] > -1,'phase']):
+                            prev_win = None
+                            win_streak = 0
+                            for index, row in rounds.loc[rounds['phase'] == phs].iterrows():
+                                if row['winner'] == prev_win:
+                                    if row['winner'] == 3:
+                                        win_streak += 1
+                                    else:
+                                        win_streak -= 1
+                                elif row['winner'] == 2:
+                                    prev_win = row['winner']
+                                    win_streak = -1
+                                else:
+                                    prev_win = row['winner']
+                                    win_streak = 1
+                                rounds.set_value(index,'ct_win_streak',win_streak)
+                                    
                         item_change = data.loc[(data['event'].isin(['defuser_purchase','armor_purchase']))
                             | ((data['weapon'] != 'c4') & data['event'].isin(['item_purchase','item_pickup','item_drop']))
                             | (data['health'] == 0) | ((data['event'] == 'weapon_fire') & (data['weapon'].isin(
                                 ['decoy','flashbang','molotov','smokegrenade','hegrenade','incgrenade','inferno','molotov_projectile'])))
                             & (data['tick'] >= rounds.loc[rounds['round'] != -1,'start'].min())
                             & (data['tick'] <= rounds['end'].max()),
-                            ['tick','event','steamid','side','health','weapon','boughtHelmet','attacker']]
+                            ['tick','event','steamid','side','health','weapon','boughtHelmet','attacker','accountRemaining']]
+                            
+#                        if len(item_change.loc[item_change['event'] == 'weapon_fire']) == 0:
+#                            raise ValueError('no grenade expending events')
+                            
                         item_change = pd.merge(item_change, weapon_data, how = 'left', on = 'weapon')
                         item_change = item_change.loc[(item_change['health'] == 0)
-                            | (~item_change['secondary_class'].isin(['knife','starter','taser'])),]
+                            | (~item_change['secondary_class'].isin(['knife','starter'])),]
                         for index, row in rounds.iterrows():
                             item_change.loc[(item_change['tick'] >= row['start'])
                                 & (item_change['tick'] <= row['end']),'round'] = row['round']
@@ -512,121 +533,292 @@ def json_to_csv():
                         item_change['life_seq'] = item_change.loc[(item_change['phase_change'] == 1)
                             | (item_change['event'] == 'player_hurt')].groupby('steamid').cumcount()
                         item_change['life_seq'] = item_change.groupby('steamid')['life_seq'].bfill().ffill()
-                        item_change = item_change.sort_values(['tick','event']).reset_index(drop = True)
-                        item_change['econ'] = 0
 
-                        for steamid in list(item_change['steamid'].drop_duplicates()):
-                            for life_seq in range(0,int(max(item_change['life_seq'])) + 1):
-                                d,a,h,pr,pr_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec = [0] * 13
-                                for index,row in item_change.loc[(item_change['steamid'] == steamid)
-                                                                & (item_change['life_seq'] == life_seq)].iterrows():
-                                    change = 0
-                                    if row['event'] == 'player_hurt':
-                                        item_change.set_value(index, 'econ', -1*(pr_value + pi_value + a*650 + h*350 + g_inc*500
-                                                                                 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50))
-                                        if d == 1:
-                                            item_change.set_value(index, 'defuse', -1)
-                                        break
-                                    elif row['event'] == 'defuser_purchase':
-                                        if d != 1:
-                                            d = 1
-                                            item_change.set_value(index, 'defuse', 1)
-                                    elif row['event'] == 'armor_purchase':
-                                        if a != 1:
-                                            if row['boughtHelmet'] == 0:
-                                                a = 1
-                                                change = 650
-                                            else:
-                                                a = 1
-                                                h = 1
-                                                change = 1000
-                                        elif h != 1:
-                                            h = 1
-                                            change = 350
-                                    elif row['event'] in ['item_purchase','item_pickup']:
-                                        if row['secondary_class'] in ['t1_rifle','t2_rifle','other']:
-                                            if pr != 1:
-                                                pr = 1
-                                                pr_value = row['value']
-                                                change = pr_value
-                                            else:
-                                                change = row['value'] - pr_value
-                                        elif row['secondary_class'] == 'upgraded':
-                                            if pi != 1:
-                                                pi = 1
-                                                pi_value = row['value']
-                                                change = pi_value
-                                            else:
-                                                change = row['value'] - pi_value
-                                        elif row['weapon'] == 'hegrenade':
-                                            if g_he != 1 and g_t < 4:
-                                                g_he = 1
-                                                g_t += 1
-                                                change = row['value']
-                                        elif row['weapon'] == 'flashbang':
-                                            if g_fla < 2 and g_t < 4:
-                                                g_fla += 1
-                                                g_t += 1
-                                                change = row['value']
-                                        elif row['weapon'] == 'smokegrenade':
-                                            if g_smo != 1 and g_t < 4:
-                                                g_smo = 1
-                                                g_t += 1
-                                                change = row['value']
-                                        elif row['weapon'] == 'decoy':
-                                            if g_dec != 1 and g_t < 4:
-                                                g_dec = 1
-                                                g_t += 1
-                                                change = row['value']
-                                        elif row['weapon'] in ['inferno','molotov_projectile','molotov','incgrenade']:
-                                            if g_inc != 1 and g_t < 4:
-                                                g_inc = 1
-                                                g_t += 1
-                                                change = row['value']
-                                        else:
-                                            raise ValueError('missing item name: ' + row['weapon'])
-                                    elif row['event'] == 'item_drop':
-                                        if row['secondary_class'] in ['t1_rifle','t2_rifle','other']:
-                                            pr = 0
-                                            pr_value = 0
-                                            change = -1*row['value']
-                                        elif row['secondary_class'] == 'upgraded':
-                                            pi = 0
-                                            pi_value = 0
-                                            change = -1*row['value']
-                                    elif row['event'] == 'weapon_fire':
-                                        g_t -= 1
-                                        change = -row['value']
-                                        if row['weapon'] == 'hegrenade':
-                                            g_he = 0
-                                        elif row['weapon'] == 'flashbang':
-                                            g_fla -= 1
-                                        elif row['weapon'] == 'smokegrenade':
-                                            g_smo = 0
-                                        elif row['weapon'] == 'decoy':
-                                            g_dec = 0
-                                        elif row['weapon'] in ['inferno','molotov_projectile','molotov','incgrenade']:
-                                            g_inc = 0
-                                        else:
-                                            raise ValueError('missing item name: ' + row['weapon'])
-                                    item_change.set_value(index, 'econ', change)
+#                        userid_side = pd.merge(init_data.loc[(init_data['event'] == 'player_connect') & (init_data['steamid'] != 'BOT'),
+#                                                             ['userid','steamid']].drop_duplicates(), 
+#                                                 item_change[['phase','steamid','side']].drop_duplicates(), how = 'left', on = 'steamid')\
+#                                             .drop_duplicates()
+#                                             
+#                        round_reward = pd.concat([item_change.loc[item_change['event'] == 'player_hurt'],
+#                                                  data.loc[data['event'] == 'bomb_planted',['tick','event','steamid']]])
+#                        round_reward = pd.merge(round_reward, userid_side, how = 'left', left_on = ['phase','attacker'],
+#                                                right_on = ['phase','userid'])
+#                        round_reward = round_reward.loc[round_reward['weapon'] != '']
+#                        round_reward['event'] = np.where((round_reward['event'] == 'player_hurt') & (round_reward['side_x'] == round_reward['side_y']),'teamkill',round_reward['event'])
+#
+#                        rounds_df,reward_df = pd.DataFrame(),pd.DataFrame()
+#                        rounds_df[['tick','round','phase','reason','ct_win_streak']] = rounds.loc[rounds['phase'] != 'knife',['round_decision','round','phase','reason','ct_win_streak']]
+#                        rounds_df['event'] = 'round_end'
+#                        reward_df[['tick','round','phase','steamid_x','steamid_y','side','event','kill']] = round_reward.loc[round_reward['phase'] != 'knife',['tick','round','phase','steamid_x','steamid_y','side','event','kill']]
+#                        reward_df['steamid'] = np.where((reward_df['event'].isin(['bomb_planted','bomb_defused'])),reward_df['steamid_x'],reward_df['steamid_y'])
+#                        reward_df['event'] = np.where((reward_df['event'] == 'player_hurt'),'kill',reward_df['event'])
+#                        
+#                        item_change['reason'],item_change['ct_win_streak'],item_change['kill'] = None,None,None
+#                        item_change = pd.concat([item_change,rounds_df,reward_df[['tick','round','phase','steamid','side','event','kill']]])
+                        item_change = item_change.sort_values(['tick','event']).reset_index(drop = True)
+
+                        player_econ = pd.DataFrame(columns = ['tick','round','phase','side','steamid','life_seq','event','money_change','equip_value','equip_change','primary','secondary','chest','helmet','flash','smoke','inc','he','decoy','kit','zeus'])
+
+                        for steamid in set(item_change['steamid']):
+                            for phase in list(item_change.loc[(item_change['steamid'] == steamid) & (pd.isnull(item_change['phase']) == False),'phase'].drop_duplicates()):
+                                ls = list(item_change.loc[(item_change['steamid'] == steamid) & (item_change['phase'] == phase) & (pd.isnull(item_change['life_seq']) == False),'life_seq'].drop_duplicates())
+                                if phase in ['h1','h2']:
+                                    money = 800
+                                else:
+                                    money = 16000
+                                for life_seq in ls:
+                                    d,a,h,pr,pr_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,new_money = [0] * 15
                                     
-                        item_change['defuse'] = item_change[['phase','defuse']].groupby('phase').cumsum()
-                        item_change['defuse'] = item_change[['phase','defuse']].groupby('phase')['defuse'].ffill().fillna(0)
-                        item_change['t_econ'] = item_change.loc[item_change['side'] == 2,['phase','econ']].groupby('phase').cumsum()
-                        item_change['t_econ'] = item_change[['phase','t_econ']].groupby('phase')['t_econ'].ffill().fillna(0)
-                        item_change['ct_econ'] = item_change.loc[item_change['side'] == 3,['phase','econ']].groupby('phase').cumsum()
-                        item_change['ct_econ'] = item_change[['phase','ct_econ']].groupby('phase')['ct_econ'].ffill().fillna(0)
+                                    min_tick = min(item_change.loc[(item_change['steamid'] == steamid) & (item_change['life_seq'] == life_seq)
+                                                                    & (item_change['phase'] == phase),'tick'])
+                                    try:
+                                        max_tick = min(item_change.loc[(item_change['steamid'] == steamid) & (item_change['life_seq'] == (life_seq + 1))
+                                                                    & (item_change['phase'] == phase),'tick'])
+                                    except:
+                                        max_tick = max(rounds.loc[rounds['phase'] == phase,'end'])
+                                    item_df = item_change.loc[((item_change['steamid'] == steamid) | (item_change['event'] == 'round_end')) & (item_change['tick'] < max_tick)
+                                                                    & (item_change['tick'] >= min_tick),]
+                                    side = item_df.loc[pd.isnull(item_df['side']) == False,'side'].iloc[0]
+                                    for index,row in item_df.iterrows():
+                                        if row['event'] == 'kill':
+                                            new_money = money + row['kill']
+                                        elif row['event'] == 'teamkill':
+                                            new_money = money -3300
+                                        elif row['event'] in ['bomb_planted','bomb_defused']:
+                                            new_money = money - 300
+                                        elif row['event'] == 'round_end':
+                                            if side == 2:
+                                                if row['reason'] == 12:
+                                                    die_before_time = len(item_df.loc[(item_df['round'] == row['round']) & (item_df['event'] == 'player_hurt') & (item_df['tick'] <= row['tick']),])
+                                                    new_money = money + die_before_time*(900 + max(500,500*row['ct_win_streak']))
+                                                elif row['reason'] == 9:
+                                                    money_change = 3250
+                                                elif row['reason'] <= 2:
+                                                    money_change = 3500
+                                                elif row['reason'] == 8:
+                                                    money_change = 900 + max(500,500*row['ct_win_streak'])
+                                                elif row['reason'] == 7:
+                                                    money_change = 1700 + max(500,500*row['ct_win_streak'])
+                                                else:
+                                                    raise ValueError('round reward error')
+                                            else:
+                                                if row['reason'] in [8,12]:
+                                                    money_change = 3250
+                                                elif row['reason'] in [1,2,9]:
+                                                    money_change = 900 - max(500,500*row['ct_win_streak'])
+                                                elif row['reason'] == 7:
+                                                    money_change = 3500
+                                                else:
+                                                    raise ValueError('round reward error')
+                                        if row['event'] == 'armor_purchase':
+                                            a = 1
+                                            h = row['boughtHelmet']
+                                            money = row['accountRemaining']
+                                            money_change =  - money - 650 - row['boughtHelmet']*350
+                                        elif row['event'] == 'defuser_purchase':
+                                            d = 1
+#                                            money_change = row['accountRemaining'] - money
+                                        elif row['event'] in ['item_purchase','item_pickup']:
+#                                            if row['event'] == 'item_purchase':
+#                                                money_change = row['accountRemaining'] - money
+
+                                            if row['primary_class'] == 'primary':
+                                                pr = row['weapon']
+                                                pr_value = row['value']
+                                            elif row['primary_class'] == 'pistol':
+                                                pi = row['weapon']
+                                                pi_value = row['value']
+                                            elif g_t < 4:
+                                                g_t += 1
+                                                if row['weapon'] == 'smokegrenade':
+                                                    g_smo = 1
+                                                elif row['weapon'] == 'flashbang':
+                                                    if g_fla < 2:
+                                                        g_fla += 1
+                                                elif row['weapon'] == 'hegrenade':
+                                                    g_he = 1
+                                                elif row['weapon']  in ['inferno','molotov_projectile','molotov','incgrenade']:
+                                                    g_inc = 1
+                                                elif row['weapon'] == 'decoy':
+                                                    g_dec = 1
+                                        elif row['event'] in ['item_drop','weapon_fire']:
+                                            if row['primary_class'] == 'primary':
+                                                pr = 0
+                                                pr_value = 0
+                                            elif row['primary_class'] == 'pistol':
+                                                pi = 0
+                                                pi_value = 0
+                                            elif g_t > 0:
+                                                g_t -= 1
+                                                if row['weapon'] == 'smokegrenade':
+                                                    g_smo = 0
+                                                elif row['weapon'] == 'flashbang':
+                                                    if g_fla > 0:
+                                                        g_fla -= 1
+                                                elif row['weapon'] == 'hegrenade':
+                                                    g_he = 0
+                                                elif row['weapon']  in ['inferno','molotov_projectile','molotov','incgrenade']:
+                                                    g_inc = 0
+                                                elif row['weapon'] == 'decoy':
+                                                    g_dec = 0
+                                        elif row['event'] == 'player_hurt':
+                                            player_econ.loc[len(player_econ)] = [row['tick'],row['round'],phase,side,steamid,life_seq,
+                                                            row['event'],row['accountRemaining'],0,-1*equip_value,0,0,0,0,0,0,0,0,0,0,0]
+                                            equip_value = 0
+                                            continue
+                                        else:
+                                            raise ValueError('missing item name: ' + row['weapon'])
+                                        new_equip_value = pr_value + pi_value + a*650 + h*350 + g_inc*500 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50
+                                        equip_change = new_equip_value - equip_value
+                                        equip_value = pr_value + pi_value + a*650 + h*350 + g_inc*500 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50
+#                                        money += money_change 
+#                                        money = min(16000,max(0,money))
+                                        player_econ.loc[len(player_econ)] = [row['tick'],row['round'],phase,side,steamid,life_seq,row['event'],
+                                                        row['accountRemaining'],equip_value,equip_change,pr,pi,a,h,g_fla,g_smo,g_inc,g_he,g_dec,d,0]
+                                                        
+                        player_econ = player_econ.sort_values(['tick','event']).reset_index(drop = True)
+                        for phase in list(player_econ['phase'].drop_duplicates()):
+                            if phase in ['h1','h2']:
+                                t_money,ct_money = 800*5,800*5
+                            else:
+                                t_money,ct_money = 16000*5,16000*5
+                            for index, row in player_econ.loc[player_econ['phase'] == phase].iterrows():
+#                                if row['tick'] == 227373:
+#                                    break
+                                if row['side'] == 2:
+                                    t_money += row['money_change']
+                                else:
+                                    ct_money += row['money_change']
+                                player_econ.set_value(index,'t_money',t_money)
+                                player_econ.set_value(index,'ct_money',ct_money)
+                                
+                        player_econ = player_econ.sort_values(['tick','event']).reset_index(drop = True)
+                        player_econ['t_equip'] = player_econ.loc[player_econ['side'] == 2,['phase','equip_change']].groupby('phase').cumsum()
+                        player_econ['t_equip'] = player_econ[['phase','t_equip']].groupby('phase')['t_equip'].ffill().fillna(0)
+                        player_econ['ct_equip'] = player_econ.loc[player_econ['side'] == 3,['phase','equip_change']].groupby('phase').cumsum()
+                        player_econ['ct_equip'] = player_econ[['phase','ct_equip']].groupby('phase')['ct_equip'].ffill().fillna(0)
                         
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
-                            defuse = item_change.loc[(row['start'] <= item_change['tick'])
-                                & (item_change['tick'] < row['first_blood']),'defuse'].max()
-                            ct_econ = item_change.loc[(row['start'] <= item_change['tick'])
-                                & (item_change['tick'] < row['first_blood']),'ct_econ'].max()
-                            t_econ = item_change.loc[(row['start'] <= item_change['tick'])
-                                & (item_change['tick'] < row['first_blood']),'t_econ'].max()
-                            rounds.set_value(index, 'ct_econ_adv', ct_econ - t_econ)
-                            rounds.set_value(index, 'defuse', defuse)
+#                            if row['round'] == 3:
+#                                break
+                            final_money = player_econ.loc[(player_econ['tick'] >= row['start'])
+                                & (player_econ['tick'] <= row['end']),['ct_money','t_money']].iloc[-1]
+                            rounds.set_value(index,'ct_money',final_money['ct_money'])
+                            rounds.set_value(index,'t_money',final_money['t_money'])
+                            if row['round'] not in [1,16]:
+                                start_equip = player_econ.loc[(player_econ['tick'] >= row['start'])
+                                    & (player_econ['tick'] < row['first_blood']),['t_equip','ct_equip']]
+                                rounds.set_value(index,'ct_equip',max(start_equip['ct_equip']))
+                                rounds.set_value(index,'t_equip',max(start_equip['t_equip']))
+
+                            
+#                                        change = 0
+#                                        if row['event'] == 'player_hurt':
+#                                            item_change.set_value(index, 'econ', -1*(pr_value + pi_value + a*650 + h*350 + g_inc*500
+#                                                                                     + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50))
+#                                            if d == 1:
+#                                                item_change.set_value(index, 'defuse', -1)
+#                                            break
+#                                        elif row['event'] == 'defuser_purchase':
+#                                            if d != 1:
+#                                                d = 1
+#                                                item_change.set_value(index, 'defuse', 1)
+#                                        elif row['event'] == 'armor_purchase':
+#                                            if a != 1:
+#                                                if row['boughtHelmet'] == 0:
+#                                                    a = 1
+#                                                    change = 650
+#                                                else:
+#                                                    a = 1
+#                                                    h = 1
+#                                                    change = 1000
+#                                            elif h != 1:
+#                                                h = 1
+#                                                change = 350
+#                                        elif row['event'] in ['item_purchase','item_pickup']:
+#                                            if row['secondary_class'] in ['t1_rifle','t2_rifle','other']:
+#                                                if pr != 1:
+#                                                    pr = 1
+#                                                    pr_value = row['value']
+#                                                    change = pr_value
+#                                                else:
+#                                                    change = row['value'] - pr_value
+#                                            elif row['secondary_class'] == 'upgraded':
+#                                                if pi != 1:
+#                                                    pi = 1
+#                                                    pi_value = row['value']
+#                                                    change = pi_value
+#                                                else:
+#                                                    change = row['value'] - pi_value
+#                                            elif row['weapon'] == 'hegrenade':
+#                                                if g_he != 1 and g_t < 4:
+#                                                    g_he = 1
+#                                                    g_t += 1
+#                                                    change = row['value']
+#                                            elif row['weapon'] == 'flashbang':
+#                                                if g_fla < 2 and g_t < 4:
+#                                                    g_fla += 1
+#                                                    g_t += 1
+#                                                    change = row['value']
+#                                            elif row['weapon'] == 'smokegrenade':
+#                                                if g_smo != 1 and g_t < 4:
+#                                                    g_smo = 1
+#                                                    g_t += 1
+#                                                    change = row['value']
+#                                            elif row['weapon'] == 'decoy':
+#                                                if g_dec != 1 and g_t < 4:
+#                                                    g_dec = 1
+#                                                    g_t += 1
+#                                                    change = row['value']
+#                                            elif row['weapon'] in ['inferno','molotov_projectile','molotov','incgrenade']:
+#                                                if g_inc != 1 and g_t < 4:
+#                                                    g_inc = 1
+#                                                    g_t += 1
+#                                                    change = row['value']
+#                                            else:
+#                                                raise ValueError('missing item name: ' + row['weapon'])
+#                                        elif row['event'] == 'item_drop':
+#                                            if row['secondary_class'] in ['t1_rifle','t2_rifle','other']:
+#                                                pr = 0
+#                                                pr_value = 0
+#                                                change = -1*row['value']
+#                                            elif row['secondary_class'] == 'upgraded':
+#                                                pi = 0
+#                                                pi_value = 0
+#                                                change = -1*row['value']
+#                                        elif row['event'] == 'weapon_fire':
+#                                            g_t -= 1
+#                                            change = -row['value']
+#                                            if row['weapon'] == 'hegrenade':
+#                                                g_he = 0
+#                                            elif row['weapon'] == 'flashbang':
+#                                                g_fla -= 1
+#                                            elif row['weapon'] == 'smokegrenade':
+#                                                g_smo = 0
+#                                            elif row['weapon'] == 'decoy':
+#                                                g_dec = 0
+#                                            elif row['weapon'] in ['inferno','molotov_projectile','molotov','incgrenade']:
+#                                                g_inc = 0
+#                                            else:
+#                                                raise ValueError('missing item name: ' + row['weapon'])
+#                                        item_change.set_value(index, 'econ', change)
+                                    
+#                        item_change['defuse'] = item_change[['phase','defuse']].groupby('phase').cumsum()
+#                        item_change['defuse'] = item_change[['phase','defuse']].groupby('phase')['defuse'].ffill().fillna(0)
+#                        item_change['t_econ'] = item_change.loc[item_change['side'] == 2,['phase','econ']].groupby('phase').cumsum()
+#                        item_change['t_econ'] = item_change[['phase','t_econ']].groupby('phase')['t_econ'].ffill().fillna(0)
+#                        item_change['ct_econ'] = item_change.loc[item_change['side'] == 3,['phase','econ']].groupby('phase').cumsum()
+#                        item_change['ct_econ'] = item_change[['phase','ct_econ']].groupby('phase')['ct_econ'].ffill().fillna(0)
+#                        
+#                        for index, row in rounds.loc[rounds['round'] > 0].iterrows():
+#                            defuse = item_change.loc[(row['start'] <= item_change['tick'])
+#                                & (item_change['tick'] < row['first_blood']),'defuse'].max()
+#                            ct_econ = item_change.loc[(row['start'] <= item_change['tick'])
+#                                & (item_change['tick'] < row['first_blood']),'ct_econ'].max()
+#                            t_econ = item_change.loc[(row['start'] <= item_change['tick'])
+#                                & (item_change['tick'] < row['first_blood']),'t_econ'].max()
+#                            rounds.set_value(index, 'ct_econ_adv', ct_econ - t_econ)
+#                            rounds.set_value(index, 'defuse', defuse)
                             
                             
                         userid_side = pd.merge(init_data.loc[(init_data['event'] == 'player_connect') & (init_data['steamid'] != 'BOT'),
@@ -647,7 +839,6 @@ def json_to_csv():
 #						 9 = No CTs remain (pre-plant)
 #						 12 = Time expired
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
-                        for index, row in rounds.loc[rounds['round'] == 5].iterrows():
                             t_value,ct_value = [0,0]
                             temp_df = round_reward.loc[(round_reward['tick'] >= row['start'])
                                 & (round_reward['tick'] <= row['end']),]
@@ -672,23 +863,23 @@ def json_to_csv():
                                 time_deaths = temp_df.loc[(temp_df['side_x'] == 2) & (temp_df['event'] == 'player_hurt')
                                     & (temp_df['tick'] > row['round_decision'])]
                                 ct_value += 5*3250
-                                t_value += (5 - len(time_deaths))*1400
+                                t_value += (5 - len(time_deaths))*(900 + max(500,500*row['ct_win_streak']))
                                 rounds.set_value(index,'plant',0)
                             elif row['reason'] == 9:
                                 t_value += 5*3250
-                                ct_value += 5*1400
+                                ct_value += 5*(900 - max(500,500*row['ct_win_streak']))
                                 rounds.set_value(index,'plant',0)
                             elif row['reason'] <= 2:
                                 t_value += 5*3500
-                                ct_value += 5*1400
+                                ct_value += 5*(900 - max(500,500*row['ct_win_streak']))
                                 rounds.set_value(index,'plant',1)
                             elif row['reason'] == 8:
                                 ct_value += 5*3250
-                                t_value += 5*1400
+                                t_value += 5*(900 + max(500,500*row['ct_win_streak']))
                                 rounds.set_value(index,'plant',0)
                             elif row['reason'] == 7:
                                 ct_value += 5*3500
-                                t_value += 5*(1400+800)
+                                t_value += 5*(1700 + max(500,500*row['ct_win_streak']))
                                 rounds.set_value(index,'plant',1)
                             else:
                                 raise ValueError('round reward error')
@@ -728,4 +919,4 @@ def json_to_csv():
                                 demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],None,None,error_msg])
                             print('\tFAIL - ' + match_row[1])
                                 
-json_to_csv()
+#json_to_csv()
