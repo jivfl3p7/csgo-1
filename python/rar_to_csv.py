@@ -500,11 +500,11 @@ def json_to_csv():
                                     
                         item_change = data.loc[(data['event'].isin(['defuser_purchase','armor_purchase']))
                             | ((data['weapon'] != 'c4') & data['event'].isin(['item_purchase','item_pickup','item_drop']))
-                            | (data['health'] == 0) | ((data['event'] == 'weapon_fire') & (data['weapon'].isin(
+                            | (data['event'] == 'player_hurt') | ((data['event'] == 'weapon_fire') & (data['weapon'].isin(
                                 ['decoy','flashbang','molotov','smokegrenade','hegrenade','incgrenade','inferno','molotov_projectile'])))
                             & (data['tick'] >= rounds.loc[rounds['round'] != -1,'start'].min())
                             & (data['tick'] <= rounds['end'].max()),
-                            ['tick','event','steamid','side','health','weapon','boughtHelmet','attacker','accountRemaining']]
+                            ['tick','event','steamid','side','armor','health','weapon','boughtHelmet','attacker','accountRemaining']]
                             
 #                        if len(item_change.loc[item_change['event'] == 'weapon_fire']) == 0:
 #                            raise ValueError('no grenade expending events')
@@ -531,33 +531,33 @@ def json_to_csv():
                                 item_change.set_value(index,'phase_change',1)
                         
                         item_change['life_seq'] = item_change.loc[(item_change['phase_change'] == 1)
-                            | (item_change['event'] == 'player_hurt')].groupby('steamid').cumcount()
+                            | ((item_change['event'] == 'player_hurt') & (item_change['health'] == 0))].groupby('steamid').cumcount()
                         item_change['life_seq'] = item_change.groupby('steamid')['life_seq'].bfill().ffill()
 
-#                        userid_side = pd.merge(init_data.loc[(init_data['event'] == 'player_connect') & (init_data['steamid'] != 'BOT'),
-#                                                             ['userid','steamid']].drop_duplicates(), 
-#                                                 item_change[['phase','steamid','side']].drop_duplicates(), how = 'left', on = 'steamid')\
-#                                             .drop_duplicates()
-#                                             
-#                        round_reward = pd.concat([item_change.loc[item_change['event'] == 'player_hurt'],
-#                                                  data.loc[data['event'] == 'bomb_planted',['tick','event','steamid']]])
-#                        round_reward = pd.merge(round_reward, userid_side, how = 'left', left_on = ['phase','attacker'],
-#                                                right_on = ['phase','userid'])
-#                        round_reward = round_reward.loc[round_reward['weapon'] != '']
-#                        round_reward['event'] = np.where((round_reward['event'] == 'player_hurt') & (round_reward['side_x'] == round_reward['side_y']),'teamkill',round_reward['event'])
-#
-#                        rounds_df,reward_df = pd.DataFrame(),pd.DataFrame()
-#                        rounds_df[['tick','round','phase','reason','ct_win_streak']] = rounds.loc[rounds['phase'] != 'knife',['round_decision','round','phase','reason','ct_win_streak']]
-#                        rounds_df['event'] = 'round_end'
-#                        reward_df[['tick','round','phase','steamid_x','steamid_y','side','event','kill']] = round_reward.loc[round_reward['phase'] != 'knife',['tick','round','phase','steamid_x','steamid_y','side','event','kill']]
-#                        reward_df['steamid'] = np.where((reward_df['event'].isin(['bomb_planted','bomb_defused'])),reward_df['steamid_x'],reward_df['steamid_y'])
-#                        reward_df['event'] = np.where((reward_df['event'] == 'player_hurt'),'kill',reward_df['event'])
-#                        
-#                        item_change['reason'],item_change['ct_win_streak'],item_change['kill'] = None,None,None
-#                        item_change = pd.concat([item_change,rounds_df,reward_df[['tick','round','phase','steamid','side','event','kill']]])
+                        userid_side = pd.merge(init_data.loc[(init_data['event'] == 'player_connect') & (init_data['steamid'] != 'BOT'),
+                                                             ['userid','steamid']].drop_duplicates(), 
+                                                 item_change[['phase','steamid','side']].drop_duplicates(), how = 'left', on = 'steamid')\
+                                             .drop_duplicates()
+                                             
+                        round_reward = pd.concat([item_change.loc[item_change['event'] == 'player_hurt'],
+                                                  data.loc[data['event'] == 'bomb_planted',['tick','event','steamid']]])
+                        round_reward = pd.merge(round_reward, userid_side, how = 'left', left_on = ['phase','attacker'],
+                                                right_on = ['phase','userid'])
+                        round_reward = round_reward.loc[round_reward['weapon'] != '']
+                        round_reward['event'] = np.where((round_reward['event'] == 'player_hurt') & (round_reward['side_x'] == round_reward['side_y']),'teamkill',round_reward['event'])
+
+                        rounds_df,reward_df = pd.DataFrame(),pd.DataFrame()
+                        rounds_df[['tick','round','phase','reason','ct_win_streak']] = rounds.loc[rounds['phase'] != 'knife',['round_decision','round','phase','reason','ct_win_streak']]
+                        rounds_df['event'] = 'round_end'
+                        reward_df[['tick','round','phase','steamid_x','steamid_y','side','event','kill']] = round_reward.loc[round_reward['phase'] != 'knife',['tick','round','phase','steamid_x','steamid_y','side','event','kill']]
+                        reward_df['steamid'] = np.where((reward_df['event'].isin(['bomb_planted','bomb_defused'])),reward_df['steamid_x'],reward_df['steamid_y'])
+                        reward_df['event'] = np.where((reward_df['event'] == 'player_hurt'),'kill',reward_df['event'])
+                        
+                        item_change['reason'],item_change['ct_win_streak'],item_change['kill'] = None,None,None
+                        item_change = pd.concat([item_change,rounds_df,reward_df[['tick','round','phase','steamid','side','event','kill']]])
                         item_change = item_change.sort_values(['tick','event']).reset_index(drop = True)
 
-                        player_econ = pd.DataFrame(columns = ['tick','round','phase','side','steamid','life_seq','event','money_change','equip_value','equip_change','primary','secondary','chest','helmet','flash','smoke','inc','he','decoy','kit','zeus'])
+                        player_econ = pd.DataFrame(columns = ['tick','round','phase','side','steamid','life_seq','event','money','new_money','equip_value','equip_change','primary','secondary','chest','helmet','flash','smoke','inc','he','decoy','kit','zeus'])
 
                         for steamid in set(item_change['steamid']):
                             for phase in list(item_change.loc[(item_change['steamid'] == steamid) & (pd.isnull(item_change['phase']) == False),'phase'].drop_duplicates()):
@@ -567,7 +567,7 @@ def json_to_csv():
                                 else:
                                     money = 16000
                                 for life_seq in ls:
-                                    d,a,h,pr,pr_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,new_money = [0] * 15
+                                    d,a,h,pr,pr_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,new_money,a_str = [0] * 16
                                     
                                     min_tick = min(item_change.loc[(item_change['steamid'] == steamid) & (item_change['life_seq'] == life_seq)
                                                                     & (item_change['phase'] == phase),'tick'])
@@ -581,46 +581,52 @@ def json_to_csv():
                                     side = item_df.loc[pd.isnull(item_df['side']) == False,'side'].iloc[0]
                                     for index,row in item_df.iterrows():
                                         if row['event'] == 'kill':
-                                            new_money = money + row['kill']
+                                            new_money = min(16000,max(0,money + row['kill']))
                                         elif row['event'] == 'teamkill':
-                                            new_money = money -3300
+                                            new_money = min(16000,max(0,money -3300))
                                         elif row['event'] in ['bomb_planted','bomb_defused']:
-                                            new_money = money - 300
+                                            new_money = min(16000,max(0,money - 300))
                                         elif row['event'] == 'round_end':
                                             if side == 2:
                                                 if row['reason'] == 12:
                                                     die_before_time = len(item_df.loc[(item_df['round'] == row['round']) & (item_df['event'] == 'player_hurt') & (item_df['tick'] <= row['tick']),])
-                                                    new_money = money + die_before_time*(900 + max(500,500*row['ct_win_streak']))
+                                                    new_money = min(16000,max(0,money + die_before_time*(900 + max(500,500*row['ct_win_streak']))))
                                                 elif row['reason'] == 9:
-                                                    money_change = 3250
+                                                    new_money = min(16000,max(0,money + 3250))
                                                 elif row['reason'] <= 2:
-                                                    money_change = 3500
+                                                    new_money = min(16000,max(0,money + 3500))
                                                 elif row['reason'] == 8:
-                                                    money_change = 900 + max(500,500*row['ct_win_streak'])
+                                                    new_money = min(16000,max(0,money + 900 + max(500,500*row['ct_win_streak'])))
                                                 elif row['reason'] == 7:
-                                                    money_change = 1700 + max(500,500*row['ct_win_streak'])
+                                                    new_money = min(16000,max(0,money + 1700 + max(500,500*row['ct_win_streak'])))
                                                 else:
                                                     raise ValueError('round reward error')
                                             else:
                                                 if row['reason'] in [8,12]:
-                                                    money_change = 3250
+                                                    new_money = min(16000,max(0,money + 3250))
                                                 elif row['reason'] in [1,2,9]:
-                                                    money_change = 900 - max(500,500*row['ct_win_streak'])
+                                                    new_money = min(16000,max(0,money + 900 - max(500,500*row['ct_win_streak'])))
                                                 elif row['reason'] == 7:
-                                                    money_change = 3500
+                                                    new_money = min(16000,max(0,money + 3500))
                                                 else:
                                                     raise ValueError('round reward error')
-                                        if row['event'] == 'armor_purchase':
+                                        elif row['event'] == 'armor_purchase':
+                                            new_money = row['accountRemaining']
+                                            if a_str < 100:
+                                                money = row['accountRemaining'] + 650 + 350*row['boughtHelmet']
+                                            elif h == 0:
+                                                money = row['accountRemaining'] + 350*row['boughtHelmet']
                                             a = 1
                                             h = row['boughtHelmet']
-                                            money = row['accountRemaining']
-                                            money_change =  - money - 650 - row['boughtHelmet']*350
+                                            a_str = 100
                                         elif row['event'] == 'defuser_purchase':
+                                            new_money = row['accountRemaining']
                                             d = 1
-#                                            money_change = row['accountRemaining'] - money
+                                            money = row['accountRemaining'] + 400
                                         elif row['event'] in ['item_purchase','item_pickup']:
-#                                            if row['event'] == 'item_purchase':
-#                                                money_change = row['accountRemaining'] - money
+                                            if row['event'] == 'item_purchase':
+                                                new_money = row['accountRemaining']
+                                                money = row['accountRemaining'] + row['purchase']
 
                                             if row['primary_class'] == 'primary':
                                                 pr = row['weapon']
@@ -662,36 +668,23 @@ def json_to_csv():
                                                 elif row['weapon'] == 'decoy':
                                                     g_dec = 0
                                         elif row['event'] == 'player_hurt':
-                                            player_econ.loc[len(player_econ)] = [row['tick'],row['round'],phase,side,steamid,life_seq,
-                                                            row['event'],row['accountRemaining'],0,-1*equip_value,0,0,0,0,0,0,0,0,0,0,0]
-                                            equip_value = 0
+                                            if row['health'] == 0:
+                                                player_econ.loc[len(player_econ)] = [row['tick'],row['round'],phase,side,steamid,life_seq,
+                                                                row['event'],money,new_money,0,-1*equip_value,0,0,0,0,0,0,0,0,0,0,0]
+                                                d,a,h,pr,pr_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,a_str = [0] * 15
+                                                money = new_money
+                                            else:
+                                                a_str = row['armor']
                                             continue
                                         else:
                                             raise ValueError('missing item name: ' + row['weapon'])
                                         new_equip_value = pr_value + pi_value + a*650 + h*350 + g_inc*500 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50
                                         equip_change = new_equip_value - equip_value
                                         equip_value = pr_value + pi_value + a*650 + h*350 + g_inc*500 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50
-#                                        money += money_change 
-#                                        money = min(16000,max(0,money))
                                         player_econ.loc[len(player_econ)] = [row['tick'],row['round'],phase,side,steamid,life_seq,row['event'],
-                                                        row['accountRemaining'],equip_value,equip_change,pr,pi,a,h,g_fla,g_smo,g_inc,g_he,g_dec,d,0]
+                                                        money,new_money,equip_value,equip_change,pr,pi,a,h,g_fla,g_smo,g_inc,g_he,g_dec,d,0]
+                                        money = new_money
                                                         
-                        player_econ = player_econ.sort_values(['tick','event']).reset_index(drop = True)
-                        for phase in list(player_econ['phase'].drop_duplicates()):
-                            if phase in ['h1','h2']:
-                                t_money,ct_money = 800*5,800*5
-                            else:
-                                t_money,ct_money = 16000*5,16000*5
-                            for index, row in player_econ.loc[player_econ['phase'] == phase].iterrows():
-#                                if row['tick'] == 227373:
-#                                    break
-                                if row['side'] == 2:
-                                    t_money += row['money_change']
-                                else:
-                                    ct_money += row['money_change']
-                                player_econ.set_value(index,'t_money',t_money)
-                                player_econ.set_value(index,'ct_money',ct_money)
-                                
                         player_econ = player_econ.sort_values(['tick','event']).reset_index(drop = True)
                         player_econ['t_equip'] = player_econ.loc[player_econ['side'] == 2,['phase','equip_change']].groupby('phase').cumsum()
                         player_econ['t_equip'] = player_econ[['phase','t_equip']].groupby('phase')['t_equip'].ffill().fillna(0)
@@ -699,17 +692,89 @@ def json_to_csv():
                         player_econ['ct_equip'] = player_econ[['phase','ct_equip']].groupby('phase')['ct_equip'].ffill().fillna(0)
                         
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
-#                            if row['round'] == 3:
-#                                break
-                            final_money = player_econ.loc[(player_econ['tick'] >= row['start'])
-                                & (player_econ['tick'] <= row['end']),['ct_money','t_money']].iloc[-1]
-                            rounds.set_value(index,'ct_money',final_money['ct_money'])
-                            rounds.set_value(index,'t_money',final_money['t_money'])
-                            if row['round'] not in [1,16]:
-                                start_equip = player_econ.loc[(player_econ['tick'] >= row['start'])
-                                    & (player_econ['tick'] < row['first_blood']),['t_equip','ct_equip']]
-                                rounds.set_value(index,'ct_equip',max(start_equip['ct_equip']))
-                                rounds.set_value(index,'t_equip',max(start_equip['t_equip']))
+                            money_df = pd.DataFrame(columns = ['round','side','steamid','start_money','end_money'])
+                            equip_df = pd.DataFrame(columns = ['round','side','steamid','start_equip','end_equip'])
+                            
+                            steamids = player_econ.loc[player_econ['round'] == row['round'],['steamid','side']].drop_duplicates()
+                            if len(steamids) != 10:
+                                raise ValueError('wrong number of steamids')
+                                
+                            for index2, row2 in steamids.iterrows():
+                                player_df = player_econ.loc[(player_econ['steamid'] == row2['steamid']) & (player_econ['tick'] >= row['start'])
+                                    & (player_econ['tick'] <= row['end'])]
+
+                                start_money = player_df['money'].iloc[0]
+                                end_money = player_df['new_money'].iloc[-1]
+                                money_df.loc[len(money_df)] = [row['round'],row2['side'],row2['steamid'],start_money,end_money]
+                                             
+                                start_equip = player_df['equip_value'].iloc[0] - player_df['equip_change'].iloc[0]
+                                end_equip = player_df['equip_value'].iloc[-1]
+                                equip_df.loc[len(money_df)] = [row['round'],row2['side'],row2['steamid'],start_equip,end_equip]
+                                             
+                                             
+                            rounds.set_value(index,'ct_start_money',sum(money_df.loc[money_df['side'] == 3,'start_money']))
+                            rounds.set_value(index,'ct_end_money',sum(money_df.loc[money_df['side'] == 3,'end_money']))
+                            rounds.set_value(index,'t_start_money',sum(money_df.loc[money_df['side'] == 2,'start_money']))
+                            rounds.set_value(index,'t_end_money',sum(money_df.loc[money_df['side'] == 2,'end_money']))
+                            rounds.set_value(index,'ct_start_equip',sum(equip_df.loc[equip_df['side'] == 3,'start_equip']))
+                            rounds.set_value(index,'ct_end_equip',sum(equip_df.loc[equip_df['side'] == 3,'end_equip']))
+                            rounds.set_value(index,'t_start_equip',sum(equip_df.loc[equip_df['side'] == 2,'start_equip']))
+                            rounds.set_value(index,'t_end_equip',sum(equip_df.loc[equip_df['side'] == 2,'end_equip']))
+                            
+                            
+                            
+                            
+#                            if phs in ['h1','h2']:
+#                                t_money,ct_money = 800,800
+#                            else:
+#                                t_money,ct_money = 16000,16000
+#                            for index, row in player_econ.loc[player_econ['phase'] == phs].iterrows():
+#                                if row['steamid'] not in money_df.loc[money_df['side'] == row['side'],'steamid']:
+#                                    money_df.loc[len(money_df)] = [row['tick'],]
+#                                
+#                                if row['side'] == 2:
+#                                    if row['steamid'] not in t_list:
+#                                        t_money += row['new_money']
+#                                        t_list.append(row['steamid'])
+#                                    else:
+#                                        t_money += (row['new_money'] - row['money'])
+#                                else:
+#                                    if row['steamid'] not in ct_list:
+#                                        ct_money += row['new_money']
+#                                        ct_list.append(row['steamid'])
+#                                    else:
+#                                        ct_money += (row['new_money'] - row['money'])
+#                                player_econ.set_value(index,'t_money',t_money)
+#                                player_econ.set_value(index,'ct_money',ct_money)
+                                
+                                
+                                
+                                
+                                
+#                        player_econ = player_econ.sort_values(['tick','event']).reset_index(drop = True)
+                        
+                        
+#                        for phs in list(rounds.loc[rounds['round'] > 0,'phase'].drop_duplicates()):
+#                            if phs in ['h1','h2']:
+#                                t_start_money,ct_start_money = 5*800,5*800
+#                            else:
+#                                t_start_money,ct_start_money = 5*16000,5*16000
+#                            for index, row in rounds.loc[rounds['phase'] == phs].iterrows():
+#                                rounds.set_value(index,'ct_start_money',ct_start_money)
+#                                rounds.set_value(index,'t_start_money',t_start_money)
+#                                
+#                                final_money = player_econ.loc[(player_econ['tick'] >= row['start'])
+#                                    & (player_econ['tick'] <= row['end']),['ct_money','t_money']].iloc[-1]
+#                                rounds.set_value(index,'ct_final_money',final_money['ct_money'])
+#                                rounds.set_value(index,'t_final_money',final_money['t_money'])
+#                                
+#                                t_start_money = final_money['t_money']
+#                                ct_start_money = final_money['ct_money']
+#                                if row['round'] not in [1,16]:
+#                                    start_equip = player_econ.loc[(player_econ['tick'] >= row['start'])
+#                                        & (player_econ['tick'] < row['first_blood']),['t_equip','ct_equip']]
+#                                    rounds.set_value(index,'ct_equip',max(start_equip['ct_equip']))
+#                                    rounds.set_value(index,'t_equip',max(start_equip['t_equip']))
 
                             
 #                                        change = 0
@@ -821,15 +886,15 @@ def json_to_csv():
 #                            rounds.set_value(index, 'defuse', defuse)
                             
                             
-                        userid_side = pd.merge(init_data.loc[(init_data['event'] == 'player_connect') & (init_data['steamid'] != 'BOT'),
-                                                             ['userid','steamid']].drop_duplicates(), 
-                                                 item_change[['phase','steamid','side']].drop_duplicates(), how = 'left', on = 'steamid')\
-                                             .drop_duplicates()
-                                             
-                        round_reward = pd.concat([item_change.loc[item_change['event'] == 'player_hurt'],
-                                                  data.loc[data['event'] == 'bomb_planted',['tick','event','steamid']]])
-                        round_reward = pd.merge(round_reward, userid_side, how = 'left', left_on = ['phase','attacker'],
-                                                right_on = ['phase','userid'])
+#                        userid_side = pd.merge(init_data.loc[(init_data['event'] == 'player_connect') & (init_data['steamid'] != 'BOT'),
+#                                                             ['userid','steamid']].drop_duplicates(), 
+#                                                 item_change[['phase','steamid','side']].drop_duplicates(), how = 'left', on = 'steamid')\
+#                                             .drop_duplicates()
+#                                             
+#                        round_reward = pd.concat([item_change.loc[item_change['event'] == 'player_hurt'],
+#                                                  data.loc[data['event'] == 'bomb_planted',['tick','event','steamid']]])
+#                        round_reward = pd.merge(round_reward, userid_side, how = 'left', left_on = ['phase','attacker'],
+#                                                right_on = ['phase','userid'])
                         
 						
 #						 1 = Bomb explosion
@@ -838,52 +903,52 @@ def json_to_csv():
 #						 8 = No Ts remain
 #						 9 = No CTs remain (pre-plant)
 #						 12 = Time expired
-                        for index, row in rounds.loc[rounds['round'] > 0].iterrows():
-                            t_value,ct_value = [0,0]
-                            temp_df = round_reward.loc[(round_reward['tick'] >= row['start'])
-                                & (round_reward['tick'] <= row['end']),]
-                            for index2, row2 in temp_df.iterrows():
-                                if row2['event'] == 'bomb_planted':
-                                    t_value += 300
-                                elif row2['event'] == 'bomb_defused':
-                                    ct_value += 300
-                                elif row2['side_x'] == 2:
-                                    if row2['side_y'] == 3:
-                                        t_value += row2['kill']
-                                    else:
-                                        t_value -= 300
-                                elif row2['side_x'] == 3:
-                                    if row2['side_y'] == 2:
-                                        ct_value += row2['kill']
-                                    else:
-                                        ct_value -= 300
-                                else:
-                                    raise ValueError('round reward error')
-                            if row['reason'] == 12:
-                                time_deaths = temp_df.loc[(temp_df['side_x'] == 2) & (temp_df['event'] == 'player_hurt')
-                                    & (temp_df['tick'] > row['round_decision'])]
-                                ct_value += 5*3250
-                                t_value += (5 - len(time_deaths))*(900 + max(500,500*row['ct_win_streak']))
-                                rounds.set_value(index,'plant',0)
-                            elif row['reason'] == 9:
-                                t_value += 5*3250
-                                ct_value += 5*(900 - max(500,500*row['ct_win_streak']))
-                                rounds.set_value(index,'plant',0)
-                            elif row['reason'] <= 2:
-                                t_value += 5*3500
-                                ct_value += 5*(900 - max(500,500*row['ct_win_streak']))
-                                rounds.set_value(index,'plant',1)
-                            elif row['reason'] == 8:
-                                ct_value += 5*3250
-                                t_value += 5*(900 + max(500,500*row['ct_win_streak']))
-                                rounds.set_value(index,'plant',0)
-                            elif row['reason'] == 7:
-                                ct_value += 5*3500
-                                t_value += 5*(1700 + max(500,500*row['ct_win_streak']))
-                                rounds.set_value(index,'plant',1)
-                            else:
-                                raise ValueError('round reward error')
-                            rounds.set_value(index,'ct_reward_diff',ct_value - t_value)                            
+#                        for index, row in rounds.loc[rounds['round'] > 0].iterrows():
+#                            t_value,ct_value = [0,0]
+#                            temp_df = round_reward.loc[(round_reward['tick'] >= row['start'])
+#                                & (round_reward['tick'] <= row['end']),]
+#                            for index2, row2 in temp_df.iterrows():
+#                                if row2['event'] == 'bomb_planted':
+#                                    t_value += 300
+#                                elif row2['event'] == 'bomb_defused':
+#                                    ct_value += 300
+#                                elif row2['side_x'] == 2:
+#                                    if row2['side_y'] == 3:
+#                                        t_value += row2['kill']
+#                                    else:
+#                                        t_value -= 300
+#                                elif row2['side_x'] == 3:
+#                                    if row2['side_y'] == 2:
+#                                        ct_value += row2['kill']
+#                                    else:
+#                                        ct_value -= 300
+#                                else:
+#                                    raise ValueError('round reward error')
+#                            if row['reason'] == 12:
+#                                time_deaths = temp_df.loc[(temp_df['side_x'] == 2) & (temp_df['event'] == 'player_hurt')
+#                                    & (temp_df['tick'] > row['round_decision'])]
+#                                ct_value += 5*3250
+#                                t_value += (5 - len(time_deaths))*(900 + max(500,500*row['ct_win_streak']))
+#                                rounds.set_value(index,'plant',0)
+#                            elif row['reason'] == 9:
+#                                t_value += 5*3250
+#                                ct_value += 5*(900 - max(500,500*row['ct_win_streak']))
+#                                rounds.set_value(index,'plant',0)
+#                            elif row['reason'] <= 2:
+#                                t_value += 5*3500
+#                                ct_value += 5*(900 - max(500,500*row['ct_win_streak']))
+#                                rounds.set_value(index,'plant',1)
+#                            elif row['reason'] == 8:
+#                                ct_value += 5*3250
+#                                t_value += 5*(900 + max(500,500*row['ct_win_streak']))
+#                                rounds.set_value(index,'plant',0)
+#                            elif row['reason'] == 7:
+#                                ct_value += 5*3500
+#                                t_value += 5*(1700 + max(500,500*row['ct_win_streak']))
+#                                rounds.set_value(index,'plant',1)
+#                            else:
+#                                raise ValueError('round reward error')
+#                            rounds.set_value(index,'ct_reward_diff',ct_value - t_value)                            
                         
                         rounds['match_href'] = match_row[1]
                         rounds['map_num'] = int(file_[-6:-5])
