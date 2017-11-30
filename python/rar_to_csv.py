@@ -557,7 +557,7 @@ def json_to_csv():
                         item_change = pd.concat([item_change,rounds_df,reward_df[['tick','round','phase','steamid','side','event','kill']]])
                         item_change = item_change.sort_values(['tick','event']).reset_index(drop = True)
 
-                        player_econ = pd.DataFrame(columns = ['tick','round','phase','side','steamid','life_seq','event','money','new_money','equip_value','equip_change','primary','secondary','chest','helmet','flash','smoke','inc','he','decoy','kit','zeus'])
+                        player_econ = pd.DataFrame(columns = ['tick','round','phase','side','steamid','life_seq','event','money','new_money','equip_value','equip_change','t1_primary','t2_primary','secondary','chest','helmet','flash','smoke','inc','he','decoy','kit','zeus'])
 
                         for steamid in set(item_change['steamid']):
                             for phase in list(item_change.loc[(item_change['steamid'] == steamid) & (pd.isnull(item_change['phase']) == False),'phase'].drop_duplicates()):
@@ -567,7 +567,7 @@ def json_to_csv():
                                 else:
                                     money = 16000
                                 for life_seq in ls:
-                                    d,a,h,pr,pr_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,new_money,a_str = [0] * 16
+                                    d,a,h,t1,t1_value,t2,t2_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,new_money,a_str = [0] * 18
                                     
                                     min_tick = min(item_change.loc[(item_change['steamid'] == steamid) & (item_change['life_seq'] == life_seq)
                                                                     & (item_change['phase'] == phase),'tick'])
@@ -629,10 +629,14 @@ def json_to_csv():
                                                 money = row['accountRemaining'] + row['purchase']
 
                                             if row['primary_class'] == 'primary':
-                                                pr = row['weapon']
-                                                pr_value = row['value']
+                                                if row['secondary_class'] == 't1_rifle':
+                                                    t1,t2 = 1,0
+                                                    t1_value,t2_value = 3000,0
+                                                else:
+                                                    t1,t2 = 0,1
+                                                    t1_value,t2_value = 0,row['value']
                                             elif row['primary_class'] == 'pistol':
-                                                pi = row['weapon']
+                                                pi = 1
                                                 pi_value = row['value']
                                             elif g_t < 4:
                                                 g_t += 1
@@ -649,8 +653,8 @@ def json_to_csv():
                                                     g_dec = 1
                                         elif row['event'] in ['item_drop','weapon_fire']:
                                             if row['primary_class'] == 'primary':
-                                                pr = 0
-                                                pr_value = 0
+                                                t1,t2 = 0,0
+                                                t1_value,t2_value = 00,0
                                             elif row['primary_class'] == 'pistol':
                                                 pi = 0
                                                 pi_value = 0
@@ -670,19 +674,19 @@ def json_to_csv():
                                         elif row['event'] == 'player_hurt':
                                             if row['health'] == 0:
                                                 player_econ.loc[len(player_econ)] = [row['tick'],row['round'],phase,side,steamid,life_seq,
-                                                                row['event'],money,new_money,0,-1*equip_value,0,0,0,0,0,0,0,0,0,0,0]
-                                                d,a,h,pr,pr_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,a_str = [0] * 15
+                                                                row['event'],money,new_money,0,-1*equip_value,0,0,0,0,0,0,0,0,0,0,0,0]
+                                                d,a,h,t1,t1_value,t2,t2_value,pi,pi_value,g_he,g_t,g_inc,g_fla,g_smo,g_dec,equip_value,a_str = [0] * 17
                                                 money = new_money
                                             else:
                                                 a_str = row['armor']
                                             continue
                                         else:
                                             raise ValueError('missing item name: ' + row['weapon'])
-                                        new_equip_value = pr_value + pi_value + a*650 + h*350 + g_inc*500 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50
+                                        new_equip_value = t1_value + t2_value + pi_value + a*650 + h*350 + g_inc*500 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50
                                         equip_change = new_equip_value - equip_value
-                                        equip_value = pr_value + pi_value + a*650 + h*350 + g_inc*500 + g_smo*300 + g_he*300 + g_fla*200 + g_dec*50
+                                        equip_value = new_equip_value
                                         player_econ.loc[len(player_econ)] = [row['tick'],row['round'],phase,side,steamid,life_seq,row['event'],
-                                                        money,new_money,equip_value,equip_change,pr,pi,a,h,g_fla,g_smo,g_inc,g_he,g_dec,d,0]
+                                                        money,new_money,equip_value,equip_change,t1,t2,pi,a,h,g_fla,g_smo,g_inc,g_he,g_dec,d,0]
                                         money = new_money
                                                         
                         player_econ = player_econ.sort_values(['tick','event']).reset_index(drop = True)
@@ -692,8 +696,14 @@ def json_to_csv():
                         player_econ['ct_equip'] = player_econ[['phase','ct_equip']].groupby('phase')['ct_equip'].ffill().fillna(0)
                         
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
+                            t_equip = player_econ.loc[(player_econ['round'] == row['round']) & (player_econ['tick'] < row['first_blood']),'t_equip'].max()
+                            ct_equip = player_econ.loc[(player_econ['round'] == row['round']) & (player_econ['tick'] < row['first_blood']),'ct_equip'].max()
+                            rounds.set_value(index,'t_equip',t_equip)
+                            rounds.set_value(index,'ct_equip',ct_equip)
+                            
+                            
                             money_df = pd.DataFrame(columns = ['round','side','steamid','start_money','end_money'])
-                            equip_df = pd.DataFrame(columns = ['round','side','steamid','start_equip','end_equip'])
+                            equip_df = pd.DataFrame(columns = ['round','side','steamid','item','start','end'])
                             
                             steamids = player_econ.loc[player_econ['round'] == row['round'],['steamid','side']].drop_duplicates()
                             if len(steamids) != 10:
@@ -707,19 +717,34 @@ def json_to_csv():
                                 end_money = player_df['new_money'].iloc[-1]
                                 money_df.loc[len(money_df)] = [row['round'],row2['side'],row2['steamid'],start_money,end_money]
                                              
-                                start_equip = player_df['equip_value'].iloc[0] - player_df['equip_change'].iloc[0]
-                                end_equip = player_df['equip_value'].iloc[-1]
-                                equip_df.loc[len(money_df)] = [row['round'],row2['side'],row2['steamid'],start_equip,end_equip]
-                                             
+                                for item in player_df.columns[range(11,22)]:
+                                    try:
+                                        prev_index = max(player_econ.loc[(player_econ['steamid'] == row2['steamid']) & (player_econ['phase'] == row['phase']) & (player_econ.index < player_df.iloc[0].name)].index)
+                                        start_item = player_econ.loc[prev_index,item]
+                                    except:
+                                        start_item = 0
+                                    
+                                    end_item = player_df[item].iloc[-1]
+                                    equip_df.loc[len(equip_df)] = [row['round'],row2['side'],row2['steamid'],item,start_item,end_item]                                             
                                              
                             rounds.set_value(index,'ct_start_money',sum(money_df.loc[money_df['side'] == 3,'start_money']))
                             rounds.set_value(index,'ct_end_money',sum(money_df.loc[money_df['side'] == 3,'end_money']))
                             rounds.set_value(index,'t_start_money',sum(money_df.loc[money_df['side'] == 2,'start_money']))
                             rounds.set_value(index,'t_end_money',sum(money_df.loc[money_df['side'] == 2,'end_money']))
-                            rounds.set_value(index,'ct_start_equip',sum(equip_df.loc[equip_df['side'] == 3,'start_equip']))
-                            rounds.set_value(index,'ct_end_equip',sum(equip_df.loc[equip_df['side'] == 3,'end_equip']))
-                            rounds.set_value(index,'t_start_equip',sum(equip_df.loc[equip_df['side'] == 2,'start_equip']))
-                            rounds.set_value(index,'t_end_equip',sum(equip_df.loc[equip_df['side'] == 2,'end_equip']))
+                            
+                            for side in [2,3]:
+                                for item in player_df.columns[range(11,22)]:
+                                    sum_start = sum(equip_df.loc[(equip_df['side'] == side) & (equip_df['item'] == item),'start'])
+                                    sum_end = sum(equip_df.loc[(equip_df['side'] == side) & (equip_df['item'] == item),'end'])
+                                    side_str = 't_' if side == 2 else 'ct_'
+                                    
+                                    rounds.set_value(index,side_str + 'start_' + item,sum_start)
+                                    rounds.set_value(index,side_str + 'end_' + item,sum_end)
+                                
+#                            rounds.set_value(index,'ct_start_equip',sum(equip_df.loc[equip_df['side'] == 3,'start_equip']))
+#                            rounds.set_value(index,'ct_end_equip',sum(equip_df.loc[equip_df['side'] == 3,'end_equip']))
+#                            rounds.set_value(index,'t_start_equip',sum(equip_df.loc[equip_df['side'] == 2,'start_equip']))
+#                            rounds.set_value(index,'t_end_equip',sum(equip_df.loc[equip_df['side'] == 2,'end_equip']))
                             
                             
                             
@@ -953,7 +978,7 @@ def json_to_csv():
                         rounds['match_href'] = match_row[1]
                         rounds['map_num'] = int(file_[-6:-5])
                         
-                        missing_econ_rds = rounds.loc[pd.isnull(rounds['ct_econ_adv']) & (rounds['round'] != -1)]
+                        missing_econ_rds = rounds.loc[(pd.isnull(rounds['t_equip']) | pd.isnull(rounds['ct_equip'])) & (rounds['round'] != -1)]
                         
                         if len(missing_econ_rds) > 0:
                             rounds = rounds.loc[(rounds['round'] < min(list(missing_econ_rds['round'])))
@@ -965,8 +990,7 @@ def json_to_csv():
                             error_msg = 'missing knife deaths' + (', ' + error_msg if error_msg else '')
                             
                         with open('csv\\demo_rounds.csv', 'ab') as democsv:
-                            rounds[['match_href','map_num','phase','round','t_href','ct_href','ct_econ_adv','ct_reward_diff','defuse',
-                                    'plant','winner']].to_csv(democsv, header = False, index = False)
+                            rounds.to_csv(democsv, header = False, index = False)
                            
                         mapname = data.loc[data['event']=='info','mapName'].iloc[0]
                         maphash = str(int(data.loc[data['event']=='info','mapHash'].iloc[0]))
@@ -984,4 +1008,4 @@ def json_to_csv():
                                 demowriter.writerow([match_row[1],int(file_[-6:-5]),file_[:-5],None,None,error_msg])
                             print('\tFAIL - ' + match_row[1])
                                 
-#json_to_csv()
+json_to_csv()
