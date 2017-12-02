@@ -696,6 +696,11 @@ def json_to_csv():
                         player_econ['ct_equip'] = player_econ[['phase','ct_equip']].groupby('phase')['ct_equip'].ffill().fillna(0)
                         
                         for index, row in rounds.loc[rounds['round'] > 0].iterrows():
+                            if row['reason'] < 8:
+                                rounds.set_value(index,'plant',1)
+                            else:
+                                rounds.set_value(index,'plant',0)
+                            
                             t_equip = player_econ.loc[(player_econ['round'] == row['round']) & (player_econ['tick'] < row['first_blood']),'t_equip'].max()
                             ct_equip = player_econ.loc[(player_econ['round'] == row['round']) & (player_econ['tick'] < row['first_blood']),'ct_equip'].max()
                             rounds.set_value(index,'t_equip',t_equip)
