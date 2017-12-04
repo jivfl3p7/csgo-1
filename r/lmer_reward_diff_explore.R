@@ -90,9 +90,95 @@ plant = as.factor(plant)
 rounds = list(c(1,16),c(2,17),c(c(3:15),c(18:30)))
 round_types = c('pistol', 'rd2', 'main')
 
+lmer.function <- function(formula, temp_data, map, round_type, win, plnt){
+  model = lmer(formula, data = temp_data, verbose = 0)
+  
+  relgrad <- with(model@optinfo$derivs,solve(Hessian,gradient))
+  if (max(abs(relgrad)) > 0.0003){
+    print('##### converge issue #####')
+    model = lmer(formula, data = temp_data, verbose = 0)
+    
+    relgrad <- with(model@optinfo$derivs,solve(Hessian,gradient))
+    if (max(abs(relgrad)) > 0.0003){
+      conv_err = data.frame(dep_var,map,round_type)
+      names(conv_err) = c('dep_var','map_name','round_type')
+      return(list(data.frame(),data.frame(),data.frame(),data.frame(),data.frame(),conv_err))
+      stop(paste('Convergence failure:',dep_var,i,map))
+    }
+  }
+  
+  print(summary(model))
+  eff = ranef(model, condVar = T)
+  fix = fixef(model)
+  
+  t = eff$t_lineup
+  t$lineup = rownames(t)
+  t$var = sqrt(attr(eff$t_lineup, "postVar")[1, 1, ])
+  t = merge(t, data.frame(table(temp_data$t_lineup)), by.x = 'lineup', by.y = 'Var1', all.x = T)
+  colnames(t)[c(2:4)] <- c("t_int","t_var","t_rounds")
+  
+  ct = eff$ct_lineup
+  ct$lineup = rownames(ct)
+  ct$var = sqrt(attr(eff$ct_lineup, "postVar")[1, 1, ])
+  ct = merge(ct, data.frame(table(temp_data$ct_lineup)), by.x = 'lineup', by.y = 'Var1', all.x = T)
+  colnames(ct)[c(2:4)] <- c("ct_int","ct_var","ct_rounds")
+  
+  comb = merge(ct, t, by = 'lineup', all.x = T)
+  comb$map_name = map
+  comb$round_type = round_type
+  comb$dep_var = 'ct_reward_diff'
+  
+  int_val = data.frame(variable = rownames(coef(summary(model))), coef(summary(model)), row.names = NULL)
+  int_val$map_name = map
+  int_val$round_type = round_type
+  int_val$dep_var = 'ct_reward_diff'
+  
+  if ('pick' %in% names(eff)){
+    pick = eff$pick
+    pick$map_name = map
+    pick$round_type = round_type
+    pick$var = sqrt(attr(eff$pick, "postVar")[1, 1, ])
+    pick$dep_var = 'ct_reward_diff'
+    
+    rtn_list = list(comb,pick,int_val)
+  } else {
+    rtn_list = list(comb,data.frame(),int_val)
+  }
+  
+  if ('ct_econ_group' %in% names(eff)){
+    ct_econ = eff$ct_econ_group
+    ct_econ$map_name = map
+    ct_econ$round_type = round_type
+    ct_econ$var = sqrt(attr(eff$ct_econ_group, "postVar")[1, 1, ])
+    ct_econ$dep_var = 'ct_reward_diff'
+    
+    rtn_list[[4]] = ct_econ
+  } else {
+    rtn_list[[4]] = data.frame()
+  }
+  
+  if ('map_name:rd_type' %in% names(eff)){
+    mprt = eff$`map_name:rd_type`
+    mprt$map_name = map
+    mprt$round_type = round_type
+    mprt$var = sqrt(attr(eff$`map_name:rd_type`, "postVar")[1, 1, ])
+    mprt$dep_var = 'ct_reward_diff'
+    
+    rtn_list[[5]] = mprt
+  } else {
+    rtn_list[[5]] = data.frame()
+  }
+  
+  rtn_list[[6]] = data.frame()
+  
+  names(rtn_list) = c('team_eff','pick_eff','int_eff','econ_eff','mprt_eff','mod_fail')
+  
+  return(rtn_list)
+}
+
 formula = ct_reward_diff ~ (1|t_lineup) + (1|ct_lineup) + (1|ct_econ_group)
-for (ct_win in c(0,1)){
-  for (plant in c(0,1)){
+for (win in c(0,1)){
+  for (plnt in c(0,1)){
     for (i in c(1,2,0)){
       if (i == 1){
         round_type = 'pistol'
@@ -106,7 +192,7 @@ for (ct_win in c(0,1)){
         round_type = 'main'
         formula = ct_reward_diff ~ (1|t_lineup) + (1|ct_lineup) + ct_econ_group
         for (map in unique(round_data$map_name)){
-          temp_data = round_data[(plant == 1) & (ct_win == 1) & (rd_type == i) & (map_name == map),]
+          temp_data = round_data[(plant == plnt) & (ct_win == win) & (rd_type == i) & (map_name == map),]
         }
       }
     }
