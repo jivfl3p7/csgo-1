@@ -17,7 +17,7 @@
 /team/6684/empire,empire,
 /team/6094/vega-squadron,vega squadron,/player/7716/chopper/player/8786/jR/player/8788/keshandr/player/8789/mir/player/8790/hutji
 /team/7728/spotnet,spotnet,/player/11905/spy/player/13612/Empera/player/13613/Senpai/player/13614/Jabz/player/5199/Zerocool
-/team/6343/euronics,euronics,/player/1064/crisby/player/12782/kressy/player/3517/kzy/player/7523/maRky/player/8000/syken
+/team/6343/euronics,euronics,
 /team/6042/mnm,mnm,
 /team/6301/splyce,splyce,/player/10470/m1tch/player/1915/SEMPHIS/player/7935/roca/player/8508/DAVEY/player/9130/Drone
 /team/6978/singularity,singularity,
@@ -42,6 +42,7 @@
 /team/5824/ratsoftheyear,ratsoftheyear,
 /team/6134/kinguin,kinguin,/player/14221/Kap3r/player/5388/rallen/player/7356/MICHU/player/8323/mouz/player/973/SZPERO
 /team/7318/norse,norse,
+/team/7153/dreamrar,dreamrar,
 /team/5599/dobrygaming,dobry&gaming,
 /team/6368/red-instinct,red instinct,
 /team/7274/sabertooth,sabertooth,
@@ -50,7 +51,7 @@
 /team/7801/ghost,ghost,
 /team/6685/ancient,ancient,
 /team/7434/conquer,conquer,/player/10758/heku/player/11244/wils0n/player/11904/INSES/player/15563/SADDYX/player/9820/pietola
-/team/5974/clg,clg,/player/10671/nahtE/player/6451/FNS/player/8137/reltuC/player/8745/Rickeh/player/9056/koosta
+/team/5974/clg,clg,
 /team/7208/godsent-academy,godsent academy,
 /team/6964/exotic-island,exotic island,
 /team/7585/rynnkkviikset,rynnkkviikset,
@@ -84,18 +85,20 @@
 /team/7606/vici,vici,/player/10774/Freeman/player/180/Savage/player/839/tb/player/8601/zhokiNg/player/8604/aumaN
 /team/5395/penta,penta,
 /team/6681/risky,risky,
+/team/7497/resistance,resistance,
 /team/6680/echo-fox,echo fox,
 /team/8452/seed,seed,/player/1378/zehN/player/3669/innocent/player/7218/kRYSTAL/player/7499/Spiidi/player/7511/denis
 /team/6474/mvp-project,mvp project,
 /team/6369/dead-pixels,dead pixels,
 /team/7331/igamecom,igame.com,
 /team/6724/preparation,preparation,
+/team/8441/limitless,limitless,/player/13138/Maka/player/8157/Smyli/player/9048/Kan4/player/9072/LoWkii/player/9646/Polox
 /team/6366/vault,vault,/player/10347/Daveys/player/10351/points/player/11524/sam_A/player/9213/sickLy/player/9214/spamzz
 /team/7018/darkpassage,darkpassage,/player/14067/KEY/player/14068/SARANOSTRA/player/14069/bishop/player/14070/hatex/player/14071/XANATOS
 /team/5988/flipsid3,flipsid3,/player/3347/seized/player/338/markeloff/player/472/B1ad3/player/7403/WorldEdit/player/7796/wayLander
 /team/7425/divizon,divizon,/player/12010/P4TriCK/player/12708/rigoN/player/7508/alexRr/player/8117/LyGHT/player/8212/ScrunK
 /team/7010/immortals,immortals,
-/team/6353/mith,mith,/player/12546/AlicPond/player/13525/SKYdrake/player/14026/Myste2y/player/14027/EthAnlele/player/9601/JinNy
+/team/6353/mith,mith,/player/13461/wannafly/player/13564/PPOverdose/player/14577/foxz/player/14935/zendy/player/14937/koNgared
 /team/7674/ambush,ambush,
 /team/6762/bpro,bpro,/player/10697/blocker/player/12126/poiz0n/player/13991/VNko/player/13992/Zix/player/15369/REDSTAR
 /team/6651/gambit,gambit,/player/10052/fitch/player/334/AdreN/player/735/Dosia/player/8528/HObbit/player/964/mou
@@ -112,12 +115,14 @@
 /team/7324/enzo,enzo,
 /team/4894/aligon,aligon,
 /team/6504/allgamers,allgamers,
+/team/6652/gameagents,gameagents,/player/10698/koloRRR/player/12317/fleav/player/5440/flash/player/7925/gabesson/player/7926/ZEN
 /team/4869/ence,ence,
 /team/7104/rush,rush,
 /team/7251/5frags,5frags,/player/11889/Warden/player/12417/Feagleyy/player/13914/Whiskas/player/14174/hek/player/3422/ayriks
 /team/7616/french-canadians,french canadians,/player/11231/Subroza/player/11438/PLAYER1/player/12710/gMd/player/12859/REOVA/player/9661/effys
 /team/6334/games-academy,games academy,
 /team/4484/paranoia,paranoia,
+/team/8473/noreg,noreg,
 /team/6896/pride,pride,/player/15300/ToM223/player/2826/MINISE/player/5385/Luz/player/8242/reatz/player/8324/morelz
 /team/4548/cph-wolves,cph wolves,
 /team/6947/teamone,teamone,/player/10563/caike/player/10818/iDk/player/11163/trk/player/2529/Maluk3/player/2532/mch
@@ -142,10 +147,12 @@
 /team/6282/south-africa,south africa,
 /team/7092/5power,5power,/player/10870/kabal/player/11574/xiaosaGe/player/13238/PTC/player/2292/forget/player/9521/dobu
 /team/7613/red-reserve,red reserve,/player/10463/B%C3%A5%C3%A5ten/player/12572/djL/player/9277/FREDDyFROG/player/9279/Relaxa/player/9811/PlesseN
+/team/5140/belgium,belgium,
 /team/6842/plantronics,plantronics,
 /team/4773/pain,pain,
 /team/4863/tyloo,tyloo,/player/2131/bondik/player/5187/Mo/player/7026/DD/player/7131/BnTeT/player/8605/somebody
 /team/6715/mineski,mineski,/player/10668/GII/player/10770/Hannibal/player/10771/DubsteP/player/11433/Retrac/player/9464/dispenser
+/team/7234/endpoint,endpoint,/player/11954/FASHR/player/12523/stan1ey/player/7165/weber/player/8981/Immi/player/8983/MiGHTYMAX
 /team/7187/nexus,nexus,/player/10692/iGm/player/1206/BTN/player/4726/jaxi/player/9060/nJ/player/9626/XELLOW
 /team/7668/wasd,wasd,/player/10054/ViztA/player/1038/bitchiR/player/3373/Gaborik/player/3401/sperr/player/566/Dodz
 /team/5944/egeneration,egeneration,
@@ -162,6 +169,7 @@
 /team/7454/gatekeepers,gatekeepers,/player/13560/jolietoG/player/15406/mikki/player/9272/Philip/player/9275/NiTo/player/9872/fletch
 /team/6292/conquest,conquest,
 /team/7145/tengri,tengri,/player/11842/Ramz1k/player/11941/hippo/player/11943/flomaster/player/7983/sonic/player/9445/SNk
+/team/7367/quantum-bellator-fire,quantum bellator fire,/player/11840/Boombl4/player/8294/balblna/player/8368/jmqa/player/8459/Kvik/player/8727/waterfaLLZ
 /team/4791/immunity,immunity,
 /team/8225/goldenmix,goldenmix,/player/11385/YanLi/player/12192/hRRR/player/12202/BigggD/player/671/cedrik/player/7082/EygisK
 /team/7892/eclipse,eclipse,/player/10168/bottle/player/10186/ayaya/player/11576/shuadapai/player/12958/AE/player/2284/ryk
@@ -175,15 +183,17 @@
 /team/5991/envyus,envyus,/player/147/SIXER/player/7169/RpK/player/7390/ScreaM/player/7429/Happy/player/9545/xms
 /team/5284/titan,titan,
 /team/7020/spirit,spirit,/player/8124/DavCost/player/8125/Dima/player/8410/arch/player/9081/S0tF1k/player/9083/COLDYY1
-/team/5906/torqued,torqued,/player/12713/floppy/player/1925/a2z/player/7253/steel/player/7348/tck/player/9065/4sh0t
-/team/7153/dreamrar,dreamrar,
+/team/5906/torqued,torqued,
+/team/5138/russia,russia,
 /team/6548/-,?,
 /team/8120/avangar,avangar,/player/11942/Busterjkee/player/12161/KrizzeN/player/13239/Qikert/player/13776/Jame/player/13780/dimasick
+/team/7969/nemiga,nemiga,/player/1154/roman/player/11926/mds/player/1200/hitMouse/player/3410/ROBO/player/8255/CyberFocus
 /team/7592/enigma6,enigma6,
 /team/6832/iwku,iwku,
 /team/4468/x6tence,x6tence,/player/14120/HugoXD/player/14218/Plopski/player/322/FlipiN/player/329/Kairi/player/7388/SOKER
 /team/6635/efuture,efuture,
-/team/7820/goodjob,goodjob,/player/13976/boX/player/13977/fnyekes/player/13978/Coffee/player/13979/Desshustle/player/13980/lollipop21k
+/team/7080/wololos,wololos,
+/team/7820/goodjob,goodjob,/player/13976/boX/player/13977/fnyekes/player/13978/Coffee/player/13980/lollipop21k/player/15474/SADZED
 /team/6959/mk,mk,
 /team/5752/cloud9,cloud9,/player/7440/Skadoodle/player/7805/RUSH/player/8523/tarik/player/8735/autimatic/player/8797/Stewie2K
 /team/5929/space-soldiers,space soldiers,/player/150/MAJ3R/player/7938/XANTARES/player/8575/Calyx/player/9353/paz/player/9857/ngiN
@@ -214,7 +224,7 @@
 /team/5973/liquid,liquid,/player/10394/Twistzz/player/7382/steel/player/7687/nitr0/player/8346/jdm64/player/8738/EliGE
 /team/6132/method,method,
 /team/5158/bravado,bravado,/player/10611/Fadey/player/11630/JT/player/7993/Detrony/player/8446/ELUSIVE/player/8711/Sonic
-/team/6248/themongolz,themongolz,/player/8622/Zilkenberg/player/9243/maaRaa/player/9245/Tsogoo/player/9247/Machinegun/player/9736/ncl
+/team/6248/themongolz,themongolz,/player/12525/cazze/player/15058/cTrl/player/9245/Tsogoo/player/9247/Machinegun/player/9736/ncl
 /team/7268/russia,.russia,
 /team/6807/alpha,alpha,
 /team/7336/esportslab-black,esportslab black,
