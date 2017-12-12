@@ -8,8 +8,8 @@ if "%computername%"=="MITCHELL-LAPTOP" (
 	set ana_path=C:
 )
 
-::%ana_path%\Anaconda2\python.exe -W ignore %~dp0\python\hltv_scrape.py
-::%ana_path%\Anaconda2\python.exe -W ignore %~dp0\python\rar_to_csv.py
+%ana_path%\Anaconda2\python.exe -W ignore %~dp0\python\hltv_scrape.py
+%ana_path%\Anaconda2\python.exe -W ignore %~dp0\python\rar_to_csv.py
 
 for /f %%a in ('psql -U postgres -c "select 1 as result from pg_database where datname='csgo'" -t') do set /a check=%%a
 
@@ -35,7 +35,7 @@ psql -U postgres -d csgo -v init_path=%init_path% -qf sql/demo_rounds.sql
 
 psql -U postgres -d csgo -qc "drop schema if exists glmer cascade; create schema glmer;"
 
-Rscript --silent r\me_with_demo_data.R
-Rscript --silent r\team_str_plot.R
+REM Rscript --silent r\me_with_demo_data.R
+REM Rscript --silent r\team_str_plot.R
 
 pause
