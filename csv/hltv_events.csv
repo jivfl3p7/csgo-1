@@ -31,7 +31,7 @@
 /events/2319/pro-gamer-league-2016-summer-finals,Pro Gamer League 2016 Summer Finals,07/24/2016,Intl. LAN,16,2016-07-19 00:00:00
 /events/2135/eleague-season-1,ELEAGUE Season 1,07/30/2016,Intl. LAN,103,2016-05-23 00:00:00
 /events/2314/asus-rog-summer-2016,ASUS ROG Summer 2016,08/06/2016,Intl. LAN,13,2016-08-01 00:00:00
-/events/2350/esea-season-22-global-challenge,ESEA Season 22 Global Challenge,08/28/2016,Intl. LAN,13,2016-08-22 00:00:00
+/events/2350/esea-season-22-mdl-global-challenge,ESEA Season 22 MDL Global Challenge,08/28/2016,Intl. LAN,13,2016-08-22 00:00:00
 /events/2285/northern-arena-2016-toronto,Northern Arena 2016 - Toronto,09/04/2016,Intl. LAN,26,2016-08-29 00:00:00
 /events/2325/sl-i-league-starseries-season-2-finals,SL i-League StarSeries Season 2 Finals,09/11/2016,Intl. LAN,27,2016-09-05 00:00:00
 /events/2112/dreamhack-zowie-open-bucharest-2016,DreamHack ZOWIE Open Bucharest 2016,09/18/2016,Intl. LAN,13,2016-09-12 00:00:00
@@ -54,7 +54,7 @@
 /events/2599/wca-2016-finals,WCA 2016 Finals,12/11/2016,Intl. LAN,24,2016-12-05 00:00:00
 /events/2472/eleague-major-main-qualifier,ELEAGUE Major Main Qualifier,12/18/2016,Intl. LAN,33,2016-12-12 00:00:00
 /events/2613/china-top-2016,China Top 2016,12/18/2016,Intl. LAN,3,2016-12-12 00:00:00
-/events/2538/esea-season-23-global-challenge,ESEA Season 23 Global Challenge,01/08/2017,Intl. LAN,13,2017-01-02 00:00:00
+/events/2538/esea-season-23-mdl-global-challenge,ESEA Season 23 MDL Global Challenge,01/08/2017,Intl. LAN,13,2017-01-02 00:00:00
 /events/2564/wesg-2016-world-finals,WESG 2016 World Finals,01/15/2017,Intl. LAN,67,2017-01-09 00:00:00
 /events/2566/dreamhack-astro-open-leipzig-2017,DreamHack ASTRO Open Leipzig 2017,01/15/2017,Intl. LAN,13,2017-01-09 00:00:00
 /events/2471/eleague-major-2017,ELEAGUE Major 2017,01/29/2017,Major,40,2017-01-16 00:00:00
@@ -69,7 +69,7 @@
 /events/2713/iem-sydney-2017,IEM Sydney 2017,05/07/2017,Intl. LAN,19,2017-05-01 00:00:00
 /events/2807/4gamers-csgo-masters,4Gamers CS:GO Masters,05/07/2017,Intl. LAN,9,2017-05-01 00:00:00
 /events/2568/dreamhack-open-tours-2017,DreamHack Open Tours 2017,05/08/2017,Intl. LAN,13,2017-05-01 00:00:00
-/events/2749/esea-season-24-global-challenge-mdl-global-finals,ESEA Season 24 Global Challenge - MDL Global Finals,05/14/2017,Intl. LAN,13,2017-05-08 00:00:00
+/events/2749/esea-season-24-mdl-global-challenge,ESEA Season 24 MDL Global Challenge,05/14/2017,Intl. LAN,13,2017-05-08 00:00:00
 /events/2777/geforce-cup-2017,GeForce Cup 2017,05/28/2017,Intl. LAN,7,2017-05-22 00:00:00
 /events/2557/esl-pro-league-season-5-finals,ESL Pro League Season 5 Finals,06/04/2017,Intl. LAN,38,2017-05-29 00:00:00
 /events/2725/asia-minor-pgl-major-krakow-2017,Asia Minor - PGL Major Krakow 2017,06/04/2017,Intl. LAN,16,2017-05-29 00:00:00
@@ -84,18 +84,14 @@
 /events/2570/dreamhack-open-valencia-2017,DreamHack Open Valencia 2017,07/15/2017,Intl. LAN,13,2017-07-10 00:00:00
 /events/2720/pgl-major-krakow-2017,PGL Major Krakow 2017,07/23/2017,Major,40,2017-07-10 00:00:00
 /events/2571/dreamhack-open-atlanta-2017,DreamHack Open Atlanta 2017,07/23/2017,Intl. LAN,13,2017-07-17 00:00:00
-/events/2350/esea-season-22-mdl-global-challenge,ESEA Season 22 MDL Global Challenge,08/28/2016,Intl. LAN,13,2016-08-22 00:00:00
-/events/2538/esea-season-23-mdl-global-challenge,ESEA Season 23 MDL Global Challenge,01/08/2017,Intl. LAN,13,2017-01-02 00:00:00
-/events/2749/esea-season-24-mdl-global-challenge,ESEA Season 24 MDL Global Challenge,05/14/2017,Intl. LAN,13,2017-05-08 00:00:00
-/events/2684/dreamhack-masters-malm-2017,DreamHack Masters Malmö 2017,09/03/2017,Intl. LAN,27,2017-07-31 00:00:00
-/events/3061/esg-tour-mykonos-2017,ESG Tour Mykonos 2017,09/10/2017,Intl. LAN,14,2017-07-31 00:00:00
-/events/2572/dreamhack-open-montreal-2017,DreamHack Open Montreal 2017,09/10/2017,Intl. LAN,13,2017-07-31 00:00:00
-/events/2636/esl-one-new-york-2017,ESL One New York 2017,09/17/2017,Intl. LAN,13,2017-07-31 00:00:00
-/events/3046/esea-season-25-mdl-global-challenge,ESEA Season 25 MDL Global Challenge,09/24/2017,Intl. LAN,13,2017-07-31 00:00:00
-/events/3189/china-top-2017,China Top 2017,10/01/2017,Intl. LAN,6,2017-07-31 00:00:00
-/events/3016/eleague-csgo-premier-2017,ELEAGUE CS:GO Premier 2017,10/13/2017,Intl. LAN,27,2017-07-31 00:00:00
-/events/3183/rog-masters-2017-emea-finals,ROG MASTERS 2017 EMEA Finals,10/15/2017,Intl. LAN,7,2017-07-31 00:00:00
+/events/2684/dreamhack-masters-malm-2017,DreamHack Masters Malmö 2017,09/03/2017,Intl. LAN,27,2017-08-28 00:00:00
+/events/3061/esg-tour-mykonos-2017,ESG Tour Mykonos 2017,09/10/2017,Intl. LAN,14,2017-09-04 00:00:00
+/events/2572/dreamhack-open-montreal-2017,DreamHack Open Montreal 2017,09/10/2017,Intl. LAN,13,2017-09-04 00:00:00
+/events/2636/esl-one-new-york-2017,ESL One New York 2017,09/17/2017,Intl. LAN,13,2017-09-11 00:00:00
+/events/3046/esea-season-25-mdl-global-challenge,ESEA Season 25 MDL Global Challenge,09/24/2017,Intl. LAN,13,2017-09-18 00:00:00
 /events/3189/china-top-2017-kunshan,China Top 2017 Kunshan,10/01/2017,Intl. LAN,6,2017-09-25 00:00:00
+/events/3016/eleague-csgo-premier-2017,ELEAGUE CS:GO Premier 2017,10/13/2017,Intl. LAN,27,2017-09-04 00:00:00
+/events/3183/rog-masters-2017-emea-finals,ROG MASTERS 2017 EMEA Finals,10/15/2017,Intl. LAN,7,2017-10-09 00:00:00
 /events/2573/dreamhack-open-denver-2017,DreamHack Open Denver 2017,10/22/2017,Intl. LAN,13,2017-10-16 00:00:00
 /events/3153/epicenter-2017-wild-card-qualifier,EPICENTER 2017 Wild Card Qualifier,10/23/2017,Intl. LAN,2,2017-10-16 00:00:00
 /events/3133/epicenter-2017,EPICENTER 2017,10/29/2017,Intl. LAN,14,2017-10-23 00:00:00
@@ -108,8 +104,9 @@
 /events/2956/iem-oakland-2017,IEM Oakland 2017,11/19/2017,Intl. LAN,35,2017-11-13 00:00:00
 /events/3292/china-top-2017-shenzhen,China Top 2017 Shenzhen,11/23/2017,Intl. LAN,6,2017-11-13 00:00:00
 /events/2998/blast-pro-series-copenhagen-2017,BLAST Pro Series Copenhagen 2017,11/25/2017,Intl. LAN,17,2017-11-20 00:00:00
-/events/3224/fcdb-cup-2017,FCDB Cup 2017,11/26/2017,Intl. LAN,13,2017-11-20 00:00:00
 /events/3114/wesg-2017-europe-cis-regional-finals,WESG 2017 Europe & CIS Regional Finals,11/26/2017,Intl. LAN,52,2017-11-20 00:00:00
+/events/3224/fcdb-cup-2017,FCDB Cup 2017,11/26/2017,Intl. LAN,13,2017-11-20 00:00:00
 /events/2574/dreamhack-open-winter-2017,DreamHack Open Winter 2017,12/03/2017,Intl. LAN,13,2017-11-27 00:00:00
 /events/3283/rog-masters-2017-grand-finals,ROG MASTERS 2017 Grand Finals,12/09/2017,Intl. LAN,13,2017-12-04 00:00:00
 /events/3072/esl-pro-league-season-6-finals,ESL Pro League Season 6 Finals,12/10/2017,Intl. LAN,35,2017-12-04 00:00:00
+/events/3313/ecs-season-4-finals,ECS Season 4 Finals,12/17/2017,Intl. LAN,13,2017-12-11 00:00:00
