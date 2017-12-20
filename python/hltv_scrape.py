@@ -260,7 +260,7 @@ def match_data():
     prev_match = None
             
     for index, row in match_iterator.loc[match_iterator.sum(axis = 1) > 0].iterrows():
-        event_href = row[0]        
+        event_href = row[0]
         match_href = row[1]
         match_req = requests.get('https://www.hltv.org' + match_href, headers = header)
         match_soup = BeautifulSoup(match_req.content,'lxml')
@@ -376,7 +376,7 @@ def match_data():
                                 team = re.sub('^[0-9]\.( )*','',re.compile('.*(?= ' + veto_words_re + ')').search(
                                     veto_step.encode('utf-8')).group(0)).encode('utf-8').strip()
                                 if team == '?':
-                                    veto_team_href == '/team/6548/-'
+                                    veto_team_href = '/team/6548/-'
                                 else:
                                     match = process.extractOne(team,team_name_list)
                                     if match[0] == team_name_list[0]:
@@ -462,6 +462,12 @@ def match_data():
                 map_results = match_soup.find_all('div', {'class': 'mapholder'})
                 for map_,map_num in zip(map_results,range(1,len(map_results) + 1)):
                     if map_.contents[1].contents[1].contents[2].contents[0] == 'Default':
+                        with open("csv\\hltv_round_results.csv", 'ab') as roundcsv:
+                                roundwriter = csv.writer(roundcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                                roundwriter.writerow([match_href, map_num, None, None, None, None, None, None, None, None])
+                        with open("csv\\hltv_map_results.csv", 'ab') as resultcsv:
+                            resultwriter = csv.writer(resultcsv, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                            resultwriter.writerow([match_href, map_num, None, None, None, None, None, None, None])
                         continue
                     try:
                         map_.contents[1].contents[1].contents[2].contents[0]
